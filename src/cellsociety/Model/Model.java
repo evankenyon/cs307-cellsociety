@@ -10,16 +10,22 @@ public class Model {
 
 
 
-    public void findNextStateForEachCell(){
+//                r.setState();
 
+    public void findNextStateForEsachCell(){
+        for(int row = 0; row <cellGrid.length; row++){
+            for(int col = 0; col<cellGrid[0].length; col++){
+//               Rule r=new Rule(cellGrid[row][col]);
+//                r.setState();
+            }
+        }
 
     } //loop through each cell, set its future state
     public void updateCells(){
         for(int row = 0; row <cellGrid.length; row++){
             for(int col = 0; col<cellGrid[0].length; col++){
                 //cellGrid[row][col].updateState();
-//                Rule r=new Rule(cellGrid[row][col]);
-//                r.setState();
+//
                 cellGrid[row][col].updateState();
             }
         }
