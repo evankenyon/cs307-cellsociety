@@ -1,4 +1,4 @@
-package cellsociety.cell;
+package cellsociety.CellParts;
 
 import cellsociety.location.CornerLocation;
 
@@ -29,6 +29,10 @@ public class Cell {
 
     public void setFutureState(int state){
         this.futureState = futureState;
+    }
+
+    public int getCurrentState() {
+        return currentState;
     }
 
     //FIXME: Not complete
