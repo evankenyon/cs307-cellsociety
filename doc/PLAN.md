@@ -38,12 +38,24 @@ we have decided to put the responsibility of knowing a Cell's neighbors in the C
 
 #### Design Issue #2
 
- * Alernative #1
-
- * Alernative #2
-
- * Trade-offs
-
+Another important design issue that we ran into was whether to have a Rule class for each app that
+handles all the rules of an app (i.e. for game of life it would handle all 4 rules), or to have
+a RuleBook class which had a list of Rule classes, where each Rule class would be responsible for
+one of the app's rules (i.e. there would be a RuleBook class for each app, and an example Rule
+class would be one for the case where a location has 0 neighbors in game of life). One pro of the
+Rule class that handles every rule of a game is that only one class would be in charge of changing
+the Cell class's state, so there would not be as many classes collaborating with it. Another pro of
+that design choice is less code complexity, allowing for a more readable program that still
+maintains the single responsibility principle. However, a con is that, although the Rule class
+still has one responsibility (handling updating a cell's state), it would be a relatively large 
+class and could have a switch case statement as well. The RuleBook class, on the other hand,
+could have a map of number of neighbors/neighbor states to Rule objects, thus eliminating the 
+potential use of a switch case statement. Additionally, this would extract some functionality
+from the Rule class, which could be viewed as better upholding the single responsibility principle.
+However, a con would be that there would be more classes collaborating with the Cell class, thus
+raising the possibility of unexpected errors. So far, we've tentatively decided to go with the
+Rule class that handles all the rules for an app for simplicity's sake (and since it still follows
+basic design principles), but we are open to the other design idea if code smells start to pop up.
 
 
 ## User Interface
@@ -57,13 +69,27 @@ taken from [Brilliant Examples of Sketched UI Wireframes and Mock-Ups](https://o
 
 ## Team Responsibilities
 
- * Team Member #1
+ * Evan Kenyon
 
- * Team Member #2
+Primary: Controller
+Secondary: Frontend
 
- * Team Member #3
+ * Tarun Amasa
+ 
+Primary: Backend
+Secondary: Controller, Parser
 
- * Team Member #4
+ * Remy Cross
+
+Primary: Backend
+Secondary: Frontend
+
+ * Keith Cressman
+
+Primary: Frontend
+Secondary: Controller
 
 
 #### Proposed Schedule
+
+c
