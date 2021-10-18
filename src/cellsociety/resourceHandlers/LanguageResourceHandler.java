@@ -17,9 +17,11 @@ public class LanguageResourceHandler {
   public static final String LANGUAGE_KEY = "Language";
   public static final String SELECT_FILE_KEY = "SelectFile";
   public static final String START_SIMULATIONS_KEY = "StartSimulations";
+  public static final String CHANGE_ENGLISH_KEY = "ChangeEnglish";
+  public static final String CHANGE_SPANISH_KEY = "ChangeSpanish";
   public static final String ENGLISH = "English";
   public static final String SPANISH = "Spanish";
-  private final String[] supportedLanguages = {ENGLISH, SPANISH};
+  public static final String[] SUPPORTED_LANGUAGES = {ENGLISH, SPANISH};
   private final Locale englishLocale = new Locale(ENGLISH, "EN");
   private final Locale spanishLocale = new Locale(SPANISH, "ES");
   private Map<String, Locale> langToLocale;
@@ -82,6 +84,22 @@ public class LanguageResourceHandler {
   }
 
   /**
+   * Get the String used on the Change to English Button
+   * @return a String like "English" which is meant for the GUI
+   */
+  public String getChangeEnglishString(){
+    return myResourceBundle.getString(CHANGE_ENGLISH_KEY);
+  }
+
+  /**
+   * Get the String used on the Change to Spanish Button
+   * @return a String like "Spanish" which is meant for the GUI
+   */
+  public String getChangeSpanishString(){
+    return myResourceBundle.getString(CHANGE_SPANISH_KEY);
+  }
+
+  /**
    * use the Spanish labels
    */
   public void changeToSpanish(){
@@ -93,6 +111,15 @@ public class LanguageResourceHandler {
    */
   public void changeToEnglish(){
     myResourceBundle = ResourceBundle.getBundle(LANGUAGE_BUNDLE_NAME, langToLocale.get(ENGLISH));
+  }
+
+  /**
+   * get the key/label associated with this key
+   * @param key should be one of the static final String constants defiened in this class
+   * @return the label associated with the key
+   */
+  public String getStringFromKey(String key){
+    return myResourceBundle.getString(key);
   }
 
 
