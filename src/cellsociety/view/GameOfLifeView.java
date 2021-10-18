@@ -1,2 +1,5 @@
-package cellsociety.view;public class GameOfLifeView {
+package cellsociety.view;
+
+public class GameOfLifeView extends SimulationView {
+
 }
