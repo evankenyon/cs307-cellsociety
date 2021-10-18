@@ -2,18 +2,30 @@
 ### Team Number
 4
 ### Names
+Jeremy Cross
 
+Tarun Amasa
+
+Keith Cressman
+
+Evan Kenyon
 
 ## Design Overview
+![This is cool, too bad you can't see it](images/CRC1.png)
+![This is cool, too bad you can't see it](images/CRC2.png)
+![This is cool, too bad you can't see it](images/CRC3.png)
+![This is cool, too bad you can't see it](images/CRC4.png)
+![This is cool, too bad you can't see it](images/CRC5.png)
+![This is cool, too bad you can't see it](images/CRC6.png)
+![This is cool, too bad you can't see it](images/CRC7.png)
 
 
 ## Design Details
 
 Here is a graphical look at my design:
 
-![This is cool, too bad you can't see it](images/online-shopping-uml-example.png "An initial UI")
+![This is cool, too bad you can't see it](images/DesignSpecifications.jpeg)
 
-made from [a tool that generates UML from existing code](http://staruml.io/).
 
 
 ## Design Considerations
@@ -91,5 +103,7 @@ Secondary: Controller
 
 
 #### Proposed Schedule
-
-c
+10/19: Finish basic Game of Life
+10/26: Have a basic version of each application working
+10/29: Refactor and edit, make necessary changes
+11/1: Add finishing touches and submit
