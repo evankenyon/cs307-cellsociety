@@ -38,6 +38,8 @@ public class Cell {
 
     public int getFutureState() {return futureState;}
 
+    public List<Cell> getNeighbors() {return neighbors;}
+
     //FIXME: Not complete
     public void initializeNeighborList(){
 
@@ -89,4 +91,5 @@ public class Cell {
         result = 31 * result + Arrays.hashCode(cellGrid);
         return result;
     }
+
 }

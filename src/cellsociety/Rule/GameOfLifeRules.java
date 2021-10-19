@@ -1,6 +1,9 @@
 package cellsociety.Rule;
 
-import cellsociety.CellParts.Cell;
+
+import cellsociety.cell.Cell;
+
+import java.util.List;
 
 public class GameOfLifeRules {
     private Cell cell;
@@ -10,8 +13,20 @@ public class GameOfLifeRules {
     public GameOfLifeRules(Cell cell)
     {
         this.cell=cell;
-        numNeighbors=cell.getNeighbors().size();
         cellCurrentState=cell.getCurrentState();
+    }
+
+    public void generateNumNeighbors(List<Cell> neighbors)
+    {
+        int count = 0;
+        for (Cell c: neighbors)
+        {
+            if(c.getCurrentState()==1)
+            {
+                count++;
+            }
+        }
+        numNeighbors=count;
     }
 
     public void setState()

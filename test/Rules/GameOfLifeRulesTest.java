@@ -1,7 +1,7 @@
 package Rules;
 
-import cellsociety.CellParts.Cell;
 import cellsociety.Rule.GameOfLifeRules;
+import cellsociety.cell.Cell;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
