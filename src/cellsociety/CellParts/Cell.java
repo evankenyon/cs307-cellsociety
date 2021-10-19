@@ -35,6 +35,8 @@ public class Cell {
         return currentState;
     }
 
+    public int getFutureState() {return futureState;}
+
     //FIXME: Not complete
     public List<Cell> getNeighbors(){
 
