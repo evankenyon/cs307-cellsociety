@@ -49,7 +49,7 @@ public class LanguageResourceHandlerTest {
   }
 
   @Test
-  void testChangeToSpanish(){
+  void testChangeToSpanishSimple(){
     String expected = "About";
     String actual = myHandler.getAboutString();
     assertEquals(expected, actual);
@@ -60,11 +60,39 @@ public class LanguageResourceHandlerTest {
   }
 
   @Test
-  void testChangeToEnglish(){
+  void testChangeToSpanishComplex(){
+    String expected = "About";
+    String actual = myHandler.getAboutString();
+    assertEquals(expected, actual);
+    myHandler.changeToSpanish();
+    myHandler.changeToSpanish();
+    myHandler.changeToEnglish();
+    myHandler.changeToEnglish();
+    myHandler.changeToSpanish();
+    expected = "AboutS";
+    actual = myHandler.getAboutString();
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  void testChangeToEnglishSimple(){
     myHandler.changeToSpanish();
     myHandler.changeToEnglish();
     testGetLanguageEnglish();
   }
+
+  @Test
+  void testChangeToEnglishComplex(){
+    myHandler.changeToSpanish();
+    myHandler.changeToEnglish();
+    myHandler.changeToEnglish();
+    myHandler.changeToSpanish();
+    myHandler.changeToEnglish();
+    myHandler.changeToEnglish();
+    myHandler.changeToEnglish();
+    testGetLanguageEnglish();
+  }
+
 
 
 }

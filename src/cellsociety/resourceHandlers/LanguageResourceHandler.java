@@ -19,6 +19,7 @@ public class LanguageResourceHandler {
   public static final String START_SIMULATIONS_KEY = "StartSimulations";
   public static final String CHANGE_ENGLISH_KEY = "ChangeEnglish";
   public static final String CHANGE_SPANISH_KEY = "ChangeSpanish";
+  public static final String FILE_SELECTOR_TITLE_KEY = "FileSelectTitle";
   public static final String ENGLISH = "English";
   public static final String SPANISH = "Spanish";
   public static final String[] SUPPORTED_LANGUAGES = {ENGLISH, SPANISH};
@@ -98,6 +99,16 @@ public class LanguageResourceHandler {
   public String getChangeSpanishString(){
     return myResourceBundle.getString(CHANGE_SPANISH_KEY);
   }
+
+  /**
+   * Get the String used on the title of the file selector
+   * @return a String like "File selector" which is meant for the GUI
+   */
+  public String getSelectFileTitleString(){
+    return myResourceBundle.getString(SELECT_FILE_KEY);
+  }
+
+
 
   /**
    * use the Spanish labels

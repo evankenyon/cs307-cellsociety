@@ -37,6 +37,9 @@ public class GameOfLifeRules {
         }
     }
 
+    //For testing purposes
+    public void setNumNeighbors(int numNeighbors){this.numNeighbors=numNeighbors;}
+
     public void killCell()
     {
         cell.setFutureState(0);

@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 
-public class SimulationView {
+public class MainView {
   //private Controller myController;
   private Stage myStage;
   private LanguageResourceHandler myResourceHandler;
@@ -30,8 +30,10 @@ public class SimulationView {
 
   private final String[] supportedLanguages = LanguageResourceHandler.SUPPORTED_LANGUAGES;
   private final int DEFAULT_SIM_WIDTH = 400;
+  public static final int WIDTH = 800;
+  public static final int HEIGHT = 600;
 
-  public SimulationView(){
+  public MainView(){
     //myController = new Controller()
     myResourceHandler = new LanguageResourceHandler();
     myNodesToTextKey = new HashMap<>();
@@ -53,7 +55,7 @@ public class SimulationView {
     mainPane.getChildren().add(makeControlPanel());
     mainPane.getChildren().add(makeFileInputPanel());
 
-    return new Scene(mainPane, MainView.WIDTH, MainView.HEIGHT);
+    return new Scene(mainPane, WIDTH, HEIGHT);
   }
 
   private Button makeAButton(String ResourceKey, ButtonClickedMethod method){

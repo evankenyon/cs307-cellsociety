@@ -1,12 +1,10 @@
 package view;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.testfx.framework.junit5.ApplicationTest;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import cellsociety.resourceHandlers.LanguageResourceHandler;
-import cellsociety.resourceHandlers.LanguageResourceHandler;
-import cellsociety.view.SimulationView;
+import cellsociety.view.MainView;
 import cellsociety.view.NodeWithText;
 import cellsociety.view.Button2;
 
@@ -15,21 +13,13 @@ import cellsociety.view.Button2;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.Control;
-import javafx.scene.Scene;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.control.Label;
 
 
-import java.util.Map;
-import java.util.HashMap;
 import java.util.Collection;
 
 
-public class SimulationViewTest extends DukeApplicationTest{
-  private SimulationView simView;
+public class MainViewTest extends DukeApplicationTest{
+  private MainView simView;
   private LanguageResourceHandler resourceHandler;
   private Stage myStage;
 
@@ -37,7 +27,7 @@ public class SimulationViewTest extends DukeApplicationTest{
 
   @Override
   public void start(Stage stage) throws Exception {
-    simView = new SimulationView();
+    simView = new MainView();
     resourceHandler = simView.getMyResourceHandler();
     stage.setScene(simView.makeSimulationScene());
     stage.show();
