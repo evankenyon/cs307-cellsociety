@@ -13,6 +13,7 @@ public class GameOfLifeRules {
     public GameOfLifeRules(Cell cell)
     {
         this.cell=cell;
+        generateNumNeighbors(cell.getNeighbors());
         cellCurrentState=cell.getCurrentState();
     }
 
