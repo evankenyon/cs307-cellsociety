@@ -1,6 +1,6 @@
 package cellsociety.Rule;
 
-import cellsociety.cell.Cell;
+import cellsociety.CellParts.Cell;
 
 public class GameOfLifeRules {
     private Cell cell;
@@ -36,6 +36,9 @@ public class GameOfLifeRules {
                 }
         }
     }
+
+    //For testing purposes
+    public void setNumNeighbors(int numNeighbors){this.numNeighbors=numNeighbors;}
 
     public void killCell()
     {

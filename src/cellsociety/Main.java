@@ -3,7 +3,6 @@ package cellsociety;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import cellsociety.view.MainView;
 import cellsociety.view.SimulationView;
 
 /**
