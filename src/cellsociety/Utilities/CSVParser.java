@@ -1,6 +1,6 @@
 package cellsociety.Utilities;
 
-import cellsociety.CellParts.Cell;
+import cellsociety.cell.Cell;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,8 +14,8 @@ public class CSVParser {
     private int [][] integer2DArray;
     private Cell[][] cellMatrix;
 
-    public CSVParser(String fileName){
-        this.file = new File(fileName);
+    public void setFile(File file) {
+        this.file = file;
     }
 
     public void makeInteger2DArray() throws FileNotFoundException{
@@ -53,5 +53,9 @@ public class CSVParser {
             }
         }
         this.cellMatrix = cellMatrix;
+    }
+
+    public Cell[][] getCellMatrix() {
+        return cellMatrix;
     }
 }

@@ -1,7 +1,10 @@
 package cellsociety.Model;
 
-import cellsociety.CellParts.Cell;
+import cellsociety.cell.Cell;
 import cellsociety.Utilities.CSVParser;
+import cellsociety.Rule.GameOfLifeRules;
+
+import java.io.File;
 
 public class Model {
 
@@ -9,7 +12,15 @@ public class Model {
     CSVParser parser;
 
 
+    public Model(){
+        parser = new CSVParser();
+    }
 
+
+    public void uploadCellGridFromFile(File fileName){
+        parser.setFile(fileName);
+        cellGrid = parser.getCellMatrix();
+    }
 //                r.setState();
 
     public void findNextStateForEsachCell(){
