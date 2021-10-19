@@ -26,6 +26,29 @@ Here is a graphical look at my design:
 
 ![This is cool, too bad you can't see it](images/DesignSpecifications.jpeg)
 
+Here are some example test cases demonstrating how the various classes work together:
+1. At a step of the animation, each cell is updated
+  * SimulationView.step() //includes the indented code below
+    * myController.myModel.findNextStateForEachCell() //includes indented code below
+      * for (Cell c : allCells)
+        * List<Cell> neighbors = c.getNeighbors()
+        * c.setFutureState(Rule.RuleForXNeighbors(neighbors.size()))
+    * myController.myModel.setNextStateForEachCell() //includes indented code below
+      * for (Cell c : allCells)
+        * c.updateCurrentState()
+          * c.myCellDisplay.changeState()
+
+2. A user inputs a csv file, creating a new grid
+  * MainView.handleSelectedFile(file)
+    * SingleSimulationDisplay simDisplay = new SingleSimulationDisplay()
+    * simDisplay.myController.loadFile(file) //includes the indented code below
+      * Parser p = new Parser()
+      * p.setCSV(file)
+      * myModel.setCellGrid(p.createCellArray())
+    * Node displayForMainView = simDisplay.makeDisplay() //includes the indented code below
+      * //use the controller to get each cell display, and add each to a JavaFX component
+      * //add some other GUI components, like buttons to stop/pause animation
+    * MainView.addSimulationDisplay(displayForMainView)
 
 
 ## Design Considerations
