@@ -5,11 +5,17 @@ import cellsociety.cell.Cell;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GameOfLifeRulesTest {
     @Test
     void killCellTest()
     {
         Cell cell=new Cell(0,0,1);
+        List<Cell> test=new ArrayList<>();
+        test.add(new Cell(0,0,0));
+        cell.setNeighbors(test);
         GameOfLifeRules rules=new GameOfLifeRules(cell);
         rules.killCell();
         Assertions.assertEquals(0,cell.getFutureState());
@@ -19,6 +25,9 @@ public class GameOfLifeRulesTest {
     void createCellTest()
     {
         Cell cell=new Cell(0,0,0);
+        List<Cell> test=new ArrayList<>();
+        test.add(new Cell(0,0,0));
+        cell.setNeighbors(test);
         GameOfLifeRules rules=new GameOfLifeRules(cell);
         rules.createCell();
         Assertions.assertEquals(1,cell.getFutureState());
@@ -28,6 +37,9 @@ public class GameOfLifeRulesTest {
     void setStateLessThanTwoNeighbors()
     {
         Cell cell=new Cell(0,0,1);
+        List<Cell> test=new ArrayList<>();
+        test.add(new Cell(0,0,0));
+        cell.setNeighbors(test);
         GameOfLifeRules rules=new GameOfLifeRules(cell);
         rules.setNumNeighbors(1);
         rules.setState();
@@ -38,6 +50,9 @@ public class GameOfLifeRulesTest {
     void setStateLiveTwoNeighbors()
     {
         Cell cell=new Cell(0,0,1);
+        List<Cell> test=new ArrayList<>();
+        test.add(new Cell(0,0,0));
+        cell.setNeighbors(test);
         GameOfLifeRules rules=new GameOfLifeRules(cell);
         rules.setNumNeighbors(2);
         rules.setState();
@@ -48,6 +63,9 @@ public class GameOfLifeRulesTest {
     void setStateLiveThreeNeighbors()
     {
         Cell cell=new Cell(0,0,1);
+        List<Cell> test=new ArrayList<>();
+        test.add(new Cell(0,0,0));
+        cell.setNeighbors(test);
         GameOfLifeRules rules=new GameOfLifeRules(cell);
         rules.setNumNeighbors(3);
         rules.setState();
@@ -58,6 +76,9 @@ public class GameOfLifeRulesTest {
     void setStateLiveMoreThanThreeNeighbors()
     {
         Cell cell=new Cell(0,0,1);
+        List<Cell> test=new ArrayList<>();
+        test.add(new Cell(0,0,0));
+        cell.setNeighbors(test);
         GameOfLifeRules rules=new GameOfLifeRules(cell);
         rules.setNumNeighbors(4);
         rules.setState();
@@ -68,6 +89,9 @@ public class GameOfLifeRulesTest {
     void setStateDeadThreeNeighbors()
     {
         Cell cell=new Cell(0,0,0);
+        List<Cell> test=new ArrayList<>();
+        test.add(new Cell(0,0,0));
+        cell.setNeighbors(test);
         GameOfLifeRules rules=new GameOfLifeRules(cell);
         rules.setNumNeighbors(3);
         rules.setState();

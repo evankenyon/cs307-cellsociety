@@ -40,6 +40,9 @@ public class Cell {
 
     public List<Cell> getNeighbors() {return neighbors;}
 
+    //Testing purposes
+    public void setNeighbors(List<Cell> neighbors) {this.neighbors = neighbors;}
+
     //FIXME: Not complete
     public void initializeNeighborList(){
 
