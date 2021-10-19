@@ -97,9 +97,8 @@ basic design principles), but we are open to the other design idea if code smell
 
 Here is our amazing UI:
 
-![This is cool, too bad you can't see it](images/29-sketched-ui-wireframe.jpg "An alternate design")
+![This is cool, too bad you can't see it](images/UI.jpeg "An alternate design")
 
-taken from [Brilliant Examples of Sketched UI Wireframes and Mock-Ups](https://onextrapixel.com/40-brilliant-examples-of-sketched-ui-wireframes-and-mock-ups/).
 
 
 ## Team Responsibilities
