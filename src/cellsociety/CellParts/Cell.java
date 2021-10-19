@@ -28,7 +28,7 @@ public class Cell {
 
 
     public void setFutureState(int state){
-        this.futureState = futureState;
+        this.futureState = state;
     }
 
     public int getCurrentState() {

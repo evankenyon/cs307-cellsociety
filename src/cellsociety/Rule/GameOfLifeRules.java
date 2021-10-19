@@ -21,18 +21,22 @@ public class GameOfLifeRules {
             case 0:
                 switch(numNeighbors)
                 {
-                    case 0: case 1: case 2: case 4: case 5: case 6: case 7: case 8:
-                        killCell();
                     case 3:
                         createCell();
+                        break;
+                    case 0: case 1: case 2: case 4: case 5: case 6: case 7: case 8:
+                        killCell();
+                        break;
                 }
             case 1:
                 switch(numNeighbors)
                 {
                     case 0: case 1: case 4: case 5: case 6: case 7: case 8:
                         killCell();
+                        break;
                     case 2: case 3:
                         createCell();
+                        break;
                 }
         }
     }
