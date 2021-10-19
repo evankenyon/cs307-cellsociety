@@ -1,6 +1,6 @@
 package cellsociety.Rule;
 
-import cellsociety.cell.Cell;
+import cellsociety.CellParts.Cell;
 
 public class GameOfLifeRules {
     private Cell cell;

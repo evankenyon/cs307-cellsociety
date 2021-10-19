@@ -4,7 +4,6 @@ package cellsociety;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import cellsociety.view.MainView;
-import cellsociety.view.SimulationView;
 
 /**
  * Feel free to completely change this code or delete it entirely. 
@@ -23,7 +22,7 @@ public class Main extends Application{
      */
     @Override
     public void start(Stage stage) {
-        SimulationView sv = new SimulationView();
+        MainView sv = new MainView();
         stage.setScene(sv.makeSimulationScene());
         sv.setStage(stage);
         stage.show();
