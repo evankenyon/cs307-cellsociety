@@ -9,25 +9,26 @@ import java.io.File;
 public class Model {
 
     Cell [][] cellGrid;
-    CSVParser parser;
 
 
     public Model(){
-        parser = new CSVParser();
+        cellGrid = null;
+    }
+
+    public void setCellGrid(Cell[][] cellGrid) {
+        this.cellGrid = cellGrid;
+    }
+
+    public Cell[][] getCellGrid() {
+        return cellGrid;
     }
 
 
-    public void uploadCellGridFromFile(File fileName){
-        parser.setFile(fileName);
-        cellGrid = parser.getCellMatrix();
-    }
-//                r.setState();
-
-    public void findNextStateForEsachCell(){
+    public void findNextStateForEachCell(){
         for(int row = 0; row <cellGrid.length; row++){
             for(int col = 0; col<cellGrid[0].length; col++){
-//               Rule r=new Rule(cellGrid[row][col]);
-//                r.setState();
+               GameOfLifeRules r= new GameOfLifeRules(cellGrid[row][col]);
+               r.setState();
             }
         }
 
@@ -35,8 +36,6 @@ public class Model {
     public void updateCells(){
         for(int row = 0; row <cellGrid.length; row++){
             for(int col = 0; col<cellGrid[0].length; col++){
-                //cellGrid[row][col].updateState();
-//
                 cellGrid[row][col].updateState();
             }
         }

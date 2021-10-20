@@ -23,7 +23,7 @@ public class CSVParser {
         scanner = new Scanner(file);
         if(scanner.hasNextLine()){
             String dimensionInformation = scanner.nextLine();
-            dimensionInformation.strip();
+            dimensionInformation = dimensionInformation.strip();
             String[] dimensions = dimensionInformation.split(",");
             //FIXME: Need to throw an exception when it isnt an integer
              rows = Integer.valueOf(dimensions[0]);
@@ -33,7 +33,7 @@ public class CSVParser {
         int currentXIndex = 0;
         while (scanner.hasNextLine()) {
             String xIndexInfo = scanner.nextLine();
-            xIndexInfo.strip();
+            xIndexInfo = xIndexInfo.strip();
             integer2DArray[currentXIndex] =  Arrays.stream(xIndexInfo.split(",")).mapToInt(Integer::parseInt).toArray();
             currentXIndex++;
         }
@@ -50,6 +50,7 @@ public class CSVParser {
         for(int row = 0; row <integer2DArray.length; row++){
             for(int col = 0; col<integer2DArray[0].length; col++){
                 Cell newCell = new Cell(row, col, integer2DArray[row][col]);
+                cellMatrix[row][col] = newCell;
             }
         }
         this.cellMatrix = cellMatrix;
