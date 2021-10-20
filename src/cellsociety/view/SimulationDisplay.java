@@ -23,6 +23,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 
+import java.util.List;
+import java.util.ArrayList;
+
 /**
  * Objects of this class represent the display for a single simulation (I say single since there can be multiple
  * simulations on the screen at once).
@@ -64,7 +67,7 @@ public class SimulationDisplay extends ChangeableDisplay{
     VBox root = new VBox();
     Group simAreaGroup = new Group();
     simAreaGroup.getChildren().add(new Rectangle(0, 0, DEFAULT_WIDTH, DEFAULT_WIDTH));
-    //simAreaGroup.getChildren().addAll(myController.getCellDisplays()))
+    simAreaGroup.getChildren().addAll(myController.getCellDisplays()));
     root.getChildren().add(simAreaGroup);
     root.getChildren().add(makeControls());
     return root;

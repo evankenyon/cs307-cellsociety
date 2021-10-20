@@ -3,6 +3,9 @@ package cellsociety.Model;
 import cellsociety.cell.Cell;
 import cellsociety.Utilities.CSVParser;
 import cellsociety.Rule.GameOfLifeRules;
+import javafx.scene.Node;
+import java.util.List;
+import java.util.ArrayList;
 
 import java.io.File;
 
@@ -40,5 +43,15 @@ public class Model {
             }
         }
     } //loop through each cell, set its current state to future state, calls updateCurrentStateMethod
+
+    public List<Node> getCellDisplays(){
+        List<Node> nodeList = new ArrayList<>();
+        for(int row = 0; row <cellGrid.length; row++){
+            for(int col = 0; col<cellGrid[0].length; col++){
+                nodeList.add(cellGrid[row][col].getMyDisplay());
+            }
+        }
+        return nodeList;
+    }
 
 }

@@ -1,8 +1,11 @@
 package cellsociety.cell;
 
+import cellsociety.view.SimulationDisplay;
+
 import cellsociety.location.CornerLocation;
 
 import java.util.*;
+import javafx.scene.Node;
 
 public class Cell {
 
@@ -14,11 +17,14 @@ public class Cell {
     private int iIndex;
     private int jIndex;
     private HashMap<Integer, Integer> neighborStateMap;
+    private CellDisplay myDisplay;
 
     public Cell(int i, int j, int initialState){
         this.iIndex = i;
         this.jIndex = j;
         this.currentState = initialState;
+        //magic values for now. Needs to change
+        myDisplay = new CellDisplay(i * 10, j * 10, 10);
     }
 
 
@@ -93,6 +99,10 @@ public class Cell {
         int result = Objects.hash(currentState, futureState, neighbors, corners, iIndex, jIndex, neighborStateMap);
         result = 31 * result + Arrays.hashCode(cellGrid);
         return result;
+    }
+
+    public Node getMyDisplay(){
+        return myDisplay.getMyDisplay();
     }
 
 }

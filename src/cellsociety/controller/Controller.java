@@ -4,10 +4,13 @@ import cellsociety.Model.Model;
 import cellsociety.Utilities.CSVGenerator;
 import cellsociety.Utilities.CSVParser;
 import cellsociety.cell.Cell;
+import cellsociety.cell.CellDisplay;
 import cellsociety.view.MainView;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
+import javafx.scene.Node;
 
 public class Controller {
 
@@ -49,6 +52,10 @@ public class Controller {
 
   public void setModel(Model model) {
     this.model = model;
+  }
+
+  public List<Node> getCellDisplays(){
+    return model.getCellDisplays();
   }
 
 }
