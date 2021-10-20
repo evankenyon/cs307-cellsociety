@@ -97,4 +97,30 @@ public class GameOfLifeRulesTest {
         rules.setState();
         Assertions.assertEquals(1,cell.getFutureState());
     }
+
+    @Test
+    void setStateBasicBlinker() {
+        List<Cell> allCells = new ArrayList<>();
+        allCells.add(new Cell(1, 1, 1));
+        allCells.add(new Cell(1, 0, 1));
+        allCells.add(new Cell(1, 2, 1));
+        allCells.add(new Cell(0, 1, 0));
+        allCells.add(new Cell(2, 1, 0));
+        for (Cell cell: allCells) {
+            for (Cell otherCell: allCells) {
+                cell.updateNeighbors(otherCell);
+            }
+        }
+        for(Cell cell : allCells) {
+            GameOfLifeRules rules = new GameOfLifeRules(cell);
+            rules.setState();
+        }
+
+        Assertions.assertEquals(1, allCells.get(0).getFutureState());
+        Assertions.assertEquals(0, allCells.get(1).getFutureState());
+        Assertions.assertEquals(0, allCells.get(2).getFutureState());
+        Assertions.assertEquals(1, allCells.get(3).getFutureState());
+        Assertions.assertEquals(1, allCells.get(4).getFutureState());
+
+    }
 }
