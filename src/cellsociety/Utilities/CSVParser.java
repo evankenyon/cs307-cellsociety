@@ -51,10 +51,19 @@ public class CSVParser {
         for(int row = 0; row <integer2DArray.length; row++){
             for(int col = 0; col<integer2DArray[0].length; col++){
                 Cell newCell = new Cell(row, col, integer2DArray[row][col], integer2DArray.length, integer2DArray[0].length);
+                //setCellShapeAndPosition(newCell, SimulationDisplay.DEFAULT_WIDTH / cols,
+                    //SimulationDisplay.DEFAULT_WIDTH / rows, row, col);
                 cellMatrix[row][col] = newCell;
             }
         }
         this.cellMatrix = cellMatrix;
+    }
+
+    private void setCellShapeAndPosition(Cell c, int cellWidth, int cellHeight, int i, int j){
+        c.setWidth(cellWidth);
+        c.setHeight(cellHeight);
+        c.setX(cellWidth * j);
+        c.setY(cellHeight * i);
     }
 
     public Cell[][] getCellMatrix() {
