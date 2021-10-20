@@ -13,6 +13,7 @@ import cellsociety.location.CornerLocation;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import javafx.scene.shape.Rectangle;
 
 
 public class Cell {
@@ -26,8 +27,8 @@ public class Cell {
     private int jIndex;
     private HashMap<Integer, Integer> neighborStateMap;
     private CellDisplay myDisplay;
-    private static final int DEFAULT_WIDTH = 20;
-    private static final int DEFAULT_HEIGHT = 20;
+    public static final int DEFAULT_WIDTH = 20;
+    public static final int DEFAULT_HEIGHT = 20;
 
     public Cell(int i, int j, int initialState, int rows, int columns){
         this.iIndex = i;
@@ -35,10 +36,49 @@ public class Cell {
         this.currentState = initialState;
         corners = new RectangleCellCornerLocationGenerator(rows, columns).generateCorners(i, j);
         neighbors = new ArrayList<>();
+        myDisplay = new CellDisplay(i * DEFAULT_WIDTH, j * DEFAULT_WIDTH, currentState);
     }
 
+
+
     public Cell(int i, int j, int initialState){
-        this(i, j, initialState, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        this.iIndex = i;
+        this.jIndex = j;
+        this.currentState = initialState;
+        neighbors = new ArrayList<>();
+    }
+
+
+    /**
+     * change width of the display
+     * @param width will be the width of hte display
+     */
+    public void setWidth(int width){
+        myDisplay.setWidth(width);
+    }
+
+    /**
+     * chagne the height of the display
+     * @param height will be height of the display
+     */
+    public void setHeight(int height){
+        myDisplay.setHeight(height);
+    }
+
+    /**
+     * change the x coordinate of display
+     * @param x
+     */
+    public void setX(int x){
+        myDisplay.setX(x);
+    }
+
+    /**
+     * change the y coordinate of display
+     * @param y
+     */
+    public void setY(int y){
+        myDisplay.setY(y);
     }
 
 

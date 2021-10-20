@@ -33,7 +33,7 @@ import java.util.ArrayList;
  */
 public class SimulationDisplay extends ChangeableDisplay{
   public static final int DEFAULT_WIDTH = 400; //should go into resources
-  protected double secondDelay = 100;
+  protected double secondDelay = 1;
   private Controller myController;
   protected Timeline myAnimation;
 
