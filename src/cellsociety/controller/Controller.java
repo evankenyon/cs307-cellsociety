@@ -58,4 +58,9 @@ public class Controller {
     return model.getCellDisplays();
   }
 
+  public void step(){
+    model.findNextStateForEachCell();
+    model.updateCells();
+  }
+
 }

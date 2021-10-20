@@ -1,5 +1,6 @@
 package cellsociety.cell;
 
+
 import cellsociety.view.SimulationDisplay;
 
 import cellsociety.location.CornerLocation;
@@ -7,30 +8,47 @@ import cellsociety.location.CornerLocation;
 import java.util.*;
 import javafx.scene.Node;
 
+import cellsociety.CornerLocationGenerator.RectangleCellCornerLocationGenerator;
+import cellsociety.location.CornerLocation;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+
 public class Cell {
 
     private int currentState;
     private int futureState;
-    List<Cell> neighbors;
-    Cell[][] cellGrid;
-    List<CornerLocation> corners;
+    private List<Cell> neighbors;
+    private Cell[][] cellGrid;
+    private List<CornerLocation> corners;
     private int iIndex;
     private int jIndex;
     private HashMap<Integer, Integer> neighborStateMap;
     private CellDisplay myDisplay;
+    private static final int DEFAULT_WIDTH = 20;
+    private static final int DEFAULT_HEIGHT = 20;
 
-    public Cell(int i, int j, int initialState){
+    public Cell (int i, int j, int initialState, int width, int height){
         this.iIndex = i;
         this.jIndex = j;
         this.currentState = initialState;
         //magic values for now. Needs to change
-        myDisplay = new CellDisplay(i * 10, j * 10, 10);
+        myDisplay = new CellDisplay(i * width, j * height, width, height, currentState);
+
+        corners = new RectangleCellCornerLocationGenerator(10, 10).generateCorners(i, j);
+        neighbors = new ArrayList<>();
+    }
+
+    public Cell(int i, int j, int initialState){
+        this(i, j, initialState, DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
 
 
 
     public void updateState(){
         currentState = futureState;
+        myDisplay.changeState(currentState);
     }
 
 
@@ -45,6 +63,20 @@ public class Cell {
     public int getFutureState() {return futureState;}
 
     public List<Cell> getNeighbors() {return neighbors;}
+
+    public List<CornerLocation> getCorners() {
+        return corners;
+    }
+
+    public void updateNeighbors(Cell potentialNeighbor) {
+        Set<CornerLocation> sharedCorners = corners.stream()
+            .distinct()
+            .filter(potentialNeighbor.corners::contains)
+            .collect(Collectors.toSet());
+        if(!sharedCorners.isEmpty() && !neighbors.contains(potentialNeighbor) && !potentialNeighbor.equals(this)) {
+            neighbors.add(potentialNeighbor);
+        }
+    }
 
     //Testing purposes
     public void setNeighbors(List<Cell> neighbors) {this.neighbors = neighbors;}
@@ -86,6 +118,10 @@ public class Cell {
         this.cellGrid = cellGrid;
     }
 
+    public String getIndex() {
+        return iIndex + ", " + jIndex;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -100,6 +136,7 @@ public class Cell {
         result = 31 * result + Arrays.hashCode(cellGrid);
         return result;
     }
+
 
     public Node getMyDisplay(){
         return myDisplay.getMyDisplay();

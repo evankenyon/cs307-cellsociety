@@ -1,5 +1,9 @@
 package cellsociety.location;
 
+import cellsociety.cell.Cell;
+import java.util.Arrays;
+import java.util.Objects;
+
 public class CornerLocation {
     private double x_pos;
     private double y_pos;
@@ -24,5 +28,18 @@ public class CornerLocation {
 
     public double getY_pos() {
         return y_pos;
+    }
+
+    @Override
+    public String toString() {
+        return this.x_pos + ", " + this.y_pos;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CornerLocation otherLocation = (CornerLocation) o;
+        return this.x_pos == otherLocation.x_pos && this.y_pos == otherLocation.y_pos;
     }
 }

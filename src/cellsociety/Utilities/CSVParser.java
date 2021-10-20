@@ -2,6 +2,7 @@ package cellsociety.Utilities;
 
 import cellsociety.cell.Cell;
 
+import cellsociety.view.SimulationDisplay;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
@@ -49,7 +50,8 @@ public class CSVParser {
         Cell[][] cellMatrix = new Cell[rows][cols];
         for(int row = 0; row <integer2DArray.length; row++){
             for(int col = 0; col<integer2DArray[0].length; col++){
-                Cell newCell = new Cell(row, col, integer2DArray[row][col]);
+                Cell newCell = new Cell(row, col, integer2DArray[row][col],
+                    SimulationDisplay.DEFAULT_WIDTH / cols, SimulationDisplay.DEFAULT_WIDTH / rows);
                 cellMatrix[row][col] = newCell;
             }
         }

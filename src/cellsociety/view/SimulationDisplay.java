@@ -33,7 +33,7 @@ import java.util.ArrayList;
  */
 public class SimulationDisplay extends ChangeableDisplay{
   public static final int DEFAULT_WIDTH = 400; //should go into resources
-  protected double secondDelay = 1.0 / 60.0;
+  protected double secondDelay = 100;
   private Controller myController;
   protected Timeline myAnimation;
 
@@ -67,7 +67,7 @@ public class SimulationDisplay extends ChangeableDisplay{
     VBox root = new VBox();
     Group simAreaGroup = new Group();
     simAreaGroup.getChildren().add(new Rectangle(0, 0, DEFAULT_WIDTH, DEFAULT_WIDTH));
-    simAreaGroup.getChildren().addAll(myController.getCellDisplays()));
+    simAreaGroup.getChildren().addAll(myController.getCellDisplays());
     root.getChildren().add(simAreaGroup);
     root.getChildren().add(makeControls());
     return root;
@@ -100,8 +100,7 @@ public class SimulationDisplay extends ChangeableDisplay{
   }
 
   protected void step(){
-    //use controller to update the model
-    //myController.step();
+    myController.step();
   }
 
 
