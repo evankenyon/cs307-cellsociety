@@ -30,10 +30,10 @@ public class Main extends Application{
         Model myModel = new Model();
 
         //Set the relationships between the view/controller/and model
-        sv.setMyModel(myModel);
-        myController.setModel(myModel);
-        myController.setMainView(sv);
-        sv.setMyController(myController);
+       // sv.setMyModel(myModel);
+        //myController.setModel(myModel);
+        //myController.setMainView(sv);
+        //sv.setMyController(myController);
 
         stage.setScene(sv.makeSimulationScene());
         sv.setStage(stage);

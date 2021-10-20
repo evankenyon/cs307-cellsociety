@@ -2,6 +2,7 @@ package cellsociety.Utilities;
 
 import cellsociety.cell.Cell;
 
+import cellsociety.view.SimulationDisplay;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;

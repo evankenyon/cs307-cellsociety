@@ -1,10 +1,19 @@
 package cellsociety.cell;
 
+
+import cellsociety.view.SimulationDisplay;
+
+import cellsociety.location.CornerLocation;
+
+import java.util.*;
+import javafx.scene.Node;
+
 import cellsociety.CornerLocationGenerator.RectangleCellCornerLocationGenerator;
 import cellsociety.location.CornerLocation;
 
 import java.util.*;
 import java.util.stream.Collectors;
+
 
 public class Cell {
 
@@ -16,6 +25,9 @@ public class Cell {
     private int iIndex;
     private int jIndex;
     private HashMap<Integer, Integer> neighborStateMap;
+    private CellDisplay myDisplay;
+    private static final int DEFAULT_WIDTH = 20;
+    private static final int DEFAULT_HEIGHT = 20;
 
     public Cell(int i, int j, int initialState, int rows, int columns){
         this.iIndex = i;
@@ -25,10 +37,15 @@ public class Cell {
         neighbors = new ArrayList<>();
     }
 
+    public Cell(int i, int j, int initialState){
+        this(i, j, initialState, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+    }
+
 
 
     public void updateState(){
         currentState = futureState;
+        myDisplay.changeState(currentState);
     }
 
 
@@ -116,4 +133,10 @@ public class Cell {
         result = 31 * result + Arrays.hashCode(cellGrid);
         return result;
     }
+
+
+    public Node getMyDisplay(){
+        return myDisplay.getMyDisplay();
+    }
+
 }
