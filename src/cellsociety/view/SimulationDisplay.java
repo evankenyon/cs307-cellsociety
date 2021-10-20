@@ -36,6 +36,8 @@ public class SimulationDisplay extends ChangeableDisplay{
   protected double secondDelay = 1;
   private Controller myController;
   protected Timeline myAnimation;
+  private boolean paused;
+  private Button pauseButton;
 
   public SimulationDisplay(){
     this(new LanguageResourceHandler());
@@ -52,6 +54,7 @@ public class SimulationDisplay extends ChangeableDisplay{
     myAnimation.setCycleCount(Timeline.INDEFINITE);
     myAnimation.getKeyFrames().add(new KeyFrame(Duration.seconds(secondDelay), e -> step()));
     myAnimation.play();
+    paused = false;
   }
 
   /**
@@ -76,7 +79,8 @@ public class SimulationDisplay extends ChangeableDisplay{
   private Node makeControls(){
     HBox controlBox = new HBox();
     controlBox.getChildren().add(makeAButton(LanguageResourceHandler.ABOUT_KEY, () -> showAbout()));
-    controlBox.getChildren().add(makeAButton(LanguageResourceHandler.START_SIMULATIONS_KEY, () -> startSimulation()));
+    pauseButton = makeAButton(LanguageResourceHandler.PAUSE_KEY, () -> playPauseSimulation());
+    controlBox.getChildren().add(pauseButton);
     return controlBox;
   }
 
@@ -96,7 +100,18 @@ public class SimulationDisplay extends ChangeableDisplay{
   }
 
   private void startSimulation(){
+    myAnimation.pause();
+  }
 
+  private void playPauseSimulation(){
+    if (paused){
+      myAnimation.play();
+      pauseButton.setText(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.PAUSE_KEY));
+    }else{
+      myAnimation.pause();
+      pauseButton.setText(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.RESUME_KEY));
+    }
+    paused = !paused;
   }
 
   protected void step(){
