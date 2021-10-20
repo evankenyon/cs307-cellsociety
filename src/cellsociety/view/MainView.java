@@ -12,6 +12,8 @@ import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Alert;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -28,8 +30,6 @@ import java.util.ArrayList;
 
 
 public class MainView extends ChangeableDisplay{
-  private Controller myController;
-  private Model myModel;
 
   private Stage myStage;
   private LanguageResourceHandler myResourceHandler;
@@ -43,25 +43,13 @@ public class MainView extends ChangeableDisplay{
   public static final int HEIGHT = 600;
 
   public MainView(){
-
-    //myController = new Controller()
     super();
-
-    myController = null;
-    myModel = null;
-
     myResourceHandler = new LanguageResourceHandler();
     myNodesToTextKey = new HashMap<>();
     simulationDisplayList = new ArrayList<>();
   }
 
-  public void setMyController(Controller myController) {
-    this.myController = myController;
-  }
 
-  public void setMyModel(Model myModel) {
-    this.myModel = myModel;
-  }
 
   /**
    * change what myStage refers to
@@ -138,20 +126,18 @@ public class MainView extends ChangeableDisplay{
   public void handleSelectedFile(File selectedFile){
     //take the file inputted by a user, and send it to the controller for parsing. Show error messages if neccessary
     SimulationDisplay simDisp = new SimulationDisplay(myLanguageResourceHandler);
-    simulationDisplayList.add(new SimulationDisplay(myLanguageResourceHandler));
+    simulationDisplayList.add(simDisp);
     try{
-
       addSimulationDisplay(simDisp.makeDisplay(selectedFile));
-
-      myController.parseFile(selectedFile);
-
     } catch (Exception e){
-      displayErrorMessage();
+      displayErrorMessage(e.getMessage());
     }
   }
 
-  private void displayErrorMessage(){
-
+  private void displayErrorMessage(String message){
+    Alert a = new Alert(AlertType.WARNING);
+    a.setContentText(message);
+    a.show();
   }
 
 

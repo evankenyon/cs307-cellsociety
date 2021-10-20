@@ -20,15 +20,22 @@ public class Controller {
     this.parser = new CSVParser();
     this.generator = new CSVGenerator();
     this.mainView = null;
-    this.model = null;
+    this.model = new Model();
   }
+
+
 
   // TODO: actually handle exception
   public void parseFile(File file) throws FileNotFoundException {
-    parser.setFile(file);
-    parser.initializeCellMatrix();
-    Cell[][] cellGrid = parser.getCellMatrix();
-    model.setCellGrid(cellGrid);
+    try {
+      parser.setFile(file);
+      parser.initializeCellMatrix();
+      Cell[][] cellGrid = parser.getCellMatrix();
+      model.setCellGrid(cellGrid);
+
+    } catch(Exception e){
+      throw new FileNotFoundException();
+    }
   }
 
   // TODO: actually handle exception

@@ -1,2 +1,5 @@
-package view;public class SimulationDisplayTest {
+package view;
+
+public class SimulationDisplayTest {
+
 }

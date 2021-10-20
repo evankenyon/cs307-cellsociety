@@ -8,7 +8,7 @@ import cellsociety.view.MainView;
 import cellsociety.view.NodeWithText;
 import cellsociety.view.Button2;
 
-
+import java.io.File;
 
 import javafx.stage.Stage;
 import javafx.scene.Node;
@@ -77,13 +77,25 @@ public class MainViewTest extends DukeApplicationTest{
     //Need to change this later to involve actually clicking the button
     Node rootNode = myStage.getScene().getRoot();
     try {
-      Button languageButton = findDesiredButton(languageButtonText);
-      clickOn(languageButton);
+      clickOn(languageButtonText);
       testTextComponents();
     } catch (Exception e){
       assertTrue(false);
     }
   }
+
+  @Test
+  //not sure how to test clicking buttons on the file chooser
+  void testFileInput(){
+    testPressEnglish();
+    File testFile = new File("data/game_of_life/blinkers.csv");
+    simView.handleSelectedFile(testFile);
+    assertEquals(1, simView.getNumSimulations());
+    testChangeLanguagesComplex();
+
+
+  }
+
 
 
   private Button findDesiredButton(String correctText) throws Exception{
