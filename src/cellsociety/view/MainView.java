@@ -1,5 +1,7 @@
 package cellsociety.view;
 
+import cellsociety.Model.Model;
+import cellsociety.controller.Controller;
 import cellsociety.resourceHandlers.LanguageResourceHandler;
 
 import java.io.File;
@@ -23,8 +25,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 
+
+
 public class MainView extends ChangeableDisplay{
-  //private Controller myController;
+  private Controller myController;
+  private Model myModel;
+
   private Stage myStage;
   private LanguageResourceHandler myResourceHandler;
   private Map<NodeWithText, String> myNodesToTextKey;
@@ -37,12 +43,26 @@ public class MainView extends ChangeableDisplay{
   public static final int HEIGHT = 600;
 
   public MainView(){
+
     //myController = new Controller()
     super();
+
+    myController = null;
+    myModel = null;
+
     myResourceHandler = new LanguageResourceHandler();
     myNodesToTextKey = new HashMap<>();
     simulationDisplayList = new ArrayList<>();
   }
+
+  public void setMyController(Controller myController) {
+    this.myController = myController;
+  }
+
+  public void setMyModel(Model myModel) {
+    this.myModel = myModel;
+  }
+
   /**
    * change what myStage refers to
    * @param s is a JavaFX stage on which the scene should be nested
@@ -120,7 +140,11 @@ public class MainView extends ChangeableDisplay{
     SimulationDisplay simDisp = new SimulationDisplay(myLanguageResourceHandler);
     simulationDisplayList.add(new SimulationDisplay(myLanguageResourceHandler));
     try{
+
       addSimulationDisplay(simDisp.makeDisplay(selectedFile));
+
+      myController.parseFile(selectedFile);
+
     } catch (Exception e){
       displayErrorMessage();
     }
