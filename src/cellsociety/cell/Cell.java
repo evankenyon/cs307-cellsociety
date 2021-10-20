@@ -46,6 +46,7 @@ public class Cell {
         this.jIndex = j;
         this.currentState = initialState;
         neighbors = new ArrayList<>();
+        myDisplay = new CellDisplay(i * DEFAULT_WIDTH, j * DEFAULT_WIDTH, currentState);
     }
 
 
