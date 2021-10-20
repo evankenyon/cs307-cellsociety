@@ -134,11 +134,6 @@ public class MainView extends ChangeableDisplay{
     }
   }
 
-  private void displayErrorMessage(String message){
-    Alert a = new Alert(AlertType.WARNING);
-    a.setContentText(message);
-    a.show();
-  }
 
 
   private void addSimulationDisplay(Node newDisplay) throws Exception{

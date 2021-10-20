@@ -26,7 +26,7 @@ class ModelTest {
     controller.parseFile(new File("./data/game_of_life/blinkers.csv"));
     model.findNextStateForEachCell();
     model.updateCells();
-    controller.saveFile();
+    controller.saveFile("program-0");
     controller.parseFile(new File("./data/game_of_life/saved/program-0.csv"));
     model.findNextStateForEachCell();
     model.updateCells();

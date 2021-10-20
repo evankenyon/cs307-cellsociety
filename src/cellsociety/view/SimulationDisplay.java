@@ -22,6 +22,8 @@ import javafx.scene.Group;
 import javafx.scene.shape.Rectangle;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
+import javafx.scene.control.TextField;
+
 
 import java.util.List;
 import java.util.ArrayList;
@@ -38,6 +40,7 @@ public class SimulationDisplay extends ChangeableDisplay{
   protected Timeline myAnimation;
   private boolean paused;
   private Button pauseButton;
+  private TextField fileNameField;
 
   public SimulationDisplay(){
     this(new LanguageResourceHandler());
@@ -77,11 +80,16 @@ public class SimulationDisplay extends ChangeableDisplay{
   }
 
   private Node makeControls(){
+    VBox v = new VBox();
     HBox controlBox = new HBox();
     controlBox.getChildren().add(makeAButton(LanguageResourceHandler.ABOUT_KEY, () -> showAbout()));
     pauseButton = makeAButton(LanguageResourceHandler.PAUSE_KEY, () -> playPauseSimulation());
     controlBox.getChildren().add(pauseButton);
-    return controlBox;
+    controlBox.getChildren().add(makeAButton(LanguageResourceHandler.SAVE_FILE_KEY, () -> saveFile()));
+    v.getChildren().add(controlBox);
+    fileNameField = new TextField();
+    v.getChildren().add(fileNameField);
+    return v;
   }
 
   private void showAbout(){
@@ -104,6 +112,7 @@ public class SimulationDisplay extends ChangeableDisplay{
   }
 
   private void playPauseSimulation(){
+    //pause or resume the simulation
     if (paused){
       myAnimation.play();
       pauseButton.setText(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.PAUSE_KEY));
@@ -112,6 +121,16 @@ public class SimulationDisplay extends ChangeableDisplay{
       pauseButton.setText(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.RESUME_KEY));
     }
     paused = !paused;
+  }
+
+  private void saveFile(){
+    //save the simulation, with a file name specified by user
+    try {
+      String fileName = fileNameField.getText();
+      myController.saveFile(fileName);
+    } catch (Exception e){
+      displayErrorMessage(e.getMessage());
+    }
   }
 
   protected void step(){
