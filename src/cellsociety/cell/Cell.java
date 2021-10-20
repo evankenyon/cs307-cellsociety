@@ -29,14 +29,11 @@ public class Cell {
     private static final int DEFAULT_WIDTH = 20;
     private static final int DEFAULT_HEIGHT = 20;
 
-    public Cell (int i, int j, int initialState, int width, int height){
+    public Cell(int i, int j, int initialState, int rows, int columns){
         this.iIndex = i;
         this.jIndex = j;
         this.currentState = initialState;
-        //magic values for now. Needs to change
-        myDisplay = new CellDisplay(i * width, j * height, width, height, currentState);
-
-        corners = new RectangleCellCornerLocationGenerator(10, 10).generateCorners(i, j);
+        corners = new RectangleCellCornerLocationGenerator(rows, columns).generateCorners(i, j);
         neighbors = new ArrayList<>();
     }
 
@@ -89,10 +86,10 @@ public class Cell {
 
         //FIXME: loop through the cellGrid somehow using corners, then do this next part:
 //
-    Cell cell = new Cell(0, 0, 0);
-    if (!neighbors.contains(cell)) {
-        neighbors.add(cell);
-    }
+//    Cell cell = new Cell(0, 0, 0);
+//    if (!neighbors.contains(cell)) {
+//        neighbors.add(cell);
+//    }
 //
         this.createNeighborStateMap();
     }
