@@ -44,6 +44,7 @@ public class GameOfLifeRules {
                         killCell();
                         break;
                 }
+                break;
             case 1:
                 switch(numNeighbors)
                 {
