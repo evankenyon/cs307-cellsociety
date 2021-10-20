@@ -12,44 +12,44 @@ import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Alert;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.Label;
+import javafx.application.Platform;
 
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
 
 
-public class MainView {
-  private Controller myController;
-  private Model myModel;
+
+public class MainView extends ChangeableDisplay{
+
   private Stage myStage;
   private LanguageResourceHandler myResourceHandler;
   private Map<NodeWithText, String> myNodesToTextKey;
+  private List<SimulationDisplay> simulationDisplayList;
+  private Pane mainPane;
 
 
   private final String[] supportedLanguages = LanguageResourceHandler.SUPPORTED_LANGUAGES;
-  private final int DEFAULT_SIM_WIDTH = 400;
   public static final int WIDTH = 800;
   public static final int HEIGHT = 600;
 
   public MainView(){
-    myController = null;
-    myModel = null;
+    super();
     myResourceHandler = new LanguageResourceHandler();
     myNodesToTextKey = new HashMap<>();
+    simulationDisplayList = new ArrayList<>();
   }
 
-  public void setMyController(Controller myController) {
-    this.myController = myController;
-  }
 
-  public void setMyModel(Model myModel) {
-    this.myModel = myModel;
-  }
 
   /**
    * change what myStage refers to
@@ -64,25 +64,14 @@ public class MainView {
    * @return a Scene with all the components needed for this simulation
    */
   public Scene makeSimulationScene(){
-    Pane mainPane = new VBox();
+    mainPane = new VBox();
     mainPane.getChildren().add(makeControlPanel());
     mainPane.getChildren().add(makeFileInputPanel());
 
     return new Scene(mainPane, WIDTH, HEIGHT);
   }
 
-  private Button makeAButton(String ResourceKey, ButtonClickedMethod method){
-    Button2 button = new Button2(myResourceHandler.getStringFromKey(ResourceKey));
-    button.setOnAction(e -> method.actionOnClick());
-    myNodesToTextKey.put(button, ResourceKey);
-    return button;
-  }
 
-  private Label makeALabel(String resourceKey){
-    Label2 l = new Label2(myResourceHandler.getStringFromKey(resourceKey));
-    myNodesToTextKey.put(l, resourceKey);
-    return l;
-  }
   /**
    * Make a panel with GUI components to change the settings, including
    * fonts, colors, language, and more.
@@ -91,18 +80,14 @@ public class MainView {
   private Node makeControlPanel(){
     HBox controlBox = new HBox();
     controlBox.getChildren().add(makeALabel(LanguageResourceHandler.SETTINGS_KEY));
-    controlBox.getChildren().add(makeAButton(LanguageResourceHandler.ABOUT_KEY, () -> showAbout()));
+    //controlBox.getChildren().add(makeAButton(LanguageResourceHandler.ABOUT_KEY, () -> showAbout()));
     controlBox.getChildren().add(makeLanguageSelector());
 
     return controlBox;
   }
 
-
-  /**
-   * make a combo Box with which users can select the language on screen
-   * @return a Node (for now, a comboBox) to assist users with changing the language
-   */
   private Node makeLanguageSelector(){
+    //make a combo box with which users can select the language on screen
     HBox languageSelector = new HBox();
     languageSelector.getChildren().add(makeALabel(LanguageResourceHandler.LANGUAGE_KEY));
 
@@ -112,49 +97,20 @@ public class MainView {
     return languageSelector;
   }
 
-  /**
-   * change the language of everything on screen to english
-   */
-  private void changeToEnglish(){
-    myResourceHandler.changeToEnglish();
-    changeLanguageOfText();
-  }
-
-  /**
-   * change the language of everything on screen to spanish
-   */
-  private void changeToSpanish(){
-    myResourceHandler.changeToSpanish();
-    changeLanguageOfText();
-  }
 
 
-  /**
-   * go through each node with text and change it to the new language
-   */
-  private void changeLanguageOfText(){
-    for (NodeWithText n: myNodesToTextKey.keySet()){
-      String resourceKey = myNodesToTextKey.get(n);
-      n.setText(myResourceHandler.getStringFromKey(resourceKey));
-    }
-  }
 
-  /**
-   * Make a panel with which users can input a new file, or start the simulation
-   * @return a Node with components that allow users to add more simulations to the scene
-   */
   private Node makeFileInputPanel(){
+    //make a panel with which users can input a new file
     Pane fileInputPanel = new HBox();
     fileInputPanel.getChildren().add(makeAButton(LanguageResourceHandler.SELECT_FILE_KEY, () -> selectFile()));
-    fileInputPanel.getChildren().add(makeAButton(LanguageResourceHandler.START_SIMULATIONS_KEY, () -> startSimulations()));
 
     return fileInputPanel;
   }
 
-  /**
-   * pop up a box on the GUI that allows a user to select/input a file
-   */
+
   private void selectFile(){
+    //pop up a box on the GUI that allows a user to select a file
     FileChooser fileChooser = new FileChooser();
     fileChooser.setTitle(myResourceHandler.getSelectFileTitleString());
     fileChooser.getExtensionFilters().add(new ExtensionFilter("CSV Files", "*.csv"));
@@ -163,59 +119,55 @@ public class MainView {
     handleSelectedFile(selectedFile);
   }
 
-  private void handleSelectedFile(File selectedFile){
+  /**
+   * handle a file that has been inputted
+   * @param selectedFile
+   */
+  public void handleSelectedFile(File selectedFile){
     //take the file inputted by a user, and send it to the controller for parsing. Show error messages if neccessary
+    SimulationDisplay simDisp = new SimulationDisplay(myLanguageResourceHandler);
+    simulationDisplayList.add(simDisp);
     try{
-      myController.parseFile(selectedFile);
+      addSimulationDisplay(simDisp.makeDisplay(selectedFile));
     } catch (Exception e){
-      //should handle files with bad formatting, and other such problems
+      displayErrorMessage(e.getMessage());
+    }
+  }
+
+  private void displayErrorMessage(String message){
+    Alert a = new Alert(AlertType.WARNING);
+    a.setContentText(message);
+    a.show();
+  }
+
+
+  private void addSimulationDisplay(Node newDisplay) throws Exception{
+    //add display for a new simulation. This will be more complicated if there are multiple on screen at once
+    Platform.runLater(new Runnable() {
+      @Override public void run() {
+        mainPane.getChildren().add(newDisplay);
+      }
+    });
+  }
+
+
+  /**
+   * go through each node with text and change it to the new language
+   */
+  protected void changeLanguageOfText(){
+    super.changeLanguageOfText();
+    for (SimulationDisplay simDisp : simulationDisplayList){
+      simDisp.changeLanguageOfText();
     }
   }
 
   /**
-   * When a user inputs a file, this will be called.
-   * This method will use the controller to create a new grid corresponding to the file (if it's a valid file).
-   * Note: we can have multiple simulations
+   * get the number of simulations being run. This is for testing purposes
+   * @return the number of simulations being run
    */
-  private void addASimulation(){
-    //call on controller to parse the file and set up a grid
-    System.out.println("Add a simulation");
+  public int getNumSimulations(){
+    return simulationDisplayList.size();
   }
-
-  /**
-   * this method will start all the simulations on the screen
-   */
-  private void startSimulations(){
-    System.out.println("Start simulation");
-  }
-
-  /**
-   * when the user presses the about button, show them a dialogue box with info about the simulations
-   */
-  private void showAbout(){
-    System.out.println("about");
-  }
-
-
-  /**
-   * return the text that should be on this node
-   * @param n is a node with text that we'd like to check
-   * @return the text that should be on it
-   */
-  public String getExpectedTextforNode(NodeWithText n){
-    String ret = myResourceHandler.getStringFromKey(myNodesToTextKey.get(n));
-    return ret;
-  }
-
-  /**
-   * This is only used for testing, and should probably be edited so that it isn't public, or returns a copy
-   * @return myResourceHandler
-   */
-  public LanguageResourceHandler getMyResourceHandler(){
-    return myResourceHandler;
-  }
-
-
 
 
 

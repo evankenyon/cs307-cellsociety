@@ -20,6 +20,7 @@ public class LanguageResourceHandler {
   public static final String CHANGE_ENGLISH_KEY = "ChangeEnglish";
   public static final String CHANGE_SPANISH_KEY = "ChangeSpanish";
   public static final String FILE_SELECTOR_TITLE_KEY = "FileSelectTitle";
+  public static final String BAD_FILE_KEY = "BadFile";
   public static final String ENGLISH = "English";
   public static final String SPANISH = "Spanish";
   public static final String[] SUPPORTED_LANGUAGES = {ENGLISH, SPANISH};
