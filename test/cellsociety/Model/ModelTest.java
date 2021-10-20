@@ -2,6 +2,7 @@ package cellsociety.Model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import cellsociety.cell.Cell;
 import cellsociety.controller.Controller;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -26,6 +27,19 @@ class ModelTest {
     model.findNextStateForEachCell();
     model.updateCells();
     controller.saveFile();
+    controller.parseFile(new File("./data/game_of_life/saved/program-0.csv"));
+    model.findNextStateForEachCell();
+    model.updateCells();
+    Cell[][] actual = model.getCellGrid();
+    controller.parseFile(new File("./data/game_of_life/blinkers-one-step.csv"));
+    model.findNextStateForEachCell();
+    model.updateCells();
+    Cell[][] expected = model.getCellGrid();
+    for (int row = 0; row < expected.length; row++) {
+      for (int col = 0; col < expected[0].length; col++) {
+        assertEquals(expected[row][col].getCurrentState(), actual[row][col].getCurrentState());
+      }
+    }
   }
 
   @Test

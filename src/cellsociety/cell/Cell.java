@@ -17,11 +17,11 @@ public class Cell {
     private int jIndex;
     private HashMap<Integer, Integer> neighborStateMap;
 
-    public Cell(int i, int j, int initialState){
+    public Cell(int i, int j, int initialState, int rows, int columns){
         this.iIndex = i;
         this.jIndex = j;
         this.currentState = initialState;
-        corners = new RectangleCellCornerLocationGenerator(10, 10).generateCorners(i, j);
+        corners = new RectangleCellCornerLocationGenerator(rows, columns).generateCorners(i, j);
         neighbors = new ArrayList<>();
     }
 
@@ -69,10 +69,10 @@ public class Cell {
 
         //FIXME: loop through the cellGrid somehow using corners, then do this next part:
 //
-    Cell cell = new Cell(0, 0, 0);
-    if (!neighbors.contains(cell)) {
-        neighbors.add(cell);
-    }
+//    Cell cell = new Cell(0, 0, 0);
+//    if (!neighbors.contains(cell)) {
+//        neighbors.add(cell);
+//    }
 //
         this.createNeighborStateMap();
     }

@@ -49,7 +49,7 @@ public class CSVParser {
         Cell[][] cellMatrix = new Cell[rows][cols];
         for(int row = 0; row <integer2DArray.length; row++){
             for(int col = 0; col<integer2DArray[0].length; col++){
-                Cell newCell = new Cell(row, col, integer2DArray[row][col]);
+                Cell newCell = new Cell(row, col, integer2DArray[row][col], integer2DArray.length, integer2DArray[0].length);
                 cellMatrix[row][col] = newCell;
             }
         }
