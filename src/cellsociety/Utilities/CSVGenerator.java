@@ -12,12 +12,12 @@ public class CSVGenerator {
   private int numProgramsSaved;
 
   // TODO: handle exception properly
-  public void createCSVFile(Cell[][] cellGrid) throws IOException {
+  public void createCSVFile(Cell[][] cellGrid, String fileName) throws IOException {
     //TODO: make it so user can choose filepath
 
     // Setup code for CSVWriter borrowed from https://www.baeldung.com/opencsv
     CSVWriter csvWriter = new CSVWriter(
-        new FileWriter("./data/game_of_life/saved/program-" + numProgramsSaved + ".csv"),
+        new FileWriter("./data/game_of_life/saved/program-" + fileName + ".csv"),
         ',', CSVWriter.NO_QUOTE_CHARACTER, '"', "\n");
     String[] cellGridSizeArray = new String[]{String.valueOf(cellGrid.length),
         String.valueOf(cellGrid[0].length)};

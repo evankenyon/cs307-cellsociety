@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 
 
 import java.util.Collection;
@@ -55,7 +56,15 @@ public class SimulationDisplayTest extends DukeApplicationTest{
     }catch (Exception e){
       assertTrue(false);
     }
+  }
 
+  @Test
+  void testSaveFile(){
+
+    Node rootNode = myStage.getScene().getRoot();
+    TextField input = from(rootNode).lookup(".textField").query();
+    input.setText("Save File");
+    clickOn(resourceHandler.getStringFromKey(LanguageResourceHandler.SAVE_FILE_KEY));
 
   }
 

@@ -5,6 +5,8 @@ import cellsociety.resourceHandlers.LanguageResourceHandler;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Map;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -96,6 +98,16 @@ public abstract class ChangeableDisplay {
    */
   public LanguageResourceHandler getMyResourceHandler(){
     return myLanguageResourceHandler;
+  }
+
+  /**
+   * pop up a box with an error message on it
+   * @param message will be displayed on the GUI
+   */
+  protected void displayErrorMessage(String message){
+    Alert a = new Alert(AlertType.WARNING);
+    a.setContentText(message);
+    a.show();
   }
 
 }

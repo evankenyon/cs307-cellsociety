@@ -40,6 +40,9 @@ public class Model {
         }
     }
 
+    /**
+     * find what the next state should be for each cell
+     */
     public void findNextStateForEachCell(){
         for(int row = 0; row <cellGrid.length; row++){
             for(int col = 0; col<cellGrid[0].length; col++){
@@ -48,7 +51,11 @@ public class Model {
             }
         }
 
-    } //loop through each cell, set its future state
+    }
+
+    /**
+     * loop through each cell, set its future state
+     */
     public void updateCells(){
         for(int row = 0; row <cellGrid.length; row++){
             for(int col = 0; col<cellGrid[0].length; col++){
@@ -57,6 +64,10 @@ public class Model {
         }
     } //loop through each cell, set its current state to future state, calls updateCurrentStateMethod
 
+    /**
+     * get a list of all the nodes to go on screen, representing displays of each cell
+     * @return a list of nodes displaying the cells
+     */
     public List<Node> getCellDisplays(){
         List<Node> nodeList = new ArrayList<>();
         for(int row = 0; row <cellGrid.length; row++){

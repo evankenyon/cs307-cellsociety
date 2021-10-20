@@ -58,7 +58,7 @@ class ControllerTest {
   void saveFile() throws IOException {
     controller.parseFile(new File("./data/game_of_life/blinkers.csv"));
     Cell[][] expected = model.getCellGrid();
-    controller.saveFile();
+    controller.saveFile("program-0");
     controller.parseFile(new File("./data/game_of_life/saved/program-0.csv"));
     Cell[][] actual = model.getCellGrid();
     for (int row = 0; row < expected.length; row++) {
@@ -69,7 +69,7 @@ class ControllerTest {
   }
 
   @Test
-  void testStepWithSimpleCSV() throws IOException{
+  void testStepWith1x1Grid() throws IOException{
     controller.parseFile(new File("data/game_of_life/HandMadeTest1.csv"));
     controller.step();
     assertEquals(CellDisplay.OFF_COLOR, ((Rectangle)controller.getCellDisplays().get(0)).getFill());

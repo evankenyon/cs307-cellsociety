@@ -42,8 +42,8 @@ public class Controller {
   }
 
   // TODO: actually handle exception
-  public void saveFile() throws IOException {
-    generator.createCSVFile(model.getCellGrid());
+  public void saveFile(String fileName) throws IOException {
+    generator.createCSVFile(model.getCellGrid(), fileName);
   }
 
   public void setMainView(MainView mainView) {
