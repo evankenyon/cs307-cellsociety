@@ -17,17 +17,30 @@ public class Model {
 
     public void setCellGrid(Cell[][] cellGrid) {
         this.cellGrid = cellGrid;
+        updateAllNeighbors();
     }
 
     public Cell[][] getCellGrid() {
         return cellGrid;
     }
 
+    private void updateAllNeighbors() {
+        for (int row = 0; row < cellGrid.length; row++) {
+            for (int col = 0; col < cellGrid[0].length; col++) {
+                Cell cell = cellGrid[row][col];
+                for (int checkAgainstRow = 0; checkAgainstRow < cellGrid.length; checkAgainstRow++) {
+                    for (int checkAgainstCol = 0; checkAgainstCol < cellGrid[0].length; checkAgainstCol++) {
+                        cell.updateNeighbors(cellGrid[checkAgainstRow][checkAgainstCol]);
+                    }
+                }
+            }
+        }
+    }
 
     public void findNextStateForEachCell(){
         for(int row = 0; row <cellGrid.length; row++){
             for(int col = 0; col<cellGrid[0].length; col++){
-               GameOfLifeRules r= new GameOfLifeRules(cellGrid[row][col]);
+               GameOfLifeRules r = new GameOfLifeRules(cellGrid[row][col]);
                r.setState();
             }
         }

@@ -13,15 +13,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class ControllerTest {
+
   private Controller controller;
   private Model model;
-  private MainView mainView;
 
   @BeforeEach
   void setUp() {
     controller = new Controller();
     model = new Model();
-    mainView = new MainView();
+    MainView mainView = new MainView();
     controller.setModel(model);
     controller.setMainView(mainView);
   }
@@ -43,6 +43,12 @@ class ControllerTest {
       }
       row++;
     }
+  }
+
+  @Test
+  void parseFileThrowsException() {
+    assertThrows(FileNotFoundException.class,
+        () -> controller.parseFile(new File("./data/game_of_life/nonexistent.csv")));
   }
 
   @Test
