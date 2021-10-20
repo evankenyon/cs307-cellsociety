@@ -1,6 +1,8 @@
 package cellsociety;
 
 
+import cellsociety.Model.Model;
+import cellsociety.controller.Controller;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import cellsociety.view.MainView;
@@ -24,6 +26,15 @@ public class Main extends Application{
     @Override
     public void start(Stage stage) {
         MainView sv = new MainView();
+        Controller myController = new Controller();
+        Model myModel = new Model();
+
+        //Set the relationships between the view/controller/and model
+        sv.setMyModel(myModel);
+        myController.setModel(myModel);
+        myController.setMainView(sv);
+        sv.setMyController(myController);
+
         stage.setScene(sv.makeSimulationScene());
         sv.setStage(stage);
         stage.show();

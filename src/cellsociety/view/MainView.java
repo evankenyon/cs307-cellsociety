@@ -1,5 +1,7 @@
 package cellsociety.view;
 
+import cellsociety.Model.Model;
+import cellsociety.controller.Controller;
 import cellsociety.resourceHandlers.LanguageResourceHandler;
 
 import java.io.File;
@@ -22,7 +24,8 @@ import java.util.HashMap;
 
 
 public class MainView {
-  //private Controller myController;
+  private Controller myController;
+  private Model myModel;
   private Stage myStage;
   private LanguageResourceHandler myResourceHandler;
   private Map<NodeWithText, String> myNodesToTextKey;
@@ -34,10 +37,20 @@ public class MainView {
   public static final int HEIGHT = 600;
 
   public MainView(){
-    //myController = new Controller()
+    myController = null;
+    myModel = null;
     myResourceHandler = new LanguageResourceHandler();
     myNodesToTextKey = new HashMap<>();
   }
+
+  public void setMyController(Controller myController) {
+    this.myController = myController;
+  }
+
+  public void setMyModel(Model myModel) {
+    this.myModel = myModel;
+  }
+
   /**
    * change what myStage refers to
    * @param s is a JavaFX stage on which the scene should be nested
@@ -153,7 +166,7 @@ public class MainView {
   private void handleSelectedFile(File selectedFile){
     //take the file inputted by a user, and send it to the controller for parsing. Show error messages if neccessary
     try{
-      //controller.parseFile(selectedFile)
+      myController.parseFile(selectedFile);
     } catch (Exception e){
       //should handle files with bad formatting, and other such problems
     }
