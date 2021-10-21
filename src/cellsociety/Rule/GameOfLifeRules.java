@@ -4,6 +4,8 @@ package cellsociety.Rule;
 import cellsociety.cell.Cell;
 
 import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
 
 public class GameOfLifeRules {
     private Cell cell;
@@ -35,26 +37,10 @@ public class GameOfLifeRules {
         switch(cellCurrentState)
         {
             case 0:
-                switch(numNeighbors)
-                {
-                    case 3:
-                        createCell();
-                        break;
-                    case 0: case 1: case 2: case 4: case 5: case 6: case 7: case 8:
-                        killCell();
-                        break;
-                }
+                deadCell();
                 break;
             case 1:
-                switch(numNeighbors)
-                {
-                    case 0: case 1: case 4: case 5: case 6: case 7: case 8:
-                        killCell();
-                        break;
-                    case 2: case 3:
-                        createCell();
-                        break;
-                }
+                liveCell();
         }
     }
 
@@ -69,6 +55,18 @@ public class GameOfLifeRules {
     public void createCell()
     {
         cell.setFutureState(1);
+    }
+
+    public void deadCell()
+    {
+        if (numNeighbors==3) {createCell();}
+        else {killCell();}
+    }
+
+    public void liveCell()
+    {
+            if (numNeighbors==3 || numNeighbors==2) {createCell();}
+            else {killCell();}
     }
 
 
