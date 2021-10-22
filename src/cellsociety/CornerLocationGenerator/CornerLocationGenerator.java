@@ -9,7 +9,7 @@ public abstract class CornerLocationGenerator {
 
     //Put these values in the properties file
     protected final double VIEW_WIDTH=800;
-    protected final double VIEW_HEIGHT=800;
+    protected final double VIEW_HEIGHT=600;
 
     protected List<CornerLocation> corners=new ArrayList<>();
     protected int rows;

@@ -5,7 +5,7 @@ import javafx.scene.Node;
 
 public class CellDisplay {
   private Node myDisp;
-  public static final Color ON_COLOR = Color.GREENYELLOW;
+  public static final Color ON_COLOR = Color.BLUE;
   public static final Color OFF_COLOR = Color.BLACK;
 
   public CellDisplay(int x, int y, int state){
@@ -66,4 +66,5 @@ public class CellDisplay {
       ((Rectangle) myDisp).setFill(ON_COLOR);
     }
   }
+
 }
