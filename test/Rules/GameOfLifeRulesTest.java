@@ -1,6 +1,6 @@
 package Rules;
 
-import cellsociety.Rule.GameOfLifeRulesInterface;
+import cellsociety.Rule.GameOfLifeRules;
 import cellsociety.cell.Cell;
 import java.lang.reflect.InvocationTargetException;
 import org.junit.jupiter.api.Assertions;
@@ -17,7 +17,7 @@ public class GameOfLifeRulesTest {
         List<Cell> test=new ArrayList<>();
         test.add(new Cell(0,0,0));
         cell.setNeighbors(test);
-        GameOfLifeRulesInterface rules=new GameOfLifeRulesInterface(cell);
+        GameOfLifeRules rules=new GameOfLifeRules(cell);
         rules.killCell();
         Assertions.assertEquals(0,cell.getFutureState());
     }
@@ -29,7 +29,7 @@ public class GameOfLifeRulesTest {
         List<Cell> test=new ArrayList<>();
         test.add(new Cell(0,0,0));
         cell.setNeighbors(test);
-        GameOfLifeRulesInterface rules=new GameOfLifeRulesInterface(cell);
+        GameOfLifeRules rules=new GameOfLifeRules(cell);
         rules.createCell();
         Assertions.assertEquals(1,cell.getFutureState());
     }
@@ -41,7 +41,7 @@ public class GameOfLifeRulesTest {
         List<Cell> test=new ArrayList<>();
         test.add(new Cell(0,0,0));
         cell.setNeighbors(test);
-        GameOfLifeRulesInterface rules=new GameOfLifeRulesInterface(cell);
+        GameOfLifeRules rules=new GameOfLifeRules(cell);
         rules.setNumNeighbors(1);
         rules.setState();
         Assertions.assertEquals(0,cell.getFutureState());
@@ -54,7 +54,7 @@ public class GameOfLifeRulesTest {
         List<Cell> test=new ArrayList<>();
         test.add(new Cell(0,0,0));
         cell.setNeighbors(test);
-        GameOfLifeRulesInterface rules=new GameOfLifeRulesInterface(cell);
+        GameOfLifeRules rules=new GameOfLifeRules(cell);
         rules.setNumNeighbors(2);
         rules.setState();
         Assertions.assertEquals(1,cell.getFutureState());
@@ -67,7 +67,7 @@ public class GameOfLifeRulesTest {
         List<Cell> test=new ArrayList<>();
         test.add(new Cell(0,0,0));
         cell.setNeighbors(test);
-        GameOfLifeRulesInterface rules=new GameOfLifeRulesInterface(cell);
+        GameOfLifeRules rules=new GameOfLifeRules(cell);
         rules.setNumNeighbors(3);
         rules.setState();
         Assertions.assertEquals(1,cell.getFutureState());
@@ -80,7 +80,7 @@ public class GameOfLifeRulesTest {
         List<Cell> test=new ArrayList<>();
         test.add(new Cell(0,0,0));
         cell.setNeighbors(test);
-        GameOfLifeRulesInterface rules=new GameOfLifeRulesInterface(cell);
+        GameOfLifeRules rules=new GameOfLifeRules(cell);
         rules.setNumNeighbors(4);
         rules.setState();
         Assertions.assertEquals(0,cell.getFutureState());
@@ -93,7 +93,7 @@ public class GameOfLifeRulesTest {
         List<Cell> test=new ArrayList<>();
         test.add(new Cell(0,0,0));
         cell.setNeighbors(test);
-        GameOfLifeRulesInterface rules=new GameOfLifeRulesInterface(cell);
+        GameOfLifeRules rules=new GameOfLifeRules(cell);
         rules.setNumNeighbors(3);
         rules.setState();
         Assertions.assertEquals(1,cell.getFutureState());
@@ -114,7 +114,7 @@ public class GameOfLifeRulesTest {
             }
         }
         for(Cell cell : allCells) {
-            GameOfLifeRulesInterface rules = new GameOfLifeRulesInterface(cell);
+            GameOfLifeRules rules = new GameOfLifeRules(cell);
             rules.setState();
         }
 

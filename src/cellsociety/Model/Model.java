@@ -2,7 +2,7 @@ package cellsociety.Model;
 
 import cellsociety.Rule.RulesInterface;
 import cellsociety.cell.Cell;
-import cellsociety.Rule.GameOfLifeRulesInterface;
+import cellsociety.Rule.GameOfLifeRules;
 import java.util.ResourceBundle;
 import javafx.scene.Node;
 import java.util.List;
@@ -59,7 +59,7 @@ public class Model {
   public void findNextStateForEachCell() {
     for (int row = 0; row < cellGrid.length; row++) {
       for (int col = 0; col < cellGrid[0].length; col++) {
-        RulesInterface r = new GameOfLifeRulesInterface(cellGrid[row][col]);
+        RulesInterface r = new GameOfLifeRules(cellGrid[row][col]);
         //TODO: Implement properly
         try {
           r.setState();

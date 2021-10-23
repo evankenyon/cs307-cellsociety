@@ -4,16 +4,14 @@ import cellsociety.cell.Cell;
 
 import java.util.List;
 
-public class SegregationRulesInterface implements RulesInterface {
-    private Cell cell;
+public class SegregationRules extends Rules {
     private int cellCurrentState;
     private List<Cell> neighbors;
     private double satisfactionThreshold=.15;
 
-    public SegregationRulesInterface(Cell cell)
+    public SegregationRules(Cell cell)
     {
-        this.cell=cell;
-        this.cellCurrentState=cell.getCurrentState();
+        super(cell);
         this.neighbors=cell.getNeighbors();
     }
 

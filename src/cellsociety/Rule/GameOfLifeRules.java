@@ -7,22 +7,17 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ResourceBundle;
 
-public class GameOfLifeRulesInterface implements RulesInterface {
-
+public class GameOfLifeRules extends Rules {
   private static final String DEFAULT_RESOURCE_PACKAGE =
-      GameOfLifeRulesInterface.class.getPackageName() + ".resources.";
-  private static final String STATE_AND_NEIGHBORS_MAP_FILENAME = GameOfLifeRulesInterface.class.getName();
-  private Cell cell;
-  private int cellCurrentState;
+      GameOfLifeRules.class.getPackageName() + ".resources.";
+  private static final String STATE_AND_NEIGHBORS_MAP_FILENAME = "GameOfLifeRules";
   private int numNeighbors;
-  private ResourceBundle stateAndNeighborsMap;
 
-  public GameOfLifeRulesInterface(Cell cell) {
-    this.cell = cell;
+  public GameOfLifeRules(Cell cell) {
+    super(cell);
     generateNumNeighbors();
-    cellCurrentState = cell.getCurrentState();
     stateAndNeighborsMap = ResourceBundle.getBundle(
-        DEFAULT_RESOURCE_PACKAGE + "GameOfLifeRules");
+        DEFAULT_RESOURCE_PACKAGE + STATE_AND_NEIGHBORS_MAP_FILENAME);
   }
 
   private void generateNumNeighbors() {
@@ -37,21 +32,15 @@ public class GameOfLifeRulesInterface implements RulesInterface {
 
   public void setState()
       throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-    Method celLStateChange = this.getClass()
+    Method cellStateChange = this.getClass()
         .getDeclaredMethod(stateAndNeighborsMap.getString(cellCurrentState + "," + numNeighbors));
-    celLStateChange.setAccessible(true);
-    celLStateChange.invoke(this);
+    cellStateChange.setAccessible(true);
+    cellStateChange.invoke(this);
   }
 
   //For testing purposes
   public void setNumNeighbors(int numNeighbors) {
     this.numNeighbors = numNeighbors;
   }
-
-  public void killCell() {
-    cell.setFutureState(0);
-  }
-
-  public void createCell() {cell.setFutureState(1);}
 
 }
