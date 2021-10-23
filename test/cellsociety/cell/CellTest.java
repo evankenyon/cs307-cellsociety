@@ -21,8 +21,8 @@ class CellTest {
   void updateNeighborsCorrect() {
     Cell potentialNeighborOne = new Cell(1, 2, 1, DEFAULT_GRID_HEIGHT, DEFAULT_GRID_WIDTH);
     Cell potentialNeighborTwo = new Cell(1, 0, 1, DEFAULT_GRID_HEIGHT, DEFAULT_GRID_WIDTH);
-    cell.updateNeighbors(potentialNeighborOne);
-    cell.updateNeighbors(potentialNeighborTwo);
+    cell.updateNeighbors(potentialNeighborOne, 1);
+    cell.updateNeighbors(potentialNeighborTwo, 1);
     assertTrue(cell.getNeighbors().contains(potentialNeighborTwo));
     assertTrue(cell.getNeighbors().contains(potentialNeighborOne));
   }

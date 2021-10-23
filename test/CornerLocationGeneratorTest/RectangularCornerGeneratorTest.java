@@ -64,7 +64,6 @@ public class RectangularCornerGeneratorTest {
     {
         RectangleCellCornerLocationGenerator r= new RectangleCellCornerLocationGenerator(8,8);
         l=r.generateCorners(3,5);
-        System.out.println(l.get(2).getX_pos());
         Assertions.assertTrue(l.get(2).getX_pos()==500 && l.get(2).getY_pos()==400);
     }
 

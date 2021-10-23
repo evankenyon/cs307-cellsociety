@@ -4,13 +4,13 @@ import cellsociety.cell.Cell;
 
 import java.util.List;
 
-public class PercolationRules implements Rules{
-
+public class SegregationRulesInterface implements RulesInterface {
     private Cell cell;
     private int cellCurrentState;
     private List<Cell> neighbors;
+    private double satisfactionThreshold=.15;
 
-    public PercolationRules(Cell cell)
+    public SegregationRulesInterface(Cell cell)
     {
         this.cell=cell;
         this.cellCurrentState=cell.getCurrentState();
@@ -20,30 +20,15 @@ public class PercolationRules implements Rules{
 
     public void setState()
     {
-        switch(cellCurrentState)
-        {
-            case 0:
-                cell.setFutureState(0);
-            case 1:
-                percolate();
-            case 2:
-                cell.setFutureState(2);
-        }
-    }
-
-    public void percolate()
-    {
         int count=0;
         for (Cell neighbor: neighbors)
         {
-            if (neighbor.getCurrentState()==1)
+            if (neighbor.getCurrentState()==cell.getCurrentState())
             {
                 count++;
             }
         }
-        if (count==0){cell.setFutureState(1);}
-        else {cell.setFutureState(2);}
+        if ((count/ neighbors.size())<satisfactionThreshold){}//Implement movement logic
     }
-
 
 }

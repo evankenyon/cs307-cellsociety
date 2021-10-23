@@ -5,14 +5,14 @@ import cellsociety.cell.Cell;
 import java.util.List;
 import java.util.Random;
 
-public class SpreadingOfFireRules implements Rules{
+public class SpreadingOfFireRulesInterface implements RulesInterface {
     private Cell cell;
     private int cellCurrentState;
     private List<Cell> neighbors;
     private double probCatch=.15;
     private double probGrow=.15;
 
-    public SpreadingOfFireRules(Cell cell)
+    public SpreadingOfFireRulesInterface(Cell cell)
     {
         this.cell=cell;
         this.cellCurrentState=cell.getCurrentState();
@@ -22,17 +22,15 @@ public class SpreadingOfFireRules implements Rules{
 
     public void setState()
     {
-        switch(cellCurrentState)
-        {
+        switch (cellCurrentState) {
             //empty
-            case 0:
-                growTree();
+            case 0 -> growTree();
+
             //tree
-            case 1:
-                burnTree();
+            case 1 -> burnTree();
+
             //burning
-            case 2:
-                cell.setFutureState(0);
+            case 2 -> cell.setFutureState(0);
         }
     }
 
