@@ -18,7 +18,7 @@ public class GameOfLifeRulesTest {
         test.add(new Cell(0,0,0));
         cell.setNeighbors(test);
         GameOfLifeRules rules=new GameOfLifeRules(cell);
-        rules.killCell();
+        rules.setCellStateZero();
         Assertions.assertEquals(0,cell.getFutureState());
     }
 
@@ -30,7 +30,7 @@ public class GameOfLifeRulesTest {
         test.add(new Cell(0,0,0));
         cell.setNeighbors(test);
         GameOfLifeRules rules=new GameOfLifeRules(cell);
-        rules.createCell();
+        rules.setCellStateOne();
         Assertions.assertEquals(1,cell.getFutureState());
     }
 
@@ -42,7 +42,7 @@ public class GameOfLifeRulesTest {
         test.add(new Cell(0,0,0));
         cell.setNeighbors(test);
         GameOfLifeRules rules=new GameOfLifeRules(cell);
-        rules.setNumNeighbors(1);
+        rules.setNumOneNeighbors(1);
         rules.setState();
         Assertions.assertEquals(0,cell.getFutureState());
     }
@@ -55,7 +55,7 @@ public class GameOfLifeRulesTest {
         test.add(new Cell(0,0,0));
         cell.setNeighbors(test);
         GameOfLifeRules rules=new GameOfLifeRules(cell);
-        rules.setNumNeighbors(2);
+        rules.setNumOneNeighbors(2);
         rules.setState();
         Assertions.assertEquals(1,cell.getFutureState());
     }
@@ -68,7 +68,7 @@ public class GameOfLifeRulesTest {
         test.add(new Cell(0,0,0));
         cell.setNeighbors(test);
         GameOfLifeRules rules=new GameOfLifeRules(cell);
-        rules.setNumNeighbors(3);
+        rules.setNumOneNeighbors(3);
         rules.setState();
         Assertions.assertEquals(1,cell.getFutureState());
     }
@@ -81,7 +81,7 @@ public class GameOfLifeRulesTest {
         test.add(new Cell(0,0,0));
         cell.setNeighbors(test);
         GameOfLifeRules rules=new GameOfLifeRules(cell);
-        rules.setNumNeighbors(4);
+        rules.setNumOneNeighbors(4);
         rules.setState();
         Assertions.assertEquals(0,cell.getFutureState());
     }
@@ -94,7 +94,7 @@ public class GameOfLifeRulesTest {
         test.add(new Cell(0,0,0));
         cell.setNeighbors(test);
         GameOfLifeRules rules=new GameOfLifeRules(cell);
-        rules.setNumNeighbors(3);
+        rules.setNumOneNeighbors(3);
         rules.setState();
         Assertions.assertEquals(1,cell.getFutureState());
     }

@@ -12,6 +12,7 @@ public class PercolationRules extends Rules {
         GameOfLifeRules.class.getPackageName() + ".resources.";
     private static final String STATE_AND_NEIGHBORS_MAP_FILENAME = "PercolationRules";
     private List<Cell> neighbors;
+    private int numOneNeighbors;
 
     public PercolationRules(Cell cell)
     {
@@ -19,20 +20,5 @@ public class PercolationRules extends Rules {
         stateAndNeighborsMap = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + STATE_AND_NEIGHBORS_MAP_FILENAME);
         this.neighbors=cell.getNeighbors();
     }
-
-    private void percolate()
-    {
-        int count=0;
-        for (Cell neighbor: neighbors)
-        {
-            if (neighbor.getCurrentState()==1)
-            {
-                count++;
-            }
-        }
-        if (count==0){cell.setFutureState(1);}
-        else {cell.setFutureState(2);}
-    }
-
 
 }

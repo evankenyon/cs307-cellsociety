@@ -10,18 +10,30 @@ public abstract class Rules implements RulesInterface{
   protected Cell cell;
   protected int cellCurrentState;
   protected ResourceBundle stateAndNeighborsMap;
+  protected int numOneNeighbors;
 
   public Rules(Cell cell) {
     this.cell=cell;
     this.cellCurrentState=cell.getCurrentState();
+    generateNumOneNeighbors();
   }
 
   public void setState()
-      throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+      throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
     Method cellStateChange = this.getClass()
-        .getDeclaredMethod(stateAndNeighborsMap.getString(String.valueOf(cellCurrentState)));
+        .getDeclaredMethod(stateAndNeighborsMap.getString(cellCurrentState + "," + numOneNeighbors));
     cellStateChange.setAccessible(true);
     cellStateChange.invoke(this);
+  }
+
+  protected void generateNumOneNeighbors() {
+    int count = 0;
+    for (Cell c : cell.getNeighbors()) {
+      if (c.getCurrentState() == 1) {
+        count++;
+      }
+    }
+    numOneNeighbors = count;
   }
 
   public void setCellStateZero() {
