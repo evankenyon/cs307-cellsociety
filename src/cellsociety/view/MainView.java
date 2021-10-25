@@ -112,6 +112,7 @@ public class MainView extends ChangeableDisplay{
   private void selectFile(){
     //pop up a box on the GUI that allows a user to select a file
     FileChooser fileChooser = new FileChooser();
+    fileChooser.setInitialDirectory(new File("data/game_of_life"));
     fileChooser.setTitle(myResourceHandler.getSelectFileTitleString());
     fileChooser.getExtensionFilters().add(new ExtensionFilter("CSV Files", "*.csv"));
     fileChooser.getExtensionFilters().add(new ExtensionFilter("SIM Files", "*.sim"));

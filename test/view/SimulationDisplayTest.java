@@ -1,4 +1,5 @@
 package view;
+import javafx.scene.control.TextInputControl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -62,9 +63,11 @@ public class SimulationDisplayTest extends DukeApplicationTest{
   void testSaveFile(){
 
     Node rootNode = myStage.getScene().getRoot();
-    TextField input = from(rootNode).lookup(".textField").query();
-    input.setText("Save File");
+    TextField fileNameField = from(rootNode).lookup(".text-field").query();
+
+    writeInputTo((TextInputControl)fileNameField, "testName");
     clickOn(resourceHandler.getStringFromKey(LanguageResourceHandler.SAVE_FILE_KEY));
+    //assert somethig
 
   }
 

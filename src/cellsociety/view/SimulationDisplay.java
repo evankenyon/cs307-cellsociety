@@ -49,7 +49,6 @@ public class SimulationDisplay extends ChangeableDisplay{
   public SimulationDisplay(LanguageResourceHandler l){
     super(l);
     myController = new Controller();
-    setUpAnimation();
   }
 
   protected void setUpAnimation(){
@@ -76,6 +75,7 @@ public class SimulationDisplay extends ChangeableDisplay{
     simAreaGroup.getChildren().addAll(myController.getCellDisplays());
     root.getChildren().add(simAreaGroup);
     root.getChildren().add(makeControls());
+    setUpAnimation();
     return root;
   }
 
@@ -99,17 +99,6 @@ public class SimulationDisplay extends ChangeableDisplay{
   }
 
 
-  private void pauseAnimation(){
-
-  }
-
-  private void resumeAnimation(){
-
-  }
-
-  private void startSimulation(){
-    myAnimation.pause();
-  }
 
   private void playPauseSimulation(){
     //pause or resume the simulation
