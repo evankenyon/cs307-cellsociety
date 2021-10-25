@@ -42,11 +42,12 @@ public class Cell {
 
 
     public Cell(int i, int j, int initialState){
-        this.iIndex = i;
-        this.jIndex = j;
-        this.currentState = initialState;
-        neighbors = new ArrayList<>();
-        myDisplay = new CellDisplay(i * DEFAULT_WIDTH, j * DEFAULT_WIDTH, currentState);
+        this(i, j, initialState, 10, 10);
+//        this.iIndex = i;
+//        this.jIndex = j;
+//        this.currentState = initialState;
+//        neighbors = new ArrayList<>();
+//        myDisplay = new CellDisplay(i * DEFAULT_WIDTH, j * DEFAULT_WIDTH, currentState);
     }
 
 
@@ -106,12 +107,12 @@ public class Cell {
         return corners;
     }
 
-    public void updateNeighbors(Cell potentialNeighbor) {
+    public void updateNeighbors(Cell potentialNeighbor, int numCornersShared) {
         Set<CornerLocation> sharedCorners = corners.stream()
             .distinct()
             .filter(potentialNeighbor.corners::contains)
             .collect(Collectors.toSet());
-        if(!sharedCorners.isEmpty() && !neighbors.contains(potentialNeighbor) && !potentialNeighbor.equals(this)) {
+        if(sharedCorners.size() >= numCornersShared && !neighbors.contains(potentialNeighbor) && !potentialNeighbor.equals(this)) {
             neighbors.add(potentialNeighbor);
         }
     }

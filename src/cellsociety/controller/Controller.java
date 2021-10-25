@@ -35,8 +35,8 @@ public class Controller {
       parser.initializeCellMatrix();
       Cell[][] cellGrid = parser.getCellMatrix();
       model.setCellGrid(cellGrid);
-
     } catch(Exception e){
+      e.printStackTrace();
       throw new FileNotFoundException();
     }
   }

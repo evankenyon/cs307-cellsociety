@@ -3,18 +3,13 @@ package cellsociety.Rule;
 import cellsociety.cell.Cell;
 
 import java.util.List;
-import java.util.Random;
 
-public class PredatorPreyRules implements Rules{
-    private Cell cell;
-    private int cellCurrentState;
+public class PredatorPreyRules extends Rules {
     private List<Cell> neighbors;
-
 
     public PredatorPreyRules(Cell cell)
     {
-        this.cell=cell;
-        this.cellCurrentState=cell.getCurrentState();
+        super(cell);
         this.neighbors=cell.getNeighbors();
     }
 

@@ -3,18 +3,15 @@ package cellsociety.Rule;
 import cellsociety.cell.Cell;
 
 import java.util.List;
-import java.util.Random;
 
-public class SegregationRules implements Rules{
-    private Cell cell;
+public class SegregationRules extends Rules {
     private int cellCurrentState;
     private List<Cell> neighbors;
     private double satisfactionThreshold=.15;
 
     public SegregationRules(Cell cell)
     {
-        this.cell=cell;
-        this.cellCurrentState=cell.getCurrentState();
+        super(cell);
         this.neighbors=cell.getNeighbors();
     }
 

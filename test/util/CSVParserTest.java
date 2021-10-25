@@ -1,14 +1,11 @@
 package util;
-import cellsociety.Rule.GameOfLifeRules;
 import cellsociety.cell.Cell;
 import cellsociety.Utilities.CSVParser;
-import org.junit.jupiter.api.Assertions.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.io.File;
 
 
