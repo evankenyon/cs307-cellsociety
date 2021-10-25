@@ -2,41 +2,37 @@ package cellsociety.Rule;
 
 import cellsociety.cell.Cell;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Random;
+import java.util.ResourceBundle;
 
-public class SpreadingOfFireRules implements Rules{
-    private Cell cell;
-    private int cellCurrentState;
+public class SpreadingOfFireRules extends Rules {
+    private static final String DEFAULT_RESOURCE_PACKAGE =
+        GameOfLifeRules.class.getPackageName() + ".resources.";
+    private static final String STATE_AND_NEIGHBORS_MAP_FILENAME = "SpreadingOfFireRules";
+    private static final double probCatch=.15;
+    private static final double probGrow=.15;
+
     private List<Cell> neighbors;
-    private double probCatch=.15;
-    private double probGrow=.15;
 
     public SpreadingOfFireRules(Cell cell)
     {
-        this.cell=cell;
-        this.cellCurrentState=cell.getCurrentState();
+        super(cell);
         this.neighbors=cell.getNeighbors();
+        stateAndNeighborsMap = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + STATE_AND_NEIGHBORS_MAP_FILENAME);
     }
-
 
     public void setState()
-    {
-        switch(cellCurrentState)
-        {
-            //empty
-            case 0:
-                growTree();
-            //tree
-            case 1:
-                burnTree();
-            //burning
-            case 2:
-                cell.setFutureState(0);
-        }
+        throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Method cellStateChange = this.getClass()
+            .getDeclaredMethod(stateAndNeighborsMap.getString(String.valueOf(cellCurrentState)));
+        cellStateChange.setAccessible(true);
+        cellStateChange.invoke(this);
     }
 
-    public void growTree()
+    private void growTree()
     {
         Random rand=new Random();
         double chance= rand.nextDouble();
@@ -44,7 +40,7 @@ public class SpreadingOfFireRules implements Rules{
         else{cell.setFutureState(0);}
     }
 
-    public void burnTree()
+    private void burnTree()
     {
         int count=0;
         Random rand=new Random();

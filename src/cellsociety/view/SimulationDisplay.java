@@ -68,6 +68,7 @@ public class SimulationDisplay extends ChangeableDisplay{
     try {
       myController.parseFile(CSVFile);
     }catch (Exception e){
+      e.printStackTrace();
       throw new Exception(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.BAD_FILE_KEY));
     }
     VBox root = new VBox();
