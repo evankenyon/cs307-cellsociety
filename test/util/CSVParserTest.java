@@ -3,6 +3,8 @@ import cellsociety.cell.Cell;
 import cellsociety.Utilities.CSVParser;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -28,11 +30,11 @@ public class CSVParserTest {
     } catch (Exception e){
       assertTrue(false);
     }
-    Cell[][] gridMatrix = parser.getCellMatrix();
+    List<Cell> allCells = parser.getAllCells();
     //testing some random values
-    assertEquals(gridMatrix[0][0].getCurrentState(), 0);
-    assertEquals(gridMatrix[0][9].getCurrentState(), 1);
-    assertEquals(gridMatrix[9][4].getCurrentState(), 1);
+    assertEquals(allCells.get(0).getCurrentState(), 0);
+    assertEquals(allCells.get(9).getCurrentState(), 1);
+    assertEquals(allCells.get(94).getCurrentState(), 1);
   }
 
   @Test
@@ -43,11 +45,11 @@ public class CSVParserTest {
     } catch (Exception e){
       assertTrue(false);
     }
-    Cell[][] gridMatrix = parser.getCellMatrix();
+    List<Cell> allCells = parser.getAllCells();
     //testing some random values
-    assertEquals(gridMatrix[0][0].getCurrentState(), 0);
-    assertEquals(gridMatrix[2][1].getCurrentState(), 1);
-    assertEquals(gridMatrix[1][3].getCurrentState(), 1);
+    assertEquals(allCells.get(0).getCurrentState(), 0);
+    assertEquals(allCells.get(27).getCurrentState(), 1);
+    assertEquals(allCells.get(16).getCurrentState(), 1);
   }
 
 

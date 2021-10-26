@@ -17,6 +17,8 @@ import javafx.scene.shape.Rectangle;
 
 
 public class Cell {
+    public static final int DEFAULT_WIDTH = 20;
+    public static final int DEFAULT_HEIGHT = 20;
 
     private int currentState;
     private int futureState;
@@ -26,14 +28,11 @@ public class Cell {
     private int iIndex;
     private int jIndex;
     private Map<Integer, List<Cell>> neighborCellStateMap;
-
     private CellDisplay myDisplay;
-    private boolean shouldMove=false;
-    private int chrononCounter=0;
-    private int energy=5;
+    private boolean shouldMove;
+    private int chrononCounter;
+    private int energy;
     private int compareState;
-    public static final int DEFAULT_WIDTH = 20;
-    public static final int DEFAULT_HEIGHT = 20;
 
     public Cell(int i, int j, int initialState, int rows, int columns){
         this.iIndex = i;
@@ -43,6 +42,9 @@ public class Cell {
         neighbors = new ArrayList<>();
         myDisplay = new CellDisplay(j * DEFAULT_WIDTH, i * DEFAULT_WIDTH, currentState);
         neighborCellStateMap = new HashMap<>();
+        shouldMove = false;
+        chrononCounter = 0;
+        energy = 5;
     }
 
 

@@ -45,7 +45,8 @@ public class Model {
       int colPosition = cell.getjIndex();
       cellGrid[rowPosition][colPosition] = cell;
     }
-
+    updateAllNeighbors();
+    updateAllCellNeighborMaps();
   }
 
   public void setCellGrid(Cell[][] cellGrid) {

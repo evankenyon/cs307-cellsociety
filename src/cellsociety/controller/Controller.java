@@ -4,13 +4,11 @@ import cellsociety.Model.Model;
 import cellsociety.Utilities.CSVGenerator;
 import cellsociety.Utilities.CSVParser;
 import cellsociety.Utilities.SimParser;
-import cellsociety.cell.Cell;
 import cellsociety.view.MainView;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
-import java.util.Properties;
 import javafx.scene.Node;
 
 public class Controller {
@@ -37,9 +35,8 @@ public class Controller {
       simParser.setupKeyValuePairs(SimFile);
       csvParser.setFile(new File(String.format("./data/%s", simParser.getSimulationConfig().getProperty("InitialStates"))));
       csvParser.initializeCellMatrix();
-      Cell[][] cellGrid = csvParser.getCellMatrix();
       model.setSimulationInfo(simParser.getSimulationConfig());
-      model.setCellGrid(cellGrid);
+      model.setCellGrid(csvParser.getAllCells(), csvParser.getRows(), csvParser.getCols());
     } catch(Exception e){
       e.printStackTrace();
       throw new FileNotFoundException();
