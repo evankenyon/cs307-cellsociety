@@ -26,6 +26,8 @@ public class Cell {
     private int iIndex;
     private int jIndex;
     private HashMap<Integer, Integer> neighborStateMap;
+    private HashMap<Integer, List<Cell>> neighborCellStateMap;
+
     private CellDisplay myDisplay;
     private boolean shouldMove=false;
     private int chrononCounter=0;
@@ -177,9 +179,18 @@ public class Cell {
         }
     }
 
+    public void createNeighborCellStateMap(){
+        neighborCellStateMap = new HashMap<>();
+        for(Cell neighbor: neighbors){
+            int state = neighbor.getCurrentState();
+            neighborCellStateMap.putIfAbsent(state, new ArrayList<Cell>());
+            neighborCellStateMap.get(state).add(neighbor);
+        }
+    }
     public HashMap<Integer, Integer> getNeighborStateMap() {
         return neighborStateMap;
     }
+
 
     private void setCellGrid(Cell[][] cellGrid){
         this.cellGrid = cellGrid;
