@@ -27,6 +27,9 @@ public class Cell {
     private int jIndex;
     private HashMap<Integer, Integer> neighborStateMap;
     private CellDisplay myDisplay;
+    private boolean shouldMove=false;
+    private int chrononCounter=0;
+    private int energy=5;
     public static final int DEFAULT_WIDTH = 20;
     public static final int DEFAULT_HEIGHT = 20;
 
@@ -91,7 +94,21 @@ public class Cell {
         myDisplay.setY(y);
     }
 
+    public void setShouldMove(boolean shouldMove) {this.shouldMove = shouldMove;}
 
+    public boolean isShouldMove() {return shouldMove;}
+
+    public void setChrononCounter(int chrononCounter) {this.chrononCounter = chrononCounter;}
+
+    public int getChrononCounter() {return chrononCounter;}
+
+    public void setEnergy(int energy) {
+        this.energy = energy;
+    }
+
+    public int getEnergy() {
+        return energy;
+    }
 
     public void updateState(){
         currentState = futureState;
@@ -160,6 +177,9 @@ public class Cell {
         }
     }
 
+    public HashMap<Integer, Integer> getNeighborStateMap() {
+        return neighborStateMap;
+    }
 
     private void setCellGrid(Cell[][] cellGrid){
         this.cellGrid = cellGrid;
