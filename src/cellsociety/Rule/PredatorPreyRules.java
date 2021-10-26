@@ -16,6 +16,24 @@ public class PredatorPreyRules extends Rules {
 
     public void setState()
     {
+        ifCurrentStateOne();
+        ifCurrentStateTwo();
+        incrementCellChrononCounter();
+    }
+
+
+    public void checkReproduction()
+    {
+        if (cell.getChrononCounter()==reproductionCycle) {
+            cell.setFutureState(cell.getCurrentState());
+            cell.setChrononCounter(0);
+        }
+        else {cell.setFutureState(0);}
+    }
+
+
+    public void ifCurrentStateOne(){
+
         if(cell.getCurrentState()==1)
         {
             if(cell.getNeighborCellStateMap().get(0).size()>0) {
@@ -23,8 +41,14 @@ public class PredatorPreyRules extends Rules {
                 cell.setShouldMove(true);
                 checkReproduction();
             }
-            else{cell.setFutureState(cell.getCurrentState());}
+            else{
+                cell.setFutureState(cell.getCurrentState());
+            }
         }
+
+    }
+
+    public void ifCurrentStateTwo(){
         if (cell.getCurrentState()==2)
         {
             if(cell.getEnergy()!=0) {
@@ -43,18 +67,8 @@ public class PredatorPreyRules extends Rules {
             else{cell.setFutureState(0);}
             cell.setEnergy(cell.getEnergy() - 1);
         }
-
+    }
+    public void incrementCellChrononCounter(){
         cell.setChrononCounter(cell.getChrononCounter()+1);
     }
-
-
-    public void checkReproduction()
-    {
-        if (cell.getChrononCounter()==reproductionCycle) {
-            cell.setFutureState(cell.getCurrentState());
-            cell.setChrononCounter(0);
-        }
-        else {cell.setFutureState(0);}
-    }
-
 }

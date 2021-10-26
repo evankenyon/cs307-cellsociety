@@ -142,6 +142,15 @@ public class Model {
     }
   }
 
+//FIXME: A method that uses reflection
+//  public void updateReflection(String methodName){
+//    for (int row = 0; row < cellGrid.length; row++) {
+//      for (int col = 0; col < cellGrid[0].length; col++) {
+//        cellGrid[row][col].methodName.toMethod();
+//      }
+//    }
+//  }
+
   /**
    * get a list of all the nodes to go on screen, representing displays of each cell
    *

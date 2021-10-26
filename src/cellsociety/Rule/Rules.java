@@ -29,6 +29,23 @@ public abstract class Rules implements RulesInterface {
     cellStateChange.invoke(this);
   }
 
+<<<<<<< HEAD
+=======
+  private void generateNumOneNeighbors() {
+    int count = 0;
+    for (Cell c : cell.getNeighbors()) {
+      if (c.getCurrentState() == 1) {
+        count++;
+      }
+    }
+    numOneNeighbors = count;
+  }
+
+  public void setCellState(int state){
+    cell.setFutureState(state);
+  }
+
+>>>>>>> 23fd91c1ba2f0c8cb7dc3d045cc8fd56aed8e1d5
 
   public void setCellStateZero() {
     cell.setFutureState(0);
