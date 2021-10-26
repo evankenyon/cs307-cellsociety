@@ -59,8 +59,8 @@ public class Controller {
   }
 
   public void step(){
-    model.findNextStateForEachCell();
-    model.updateCells();
+      model.findNextStateForEachCell();
+      model.updateCells();
   }
 
 }

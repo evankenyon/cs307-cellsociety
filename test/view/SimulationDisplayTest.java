@@ -1,4 +1,5 @@
 package view;
+import javafx.scene.control.TextInputControl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,6 +12,7 @@ import cellsociety.view.NodeWithText;
 import cellsociety.view.Button2;
 
 import java.io.File;
+import java.util.Random;
 
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -62,10 +64,30 @@ public class SimulationDisplayTest extends DukeApplicationTest{
   void testSaveFile(){
 
     Node rootNode = myStage.getScene().getRoot();
-    TextField input = from(rootNode).lookup(".textField").query();
-    input.setText("Save File");
-    clickOn(resourceHandler.getStringFromKey(LanguageResourceHandler.SAVE_FILE_KEY));
+    TextField fileNameField = from(rootNode).lookup(".text-field").query();
+    Random r = new Random();
+    int fileName = r.nextInt(9999999);
 
+    writeInputTo((TextInputControl)fileNameField, String.valueOf(fileName));
+    clickOn(resourceHandler.getStringFromKey(LanguageResourceHandler.SAVE_FILE_KEY));
+    try {
+      File f = new File("data/game_of_life/saved/program-" + fileName + ".csv");
+      assertTrue(f.exists());
+    } catch (Exception e){
+      assertTrue(false);
+    }
+
+  }
+
+  @Test
+  void testOneStepButton(){
+    clickOn(resourceHandler.getStringFromKey(LanguageResourceHandler.ONE_STEP_KEY));
+    try {
+      Button b = findDesiredButton(resourceHandler.getStringFromKey(LanguageResourceHandler.RESUME_KEY));
+      assertTrue(true);
+    } catch (Exception e){
+      assertTrue(false);
+    }
   }
 
   private Button findDesiredButton(String correctText) throws Exception{

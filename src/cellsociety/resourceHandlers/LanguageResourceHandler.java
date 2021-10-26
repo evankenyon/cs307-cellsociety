@@ -24,6 +24,8 @@ public class LanguageResourceHandler {
   public static final String PAUSE_KEY = "Pause";
   public static final String RESUME_KEY = "Resume";
   public static final String SAVE_FILE_KEY = "SaveFile";
+  public static final String NEW_SIMULATION_KEY = "NewSimulation";
+  public static final String ONE_STEP_KEY = "OneStep";
   public static final String ENGLISH = "English";
   public static final String SPANISH = "Spanish";
   public static final String[] SUPPORTED_LANGUAGES = {ENGLISH, SPANISH};

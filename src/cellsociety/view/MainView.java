@@ -82,8 +82,18 @@ public class MainView extends ChangeableDisplay{
     controlBox.getChildren().add(makeALabel(LanguageResourceHandler.SETTINGS_KEY));
     //controlBox.getChildren().add(makeAButton(LanguageResourceHandler.ABOUT_KEY, () -> showAbout()));
     controlBox.getChildren().add(makeLanguageSelector());
+    controlBox.getChildren().add(makeAButton(LanguageResourceHandler.NEW_SIMULATION_KEY, () -> makeNewWindow()));
 
     return controlBox;
+  }
+
+  private void makeNewWindow(){
+    //create a new window to run another simulation
+    Stage s = new Stage();
+    MainView mv = new MainView();
+    s.setScene(mv.makeSimulationScene());
+    mv.setStage(s);
+    s.show();
   }
 
   private Node makeLanguageSelector(){
@@ -112,6 +122,7 @@ public class MainView extends ChangeableDisplay{
   private void selectFile(){
     //pop up a box on the GUI that allows a user to select a file
     FileChooser fileChooser = new FileChooser();
+    fileChooser.setInitialDirectory(new File("data/game_of_life"));
     fileChooser.setTitle(myResourceHandler.getSelectFileTitleString());
     fileChooser.getExtensionFilters().add(new ExtensionFilter("CSV Files", "*.csv"));
     fileChooser.getExtensionFilters().add(new ExtensionFilter("SIM Files", "*.sim"));
