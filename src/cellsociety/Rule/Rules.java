@@ -8,14 +8,10 @@ import java.util.ResourceBundle;
 
 public abstract class Rules implements RulesInterface {
   protected Cell cell;
-  protected int cellCurrentState;
   protected ResourceBundle stateAndNeighborsMap;
-  protected int numOneNeighbors;
 
   public Rules(Cell cell) {
     this.cell=cell;
-    this.cellCurrentState=cell.getCurrentState();
-    generateNumOneNeighbors();
   }
 
   public void setState()
@@ -23,24 +19,14 @@ public abstract class Rules implements RulesInterface {
     Method cellStateChange = null;
     try {
       cellStateChange = this.getClass()
-          .getDeclaredMethod(stateAndNeighborsMap.getString(cellCurrentState + "," + numOneNeighbors));
+          .getDeclaredMethod(stateAndNeighborsMap.getString(cell.getCurrentState() + "," + cell.getNumNeighborsOfState(1)));
     } catch (NoSuchMethodException e) {
       cellStateChange = this.getClass().getSuperclass()
-          .getDeclaredMethod(stateAndNeighborsMap.getString(cellCurrentState + "," + numOneNeighbors));
+          .getDeclaredMethod(stateAndNeighborsMap.getString(cell.getCurrentState() + "," + cell.getNumNeighborsOfState(1)));
     }
 
     cellStateChange.setAccessible(true);
     cellStateChange.invoke(this);
-  }
-
-  private void generateNumOneNeighbors() {
-    int count = 0;
-    for (Cell c : cell.getNeighbors()) {
-      if (c.getCurrentState() == 1) {
-        count++;
-      }
-    }
-    numOneNeighbors = count;
   }
 
 

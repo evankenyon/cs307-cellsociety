@@ -191,8 +191,14 @@ public class Cell {
             neighborCellStateMap.get(state).add(neighbor);
         }
     }
+
+
     public HashMap<Integer, Integer> getNeighborStateMap() {
         return neighborStateMap;
+    }
+
+    public int getNumNeighborsOfState(int state) {
+        return neighborCellStateMap.get(state).size();
     }
 
     public HashMap<Integer, List<Cell>> getNeighborCellStateMap() {

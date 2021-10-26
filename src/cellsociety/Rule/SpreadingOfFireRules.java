@@ -16,11 +16,8 @@ public class SpreadingOfFireRules extends Rules {
   private static final double probCatch = .15;
   private static final double probGrow = .15;
 
-  private List<Cell> neighbors;
-
   public SpreadingOfFireRules(Cell cell) {
     super(cell);
-    this.neighbors = cell.getNeighbors();
     stateAndNeighborsMap = ResourceBundle.getBundle(
         DEFAULT_RESOURCE_PACKAGE + STATE_AND_NEIGHBORS_MAP_FILENAME);
   }
@@ -30,10 +27,10 @@ public class SpreadingOfFireRules extends Rules {
     Method cellStateChange = null;
     try {
       cellStateChange = this.getClass()
-          .getDeclaredMethod(stateAndNeighborsMap.getString(String.valueOf(cellCurrentState)));
+          .getDeclaredMethod(stateAndNeighborsMap.getString(String.valueOf(cell.getCurrentState())));
     } catch (NoSuchMethodException e) {
       cellStateChange = this.getClass().getSuperclass()
-          .getDeclaredMethod(stateAndNeighborsMap.getString(String.valueOf(cellCurrentState)));
+          .getDeclaredMethod(stateAndNeighborsMap.getString(String.valueOf(cell.getCurrentState())));
     }
 
     cellStateChange.setAccessible(true);
@@ -42,8 +39,7 @@ public class SpreadingOfFireRules extends Rules {
 
   private void growTree() {
     Random rand = new Random();
-    double chance = rand.nextDouble();
-    if (chance < probGrow) {
+    if (rand.nextDouble() < probGrow) {
       cell.setFutureState(1);
     } else {
       cell.setFutureState(0);
@@ -51,20 +47,11 @@ public class SpreadingOfFireRules extends Rules {
   }
 
   private void burnTree() {
-    int count = 0;
     Random rand = new Random();
-    double chance = rand.nextDouble();
-    for (Cell neighbor : neighbors) {
-      if (neighbor.getCurrentState() == 2) {
-        count++;
-      }
-    }
-    if (count > 0 && chance < probCatch) {
+    if (cell.getNumNeighborsOfState(2) > 0 && rand.nextDouble() < probCatch) {
       cell.setFutureState(2);
     } else {
       cell.setFutureState(1);
     }
   }
-
-
 }
