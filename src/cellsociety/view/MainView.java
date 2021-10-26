@@ -3,6 +3,7 @@ package cellsociety.view;
 import cellsociety.Model.Model;
 import cellsociety.controller.Controller;
 import cellsociety.resourceHandlers.LanguageResourceHandler;
+import cellsociety.resourceHandlers.ViewResourceHandler;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -33,9 +34,12 @@ public class MainView extends ChangeableDisplay{
 
   private Stage myStage;
   private LanguageResourceHandler myResourceHandler;
+  private ViewResourceHandler myViewResourceHandler;
+
   private Map<NodeWithText, String> myNodesToTextKey;
   private List<SimulationDisplay> simulationDisplayList;
   private Pane mainPane;
+
 
   public static final String DARK_CSS_NAME = "DarkMode.css";
   public static final String DUKE_CSS_NAME = "Duke.css";
@@ -47,6 +51,7 @@ public class MainView extends ChangeableDisplay{
   public MainView(){
     super();
     myResourceHandler = new LanguageResourceHandler();
+    myViewResourceHandler = new ViewResourceHandler();
     myNodesToTextKey = new HashMap<>();
     simulationDisplayList = new ArrayList<>();
   }
@@ -71,7 +76,8 @@ public class MainView extends ChangeableDisplay{
     mainPane.getChildren().add(makeLanguageSelector());
     mainPane.getChildren().add(makeStyleSelector());
     mainPane.getChildren().add(makeFileInputPanel());
-    Scene s = new Scene(mainPane, WIDTH, HEIGHT);
+    Scene s = new Scene(mainPane, myViewResourceHandler.getWindowWidth(),
+        myViewResourceHandler.getWindowHeight());
     s.getStylesheets().add(getClass().getResource(BASIC_CSS_NAME).toExternalForm());
     return s;
   }
