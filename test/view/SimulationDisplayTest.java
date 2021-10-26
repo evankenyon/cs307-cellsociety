@@ -80,7 +80,28 @@ public class SimulationDisplayTest extends DukeApplicationTest{
   }
 
   @Test
-  void testOneStepButton(){
+  void testOneStepButtonSimple(){
+    clickOn(resourceHandler.getStringFromKey(LanguageResourceHandler.ONE_STEP_KEY));
+    try {
+      Button b = findDesiredButton(resourceHandler.getStringFromKey(LanguageResourceHandler.RESUME_KEY));
+      assertTrue(true);
+    } catch (Exception e){
+      assertTrue(false);
+    }
+  }
+
+  @Test
+  void testOneStepButtonComplex(){
+    clickOn(resourceHandler.getStringFromKey(LanguageResourceHandler.ONE_STEP_KEY));
+    clickOn(resourceHandler.getStringFromKey(LanguageResourceHandler.ONE_STEP_KEY));
+    try {
+      Button b = findDesiredButton(resourceHandler.getStringFromKey(LanguageResourceHandler.RESUME_KEY));
+      assertTrue(true);
+    } catch (Exception e){
+      assertTrue(false);
+    }
+
+    clickOn(resourceHandler.getStringFromKey(LanguageResourceHandler.RESUME_KEY));
     clickOn(resourceHandler.getStringFromKey(LanguageResourceHandler.ONE_STEP_KEY));
     try {
       Button b = findDesiredButton(resourceHandler.getStringFromKey(LanguageResourceHandler.RESUME_KEY));

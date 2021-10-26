@@ -1,6 +1,7 @@
 package cellsociety.view;
 
 import cellsociety.resourceHandlers.LanguageResourceHandler;
+import cellsociety.resourceHandlers.ViewResourceHandler;
 import cellsociety.controller.Controller;
 
 import java.io.File;
@@ -34,13 +35,14 @@ import java.util.ArrayList;
  * @author Keith Cressman
  */
 public class SimulationDisplay extends ChangeableDisplay{
-  public static final int DEFAULT_WIDTH = 400; //should go into resources
+
   protected double secondDelay = 1;
   private Controller myController;
   protected Timeline myAnimation;
   private boolean paused;
   private Button pauseButton, oneStepButton;
   private TextField fileNameField;
+  private ViewResourceHandler myViewResourceHandler;
 
   public SimulationDisplay(){
     this(new LanguageResourceHandler());
@@ -49,6 +51,7 @@ public class SimulationDisplay extends ChangeableDisplay{
   public SimulationDisplay(LanguageResourceHandler l){
     super(l);
     myController = new Controller();
+    myViewResourceHandler = new ViewResourceHandler();
   }
 
   protected void setUpAnimation(){
@@ -72,7 +75,7 @@ public class SimulationDisplay extends ChangeableDisplay{
     }
     VBox root = new VBox();
     Group simAreaGroup = new Group();
-    simAreaGroup.getChildren().add(new Rectangle(0, 0, DEFAULT_WIDTH, DEFAULT_WIDTH));
+    simAreaGroup.getChildren().add(new Rectangle(0, 0, myViewResourceHandler.simulationWidth(), myViewResourceHandler.simulationWidth()));
     simAreaGroup.getChildren().addAll(myController.getCellDisplays());
     root.getChildren().add(simAreaGroup);
     root.getChildren().add(makeControls());

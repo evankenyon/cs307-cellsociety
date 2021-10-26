@@ -13,6 +13,8 @@ import java.io.File;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 
 import java.util.Collection;
@@ -30,6 +32,7 @@ public class MainViewTest extends DukeApplicationTest{
     simView = new MainView();
     resourceHandler = simView.getMyResourceHandler();
     stage.setScene(simView.makeSimulationScene());
+    simView.setStage(stage);
     stage.show();
     stage.toFront();
     myStage = stage;
@@ -91,10 +94,33 @@ public class MainViewTest extends DukeApplicationTest{
     File testFile = new File("data/game_of_life/blinkers.csv");
     simView.handleSelectedFile(testFile);
     assertEquals(1, simView.getNumSimulations());
-    testChangeLanguagesComplex();
-
-
   }
+
+  @Test
+  //need to figure out how to check colorw
+  void testSwitchStyleSimple(){
+    clickOn(resourceHandler.getStringFromKey(LanguageResourceHandler.DARK_MODE_KEY));
+    assertEquals(Color.BLACK, myStage.getScene().getFill());
+    clickOn(resourceHandler.getStringFromKey(LanguageResourceHandler.BASIC_MODE_KEY));
+    assertEquals(Color.WHITE, myStage.getScene().getFill());
+    clickOn(resourceHandler.getStringFromKey(LanguageResourceHandler.BASIC_MODE_KEY));
+    assertEquals(Color.BLUE, myStage.getScene().getFill()); //not actually blue
+  }
+
+  @Test
+    //need to figure out how to check colors
+  void testSwitchStyleComplex(){
+    //a bunch of random stuff mixed in between
+    clickOn(resourceHandler.getStringFromKey(LanguageResourceHandler.DARK_MODE_KEY));
+    assertEquals(Color.BLACK, myStage.getScene().getFill());
+    testChangeLanguagesComplex();
+    clickOn(resourceHandler.getStringFromKey(LanguageResourceHandler.BASIC_MODE_KEY));
+    assertEquals(Color.BLUE, myStage.getScene().getFill()); //not actually blue
+    testFileInput();
+    clickOn(resourceHandler.getStringFromKey(LanguageResourceHandler.BASIC_MODE_KEY));
+    assertEquals(Color.BLUE, myStage.getScene().getFill()); //not actually blue
+  }
+
 
 
 

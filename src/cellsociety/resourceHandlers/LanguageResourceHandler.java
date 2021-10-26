@@ -26,6 +26,11 @@ public class LanguageResourceHandler {
   public static final String SAVE_FILE_KEY = "SaveFile";
   public static final String NEW_SIMULATION_KEY = "NewSimulation";
   public static final String ONE_STEP_KEY = "OneStep";
+  public static final String DARK_MODE_KEY = "DarkMode";
+  public static final String DUKE_MODE_KEY = "DukeMode";
+  public static final String BASIC_MODE_KEY = "BasicMode";
+  public static final String STYLE_SELECTOR_KEY = "SelectStyle";
+
   public static final String ENGLISH = "English";
   public static final String SPANISH = "Spanish";
   public static final String[] SUPPORTED_LANGUAGES = {ENGLISH, SPANISH};

@@ -37,8 +37,10 @@ public class MainView extends ChangeableDisplay{
   private List<SimulationDisplay> simulationDisplayList;
   private Pane mainPane;
 
+  public static final String DARK_CSS_NAME = "DarkMode.css";
+  public static final String DUKE_CSS_NAME = "Duke.css";
+  public static final String BASIC_CSS_NAME = "Basic.css";
 
-  private final String[] supportedLanguages = LanguageResourceHandler.SUPPORTED_LANGUAGES;
   public static final int WIDTH = 800;
   public static final int HEIGHT = 600;
 
@@ -65,10 +67,13 @@ public class MainView extends ChangeableDisplay{
    */
   public Scene makeSimulationScene(){
     mainPane = new VBox();
-    mainPane.getChildren().add(makeControlPanel());
+    mainPane.getChildren().add(makeALabel(LanguageResourceHandler.SETTINGS_KEY));
+    mainPane.getChildren().add(makeLanguageSelector());
+    mainPane.getChildren().add(makeStyleSelector());
     mainPane.getChildren().add(makeFileInputPanel());
-
-    return new Scene(mainPane, WIDTH, HEIGHT);
+    Scene s = new Scene(mainPane, WIDTH, HEIGHT);
+    s.getStylesheets().add(getClass().getResource(BASIC_CSS_NAME).toExternalForm());
+    return s;
   }
 
 
@@ -79,10 +84,7 @@ public class MainView extends ChangeableDisplay{
    */
   private Node makeControlPanel(){
     HBox controlBox = new HBox();
-    controlBox.getChildren().add(makeALabel(LanguageResourceHandler.SETTINGS_KEY));
-    //controlBox.getChildren().add(makeAButton(LanguageResourceHandler.ABOUT_KEY, () -> showAbout()));
     controlBox.getChildren().add(makeLanguageSelector());
-    controlBox.getChildren().add(makeAButton(LanguageResourceHandler.NEW_SIMULATION_KEY, () -> makeNewWindow()));
 
     return controlBox;
   }
@@ -107,6 +109,23 @@ public class MainView extends ChangeableDisplay{
     return languageSelector;
   }
 
+  private Node makeStyleSelector(){
+    //make GUI component allowing user to choose between dark mode, Duke colors, basic style, etc..
+    HBox styleBox = new HBox();
+    styleBox.getChildren().add(makeALabel(LanguageResourceHandler.STYLE_SELECTOR_KEY));
+    styleBox.getChildren().add(makeAButton(LanguageResourceHandler.DARK_MODE_KEY, () -> changeStyle(DARK_CSS_NAME)));
+    styleBox.getChildren().add(makeAButton(LanguageResourceHandler.DUKE_MODE_KEY, () -> changeStyle(DUKE_CSS_NAME)));
+    styleBox.getChildren().add(makeAButton(LanguageResourceHandler.BASIC_MODE_KEY, () -> changeStyle(BASIC_CSS_NAME)));
+    return styleBox;
+  }
+
+  private void changeStyle(String newStyle){
+    //change the css styling
+    System.out.println(newStyle);
+    myStage.getScene().getStylesheets().clear();
+    myStage.getScene().getStylesheets().add(getClass().getResource(newStyle).toExternalForm());
+  }
+
 
 
 
@@ -114,6 +133,7 @@ public class MainView extends ChangeableDisplay{
     //make a panel with which users can input a new file
     Pane fileInputPanel = new HBox();
     fileInputPanel.getChildren().add(makeAButton(LanguageResourceHandler.SELECT_FILE_KEY, () -> selectFile()));
+    fileInputPanel.getChildren().add(makeAButton(LanguageResourceHandler.NEW_SIMULATION_KEY, () -> makeNewWindow()));
 
     return fileInputPanel;
   }
