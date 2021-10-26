@@ -19,6 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Slider;
 
 
 import java.util.Collection;
@@ -35,6 +36,7 @@ public class SimulationDisplayTest extends DukeApplicationTest{
     resourceHandler = mView.getMyResourceHandler();
     stage.setScene(mView.makeSimulationScene());
     mView.handleSelectedFile(new File("data/game_of_life/blinkers.csv"));
+    simDisp = mView.getSimDisplay();
     stage.show();
     stage.toFront();
     myStage = stage;
@@ -109,6 +111,38 @@ public class SimulationDisplayTest extends DukeApplicationTest{
     } catch (Exception e){
       assertTrue(false);
     }
+  }
+
+  @Test
+  void testChangeSpeedSimple(){
+    Node rootNode = myStage.getScene().getRoot();
+    Slider s = from(rootNode).lookup(".slider").query();
+    changeSpeedSlider(s, 30);
+    assertTrue(doublesEqual(1.0/30.0, simDisp.getAnimationSpeed()));
+  }
+
+  @Test
+  void testChangeSpeedComplex(){
+    Node rootNode = myStage.getScene().getRoot();
+    Slider s = from(rootNode).lookup(".slider").query();
+    changeSpeedSlider(s, 30);
+    assertTrue(doublesEqual(1.0/30, simDisp.getAnimationSpeed()));
+
+    changeSpeedSlider(s, 1);
+    clickOn(resourceHandler.getStringFromKey(LanguageResourceHandler.PAUSE_KEY));
+    testOneStepButtonComplex();
+    changeSpeedSlider(s, 25);
+    assertTrue(doublesEqual(1.0/25.0, simDisp.getAnimationSpeed()));
+  }
+
+  private void changeSpeedSlider(Slider s, double newFPS){
+    setValue(s, newFPS);
+    //line above actually does nothing since it isn't technicaly cliking on the slider, so I need the line below
+    simDisp.changeAnimationSpeed(newFPS);
+  }
+
+  private boolean doublesEqual(double d1, double d2){
+    return (Math.abs(d1 - d2)) < 0.001;
   }
 
   private Button findDesiredButton(String correctText) throws Exception{

@@ -112,14 +112,15 @@ public class Model {
   } //loop through each cell, set its current state to future state, calls updateCurrentStateMethod
 
 
-  public void updateCellMovement(Cell cell) {
-    while (cell.isShouldMove()) {
-      Random random = new Random();
-      int randInt = random.nextInt(modelStateMap.get(0).size() - 1);
-      if (modelStateMap.get(0).get(randInt).getFutureState() == 0) {
-        modelStateMap.get(0).get(randInt).setFutureState(cell.getCurrentState());
-        cell.setShouldMove(false);
-      }
+  public void updateCellMovement(Cell cell)
+  {
+    if(cell.isShouldMove())
+    {
+      int state=cell.getCompareState();
+      Random random=new Random();
+      int randInt= random.nextInt(cell.getNeighborCellStateMap().get(state).size()-1);
+      cell.getNeighborCellStateMap().get(state).get(randInt).setFutureState(cell.getCurrentState());
+      cell.setShouldMove(false);
     }
   }
 

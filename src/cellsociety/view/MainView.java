@@ -83,18 +83,6 @@ public class MainView extends ChangeableDisplay{
   }
 
 
-  /**
-   * Make a panel with GUI components to change the settings, including
-   * fonts, colors, language, and more.
-   * @return a Node with components to change/view settings
-   */
-  private Node makeControlPanel(){
-    HBox controlBox = new HBox();
-    controlBox.getChildren().add(makeLanguageSelector());
-
-    return controlBox;
-  }
-
   private void makeNewWindow(){
     //create a new window to run another simulation
     Stage s = new Stage();
@@ -199,6 +187,18 @@ public class MainView extends ChangeableDisplay{
    */
   public int getNumSimulations(){
     return simulationDisplayList.size();
+  }
+
+  /**
+   * get the simulation display. Used only for testing
+   * @return the simulation display
+   */
+  public SimulationDisplay getSimDisplay(){
+    if (simulationDisplayList.size() > 0) {
+      return simulationDisplayList.get(0);
+    } else{
+      return null;
+    }
   }
 
 

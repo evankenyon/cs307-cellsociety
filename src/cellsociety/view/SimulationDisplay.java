@@ -24,6 +24,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Slider;
 
 
 import java.util.List;
@@ -36,7 +37,8 @@ import java.util.ArrayList;
  */
 public class SimulationDisplay extends ChangeableDisplay{
 
-  protected double secondDelay = 1;
+  protected double framesPerSecond = 1;
+  protected double secondDelay = 1.0 / framesPerSecond;
   private Controller myController;
   protected Timeline myAnimation;
   private boolean paused;
@@ -55,11 +57,16 @@ public class SimulationDisplay extends ChangeableDisplay{
   }
 
   protected void setUpAnimation(){
+    initializeAnimation();
+
+    myAnimation.play();
+    paused = false;
+  }
+
+  private void initializeAnimation(){
     myAnimation = new Timeline();
     myAnimation.setCycleCount(Timeline.INDEFINITE);
     myAnimation.getKeyFrames().add(new KeyFrame(Duration.seconds(secondDelay), e -> step()));
-    myAnimation.play();
-    paused = false;
   }
 
   /**
@@ -95,7 +102,34 @@ public class SimulationDisplay extends ChangeableDisplay{
     v.getChildren().add(controlBox);
     fileNameField = new TextField();
     v.getChildren().add(fileNameField);
+    v.getChildren().add(makeSlider());
     return v;
+  }
+
+  private Node makeSlider(){
+    //make the slider controlling the speed of the animation
+    HBox sliderBox = new HBox();
+    Slider slider =new Slider();
+    slider.setMin(myViewResourceHandler.getMinFramesPerSecond());
+    slider.setMax(myViewResourceHandler.getMaxFramesPerSecond());
+    slider.setShowTickLabels(true);
+    slider.setShowTickMarks(true);
+    slider.setOnMouseClicked(e -> changeAnimationSpeed(slider.getValue()));
+    sliderBox.getChildren().add(makeALabel(LanguageResourceHandler.SPEED_SLIDER_KEY));
+    sliderBox.getChildren().add(slider);
+    return sliderBox;
+  }
+
+  public void changeAnimationSpeed(double newFramesPerSecond){
+    //change speed of animation
+    framesPerSecond = newFramesPerSecond;
+    secondDelay = 1.0 / framesPerSecond;
+    initializeAnimation();
+    if (!paused){
+      myAnimation.play();
+    }
+
+
   }
 
   private void showAbout(){
@@ -149,7 +183,13 @@ public class SimulationDisplay extends ChangeableDisplay{
     return paused;
   }
 
-
+  /**
+   * returns the second delay of the timeline. Used for testing
+   * @return the second delay of the animation
+   */
+  public double getAnimationSpeed(){
+    return secondDelay;
+  }
 
 
 
