@@ -6,7 +6,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public abstract class Rules implements RulesInterface{
+public abstract class Rules implements RulesInterface {
   protected Cell cell;
   protected int cellCurrentState;
   protected ResourceBundle stateAndNeighborsMap;
@@ -26,7 +26,7 @@ public abstract class Rules implements RulesInterface{
     cellStateChange.invoke(this);
   }
 
-  protected void generateNumOneNeighbors() {
+  private void generateNumOneNeighbors() {
     int count = 0;
     for (Cell c : cell.getNeighbors()) {
       if (c.getCurrentState() == 1) {
@@ -46,7 +46,7 @@ public abstract class Rules implements RulesInterface{
   }
 
   public void setCellStateTwo() {
-    cell.setFutureState(1);
+    cell.setFutureState(2);
   }
 
 }
