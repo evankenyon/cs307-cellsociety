@@ -82,8 +82,18 @@ public class MainView extends ChangeableDisplay{
     controlBox.getChildren().add(makeALabel(LanguageResourceHandler.SETTINGS_KEY));
     //controlBox.getChildren().add(makeAButton(LanguageResourceHandler.ABOUT_KEY, () -> showAbout()));
     controlBox.getChildren().add(makeLanguageSelector());
+    controlBox.getChildren().add(makeAButton(LanguageResourceHandler.NEW_SIMULATION_KEY, () -> makeNewWindow()));
 
     return controlBox;
+  }
+
+  private void makeNewWindow(){
+    //create a new window to run another simulation
+    Stage s = new Stage();
+    MainView mv = new MainView();
+    s.setScene(mv.makeSimulationScene());
+    mv.setStage(s);
+    s.show();
   }
 
   private Node makeLanguageSelector(){

@@ -39,7 +39,7 @@ public class SimulationDisplay extends ChangeableDisplay{
   private Controller myController;
   protected Timeline myAnimation;
   private boolean paused;
-  private Button pauseButton;
+  private Button pauseButton, oneStepButton;
   private TextField fileNameField;
 
   public SimulationDisplay(){
@@ -85,7 +85,9 @@ public class SimulationDisplay extends ChangeableDisplay{
     HBox controlBox = new HBox();
     controlBox.getChildren().add(makeAButton(LanguageResourceHandler.ABOUT_KEY, () -> showAbout()));
     pauseButton = makeAButton(LanguageResourceHandler.PAUSE_KEY, () -> playPauseSimulation());
+    oneStepButton = makeAButton(LanguageResourceHandler.ONE_STEP_KEY, () -> oneStep());
     controlBox.getChildren().add(pauseButton);
+    controlBox.getChildren().add(oneStepButton);
     controlBox.getChildren().add(makeAButton(LanguageResourceHandler.SAVE_FILE_KEY, () -> saveFile()));
     v.getChildren().add(controlBox);
     fileNameField = new TextField();
@@ -123,8 +125,25 @@ public class SimulationDisplay extends ChangeableDisplay{
     }
   }
 
+  private void oneStep(){
+    //go through one step at a time
+    myAnimation.pause();
+    pauseButton.setText(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.RESUME_KEY));
+    paused = true;
+
+    step();
+  }
+
   protected void step(){
     myController.step();
+  }
+
+  /**
+   * see if the simulation is paused. Only used for testing purposes
+   * @return true iff the simulation is paused
+   */
+  public boolean getPaused(){
+    return paused;
   }
 
 
