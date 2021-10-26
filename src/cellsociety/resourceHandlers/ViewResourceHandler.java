@@ -12,7 +12,8 @@ public class ViewResourceHandler {
   private final String SIM_WIDTH_KEY = "SimulationWidth";
   private final String WINDOW_WIDTH_KEY = "windowWidth";
   private final String WINDOW_HEIGHT_KEY = "windowHeight";
-
+  private final String MIN_FRAMES_KEY = "MinFramesPerSecond";
+  private final String MAX_FRAMES_KEY = "MaxFramesPerSecond";
 
 
   public ViewResourceHandler() {
@@ -48,5 +49,24 @@ public class ViewResourceHandler {
   public int getWindowHeight(){
     return Integer.parseInt(viewProperties.getProperty(WINDOW_HEIGHT_KEY));
   }
+
+  /**
+   * get the mininum frames per second for a simulation
+   * @return minimum frames per second
+   */
+  public int getMinFramesPerSecond(){
+    return Integer.parseInt(viewProperties.getProperty(MIN_FRAMES_KEY));
+  }
+
+
+  /**
+   * get the max frames per second for a simulation
+   * @return maximum frames per second
+   */
+  public int getMaxFramesPerSecond(){
+    return Integer.parseInt(viewProperties.getProperty(MAX_FRAMES_KEY));
+  }
+
+
 
 }

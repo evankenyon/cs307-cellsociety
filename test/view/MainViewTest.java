@@ -119,13 +119,14 @@ public class MainViewTest extends DukeApplicationTest{
     testFileInput();
     clickOn(resourceHandler.getStringFromKey(LanguageResourceHandler.BASIC_MODE_KEY));
     assertEquals(Color.BLUE, myStage.getScene().getFill()); //not actually blue
+
   }
 
   @Test
   void testAddNewSimulation(){
     clickOn(resourceHandler.getStringFromKey(LanguageResourceHandler.NEW_SIMULATION_KEY));
     //not sure how to test that a new window popped up
-    
+
   }
 
 

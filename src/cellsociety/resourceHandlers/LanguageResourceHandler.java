@@ -30,6 +30,7 @@ public class LanguageResourceHandler {
   public static final String DUKE_MODE_KEY = "DukeMode";
   public static final String BASIC_MODE_KEY = "BasicMode";
   public static final String STYLE_SELECTOR_KEY = "SelectStyle";
+  public static final String SPEED_SLIDER_KEY = "SpeedSlider";
 
   public static final String ENGLISH = "English";
   public static final String SPANISH = "Spanish";
