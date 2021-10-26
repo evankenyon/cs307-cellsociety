@@ -12,7 +12,6 @@ public class PercolationRules extends Rules {
         GameOfLifeRules.class.getPackageName() + ".resources.";
     private static final String STATE_AND_NEIGHBORS_MAP_FILENAME = "PercolationRules";
     private List<Cell> neighbors;
-    private int numOneNeighbors;
 
     public PercolationRules(Cell cell)
     {
