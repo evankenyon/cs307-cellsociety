@@ -34,7 +34,7 @@ public class Model {
     // https://www.boraji.com/how-to-iterate-properites-in-java
     for (String key : simulationInfo.stringPropertyNames()) {
       if (keyValueAlternatives.containsKey(key)) {
-        simulationType = simulationInfo.getProperty(key);
+        simulationType = keyValueAlternatives.getString(simulationInfo.getProperty(key));
       }
     }
   }

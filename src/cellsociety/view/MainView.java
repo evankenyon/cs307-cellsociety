@@ -150,7 +150,7 @@ public class MainView extends ChangeableDisplay{
     FileChooser fileChooser = new FileChooser();
     fileChooser.setInitialDirectory(new File("data/game_of_life"));
     fileChooser.setTitle(myResourceHandler.getSelectFileTitleString());
-    fileChooser.getExtensionFilters().add(new ExtensionFilter("CSV Files", "*.csv"));
+//    fileChooser.getExtensionFilters().add(new ExtensionFilter("CSV Files", "*.csv"));
     fileChooser.getExtensionFilters().add(new ExtensionFilter("SIM Files", "*.sim"));
     File selectedFile = fileChooser.showOpenDialog(myStage);
     handleSelectedFile(selectedFile);

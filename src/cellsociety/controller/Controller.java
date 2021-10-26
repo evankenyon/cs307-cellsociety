@@ -32,10 +32,10 @@ public class Controller {
 
 
   // TODO: actually handle exception
-  public void parseFile(File file) throws FileNotFoundException {
+  public void parseFile(File SimFile) throws FileNotFoundException {
     try {
-      simParser.setupKeyValuePairs(file);
-      csvParser.setFile(file);
+      simParser.setupKeyValuePairs(SimFile);
+      csvParser.setFile(new File(String.format("./data/%s", simParser.getSimulationConfig().getProperty("InitialStates"))));
       csvParser.initializeCellMatrix();
       Cell[][] cellGrid = csvParser.getCellMatrix();
       model.setSimulationInfo(simParser.getSimulationConfig());

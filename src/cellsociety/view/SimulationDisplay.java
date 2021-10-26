@@ -66,9 +66,9 @@ public class SimulationDisplay extends ChangeableDisplay{
    * create the display (i.e. a grid with each cell) to put on the MainView
    * @return a Node to display on the MainView
    */
-  public Node makeDisplay(File CSVFile) throws Exception{
+  public Node makeDisplay(File SimFile) throws Exception{
     try {
-      myController.parseFile(CSVFile);
+      myController.parseFile(SimFile);
     }catch (Exception e){
       e.printStackTrace();
       throw new Exception(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.BAD_FILE_KEY));
