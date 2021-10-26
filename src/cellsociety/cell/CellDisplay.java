@@ -62,8 +62,10 @@ public class CellDisplay {
     if (state == 0) {
       ((Rectangle) myDisp).setFill(OFF_COLOR);
     }
-    else{
+    else if (state == 1){
       ((Rectangle) myDisp).setFill(ON_COLOR);
+    } else {
+      ((Rectangle) myDisp).setFill(Color.RED);
     }
   }
 

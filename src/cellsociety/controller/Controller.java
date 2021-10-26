@@ -3,7 +3,7 @@ package cellsociety.controller;
 import cellsociety.Model.Model;
 import cellsociety.Utilities.CSVGenerator;
 import cellsociety.Utilities.CSVParser;
-import cellsociety.cell.Cell;
+import cellsociety.Utilities.SimParser;
 import cellsociety.view.MainView;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,14 +13,16 @@ import javafx.scene.Node;
 
 public class Controller {
 
-  private CSVParser parser;
-  private CSVGenerator generator;
+  private CSVParser csvParser;
+  private CSVGenerator csvGenerator;
+  private SimParser simParser;
   private Model model;
   private MainView mainView;
 
   public Controller() {
-    this.parser = new CSVParser();
-    this.generator = new CSVGenerator();
+    this.csvParser = new CSVParser();
+    this.csvGenerator = new CSVGenerator();
+    this.simParser = new SimParser();
     this.mainView = null;
     this.model = new Model();
   }
@@ -28,12 +30,13 @@ public class Controller {
 
 
   // TODO: actually handle exception
-  public void parseFile(File file) throws FileNotFoundException {
+  public void parseFile(File SimFile) throws FileNotFoundException {
     try {
-      parser.setFile(file);
-      parser.initializeCellMatrix();
-      Cell[][] cellGrid = parser.getCellMatrix();
-      model.setCellGrid(cellGrid);
+      simParser.setupKeyValuePairs(SimFile);
+      csvParser.setFile(new File(String.format("./data/%s", simParser.getSimulationConfig().getProperty("InitialStates"))));
+      csvParser.initializeCellMatrix();
+      model.setSimulationInfo(simParser.getSimulationConfig());
+      model.setCellGrid(csvParser.getAllCells(), csvParser.getRows(), csvParser.getCols());
     } catch(Exception e){
       e.printStackTrace();
       throw new FileNotFoundException();
@@ -42,7 +45,7 @@ public class Controller {
 
   // TODO: actually handle exception
   public void saveFile(String fileName) throws IOException {
-    generator.createCSVFile(model.getCellGrid(), fileName);
+    csvGenerator.createCSVFile(model.getCellGrid(), fileName);
   }
 
   public void setMainView(MainView mainView) {

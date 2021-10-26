@@ -2,10 +2,11 @@ package cellsociety.Utilities;
 
 import cellsociety.cell.Cell;
 
-import cellsociety.view.SimulationDisplay;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class CSVParser {
@@ -13,13 +14,17 @@ public class CSVParser {
     private int rows;
     private int cols;
     private int [][] integer2DArray;
-    private Cell[][] cellMatrix;
+    private List<Cell> cells;
+
+    public CSVParser() {
+        cells = new ArrayList<>();
+    }
 
     public void setFile(File file) {
         this.file = file;
     }
 
-    public void makeInteger2DArray() throws FileNotFoundException{
+    private void makeInteger2DArray() throws FileNotFoundException{
         Scanner scanner;
         scanner = new Scanner(file);
         if(scanner.hasNextLine()){
@@ -47,26 +52,25 @@ public class CSVParser {
 
     public void initializeCellMatrix() throws FileNotFoundException {
         this.makeInteger2DArray();
-        Cell[][] cellMatrix = new Cell[rows][cols];
-        for(int row = 0; row <integer2DArray.length; row++){
+        for(int row = 0; row < integer2DArray.length; row++){
             for(int col = 0; col<integer2DArray[0].length; col++){
                 Cell newCell = new Cell(row, col, integer2DArray[row][col], integer2DArray.length, integer2DArray[0].length);
                 //setCellShapeAndPosition(newCell, SimulationDisplay.DEFAULT_WIDTH / cols,
                     //SimulationDisplay.DEFAULT_WIDTH / rows, row, col);
-                cellMatrix[row][col] = newCell;
+                cells.add(newCell);
             }
         }
-        this.cellMatrix = cellMatrix;
     }
 
-    private void setCellShapeAndPosition(Cell c, int cellWidth, int cellHeight, int i, int j){
-        c.setWidth(cellWidth);
-        c.setHeight(cellHeight);
-        c.setX(cellWidth * j);
-        c.setY(cellHeight * i);
+    public List<Cell> getAllCells() {
+        return cells;
     }
 
-    public Cell[][] getCellMatrix() {
-        return cellMatrix;
+    public int getRows() {
+        return rows;
+    }
+
+    public int getCols() {
+        return cols;
     }
 }

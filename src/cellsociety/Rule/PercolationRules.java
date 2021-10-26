@@ -11,13 +11,10 @@ public class PercolationRules extends Rules {
     private static final String DEFAULT_RESOURCE_PACKAGE =
         GameOfLifeRules.class.getPackageName() + ".resources.";
     private static final String STATE_AND_NEIGHBORS_MAP_FILENAME = "PercolationRules";
-    private List<Cell> neighbors;
 
     public PercolationRules(Cell cell)
     {
         super(cell);
         stateAndNeighborsMap = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + STATE_AND_NEIGHBORS_MAP_FILENAME);
-        this.neighbors=cell.getNeighbors();
     }
-
 }

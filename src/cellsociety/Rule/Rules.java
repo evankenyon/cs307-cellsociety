@@ -8,24 +8,29 @@ import java.util.ResourceBundle;
 
 public abstract class Rules implements RulesInterface {
   protected Cell cell;
-  protected int cellCurrentState;
   protected ResourceBundle stateAndNeighborsMap;
-  protected int numOneNeighbors;
 
   public Rules(Cell cell) {
     this.cell=cell;
-    this.cellCurrentState=cell.getCurrentState();
-    generateNumOneNeighbors();
   }
 
   public void setState()
       throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-    Method cellStateChange = this.getClass()
-        .getDeclaredMethod(stateAndNeighborsMap.getString(cellCurrentState + "," + numOneNeighbors));
+    Method cellStateChange = null;
+    try {
+      cellStateChange = this.getClass()
+          .getDeclaredMethod(stateAndNeighborsMap.getString(cell.getCurrentState() + "," + cell.numOfStateNeighbors(1)));
+    } catch (NoSuchMethodException e) {
+      cellStateChange = this.getClass().getSuperclass()
+          .getDeclaredMethod(stateAndNeighborsMap.getString(cell.getCurrentState() + "," + cell.numOfStateNeighbors(1)));
+    }
+
     cellStateChange.setAccessible(true);
     cellStateChange.invoke(this);
   }
 
+<<<<<<< HEAD
+=======
   private void generateNumOneNeighbors() {
     int count = 0;
     for (Cell c : cell.getNeighbors()) {
@@ -40,6 +45,7 @@ public abstract class Rules implements RulesInterface {
     cell.setFutureState(state);
   }
 
+>>>>>>> 23fd91c1ba2f0c8cb7dc3d045cc8fd56aed8e1d5
 
   public void setCellStateZero() {
     cell.setFutureState(0);

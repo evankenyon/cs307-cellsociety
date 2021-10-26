@@ -17,6 +17,8 @@ import javafx.scene.shape.Rectangle;
 
 
 public class Cell {
+    public static final int DEFAULT_WIDTH = 20;
+    public static final int DEFAULT_HEIGHT = 20;
 
     private int currentState;
     private int futureState;
@@ -25,16 +27,12 @@ public class Cell {
     private List<CornerLocation> corners;
     private int iIndex;
     private int jIndex;
-    private HashMap<Integer, Integer> neighborStateMap;
-    private HashMap<Integer, List<Cell>> neighborCellStateMap;
-
+    private Map<Integer, List<Cell>> neighborCellStateMap;
     private CellDisplay myDisplay;
-    private boolean shouldMove=false;
-    private int chrononCounter=0;
-    private int energy=5;
+    private boolean shouldMove;
+    private int chrononCounter;
+    private int energy;
     private int compareState;
-    public static final int DEFAULT_WIDTH = 20;
-    public static final int DEFAULT_HEIGHT = 20;
 
     public Cell(int i, int j, int initialState, int rows, int columns){
         this.iIndex = i;
@@ -42,18 +40,17 @@ public class Cell {
         this.currentState = initialState;
         corners = new RectangleCellCornerLocationGenerator(rows, columns).generateCorners(i, j);
         neighbors = new ArrayList<>();
-        myDisplay = new CellDisplay(i * DEFAULT_WIDTH, j * DEFAULT_WIDTH, currentState);
+        myDisplay = new CellDisplay(j * DEFAULT_WIDTH, i * DEFAULT_WIDTH, currentState);
+        neighborCellStateMap = new HashMap<>();
+        shouldMove = false;
+        chrononCounter = 0;
+        energy = 5;
     }
 
 
 
     public Cell(int i, int j, int initialState){
         this(i, j, initialState, 10, 10);
-//        this.iIndex = i;
-//        this.jIndex = j;
-//        this.currentState = initialState;
-//        neighbors = new ArrayList<>();
-//        myDisplay = new CellDisplay(i * DEFAULT_WIDTH, j * DEFAULT_WIDTH, currentState);
     }
 
 
@@ -156,39 +153,14 @@ public class Cell {
     //Testing purposes
     public void setNeighbors(List<Cell> neighbors) {this.neighbors = neighbors;}
 
-    //FIXME: Not complete
-    public void initializeNeighborList(){
-
-        neighbors = new ArrayList<>();
-
-
-        //FIXME: loop through the cellGrid somehow using corners, then do this next part:
-//
-//    Cell cell = new Cell(0, 0, 0);
-//    if (!neighbors.contains(cell)) {
-//        neighbors.add(cell);
-//    }
-//
-        this.createNeighborStateMap();
-    }
-
     public int numOfStateNeighbors(int state){
-        if(neighborStateMap.containsKey(state)){
-            return neighborStateMap.get(state);
+        if(neighborCellStateMap.containsKey(state)){
+            return neighborCellStateMap.get(state).size();
         }
         return 0;
     }
 
-    public void createNeighborStateMap(){
-        neighborStateMap = new HashMap<>();
-        for(Cell neigbor: neighbors){
-           int state = neigbor.getCurrentState();
-            neighborStateMap.putIfAbsent(state, 0);
-            neighborStateMap.put(state, neighborStateMap.get(state)+1);
-        }
-    }
-
-    public void createNeighborCellStateMap(){
+    public void updateCellNeighborStates(){
         neighborCellStateMap = new HashMap<>();
         for(Cell neighbor: neighbors){
             int state = neighbor.getCurrentState();
@@ -196,11 +168,8 @@ public class Cell {
             neighborCellStateMap.get(state).add(neighbor);
         }
     }
-    public HashMap<Integer, Integer> getNeighborStateMap() {
-        return neighborStateMap;
-    }
 
-    public HashMap<Integer, List<Cell>> getNeighborCellStateMap() {
+    public Map<Integer, List<Cell>> getNeighborCellStateMap() {
         return neighborCellStateMap;
     }
 
@@ -218,12 +187,12 @@ public class Cell {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Cell cell = (Cell) o;
-        return currentState == cell.currentState && futureState == cell.futureState && iIndex == cell.iIndex && jIndex == cell.jIndex && Objects.equals(neighbors, cell.neighbors) && Arrays.equals(cellGrid, cell.cellGrid) && Objects.equals(corners, cell.corners) && Objects.equals(neighborStateMap, cell.neighborStateMap);
+        return currentState == cell.currentState && futureState == cell.futureState && iIndex == cell.iIndex && jIndex == cell.jIndex && Objects.equals(neighbors, cell.neighbors) && Arrays.equals(cellGrid, cell.cellGrid) && Objects.equals(corners, cell.corners) && Objects.equals(neighborCellStateMap, cell.neighborCellStateMap);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(currentState, futureState, neighbors, corners, iIndex, jIndex, neighborStateMap);
+        int result = Objects.hash(currentState, futureState, neighbors, corners, iIndex, jIndex, neighborCellStateMap);
         result = 31 * result + Arrays.hashCode(cellGrid);
         return result;
     }
