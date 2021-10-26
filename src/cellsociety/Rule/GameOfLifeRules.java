@@ -11,9 +11,11 @@ public class GameOfLifeRules extends Rules {
   private static final String DEFAULT_RESOURCE_PACKAGE =
       GameOfLifeRules.class.getPackageName() + ".resources.";
   private static final String STATE_AND_NEIGHBORS_MAP_FILENAME = "GameOfLifeRules";
+  private int numOneNeighbors;
 
   public GameOfLifeRules(Cell cell) {
     super(cell);
+    numOneNeighbors = 0;
     stateAndNeighborsMap = ResourceBundle.getBundle(
         DEFAULT_RESOURCE_PACKAGE + STATE_AND_NEIGHBORS_MAP_FILENAME);
   }

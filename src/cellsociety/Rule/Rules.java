@@ -19,10 +19,10 @@ public abstract class Rules implements RulesInterface {
     Method cellStateChange = null;
     try {
       cellStateChange = this.getClass()
-          .getDeclaredMethod(stateAndNeighborsMap.getString(cell.getCurrentState() + "," + cell.getNumNeighborsOfState(1)));
+          .getDeclaredMethod(stateAndNeighborsMap.getString(cell.getCurrentState() + "," + cell.numOfStateNeighbors(1)));
     } catch (NoSuchMethodException e) {
       cellStateChange = this.getClass().getSuperclass()
-          .getDeclaredMethod(stateAndNeighborsMap.getString(cell.getCurrentState() + "," + cell.getNumNeighborsOfState(1)));
+          .getDeclaredMethod(stateAndNeighborsMap.getString(cell.getCurrentState() + "," + cell.numOfStateNeighbors(1)));
     }
 
     cellStateChange.setAccessible(true);

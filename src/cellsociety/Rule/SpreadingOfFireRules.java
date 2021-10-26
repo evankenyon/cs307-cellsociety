@@ -48,7 +48,7 @@ public class SpreadingOfFireRules extends Rules {
 
   private void burnTree() {
     Random rand = new Random();
-    if (cell.getNumNeighborsOfState(2) > 0 && rand.nextDouble() < probCatch) {
+    if (cell.numOfStateNeighbors(2) > 0 && rand.nextDouble() < probCatch) {
       cell.setFutureState(2);
     } else {
       cell.setFutureState(1);

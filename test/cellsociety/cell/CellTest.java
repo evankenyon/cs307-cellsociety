@@ -4,8 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import javafx.scene.paint.Color;
-import javafx.scene.Node;
 import javafx.scene.shape.Rectangle;
 
 class CellTest {
@@ -48,9 +46,9 @@ class CellTest {
     Cell potentialNeighborTwo = new Cell(1, 0, 0, DEFAULT_GRID_HEIGHT, DEFAULT_GRID_WIDTH);
     cell.updateNeighbors(potentialNeighborOne, 1);
     cell.updateNeighbors(potentialNeighborTwo, 1);
-    cell.createNeighborStateMap();
-    assertEquals(expected, cell.getNeighborStateMap().get(1));
-    assertEquals(expected, cell.getNeighborStateMap().get(0));
+    cell.updateCellNeighborStates();
+    assertEquals(expected, cell.numOfStateNeighbors(1));
+    assertEquals(expected, cell.numOfStateNeighbors(0));
   }
 
 

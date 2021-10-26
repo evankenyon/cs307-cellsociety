@@ -2,7 +2,6 @@ package cellsociety.Model;
 
 import cellsociety.Rule.RulesInterface;
 import cellsociety.cell.Cell;
-import cellsociety.Rule.GameOfLifeRules;
 
 import java.util.*;
 
@@ -52,6 +51,7 @@ public class Model {
   public void setCellGrid(Cell[][] cellGrid) {
     this.cellGrid = cellGrid;
     updateAllNeighbors();
+    updateAllCellNeighborMaps();
   }
 
   public Cell[][] getCellGrid() {
@@ -112,19 +112,20 @@ public class Model {
   } //loop through each cell, set its current state to future state, calls updateCurrentStateMethod
 
 
-  public void updateCellMovement(Cell cell)
+  private void updateCellMovement(Cell cell)
   {
+    // Can actually prolly move all this to cell class
     if(cell.isShouldMove())
     {
       int state=cell.getCompareState();
       Random random=new Random();
-      int randInt= random.nextInt(cell.getNeighborCellStateMap().get(state).size()-1);
+      int randInt= random.nextInt(cell.numOfStateNeighbors(state)-1);
       cell.getNeighborCellStateMap().get(state).get(randInt).setFutureState(cell.getCurrentState());
       cell.setShouldMove(false);
     }
   }
 
-  public void updateAllCellStates() {
+  private void updateAllCellStates() {
     for (int row = 0; row < cellGrid.length; row++) {
       for (int col = 0; col < cellGrid[0].length; col++) {
         cellGrid[row][col].updateState();
@@ -132,10 +133,10 @@ public class Model {
     }
   }
 
-  public void updateAllCellNeighborMaps() {
+  private void updateAllCellNeighborMaps() {
     for (int row = 0; row < cellGrid.length; row++) {
       for (int col = 0; col < cellGrid[0].length; col++) {
-        cellGrid[row][col].createNeighborStateMap();
+        cellGrid[row][col].updateCellNeighborStates();
       }
     }
   }
