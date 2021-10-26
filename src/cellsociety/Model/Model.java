@@ -26,6 +26,15 @@ public class Model {
     cellGrid = null;
   }
 
+  public void setCellGrid(List<Cell> cellList, int rows, int cols){
+    cellGrid = new Cell[rows][cols];
+    for(Cell cell: cellList){
+      int rowPosition = cell.getiIndex();
+      int colPosition = cell.getjIndex();
+      cellGrid[rowPosition][colPosition] = cell;
+    }
+
+  }
   public void setCellGrid(Cell[][] cellGrid) {
     this.cellGrid = cellGrid;
     updateAllNeighbors();
@@ -74,9 +83,16 @@ public class Model {
    * loop through each cell, set its future state
    */
   public void updateCells() {
+
     for (int row = 0; row < cellGrid.length; row++) {
       for (int col = 0; col < cellGrid[0].length; col++) {
         cellGrid[row][col].updateState();
+      }
+    }
+
+    for (int row = 0; row < cellGrid.length; row++) {
+      for (int col = 0; col < cellGrid[0].length; col++) {
+        cellGrid[row][col].createNeighborStateMap();
       }
     }
   } //loop through each cell, set its current state to future state, calls updateCurrentStateMethod

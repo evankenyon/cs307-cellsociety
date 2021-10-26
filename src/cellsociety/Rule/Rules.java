@@ -36,6 +36,7 @@ public abstract class Rules implements RulesInterface{
     numOneNeighbors = count;
   }
 
+
   public void setCellStateZero() {
     cell.setFutureState(0);
   }

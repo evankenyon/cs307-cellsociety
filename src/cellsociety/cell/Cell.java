@@ -51,6 +51,14 @@ public class Cell {
     }
 
 
+    public int getjIndex() {
+        return jIndex;
+    }
+
+    public int getiIndex() {
+        return iIndex;
+    }
+
     /**
      * change width of the display
      * @param width will be the width of hte display
