@@ -41,18 +41,13 @@ public class Cell {
         this.currentState = initialState;
         corners = new RectangleCellCornerLocationGenerator(rows, columns).generateCorners(i, j);
         neighbors = new ArrayList<>();
-        myDisplay = new CellDisplay(i * DEFAULT_WIDTH, j * DEFAULT_WIDTH, currentState);
+        myDisplay = new CellDisplay(j * DEFAULT_WIDTH, i * DEFAULT_WIDTH, currentState);
     }
 
 
 
     public Cell(int i, int j, int initialState){
         this(i, j, initialState, 10, 10);
-//        this.iIndex = i;
-//        this.jIndex = j;
-//        this.currentState = initialState;
-//        neighbors = new ArrayList<>();
-//        myDisplay = new CellDisplay(i * DEFAULT_WIDTH, j * DEFAULT_WIDTH, currentState);
     }
 
 

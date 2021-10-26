@@ -41,5 +41,17 @@ class CellTest {
     assertEquals(((Rectangle)cell.getMyDisplay()).getFill(), CellDisplay.OFF_COLOR);
   }
 
+  @Test
+  void createNeighborStateMapCorrect() {
+    int expected = 1;
+    Cell potentialNeighborOne = new Cell(1, 2, 1, DEFAULT_GRID_HEIGHT, DEFAULT_GRID_WIDTH);
+    Cell potentialNeighborTwo = new Cell(1, 0, 0, DEFAULT_GRID_HEIGHT, DEFAULT_GRID_WIDTH);
+    cell.updateNeighbors(potentialNeighborOne, 1);
+    cell.updateNeighbors(potentialNeighborTwo, 1);
+    cell.createNeighborStateMap();
+    assertEquals(expected, cell.getNeighborStateMap().get(1));
+    assertEquals(expected, cell.getNeighborStateMap().get(0));
+  }
+
 
 }

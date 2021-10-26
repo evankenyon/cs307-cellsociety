@@ -19,5 +19,4 @@ public class PercolationRules extends Rules {
         stateAndNeighborsMap = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + STATE_AND_NEIGHBORS_MAP_FILENAME);
         this.neighbors=cell.getNeighbors();
     }
-
 }

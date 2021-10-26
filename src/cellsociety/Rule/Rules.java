@@ -20,8 +20,15 @@ public abstract class Rules implements RulesInterface {
 
   public void setState()
       throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-    Method cellStateChange = this.getClass()
-        .getDeclaredMethod(stateAndNeighborsMap.getString(cellCurrentState + "," + numOneNeighbors));
+    Method cellStateChange = null;
+    try {
+      cellStateChange = this.getClass()
+          .getDeclaredMethod(stateAndNeighborsMap.getString(cellCurrentState + "," + numOneNeighbors));
+    } catch (NoSuchMethodException e) {
+      cellStateChange = this.getClass().getSuperclass()
+          .getDeclaredMethod(stateAndNeighborsMap.getString(cellCurrentState + "," + numOneNeighbors));
+    }
+
     cellStateChange.setAccessible(true);
     cellStateChange.invoke(this);
   }

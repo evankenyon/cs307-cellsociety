@@ -18,14 +18,6 @@ public class GameOfLifeRules extends Rules {
         DEFAULT_RESOURCE_PACKAGE + STATE_AND_NEIGHBORS_MAP_FILENAME);
   }
 
-  public void setState()
-      throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-    Method cellStateChange = this.getClass().getSuperclass()
-        .getDeclaredMethod(stateAndNeighborsMap.getString(cellCurrentState + "," + numOneNeighbors));
-    cellStateChange.setAccessible(true);
-    cellStateChange.invoke(this);
-  }
-
   //For testing purposes
   public void setNumOneNeighbors(int numOneNeighbors) {
     this.numOneNeighbors = numOneNeighbors;

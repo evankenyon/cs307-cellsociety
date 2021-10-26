@@ -13,25 +13,29 @@ public class Model {
   // Model.class.getPackageName() code borrowed from lab_reflection course gitlab repo
   private static final String DEFAULT_RESOURCE_PACKAGE =
       Model.class.getPackageName() + ".resources.";
-  private static final String NUM_CORNERS_FILENAME = "numCorners";
+  private static final String NUM_CORNERS_FILENAME = "NumCorners";
+  private static final String KEY_VALUE_ALTERNATIVES_FILENAME = "KeyValueAlternatives";
   private Cell[][] cellGrid;
-  private Map<String, String> simulationInfo;
+  private String simulationType;
   private ResourceBundle numCorners;
+  private ResourceBundle keyValueAlternatives;
   private HashMap<Integer, List<Cell>> modelStateMap;
 
 
   public Model() {
     numCorners = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + NUM_CORNERS_FILENAME);
+    keyValueAlternatives = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + KEY_VALUE_ALTERNATIVES_FILENAME);
     // TODO: implement this properly
     cellGrid = null;
-    simulationInfo = new HashMap<>();
   }
 
   public void setSimulationInfo(Properties simulationInfo) {
     // Borrowed code to loop through props keys and values from
     // https://www.boraji.com/how-to-iterate-properites-in-java
     for (String key : simulationInfo.stringPropertyNames()) {
-      this.simulationInfo.put(key, simulationInfo.getProperty(key));
+      if (keyValueAlternatives.containsKey(key)) {
+        simulationType = simulationInfo.getProperty(key);
+      }
     }
   }
 
@@ -66,9 +70,8 @@ public class Model {
   private void updateSingleCellNeighbors(Cell cell) {
     for (int checkAgainstRow = 0; checkAgainstRow < cellGrid.length; checkAgainstRow++) {
       for (int checkAgainstCol = 0; checkAgainstCol < cellGrid[0].length; checkAgainstCol++) {
-        String determinerVal = simulationInfo.get(numCorners.getString("NumCornersDeterminer"));
         cell.updateNeighbors(cellGrid[checkAgainstRow][checkAgainstCol],
-            Integer.parseInt(numCorners.getString(determinerVal)));
+            Integer.parseInt(numCorners.getString(simulationType)));
       }
     }
   }
@@ -79,7 +82,6 @@ public class Model {
   public void findNextStateForEachCell() {
     for (int row = 0; row < cellGrid.length; row++) {
       for (int col = 0; col < cellGrid[0].length; col++) {
-        String simulationType = simulationInfo.get(numCorners.getString("NumCornersDeterminer"));
         RulesInterface r = null;
         try {
           r = (RulesInterface) Class.forName(
