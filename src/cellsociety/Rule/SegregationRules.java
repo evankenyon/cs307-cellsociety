@@ -26,7 +26,13 @@ public class SegregationRules extends Rules {
                 count++;
             }
         }
-        if ((count/ neighbors.size())<satisfactionThreshold){}//Implement movement logic
+        if ((count/ neighbors.size())<satisfactionThreshold){moveCell();}//Implement movement logic
+    }
+
+    public void moveCell()
+    {
+        cell.setFutureState(0);
+        cell.setShouldMove(true);
     }
 
 }

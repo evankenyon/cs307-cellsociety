@@ -4,11 +4,9 @@ import cellsociety.Rule.RulesInterface;
 import cellsociety.cell.Cell;
 import cellsociety.Rule.GameOfLifeRules;
 
-import java.util.HashMap;
-import java.util.ResourceBundle;
+import java.util.*;
+
 import javafx.scene.Node;
-import java.util.List;
-import java.util.ArrayList;
 
 public class Model {
 
@@ -75,6 +73,7 @@ public class Model {
         //TODO: Implement properly
         try {
           r.setState();
+          updateCellMovement(cellGrid[row][col]);
         } catch (Exception e) {
           e.printStackTrace();
         }
@@ -91,6 +90,20 @@ public class Model {
     createModelStateMap();
   } //loop through each cell, set its current state to future state, calls updateCurrentStateMethod
 
+
+  public void updateCellMovement(Cell cell)
+  {
+    while(cell.isShouldMove())
+    {
+      Random random=new Random();
+      int randInt= random.nextInt(modelStateMap.get(0).size()-1);
+      if(modelStateMap.get(0).get(randInt).getFutureState()==0)
+      {
+        modelStateMap.get(0).get(randInt).setFutureState(cell.getCurrentState());
+        cell.setShouldMove(false);
+      }
+    }
+  }
 
   public void updateAllCellStates(){
     for (int row = 0; row < cellGrid.length; row++) {
