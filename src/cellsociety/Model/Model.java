@@ -3,6 +3,8 @@ package cellsociety.Model;
 import cellsociety.Rule.RulesInterface;
 import cellsociety.cell.Cell;
 import cellsociety.Rule.GameOfLifeRules;
+
+import java.util.HashMap;
 import java.util.ResourceBundle;
 import javafx.scene.Node;
 import java.util.List;
@@ -17,6 +19,7 @@ public class Model {
   Cell[][] cellGrid;
   String simulationType;
   private ResourceBundle numCorners;
+  private HashMap<Integer, List<Cell>> modelStateMap;
 
 
   public Model() {
@@ -26,6 +29,15 @@ public class Model {
     cellGrid = null;
   }
 
+  public void setCellGrid(List<Cell> cellList, int rows, int cols){
+    cellGrid = new Cell[rows][cols];
+    for(Cell cell: cellList){
+      int rowPosition = cell.getiIndex();
+      int colPosition = cell.getjIndex();
+      cellGrid[rowPosition][colPosition] = cell;
+    }
+
+  }
   public void setCellGrid(Cell[][] cellGrid) {
     this.cellGrid = cellGrid;
     updateAllNeighbors();
@@ -73,14 +85,28 @@ public class Model {
   /**
    * loop through each cell, set its future state
    */
-  public void updateCells() {
+  public void updateModel() {
+    updateAllCellStates();
+    updateAllCellNeighborMaps();
+    createModelStateMap();
+  } //loop through each cell, set its current state to future state, calls updateCurrentStateMethod
+
+
+  public void updateAllCellStates(){
     for (int row = 0; row < cellGrid.length; row++) {
       for (int col = 0; col < cellGrid[0].length; col++) {
         cellGrid[row][col].updateState();
       }
     }
-  } //loop through each cell, set its current state to future state, calls updateCurrentStateMethod
+  }
 
+  public void updateAllCellNeighborMaps(){
+    for (int row = 0; row < cellGrid.length; row++) {
+      for (int col = 0; col < cellGrid[0].length; col++) {
+        cellGrid[row][col].createNeighborStateMap();
+      }
+    }
+  }
   /**
    * get a list of all the nodes to go on screen, representing displays of each cell
    *
@@ -94,6 +120,18 @@ public class Model {
       }
     }
     return nodeList;
+  }
+
+  public void createModelStateMap(){
+    modelStateMap = new HashMap<>();
+    for (int row = 0; row < cellGrid.length; row++) {
+      for (int col = 0; col < cellGrid[0].length; col++) {
+        Cell cell = cellGrid[row][col];
+        int cellCurrentState = cell.getCurrentState();
+        modelStateMap.putIfAbsent(cellCurrentState, new ArrayList<>());
+        modelStateMap.get(cellCurrentState).add(cell);
+      }
+    }
   }
 
 }

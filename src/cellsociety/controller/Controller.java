@@ -4,7 +4,6 @@ import cellsociety.Model.Model;
 import cellsociety.Utilities.CSVGenerator;
 import cellsociety.Utilities.CSVParser;
 import cellsociety.cell.Cell;
-import cellsociety.cell.CellDisplay;
 import cellsociety.view.MainView;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -59,8 +58,8 @@ public class Controller {
   }
 
   public void step(){
-      model.findNextStateForEachCell();
-      model.updateCells();
+    model.findNextStateForEachCell();
+    model.updateModel();
   }
 
 }

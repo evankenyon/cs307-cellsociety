@@ -27,8 +27,8 @@ public class CSVParser {
             dimensionInformation = dimensionInformation.strip();
             String[] dimensions = dimensionInformation.split(",");
             //FIXME: Need to throw an exception when it isnt an integer
-             rows = Integer.valueOf(dimensions[0]);
-             cols = Integer.valueOf(dimensions[1]);
+             rows = Integer.valueOf(dimensions[1]);
+             cols = Integer.valueOf(dimensions[0]);
         }
         int[][] integer2DArray = new int[rows][cols];
         int currentXIndex = 0;
