@@ -6,13 +6,11 @@ import java.util.List;
 import java.util.Random;
 
 public class PredatorPreyRules extends Rules {
-    private List<Cell> neighbors;
     private int reproductionCycle=3;
 
     public PredatorPreyRules(Cell cell)
     {
         super(cell);
-        this.neighbors=cell.getNeighbors();
     }
 
 
@@ -20,17 +18,25 @@ public class PredatorPreyRules extends Rules {
     {
         if(cell.getCurrentState()==1)
         {
-            if(cell.getNeighborStateMap().get(0)>0) {move(0);}
+            if(cell.getNeighborCellStateMap().get(0).size()>0) {
+                cell.setCompareState(0);
+                cell.setShouldMove(true);
+                checkReproduction();
+            }
             else{cell.setFutureState(cell.getCurrentState());}
         }
         if (cell.getCurrentState()==2)
         {
             if(cell.getEnergy()!=0) {
-                if (cell.getNeighborStateMap().get(1) > 0) {
-                    move(1);
+                if (cell.getNeighborCellStateMap().get(1).size() > 0) {
+                    cell.setCompareState(1);
+                    cell.setShouldMove(true);
+                    checkReproduction();
                     cell.setEnergy(cell.getEnergy() + 1);
-                } else if (cell.getNeighborStateMap().get(0) > 0) {
-                    move(0);
+                } else if (cell.getNeighborCellStateMap().get(0).size() > 0) {
+                    cell.setCompareState(0);
+                    cell.setShouldMove(true);
+                    checkReproduction();
                 }
                 else{cell.setFutureState(cell.getCurrentState());}
             }
@@ -42,20 +48,8 @@ public class PredatorPreyRules extends Rules {
     }
 
 
-
-    public void move(int type)
+    public void checkReproduction()
     {
-        boolean temp=true;
-        while(temp)
-        {
-            Random random=new Random();
-            int randInt= random.nextInt(neighbors.size()-1);
-            if(neighbors.get(randInt).getCurrentState()==type && neighbors.get(randInt).getFutureState()==type)
-            {
-                neighbors.get(randInt).setFutureState(cell.getCurrentState());
-                temp=false;
-            }
-        }
         if (cell.getChrononCounter()==reproductionCycle) {
             cell.setFutureState(cell.getCurrentState());
             cell.setChrononCounter(0);

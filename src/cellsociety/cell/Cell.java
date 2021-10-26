@@ -32,6 +32,7 @@ public class Cell {
     private boolean shouldMove=false;
     private int chrononCounter=0;
     private int energy=5;
+    private int compareState;
     public static final int DEFAULT_WIDTH = 20;
     public static final int DEFAULT_HEIGHT = 20;
 
@@ -112,6 +113,14 @@ public class Cell {
         return energy;
     }
 
+    public int getCompareState() {
+        return compareState;
+    }
+
+    public void setCompareState(int compareState) {
+        this.compareState = compareState;
+    }
+
     public void updateState(){
         currentState = futureState;
         myDisplay.changeState(currentState);
@@ -189,6 +198,10 @@ public class Cell {
     }
     public HashMap<Integer, Integer> getNeighborStateMap() {
         return neighborStateMap;
+    }
+
+    public HashMap<Integer, List<Cell>> getNeighborCellStateMap() {
+        return neighborCellStateMap;
     }
 
 

@@ -18,21 +18,15 @@ public class SegregationRules extends Rules {
 
     public void setState()
     {
-        int count=0;
-        for (Cell neighbor: neighbors)
-        {
-            if (neighbor.getCurrentState()==cell.getCurrentState())
-            {
-                count++;
-            }
-        }
-        if ((count/ neighbors.size())<satisfactionThreshold){moveCell();}//Implement movement logic
+        int countOfAgent=cell.getNeighborCellStateMap().get(cell.getCurrentState()).size();
+        if ((countOfAgent/ neighbors.size())<satisfactionThreshold){moveCell();}
     }
 
     public void moveCell()
     {
         cell.setFutureState(0);
         cell.setShouldMove(true);
+        cell.setCompareState(0);
     }
 
 }
