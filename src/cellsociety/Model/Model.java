@@ -142,6 +142,7 @@ public class Model {
   }
 
   public void createModelStateMap() {
+    modelStateMap = new HashMap<>();
     for(Cell cell: cellList){
       int cellCurrentState = cell.getCurrentState();
       modelStateMap.putIfAbsent(cellCurrentState, new ArrayList<>());
