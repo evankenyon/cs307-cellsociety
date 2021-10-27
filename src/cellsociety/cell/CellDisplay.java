@@ -40,6 +40,14 @@ public class CellDisplay {
   }
 
   /**
+   * change the color corresponding to each state
+   * @param colors is an array where colors[i] is the color for the ith state in the simulation
+   */
+  public void setColors(Color[] colors){
+    stateColors = colors;
+  }
+
+  /**
    * change width of the display
    * @param width will be the width of hte display
    */

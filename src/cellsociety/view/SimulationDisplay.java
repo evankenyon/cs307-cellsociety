@@ -109,12 +109,14 @@ public class SimulationDisplay extends ChangeableDisplay{
     int[] gridShape = myController.getGridShape();
     int numRows = gridShape[0];
     int numCols = gridShape[1];
-    double widthPerCell = myViewResourceHandler.simulationWidth() / numCols;
-    double heightPerCell = myViewResourceHandler.simulationWidth() / numRows;
+    double widthPerCell = myViewResourceHandler.simulationWidth() / (numCols + 0.01);
+    double heightPerCell = myViewResourceHandler.simulationWidth() / (numRows + 0.01);
     for (Cell cell : allCells){
-      CellDisplay newDisplay = new CellDisplay(cell.getiIndex() * widthPerCell,
-          cell.getjIndex() * heightPerCell, widthPerCell, heightPerCell, cell.getCurrentState());
+      CellDisplay newDisplay = new CellDisplay(cell.getiIndex() * heightPerCell,
+          cell.getjIndex() * widthPerCell, widthPerCell, heightPerCell, cell.getCurrentState());
       newDisplay.setCell(cell);
+      newDisplay.setColors(myViewResourceHandler.getColorsForSimulation(
+          myController.getSimulationType()));
       cell.setDisplay(newDisplay);
       displayNodes.add(newDisplay.getMyDisplay());
       allCellDisplays.add(newDisplay);
@@ -160,8 +162,6 @@ public class SimulationDisplay extends ChangeableDisplay{
     if (!paused){
       myAnimation.play();
     }
-
-
   }
 
   private void showAbout(){

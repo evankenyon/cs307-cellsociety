@@ -89,4 +89,12 @@ public class Controller {
     return model.getGridShape();
   }
 
+  /**
+   * get the simulation type, e.g. "GameOfLife" or "Percolation"
+   * @return the the model's string simulationType
+   */
+  public String getSimulationType(){
+    return model.getSimulationType();
+  }
+
 }
