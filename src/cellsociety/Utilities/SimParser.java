@@ -16,6 +16,7 @@ public class SimParser {
       SimParser.class.getPackageName() + ".resources.";
   private static final String OPTIONAL_KEYS_FILENAME = "OptionalKeys";
   private static final String REQUIRED_KEYS_FILENAME = "RequiredKeys";
+  private static final String NUM_REQUIRED_KEYS_FILENAME = "NumRequiredKeys";
 
   private Properties simulationConfig;
   private ResourceBundle requiredKeys;
@@ -31,13 +32,16 @@ public class SimParser {
   public void setupKeyValuePairs(File simFile) throws IOException, InputMismatchException {
     // Used https://mkyong.com/java/java-read-a-file-from-resources-folder/ to learn how to properly
     // setup pathname
-
-    String pathName = String.format("%s/%s", simFile.getParentFile().getName(), simFile.getName());
-
+    File currFile = simFile;
+    StringBuilder pathName = new StringBuilder(simFile.getName());
+    while (!currFile.getParentFile().getName().equals("data")) {
+      pathName.insert(0, String.format("%s/", currFile.getParentFile().getName()));
+      currFile = currFile.getParentFile();
+    }
     // Borrowed code for making InputStream from
     // https://www.baeldung.com/convert-file-to-input-stream
-    InputStream simFileInputStream = this.getClass().getClassLoader().getResourceAsStream(pathName);
-
+    InputStream simFileInputStream = this.getClass().getClassLoader().getResourceAsStream(pathName.toString());
+    
     simulationConfig.load(simFileInputStream);
     handleIllegalInput();
   }
@@ -51,7 +55,7 @@ public class SimParser {
       }
       numRequiredKeys++;
     }
-    if(numRequiredKeys != simulationConfig.size()) {
+    if(numRequiredKeys != Integer.parseInt(ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + NUM_REQUIRED_KEYS_FILENAME).getString("NumRequiredKeys"))) {
       // TODO: actually handle
       throw new InputMismatchException();
     }
@@ -59,7 +63,6 @@ public class SimParser {
 
   private boolean simulationConfigContainsRequiredKey(String key) {
     for (String possibleKey : requiredKeys.getString(key).split(",")) {
-      System.out.println(possibleKey);
       if(simulationConfig.containsKey(possibleKey)) {
         return true;
       }

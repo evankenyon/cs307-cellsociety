@@ -18,8 +18,13 @@ public class SegregationRules extends Rules {
 
     public void setState()
     {
-        int countOfAgent=cell.getNeighborCellStateMap().get(cell.getCurrentState()).size();
+//        if(cell.getCurrentState() != 0) {
+        int countOfAgent=cell.numOfStateNeighbors(cell.getCurrentState());
         if ((countOfAgent/ neighbors.size())<satisfactionThreshold){moveCell();}
+//            else {
+//                cell.setFutureState(cell.getCurrentState());
+//            }
+//        }
     }
 
     public void moveCell()

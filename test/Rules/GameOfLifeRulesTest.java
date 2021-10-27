@@ -113,6 +113,9 @@ public class GameOfLifeRulesTest {
                 cell.updateNeighbors(otherCell, 1);
             }
         }
+        for (Cell cell : allCells) {
+            cell.updateCellNeighborStates();
+        }
         for(Cell cell : allCells) {
             GameOfLifeRules rules = new GameOfLifeRules(cell);
             rules.setState();
