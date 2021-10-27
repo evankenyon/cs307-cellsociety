@@ -31,12 +31,14 @@ public class SimParser {
   public void setupKeyValuePairs(File simFile) throws IOException, InputMismatchException {
     // Used https://mkyong.com/java/java-read-a-file-from-resources-folder/ to learn how to properly
     // setup pathname
+
     String pathName = String.format("%s/%s", simFile.getParentFile().getName(), simFile.getName());
+
     // Borrowed code for making InputStream from
     // https://www.baeldung.com/convert-file-to-input-stream
     InputStream simFileInputStream = this.getClass().getClassLoader().getResourceAsStream(pathName);
+
     simulationConfig.load(simFileInputStream);
-    System.out.println(simulationConfig.keySet());
     handleIllegalInput();
   }
 
