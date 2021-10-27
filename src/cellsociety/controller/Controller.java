@@ -17,11 +17,9 @@ import javafx.scene.Node;
 
 public class Controller {
   private Model model;
-  private MainView mainView;
   private SimGenerator simGenerator;
 
   public Controller() {
-    this.mainView = null;
     this.model = new Model();
   }
 
@@ -60,7 +58,7 @@ public class Controller {
   }
 
   public void setMainView(MainView mainView) {
-    this.mainView = mainView;
+    //this.mainView = mainView;
   }
 
   public void setModel(Model model) {
