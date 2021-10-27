@@ -33,7 +33,9 @@ public class Controller {
       csvParser.initializeCellMatrix();
       model.setSimulationInfo(simParser.getSimulationConfig());
       simGenerator = new SimGenerator(simParser.getSimulationConfig());
-      model.setCellGrid(csvParser.getAllCells(), csvParser.getRows(), csvParser.getCols());
+      model.setCellList(csvParser.getAllCells());
+      model.setCols(csvParser.getCols());
+      model.setRows(csvParser.getRows());
     } catch(Exception e){
       e.printStackTrace();
       throw new FileNotFoundException();
