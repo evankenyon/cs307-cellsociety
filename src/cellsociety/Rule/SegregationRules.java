@@ -9,7 +9,7 @@ import java.util.Random;
 public class SegregationRules extends Rules {
     private double satisfactionThreshold=.25;
 
-    public SegregationRules(Cell cell, List<Integer> args)
+    public SegregationRules(Cell cell, List<Double> args)
     {
         super(cell);
         if(args.size() > 1) {

@@ -15,7 +15,7 @@ public class GameOfLifeRules extends Rules {
   private static final String STATE_AND_NEIGHBORS_MAP_FILENAME = "GameOfLifeRules";
   private int numOneNeighbors;
 
-  public GameOfLifeRules(Cell cell, List<Integer> args) {
+  public GameOfLifeRules(Cell cell, List<Double> args) {
     super(cell);
     if(!args.isEmpty()) {
       // TODO: handle

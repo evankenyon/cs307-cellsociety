@@ -13,7 +13,7 @@ public class PercolationRules extends Rules {
         GameOfLifeRules.class.getPackageName() + ".resources.";
     private static final String STATE_AND_NEIGHBORS_MAP_FILENAME = "PercolationRules";
 
-    public PercolationRules(Cell cell, List<Integer> args)
+    public PercolationRules(Cell cell, List<Double> args)
     {
         super(cell);
         if(!args.isEmpty()) {

@@ -9,7 +9,7 @@ import java.util.Random;
 public class PredatorPreyRules extends Rules {
     private int reproductionCycle=3;
 
-    public PredatorPreyRules(Cell cell, List<Integer> args)
+    public PredatorPreyRules(Cell cell, List<Double> args)
     {
         super(cell);
         if(args.size() > 1) {
