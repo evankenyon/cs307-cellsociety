@@ -41,6 +41,7 @@ public class LanguageResourceHandler {
   public static final String SIM_FILENAME_SAVE_KEY = "FileNameSave";
   public static final String SIM_OTHER_SAVE_KEY = "OtherSave";
   public static final String SAVE_BUTTON_POPUP_KEY = "FinalSave";
+  public static final String FAILED_SAVE_KEY = "FailedToSave";
 
   public static final String ENGLISH = "English";
   public static final String SPANISH = "Spanish";

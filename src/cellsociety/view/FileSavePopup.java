@@ -5,7 +5,9 @@ import cellsociety.resourceHandlers.ViewResourceHandler;
 import cellsociety.controller.Controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Properties;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.stage.FileChooser;
@@ -41,16 +43,18 @@ import java.util.ArrayList;
  */
 public class FileSavePopup extends ChangeableDisplay{
 
-  public static final String INITIAL_PROPERTIES = "InitialProperties";
+  public static final String INITIAL_STATES = "InitialStates";
   public static final String TYPE = "Type";
   public static final String TITLE = "Title";
   public static final String AUTHOR = "Author";
   public static final String DESCRIPTION = "Description";
   public static final String OTHER = "";
+  private final String DIRECTORY_PROPERTIES_PATH = "src/cellsociety/Utilities/DataDirectory.properties";
 
   private TextField typeField, titleField, authorField, descriptionField, fileNameField;
   private TextArea otherArea;
   private Controller myController;
+  private Stage myStage;
 
   public FileSavePopup(LanguageResourceHandler lrh, Controller controller){
     typeField = new TextField();
@@ -68,10 +72,10 @@ public class FileSavePopup extends ChangeableDisplay{
    */
   public void makePopup(){
 
-    Stage stage = new Stage();
+    myStage = new Stage();
     Scene scene = new Scene(makePopupContent());
-    stage.setScene(scene);
-    stage.show();
+    myStage.setScene(scene);
+    myStage.show();
   }
 
   private Pane makePopupContent(){
@@ -107,13 +111,34 @@ public class FileSavePopup extends ChangeableDisplay{
   private void saveFile(){
     //use controller to save a .sim and .csv file
     Map<String, String> propertyToValue = new HashMap<>();
-    propertyToValue.put(INITIAL_PROPERTIES, fileNameField.getText()); //need to add full path
+
+    propertyToValue.put(INITIAL_STATES, makeFilePath());
     propertyToValue.put(TYPE, typeField.getText());
     propertyToValue.put(TITLE, titleField.getText());
     propertyToValue.put(AUTHOR, authorField.getText());
     propertyToValue.put(DESCRIPTION, descriptionField.getText());
     propertyToValue.put(OTHER, otherArea.getText());
+    try {
+      myController.saveFile(fileNameField.getText(), propertyToValue);
+    } catch (Exception e){
+      displayErrorMessage(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.FAILED_SAVE_KEY));
+    }
+    myStage.close();
 
+  }
+
+  private String makeFilePath(){
+    //get the path where our files should be saved to
+    String fileName = fileNameField.getText();
+    Properties pathProperties = new Properties();
+    try {
+      pathProperties.load(new FileInputStream(DIRECTORY_PROPERTIES_PATH));
+    } catch(Exception e){
+
+    }
+    String folder = pathProperties.getProperty(myController.getSimulationType());
+    String filePath = String.format("./data/" + folder + "/saved/program-" + "%s.sim", fileName);
+    return filePath;
   }
 
   private Node makeSaveNode(String labelText, TextField tField){
