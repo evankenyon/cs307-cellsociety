@@ -13,14 +13,21 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 import javafx.scene.Node;
 
 public class Controller {
+  private static final String DEFAULT_RESOURCE_PACKAGE =
+      SimParser.class.getPackageName() + ".resources.";
+  private static final String OPTIONAL_KEYS_FILENAME = "OptionalKeys";
+
   private Model model;
   private SimGenerator simGenerator;
+  private ResourceBundle optionalKeys;
 
   public Controller() {
     this.model = new Model();
+    optionalKeys = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + OPTIONAL_KEYS_FILENAME);
   }
 
   // TODO: actually handle exception

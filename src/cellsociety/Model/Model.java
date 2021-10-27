@@ -13,23 +13,27 @@ public class Model {
   private static final String DEFAULT_RESOURCE_PACKAGE =
       Model.class.getPackageName() + ".resources.";
   private static final String NUM_CORNERS_FILENAME = "NumCorners";
-  private static final String KEY_VALUE_ALTERNATIVES_FILENAME = "KeyValueAlternatives";
+  private static final String VALUE_ALTERNATIVES_FILENAME = "ValuesAlternatives";
+  private static final String KEY_ALTERNATIVES_FILENAME = "KeyAlternatives";
   private Cell[][] cellGrid;
   private List<Cell> cellList;
-  private String simulationType;
+  private Map<String, String> simulationInfo;
+//  private String simulationType;
   private ResourceBundle numCorners;
-  private ResourceBundle keyValueAlternatives;
+  private ResourceBundle valueAlternatives;
+  private ResourceBundle keyAlternatives;
   private int rows;
   private int cols;
   private HashMap<Integer, List<Cell>> modelStateMap;
+  private List<Double> args;
 
 
 
   public Model() {
     numCorners = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + NUM_CORNERS_FILENAME);
-    keyValueAlternatives = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + KEY_VALUE_ALTERNATIVES_FILENAME);
-    // TODO: implement this properly
-
+    valueAlternatives = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + VALUE_ALTERNATIVES_FILENAME);
+    keyAlternatives = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + KEY_ALTERNATIVES_FILENAME);
+    simulationInfo = new HashMap<>();
   }
 
   public void setRows(int rows) {
@@ -76,10 +80,23 @@ public class Model {
     // Borrowed code to loop through props keys and values from
     // https://www.boraji.com/how-to-iterate-properites-in-java
     for (String key : simulationInfo.stringPropertyNames()) {
-      if (keyValueAlternatives.containsKey(key)) {
-        simulationType = keyValueAlternatives.getString(simulationInfo.getProperty(key));
+//      System.out.println(key);
+      if (keyAlternatives.containsKey(key)) {
+        try {
+          this.simulationInfo.put(keyAlternatives.getString(key), valueAlternatives.getString(simulationInfo.getProperty(key)));
+        } catch (MissingResourceException e) {
+          this.simulationInfo.put(keyAlternatives.getString(key), simulationInfo.getProperty(key));
+        }
       }
     }
+  }
+
+  private List<Double> createParamsDoubleList(String params) {
+    List<Double> paramsList = new ArrayList<>();
+    for (String param : params.split(",")) {
+      paramsList.add(Double.parseDouble(param));
+    }
+    return paramsList;
   }
 
   public List<Cell> getCellList() {
@@ -92,7 +109,7 @@ public class Model {
 
   private void updateSingleCellNeighbors(Cell inputCell){
     for(Cell cell: cellList){
-      inputCell.updateNeighbors(cell, Integer.parseInt(numCorners.getString(simulationType)));
+      inputCell.updateNeighbors(cell, Integer.parseInt(numCorners.getString(simulationInfo.get("Type"))));
     }
   }
 
@@ -104,8 +121,8 @@ public class Model {
       RulesInterface r = null;
       try {
         r = (RulesInterface) Class.forName(
-                        String.format("%s%sRules", numCorners.getString("RulesPackageName"), simulationType))
-                .getConstructor(Cell.class, List.class).newInstance(cell, new ArrayList<>());
+                        String.format("%s%sRules", numCorners.getString("RulesPackageName"), simulationInfo.get("Type")))
+                .getConstructor(Cell.class, List.class).newInstance(cell, createParamsDoubleList(simulationInfo.get("Parameters")));
       } catch (Exception e) {
         //TODO: Implement properly
         e.printStackTrace();
@@ -158,7 +175,7 @@ public class Model {
 
 
   public String getSimulationType(){
-    return simulationType;
+    return simulationInfo.get("Type");
   }
 
 }

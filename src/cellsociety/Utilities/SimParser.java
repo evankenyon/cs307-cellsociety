@@ -14,18 +14,16 @@ import java.util.ResourceBundle;
 public class SimParser {
   private static final String DEFAULT_RESOURCE_PACKAGE =
       SimParser.class.getPackageName() + ".resources.";
-  private static final String OPTIONAL_KEYS_FILENAME = "OptionalKeys";
   private static final String REQUIRED_KEYS_FILENAME = "RequiredKeys";
   private static final String NUM_REQUIRED_KEYS_FILENAME = "NumRequiredKeys";
 
   private Properties simulationConfig;
   private ResourceBundle requiredKeys;
-  private ResourceBundle optionalKeys;
+
 
   public SimParser() {
     simulationConfig = new Properties();
     requiredKeys = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + REQUIRED_KEYS_FILENAME);
-    optionalKeys = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + OPTIONAL_KEYS_FILENAME);
   }
 
   // TODO: handle exception properly
