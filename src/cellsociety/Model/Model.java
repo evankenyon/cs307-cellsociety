@@ -3,6 +3,8 @@ package cellsociety.Model;
 import cellsociety.Rule.RulesInterface;
 import cellsociety.cell.Cell;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.*;
 
 import javafx.scene.Node;
@@ -44,10 +46,23 @@ public class Model {
     this.cols = cols;
   }
 
-  public void setCellList(List<Cell> cellList){
+  public void setCellList(List<Cell> cellList) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
     this.cellList = cellList;
     updateAllNeighborsList();
-    updateAllCellNeighborMaps();
+
+//    updateAllCellNeighborMaps();
+    affectAllCells("updateCellNeighborStateMap");
+
+  }
+
+  public void updateModel() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+//    updateAllCellStates();
+    affectAllCells("updateState");
+
+//    updateAllCellNeighborMaps();
+    affectAllCells("updateCellNeighborStateMap");
+
+    createModelStateMap();
   }
 
 
@@ -57,11 +72,6 @@ public class Model {
     }
   }
 
-  public void updateModel() {
-    updateAllCellStates();
-    updateAllCellNeighborMaps();
-    createModelStateMap();
-  }
 
   private void updateAllCellStates() {
     for(Cell cell: cellList){
@@ -71,7 +81,16 @@ public class Model {
 
   private void updateAllCellNeighborMaps(){
     for(Cell cell: cellList){
-      cell.updateCellNeighborStates();
+      cell.updateCellNeighborStateMap();
+    }
+
+  }
+
+
+  private void affectAllCells(String method) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    for(Cell cell: cellList) {
+      Method realMethod = cell.getClass().getDeclaredMethod(method);
+      realMethod.invoke(cell);
     }
   }
 
@@ -172,7 +191,6 @@ public class Model {
     int[] shape = {rows, cols};
     return shape;
   }
-
 
   public String getSimulationType(){
     return simulationInfo.get("Type");

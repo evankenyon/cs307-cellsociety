@@ -11,6 +11,7 @@ import cellsociety.view.FileSavePopup;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -91,7 +92,7 @@ public class Controller {
   /**
    * perform the next step in the simulation
    */
-  public void step(){
+  public void step() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
     model.findNextStateForEachCell();
     model.updateModel();
   }

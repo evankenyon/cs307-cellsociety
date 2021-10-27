@@ -29,9 +29,7 @@ public class Cell {
     private int jIndex;
     private Map<Integer, List<Cell>> neighborCellStateMap;
     private CellDisplay myDisplay;
-    private boolean shouldMove;
-    private int chrononCounter=0;
-    private int energy=5;
+
 
     public Cell(int i, int j, int initialState, int rows, int columns){
         this.iIndex = i;
@@ -41,9 +39,6 @@ public class Cell {
         neighbors = new ArrayList<>();
         myDisplay = new CellDisplay(j * DEFAULT_WIDTH, i * DEFAULT_WIDTH, currentState);
         neighborCellStateMap = new HashMap<>();
-        shouldMove = false;
-        chrononCounter = 0;
-        energy = 5;
     }
 
 
@@ -66,54 +61,6 @@ public class Cell {
 
     public int getiIndex() {
         return iIndex;
-    }
-
-    /**
-     * change width of the display
-     * @param width will be the width of hte display
-     */
-    public void setWidth(int width){
-        myDisplay.setWidth(width);
-    }
-
-    /**
-     * chagne the height of the display
-     * @param height will be height of the display
-     */
-    public void setHeight(int height){
-        myDisplay.setHeight(height);
-    }
-
-    /**
-     * change the x coordinate of display
-     * @param x
-     */
-    public void setX(int x){
-        myDisplay.setX(x);
-    }
-
-    /**
-     * change the y coordinate of display
-     * @param y
-     */
-    public void setY(int y){
-        myDisplay.setY(y);
-    }
-
-    public void setShouldMove(boolean shouldMove) {this.shouldMove = shouldMove;}
-
-    public boolean isShouldMove() {return shouldMove;}
-
-    public void setChrononCounter(int chrononCounter) {this.chrononCounter = chrononCounter;}
-
-    public int getChrononCounter() {return chrononCounter;}
-
-    public void setEnergy(int energy) {
-        this.energy = energy;
-    }
-
-    public int getEnergy() {
-        return energy;
     }
 
 
@@ -154,7 +101,7 @@ public class Cell {
         return 0;
     }
 
-    public void updateCellNeighborStates(){
+    public void updateCellNeighborStateMap(){
         neighborCellStateMap = new HashMap<>();
         for(Cell neighbor: neighbors){
             int state = neighbor.getCurrentState();
@@ -175,13 +122,6 @@ public class Cell {
         return neighborCellStateMap.get(state).get(num);
     }
 
-    private void setCellGrid(Cell[][] cellGrid){
-        this.cellGrid = cellGrid;
-    }
-
-    public String getIndex() {
-        return iIndex + ", " + jIndex;
-    }
 
     @Override
     public boolean equals(Object o) {

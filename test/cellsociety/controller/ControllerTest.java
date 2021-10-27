@@ -9,6 +9,7 @@ import cellsociety.view.MainView;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Scanner;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -69,7 +70,7 @@ class ControllerTest {
   }
 
   @Test
-  void testStepWith1x1Grid() throws IOException{
+  void testStepWith1x1Grid() throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
     controller.parseFile(new File("data/game_of_life/HandMadeTest1.sim"));
     controller.step();
     assertEquals(CellDisplay.OFF_COLOR, ((Rectangle)controller.getCellDisplays().get(0)).getFill());
@@ -78,7 +79,7 @@ class ControllerTest {
   }
 
   @Test
-  void testWith2x2CSV() throws IOException{
+  void testWith2x2CSV() throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
     controller.parseFile(new File("data/game_of_life/HandMadeTest2.sim"));
     controller.step();
     assertEquals(CellDisplay.ON_COLOR, ((Rectangle)controller.getCellDisplays().get(0)).getFill());
@@ -95,7 +96,7 @@ class ControllerTest {
   }
 
   @Test
-  void testWith3x3Border() throws IOException{
+  void testWith3x3Border() throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
     controller.parseFile(new File("data/game_of_life/HandMadeTest3x3Border.sim"));
     assertEquals(CellDisplay.ON_COLOR, ((Rectangle)controller.getCellDisplays().get(0)).getFill());
     assertEquals(CellDisplay.ON_COLOR, ((Rectangle)controller.getCellDisplays().get(1)).getFill());
@@ -119,7 +120,7 @@ class ControllerTest {
   }
 
   @Test
-  void testWith3x3Full() throws IOException{
+  void testWith3x3Full() throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
     controller.parseFile(new File("data/game_of_life/HandMadeTest3x3Full.sim"));
     assertEquals(CellDisplay.ON_COLOR, ((Rectangle)controller.getCellDisplays().get(0)).getFill());
     assertEquals(CellDisplay.ON_COLOR, ((Rectangle)controller.getCellDisplays().get(1)).getFill());
