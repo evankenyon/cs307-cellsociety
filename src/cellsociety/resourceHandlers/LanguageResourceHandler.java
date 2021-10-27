@@ -10,6 +10,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.HashMap;
 
+/**
+ * objects of this class help handle properties relating to languages/text
+ */
 public class LanguageResourceHandler {
   public static final String LANGUAGE_BUNDLE_NAME = "Langauge";
   public static final String SETTINGS_KEY = "Settings";
