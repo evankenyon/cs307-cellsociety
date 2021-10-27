@@ -5,6 +5,8 @@ import cellsociety.cell.Cell;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.InputMismatchException;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class GameOfLifeRules extends Rules {
@@ -13,8 +15,12 @@ public class GameOfLifeRules extends Rules {
   private static final String STATE_AND_NEIGHBORS_MAP_FILENAME = "GameOfLifeRules";
   private int numOneNeighbors;
 
-  public GameOfLifeRules(Cell cell) {
+  public GameOfLifeRules(Cell cell, List<Integer> args) {
     super(cell);
+    if(!args.isEmpty()) {
+      // TODO: handle
+      throw new InputMismatchException();
+    }
     numOneNeighbors = 0;
     stateAndNeighborsMap = ResourceBundle.getBundle(
         DEFAULT_RESOURCE_PACKAGE + STATE_AND_NEIGHBORS_MAP_FILENAME);

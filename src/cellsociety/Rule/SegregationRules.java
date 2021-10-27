@@ -2,15 +2,20 @@ package cellsociety.Rule;
 
 import cellsociety.cell.Cell;
 
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Random;
 
 public class SegregationRules extends Rules {
     private double satisfactionThreshold=.25;
 
-    public SegregationRules(Cell cell)
+    public SegregationRules(Cell cell, List<Integer> args)
     {
         super(cell);
+        if(args.size() > 1) {
+            //TODO: actually handle
+            throw new InputMismatchException();
+        }
     }
 
     public void setState()

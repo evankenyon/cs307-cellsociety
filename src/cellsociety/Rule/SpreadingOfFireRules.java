@@ -4,6 +4,7 @@ import cellsociety.cell.Cell;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -16,8 +17,12 @@ public class SpreadingOfFireRules extends Rules {
   private static final double probCatch = .15;
   private static final double probGrow = .15;
 
-  public SpreadingOfFireRules(Cell cell) {
+  public SpreadingOfFireRules(Cell cell, List<Integer> args) {
     super(cell);
+    if(args.size() > 2) {
+      //TODO: actually handle
+      throw new InputMismatchException();
+    }
     stateAndNeighborsMap = ResourceBundle.getBundle(
         DEFAULT_RESOURCE_PACKAGE + STATE_AND_NEIGHBORS_MAP_FILENAME);
   }

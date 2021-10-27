@@ -16,7 +16,7 @@ public class PredatorPreyRulesTest {
     {
         Cell cell=new Cell(0,0,1);
         cell.setChrononCounter(3);
-        PredatorPreyRules pp=new PredatorPreyRules(cell);
+        PredatorPreyRules pp=new PredatorPreyRules(cell, new ArrayList<>());
         pp.checkReproduction();
         Assertions.assertTrue(cell.getFutureState()==1 && cell.getChrononCounter()==0);
     }
@@ -26,7 +26,7 @@ public class PredatorPreyRulesTest {
     {
         Cell cell=new Cell(0,0,2);
         cell.setEnergy(0);
-        PredatorPreyRules pp=new PredatorPreyRules(cell);
+        PredatorPreyRules pp=new PredatorPreyRules(cell, new ArrayList<>());
         pp.setState();
         Assertions.assertEquals(0,cell.getFutureState());
     }
@@ -44,7 +44,7 @@ public class PredatorPreyRulesTest {
         cell.setNeighbors(test);
         cell.updateCellNeighborStates();
         //System.out.println(cell.getNeighborCellStateMap());
-        PredatorPreyRules pp=new PredatorPreyRules(cell);
+        PredatorPreyRules pp=new PredatorPreyRules(cell, new ArrayList<>());
         pp.setState();
         Assertions.assertTrue(cell.getFutureState()==0 && cell.getNeighborOfState(1, 0).getFutureState()==2);
     }

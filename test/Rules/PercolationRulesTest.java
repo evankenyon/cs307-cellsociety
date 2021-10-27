@@ -25,7 +25,7 @@ public class PercolationRulesTest {
             cell.updateNeighbors(otherCell, 2);
         }
         cell.updateCellNeighborStates();
-        Rules rules=new PercolationRules(cell);
+        Rules rules=new PercolationRules(cell, new ArrayList<>());
         rules.setState();
         Assertions.assertEquals(0,cell.getFutureState());
     }
@@ -43,7 +43,7 @@ public class PercolationRulesTest {
             cell.updateNeighbors(otherCell, 2);
         }
         cell.updateCellNeighborStates();
-        Rules rules=new PercolationRules(cell);
+        Rules rules=new PercolationRules(cell, new ArrayList<>());
         rules.setState();
         Assertions.assertEquals(1,cell.getFutureState());
     }
@@ -61,7 +61,7 @@ public class PercolationRulesTest {
             cell.updateNeighbors(otherCell, 2);
         }
         cell.updateCellNeighborStates();
-        Rules rules=new PercolationRules(cell);
+        Rules rules=new PercolationRules(cell, new ArrayList<>());
         rules.setState();
         Assertions.assertEquals(2,cell.getFutureState());
     }
@@ -79,7 +79,7 @@ public class PercolationRulesTest {
             cell.updateNeighbors(otherCell, 2);
         }
         cell.updateCellNeighborStates();
-        Rules rules=new PercolationRules(cell);
+        Rules rules=new PercolationRules(cell, new ArrayList<>());
         rules.setState();
         Assertions.assertEquals(2,cell.getFutureState());
     }
