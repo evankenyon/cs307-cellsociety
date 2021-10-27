@@ -49,6 +49,7 @@ public class SimulationDisplay extends ChangeableDisplay{
   private TextField fileNameField;
   private ViewResourceHandler myViewResourceHandler;
   private List<CellDisplay> allCellDisplays;
+  private Node myNode;
 
   public SimulationDisplay(){
     this(new LanguageResourceHandler());
@@ -85,6 +86,7 @@ public class SimulationDisplay extends ChangeableDisplay{
     root.getChildren().add(makeCellsAndBackground());
     root.getChildren().add(makeControls());
     setUpAnimation();
+    myNode = root;
     return root;
   }
 
@@ -225,6 +227,15 @@ public class SimulationDisplay extends ChangeableDisplay{
    */
   public List<CellDisplay> getAllCellDisplays(){
     return allCellDisplays;
+  }
+
+  /**
+   * get the node containing all the display stuff for this simulation.
+   * This will allow us to remove it from the MainView
+   * @return myNode
+   */
+  public Node getMyNode(){
+    return myNode;
   }
 
 

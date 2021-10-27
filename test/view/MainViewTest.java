@@ -1,4 +1,5 @@
 package view;
+import cellsociety.view.SimulationDisplay;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,21 +22,22 @@ import java.util.Collection;
 
 
 public class MainViewTest extends DukeApplicationTest{
-  private MainView simView;
+  private MainView mainView;
   private LanguageResourceHandler resourceHandler;
   private Stage myStage;
   private static final Color BASIC_BACKGROUND = Color.web("#FFFFFF");
   private static final Color DUKE_BACKGROUND = Color.web("#2222FF");
   private static final Color DARK_BACKGROUND = Color.web("#000000");
-
+  public static final String BLINKERS_PATH = "data/game_of_life/blinkers.sim";
+  public static final String GLIDER_PATH = "data/game_of_life/glider.sim";
 
 
   @Override
   public void start(Stage stage) throws Exception {
-    simView = new MainView();
-    resourceHandler = simView.getMyResourceHandler();
-    stage.setScene(simView.makeSimulationScene());
-    simView.setStage(stage);
+    mainView = new MainView();
+    resourceHandler = mainView.getMyResourceHandler();
+    stage.setScene(mainView.makeSimulationScene());
+    mainView.setStage(stage);
     stage.show();
     stage.toFront();
     myStage = stage;
@@ -50,7 +52,7 @@ public class MainViewTest extends DukeApplicationTest{
     for (Node n : nodes){
       try{
         NodeWithText n2 = ((NodeWithText)n);
-        String expected = simView.getExpectedTextforNode(n2);
+        String expected = mainView.getExpectedTextforNode(n2);
         String actual = n2.getText();
         assertEquals(expected, actual);
       } catch (Exception e){
@@ -94,9 +96,9 @@ public class MainViewTest extends DukeApplicationTest{
   //not sure how to test clicking buttons on the file chooser
   void testFileInput(){
     testPressEnglish();
-    File testFile = new File("data/game_of_life/blinkers.csv");
-    simView.handleSelectedFile(testFile);
-    assertEquals(1, simView.getNumSimulations());
+    File testFile = new File(BLINKERS_PATH);
+    mainView.handleSelectedFile(testFile);
+    assertEquals(1, mainView.getNumSimulations());
   }
 
   @Test
@@ -128,9 +130,24 @@ public class MainViewTest extends DukeApplicationTest{
   }
 
   @Test
-  void testAddNewSimulation(){
+  void testAddNewSimulationWindow(){
     clickOn(resourceHandler.getStringFromKey(LanguageResourceHandler.NEW_SIMULATION_KEY));
     //not sure how to test that a new window popped up
+
+  }
+
+  @Test
+  void testAddNewSimulationSimple(){
+    SimulationDisplay simDisp00 = mainView.getSimDisplay();
+    assertTrue(simDisp00 == null);
+    sleep(50); //had to throw this in here because testFX is dumb
+    mainView.handleSelectedFile(new File(BLINKERS_PATH));
+    SimulationDisplay simDisp0 = mainView.getSimDisplay();
+    assertTrue(simDisp0 != null);
+    sleep(50);
+    mainView.handleSelectedFile(new File(BLINKERS_PATH));
+    SimulationDisplay simDisp1 = mainView.getSimDisplay();
+    assertTrue(simDisp1 != simDisp0);
 
   }
 
