@@ -25,6 +25,8 @@ import javafx.animation.Timeline;
 import javafx.util.Duration;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Slider;
+import javafx.scene.control.DialogPane;
+import javafx.scene.control.TextArea;
 
 import cellsociety.cell.Cell;
 import cellsociety.cell.CellDisplay;
@@ -128,7 +130,7 @@ public class SimulationDisplay extends ChangeableDisplay{
     oneStepButton = makeAButton(LanguageResourceHandler.ONE_STEP_KEY, () -> oneStep());
     controlBox.getChildren().add(pauseButton);
     controlBox.getChildren().add(oneStepButton);
-    controlBox.getChildren().add(makeAButton(LanguageResourceHandler.SAVE_FILE_KEY, () -> saveFile()));
+    controlBox.getChildren().add(makeAButton(LanguageResourceHandler.SAVE_FILE_KEY, () -> makePopup()));
     v.getChildren().add(controlBox);
     fileNameField = new TextField();
     v.getChildren().add(fileNameField);
@@ -173,13 +175,22 @@ public class SimulationDisplay extends ChangeableDisplay{
   private void playPauseSimulation(){
     //pause or resume the simulation
     if (paused){
-      myAnimation.play();
-      pauseButton.setText(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.PAUSE_KEY));
+      resumeAnimation();
     }else{
-      myAnimation.pause();
-      pauseButton.setText(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.RESUME_KEY));
+      pauseAnimation();
     }
-    paused = !paused;
+  }
+
+  private void pauseAnimation(){
+    myAnimation.pause();
+    pauseButton.setText(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.RESUME_KEY));
+    paused = true;
+  }
+
+  private void resumeAnimation(){
+    myAnimation.play();
+    pauseButton.setText(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.PAUSE_KEY));
+    paused = false;
   }
 
   private void saveFile(){
@@ -192,12 +203,16 @@ public class SimulationDisplay extends ChangeableDisplay{
     }
   }
 
+  private void makePopup(){
+    //make a poup which the user can interact with to save the simulation
+    pauseAnimation();
+    FileSavePopup popup = new FileSavePopup(myLanguageResourceHandler, myController);
+    popup.makePopup();
+  }
+
   private void oneStep(){
     //go through one step at a time
-    myAnimation.pause();
-    pauseButton.setText(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.RESUME_KEY));
-    paused = true;
-
+    pauseAnimation();
     step();
   }
 
@@ -237,6 +252,8 @@ public class SimulationDisplay extends ChangeableDisplay{
   public Node getMyNode(){
     return myNode;
   }
+
+
 
 
 

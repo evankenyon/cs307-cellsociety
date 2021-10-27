@@ -34,6 +34,13 @@ public class LanguageResourceHandler {
   public static final String BASIC_MODE_KEY = "BasicMode";
   public static final String STYLE_SELECTOR_KEY = "SelectStyle";
   public static final String SPEED_SLIDER_KEY = "SpeedSlider";
+  public static final String SIM_TYPE_SAVE_KEY = "SimulationTypeSave";
+  public static final String SIM_TITLE_SAVE_KEY = "TitleSave";
+  public static final String SIM_AUTHOR_SAVE_KEY = "AuthorSave";
+  public static final String SIM_DESCRIPTION_SAVE_KEY = "DescriptionSave";
+  public static final String SIM_FILENAME_SAVE_KEY = "FileNameSave";
+  public static final String SIM_OTHER_SAVE_KEY = "OtherSave";
+  public static final String SAVE_BUTTON_POPUP_KEY = "FinalSave";
 
   public static final String ENGLISH = "English";
   public static final String SPANISH = "Spanish";

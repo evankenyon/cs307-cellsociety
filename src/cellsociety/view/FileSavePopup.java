@@ -32,6 +32,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 
+/**
+ * objects of this class are used to create a pop up dialogue box which a user can interact with
+ * to save a .sim file and .csv file corresponding to the current simulation
+ *
+ * To do: actually save file, and handle changing to dark mode / spanish
+ * @author Keith Cressman
+ */
 public class FileSavePopup extends ChangeableDisplay{
 
   public static final String INITIAL_PROPERTIES = "InitialProperties";
@@ -46,21 +53,38 @@ public class FileSavePopup extends ChangeableDisplay{
   private Controller myController;
 
   public FileSavePopup(LanguageResourceHandler lrh, Controller controller){
+    typeField = new TextField();
+    titleField = new TextField();
+    authorField = new TextField();
+    descriptionField = new TextField();
+    fileNameField = new TextField();
+
     myLanguageResourceHandler = lrh;
     myController = controller;
   }
 
-  private Node makePopup(){
-    DialogPane dPane = new DialogPane();
+  /**
+   * make a popup which a user can follow to save their file
+   */
+  public void makePopup(){
+
+    Stage stage = new Stage();
+    Scene scene = new Scene(makePopupContent());
+    stage.setScene(scene);
+    stage.show();
+  }
+
+  private Pane makePopupContent(){
+    //set the content for the popup
     VBox content = new VBox();
     content.getChildren().addAll(makeTextFields());
     content.getChildren().add(makeOtherBox());
-
     content.getChildren().add(makeAButton(LanguageResourceHandler.SAVE_BUTTON_POPUP_KEY, () -> saveFile()));
-    return dPane;
+    return content;
   }
 
   private List<Node> makeTextFields(){
+    //make the list of text fields and their corresponding labels
     List<Node> nodeList = new ArrayList<>();
     nodeList.add(makeSaveNode(LanguageResourceHandler.SIM_TYPE_SAVE_KEY, typeField));
     nodeList.add(makeSaveNode(LanguageResourceHandler.SIM_TITLE_SAVE_KEY, titleField));
@@ -71,6 +95,7 @@ public class FileSavePopup extends ChangeableDisplay{
   }
 
   private Node makeOtherBox(){
+    //make the Pane with a text area and label for the other field of the .sim file
     HBox otherBox = new HBox();
     otherBox.getChildren().add(makeALabel(LanguageResourceHandler.SIM_OTHER_SAVE_KEY));
     otherArea = new TextArea();
@@ -80,6 +105,7 @@ public class FileSavePopup extends ChangeableDisplay{
 
 
   private void saveFile(){
+    //use controller to save a .sim and .csv file
     Map<String, String> propertyToValue = new HashMap<>();
     propertyToValue.put(INITIAL_PROPERTIES, fileNameField.getText()); //need to add full path
     propertyToValue.put(TYPE, typeField.getText());
@@ -90,11 +116,11 @@ public class FileSavePopup extends ChangeableDisplay{
 
   }
 
-  private Node makeSaveNode(String labelText, TextField field){
+  private Node makeSaveNode(String labelText, TextField tField){
+    //make a node with a label and text field
     HBox titleBox = new HBox();
     titleBox.getChildren().add(makeALabel(labelText));
-    field = new TextField();
-    titleBox.getChildren().add(field);
+    titleBox.getChildren().add(tField);
     return titleBox;
   }
 
