@@ -3,6 +3,7 @@ package cellsociety.Rule;
 import cellsociety.cell.Cell;
 
 import java.util.List;
+import java.util.Random;
 
 public class SegregationRules extends Rules {
     private int cellCurrentState;
@@ -18,20 +19,17 @@ public class SegregationRules extends Rules {
 
     public void setState()
     {
-//        if(cell.getCurrentState() != 0) {
-        int countOfAgent=cell.numOfStateNeighbors(cell.getCurrentState());
-        if ((countOfAgent/ neighbors.size())<satisfactionThreshold){moveCell();}
-//            else {
-//                cell.setFutureState(cell.getCurrentState());
-//            }
-//        }
+        if(cell.getCurrentState() != 0) {
+            int countOfAgent = cell.numOfStateNeighbors(cell.getCurrentState());
+            if ((countOfAgent / neighbors.size()) < satisfactionThreshold) {moveCell();}
+        }
+        else {cell.setFutureState(cell.getCurrentState());}
     }
 
     public void moveCell()
     {
         cell.setFutureState(0);
-        cell.setShouldMove(true);
-        cell.setCompareState(0);
+        move(0);
     }
 
 }
