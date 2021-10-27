@@ -152,8 +152,8 @@ public class Model {
 //  }
 
   /**
+   * We shoudl remove this method eventually
    * get a list of all the nodes to go on screen, representing displays of each cell
-   *
    * @return a list of nodes displaying the cells
    */
   public List<Node> getCellDisplays() {
@@ -166,6 +166,20 @@ public class Model {
     return nodeList;
   }
 
+  /**
+   * get a list of all the nodes to go on screen, representing displays of each cell
+   * @return a list of nodes displaying the cells
+   */
+  public List<Cell> getCells() {
+    List<Cell> cellList = new ArrayList<>();
+    for (int row = 0; row < cellGrid.length; row++) {
+      for (int col = 0; col < cellGrid[0].length; col++) {
+        cellList.add(cellGrid[row][col]);
+      }
+    }
+    return cellList;
+  }
+
   public void createModelStateMap() {
     modelStateMap = new HashMap<>();
     for (int row = 0; row < cellGrid.length; row++) {
@@ -176,6 +190,15 @@ public class Model {
         modelStateMap.get(cellCurrentState).add(cell);
       }
     }
+  }
+
+  /**
+   * get the shape of hte grid, in format {numRows, numCols};
+   * @return the shape of hte grid
+   */
+  public int[] getGridShape(){
+    int[] shape = {cellGrid.length, cellGrid[0].length};
+    return shape;
   }
 
 }

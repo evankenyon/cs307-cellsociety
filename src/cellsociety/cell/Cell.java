@@ -40,7 +40,7 @@ public class Cell {
         this.currentState = initialState;
         corners = new RectangleCellCornerLocationGenerator(rows, columns).generateCorners(i, j);
         neighbors = new ArrayList<>();
-        myDisplay = new CellDisplay(j * DEFAULT_WIDTH, i * DEFAULT_WIDTH, currentState);
+        //myDisplay = new CellDisplay(j * DEFAULT_WIDTH, i * DEFAULT_WIDTH, currentState);
         neighborCellStateMap = new HashMap<>();
         shouldMove = false;
         chrononCounter = 0;
@@ -53,6 +53,13 @@ public class Cell {
         this(i, j, initialState, 10, 10);
     }
 
+    /**
+     * set what myDisplay refers to
+     * @param disp will become myDisplay
+     */
+    public void setDisplay(CellDisplay disp){
+        myDisplay = disp;
+    }
 
     public int getjIndex() {
         return jIndex;

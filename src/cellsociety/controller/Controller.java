@@ -1,5 +1,6 @@
 package cellsociety.controller;
 
+import cellsociety.cell.Cell;
 import cellsociety.Model.Model;
 import cellsociety.Utilities.CSVGenerator;
 import cellsociety.Utilities.CSVParser;
@@ -56,13 +57,36 @@ public class Controller {
     this.model = model;
   }
 
+  /**
+   * get a list of the display nodes for each cell
+   * @return a list of the display node for each cell
+   */
   public List<Node> getCellDisplays(){
     return model.getCellDisplays();
   }
 
+  /**
+   * get a list of the cells in the simulation
+   * @return a list of each cell
+   */
+  public List<Cell> getCells(){
+    return model.getCells();
+  }
+
+  /**
+   * perform the next step in the simulation
+   */
   public void step(){
     model.findNextStateForEachCell();
     model.updateModel();
+  }
+
+  /**
+   * get the shape of the grid for this simulation
+   * @return model.getGridShape()
+   */
+  public int[] getGridShape(){
+    return model.getGridShape();
   }
 
 }

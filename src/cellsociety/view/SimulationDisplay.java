@@ -26,6 +26,9 @@ import javafx.util.Duration;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Slider;
 
+import cellsociety.cell.Cell;
+import cellsociety.cell.CellDisplay;
+
 
 import java.util.List;
 import java.util.ArrayList;
@@ -45,6 +48,7 @@ public class SimulationDisplay extends ChangeableDisplay{
   private Button pauseButton, oneStepButton;
   private TextField fileNameField;
   private ViewResourceHandler myViewResourceHandler;
+  private List<CellDisplay> allCellDisplays;
 
   public SimulationDisplay(){
     this(new LanguageResourceHandler());
@@ -57,17 +61,14 @@ public class SimulationDisplay extends ChangeableDisplay{
   }
 
   protected void setUpAnimation(){
-    initializeAnimation();
+    myAnimation = new Timeline();
+    myAnimation.setCycleCount(Timeline.INDEFINITE);
+    myAnimation.getKeyFrames().add(new KeyFrame(Duration.seconds(secondDelay), e -> step()));
 
     myAnimation.play();
     paused = false;
   }
 
-  private void initializeAnimation(){
-    myAnimation = new Timeline();
-    myAnimation.setCycleCount(Timeline.INDEFINITE);
-    myAnimation.getKeyFrames().add(new KeyFrame(Duration.seconds(secondDelay), e -> step()));
-  }
 
   /**
    * create the display (i.e. a grid with each cell) to put on the MainView
@@ -81,13 +82,40 @@ public class SimulationDisplay extends ChangeableDisplay{
       throw new Exception(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.BAD_FILE_KEY));
     }
     VBox root = new VBox();
-    Group simAreaGroup = new Group();
-    simAreaGroup.getChildren().add(new Rectangle(0, 0, myViewResourceHandler.simulationWidth(), myViewResourceHandler.simulationWidth()));
-    simAreaGroup.getChildren().addAll(myController.getCellDisplays());
-    root.getChildren().add(simAreaGroup);
+    root.getChildren().add(makeCellsAndBackground());
     root.getChildren().add(makeControls());
     setUpAnimation();
     return root;
+  }
+
+  private Node makeCellsAndBackground(){
+    //make a Node containing a background and all the cell displays on top of it
+    Group simAreaGroup = new Group();
+    simAreaGroup.getChildren().add(new Rectangle(0, 0, myViewResourceHandler.simulationWidth(), myViewResourceHandler.simulationWidth()));
+    //simAreaGroup.getChildren().addAll(myController.getCellDisplays());
+    simAreaGroup.getChildren().addAll(makeCellDisplays());
+    return simAreaGroup;
+  }
+
+  private List<Node> makeCellDisplays(){
+    //take all the cells in the simulation and create a cell display for them,
+    allCellDisplays = new ArrayList<>();
+    List<Node> displayNodes = new ArrayList<>();
+    List<Cell> allCells = myController.getCells();
+    int[] gridShape = myController.getGridShape();
+    int numRows = gridShape[0];
+    int numCols = gridShape[1];
+    double widthPerCell = myViewResourceHandler.simulationWidth() / numCols;
+    double heightPerCell = myViewResourceHandler.simulationWidth() / numRows;
+    for (Cell cell : allCells){
+      CellDisplay newDisplay = new CellDisplay(cell.getiIndex() * widthPerCell,
+          cell.getjIndex() * heightPerCell, widthPerCell, heightPerCell, cell.getCurrentState());
+      newDisplay.setCell(cell);
+      cell.setDisplay(newDisplay);
+      displayNodes.add(newDisplay.getMyDisplay());
+      allCellDisplays.add(newDisplay);
+    }
+    return displayNodes;
   }
 
   private Node makeControls(){
@@ -124,7 +152,7 @@ public class SimulationDisplay extends ChangeableDisplay{
     //change speed of animation
     framesPerSecond = newFramesPerSecond;
     secondDelay = 1.0 / framesPerSecond;
-    initializeAnimation();
+    myAnimation.setRate(framesPerSecond);
     if (!paused){
       myAnimation.play();
     }
@@ -189,6 +217,14 @@ public class SimulationDisplay extends ChangeableDisplay{
    */
   public double getAnimationSpeed(){
     return secondDelay;
+  }
+
+  /**
+   * get a list of all the cell displays in the simulation
+   * @return allCellDisplays
+   */
+  public List<CellDisplay> getAllCellDisplays(){
+    return allCellDisplays;
   }
 
 
