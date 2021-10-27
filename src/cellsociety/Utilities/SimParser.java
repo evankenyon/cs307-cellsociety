@@ -32,7 +32,7 @@ public class SimParser {
     // Used https://mkyong.com/java/java-read-a-file-from-resources-folder/ to learn how to properly
     // setup pathname
     String pathName =
-        getRelativeParentDirectory(csvFile.getParent()) + csvFile.getName().replace(".csv", ".sim");
+        getRelativeParentDirectory( csvFile.getParent()) + csvFile.getName().replace(".csv", ".sim");
     // Borrowed code for making InputStream from
     // https://www.baeldung.com/convert-file-to-input-stream
     InputStream simFileInputStream = this.getClass().getClassLoader().getResourceAsStream(pathName);
