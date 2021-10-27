@@ -3,6 +3,7 @@ package Rules;
 import cellsociety.Rule.PredatorPreyRules;
 import cellsociety.Rule.SegregationRules;
 import cellsociety.cell.Cell;
+import cellsociety.cell.PredatorPreyCell;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +15,7 @@ public class PredatorPreyRulesTest {
     @Test
     void checkReproduction()
     {
-        Cell cell=new Cell(0,0,1);
+        PredatorPreyCell cell=new PredatorPreyCell(0,0,1);
         cell.setChrononCounter(3);
         PredatorPreyRules pp=new PredatorPreyRules(cell, new ArrayList<>());
         pp.checkReproduction();
@@ -24,7 +25,7 @@ public class PredatorPreyRulesTest {
     @Test
     void deadShark()
     {
-        Cell cell=new Cell(0,0,2);
+        PredatorPreyCell cell=new PredatorPreyCell(0,0,2);
         cell.setEnergy(0);
         PredatorPreyRules pp=new PredatorPreyRules(cell, new ArrayList<>());
         pp.setState();
@@ -34,7 +35,7 @@ public class PredatorPreyRulesTest {
     @Test
     void sharkEatsFish()
     {
-        Cell cell=new Cell(0,0,2);
+        PredatorPreyCell cell=new PredatorPreyCell(0,0,2);
         cell.setEnergy(3);
         List<Cell> test=new ArrayList<>();
         test.add(new Cell(0,0,0));
