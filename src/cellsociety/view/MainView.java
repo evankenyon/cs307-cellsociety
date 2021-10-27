@@ -1,7 +1,5 @@
 package cellsociety.view;
 
-import cellsociety.Model.Model;
-import cellsociety.controller.Controller;
 import cellsociety.resourceHandlers.LanguageResourceHandler;
 import cellsociety.resourceHandlers.ViewResourceHandler;
 
@@ -11,22 +9,15 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Control;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Alert;
+
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.control.Label;
 import javafx.application.Platform;
-
 
 import java.util.Map;
 import java.util.HashMap;
-import java.util.List;
-import java.util.ArrayList;
 
 
 /**

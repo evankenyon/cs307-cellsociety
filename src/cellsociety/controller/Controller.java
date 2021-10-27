@@ -17,11 +17,9 @@ import javafx.scene.Node;
 
 public class Controller {
   private Model model;
-  private MainView mainView;
   private SimGenerator simGenerator;
 
   public Controller() {
-    this.mainView = null;
     this.model = new Model();
   }
 
@@ -55,15 +53,13 @@ public class Controller {
   // TODO: actually handle exception
   public void saveFile(String fileName, Map<String, String> propertyToValue) throws IOException {
     CSVGenerator csvGenerator = new CSVGenerator();
-    csvGenerator.createCSVFile(model.getCellGrid(), fileName);
+    csvGenerator.createCSVFile(model.getCellGrid(), propertyToValue.get(FileSavePopup.INITIAL_STATES));
 //    simGenerator.updateReplaceableSimInfo(updatedSimInfo);
 
     simGenerator.createSimFile(propertyToValue);
   }
 
-  public void setMainView(MainView mainView) {
-    this.mainView = mainView;
-  }
+
 
   public void setModel(Model model) {
     this.model = model;
