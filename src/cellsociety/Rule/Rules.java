@@ -4,6 +4,7 @@ import cellsociety.cell.Cell;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 public abstract class Rules implements RulesInterface {
@@ -45,6 +46,22 @@ public abstract class Rules implements RulesInterface {
 
   public void setCellStateTwo() {
     cell.setFutureState(2);
+  }
+
+  public void move(int state)
+  {
+    boolean temp=true;
+    while(temp)
+    {
+      Random random=new Random();
+      int randInt= random.nextInt(cell.numOfStateNeighbors(state)-1);
+      if(cell.getNeighborCellStateMap().get(state).get(randInt).getFutureState()==0)
+      {
+        cell.getNeighborCellStateMap().get(state).get(randInt).setFutureState(cell.getCurrentState());
+        temp=false;
+      }
+
+    }
   }
 
 }

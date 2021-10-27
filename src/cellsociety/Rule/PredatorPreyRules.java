@@ -36,9 +36,8 @@ public class PredatorPreyRules extends Rules {
 
         if(cell.getCurrentState()==1)
         {
-            if(cell.getNeighborCellStateMap().get(0).size()>0) {
-                cell.setCompareState(0);
-                cell.setShouldMove(true);
+            if(cell.numOfStateNeighbors(0)>0) {
+                move(0);
                 checkReproduction();
             }
             else{
@@ -52,14 +51,12 @@ public class PredatorPreyRules extends Rules {
         if (cell.getCurrentState()==2)
         {
             if(cell.getEnergy()!=0) {
-                if (cell.getNeighborCellStateMap().get(1).size() > 0) {
-                    cell.setCompareState(1);
-                    cell.setShouldMove(true);
+                if (cell.numOfStateNeighbors(1) > 0) {
+                    move(1);
                     checkReproduction();
                     cell.setEnergy(cell.getEnergy() + 1);
-                } else if (cell.getNeighborCellStateMap().get(0).size() > 0) {
-                    cell.setCompareState(0);
-                    cell.setShouldMove(true);
+                } else if (cell.numOfStateNeighbors(0) > 0) {
+                    move(0);
                     checkReproduction();
                 }
                 else{cell.setFutureState(cell.getCurrentState());}
@@ -71,4 +68,14 @@ public class PredatorPreyRules extends Rules {
     public void incrementCellChrononCounter(){
         cell.setChrononCounter(cell.getChrononCounter()+1);
     }
+
+
 }
+
+
+//      if(cell.getNeighborCellStateMap().get(state).isEmpty()) {
+//        System.out.println("test");
+//      }
+//      while (cell.getNeighborCellStateMap().get(state).get(randInt).getFutureState() != 0) {
+//        randInt = random.nextInt(cell.numOfStateNeighbors(state)-1);
+//      }
