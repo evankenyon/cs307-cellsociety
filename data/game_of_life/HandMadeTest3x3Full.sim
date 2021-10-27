@@ -1,0 +1,5 @@
+Type=GameOfLife
+Description=Test
+Title=Test
+Author=Test
+InitialStates=game_of_life/HandMadeTest3x3Full.csv
