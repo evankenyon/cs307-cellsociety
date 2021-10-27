@@ -43,7 +43,6 @@ public class PredatorPreyRulesTest {
         test.add(new Cell(0,0,0));
         cell.setNeighbors(test);
         cell.updateCellNeighborStates();
-        //System.out.println(cell.getNeighborCellStateMap());
         PredatorPreyRules pp=new PredatorPreyRules(cell, new ArrayList<>());
         pp.setState();
         Assertions.assertTrue(cell.getFutureState()==0 && cell.getNeighborOfState(1, 0).getFutureState()==2);
