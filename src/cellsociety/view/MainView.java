@@ -41,7 +41,7 @@ public class MainView extends ChangeableDisplay{
   private ViewResourceHandler myViewResourceHandler;
 
   private Map<NodeWithText, String> myNodesToTextKey;
-  private List<SimulationDisplay> simulationDisplayList;
+  private SimulationDisplay mySimulationDisplay;
   private Pane mainPane;
 
 
@@ -55,7 +55,7 @@ public class MainView extends ChangeableDisplay{
     myResourceHandler = new LanguageResourceHandler();
     myViewResourceHandler = new ViewResourceHandler();
     myNodesToTextKey = new HashMap<>();
-    simulationDisplayList = new ArrayList<>();
+    mySimulationDisplay = null;
   }
 
 
@@ -147,24 +147,38 @@ public class MainView extends ChangeableDisplay{
   }
 
   /**
-   * handle a file that has been inputted
+   * Handle a file that has been inputted. This is only public so that we can use it for testing.
+   * I cannot figure out how to do TestFX to input a file, so I had to call this method in the tests - Keith
    * @param selectedFile
    */
   public void handleSelectedFile(File selectedFile){
     //take the file inputted by a user, and send it to the controller for parsing. Show error messages if neccessary
-    SimulationDisplay simDisp = new SimulationDisplay(myLanguageResourceHandler);
-    simulationDisplayList.add(simDisp);
+    SimulationDisplay oldDisplay = mySimulationDisplay;
+    mySimulationDisplay = new SimulationDisplay(myLanguageResourceHandler);
     try{
-      addSimulationDisplay(simDisp.makeDisplay(selectedFile));
+
+      addSimulationDisplay(mySimulationDisplay.makeDisplay(selectedFile), oldDisplay);
     } catch (Exception e){
-      displayErrorMessage(e.getMessage());
+      mySimulationDisplay = oldDisplay;
+      displayErrorMessage(e.getMessage());;
+
+
     }
   }
 
 
 
-  private void addSimulationDisplay(Node newDisplay) throws Exception{
-    //add display for a new simulation. This will be more complicated if there are multiple on screen at once
+  private void addSimulationDisplay(Node newDisplay, SimulationDisplay oldDisplay) throws Exception{
+    //add display for a new simulation. First remove the old display, if there was one
+    if (oldDisplay != null) {
+      if (oldDisplay.getMyNode() != null) {
+        Platform.runLater(new Runnable() {
+          @Override public void run() {
+            mainPane.getChildren().remove(oldDisplay.getMyNode());
+          }
+        });
+      }
+    }
     Platform.runLater(new Runnable() {
       @Override public void run() {
         mainPane.getChildren().add(newDisplay);
@@ -178,8 +192,8 @@ public class MainView extends ChangeableDisplay{
    */
   protected void changeLanguageOfText(){
     super.changeLanguageOfText();
-    for (SimulationDisplay simDisp : simulationDisplayList){
-      simDisp.changeLanguageOfText();
+    if (mySimulationDisplay != null) {
+      mySimulationDisplay.changeLanguageOfText();
     }
   }
 
@@ -188,7 +202,11 @@ public class MainView extends ChangeableDisplay{
    * @return the number of simulations being run
    */
   public int getNumSimulations(){
-    return simulationDisplayList.size();
+    if (mySimulationDisplay == null){
+      return 0;
+    }else{
+      return 1;
+    }
   }
 
   /**
@@ -196,11 +214,7 @@ public class MainView extends ChangeableDisplay{
    * @return the simulation display
    */
   public SimulationDisplay getSimDisplay(){
-    if (simulationDisplayList.size() > 0) {
-      return simulationDisplayList.get(0);
-    } else{
-      return null;
-    }
+    return mySimulationDisplay;
   }
 
 

@@ -1,4 +1,5 @@
 package view;
+import cellsociety.cell.CellDisplay;
 import javafx.scene.control.TextInputControl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,6 +11,7 @@ import cellsociety.view.MainView;
 import cellsociety.view.SimulationDisplay;
 import cellsociety.view.NodeWithText;
 import cellsociety.view.Button2;
+import cellsociety.cell.Cell;
 
 import java.io.File;
 import java.util.Random;
@@ -35,7 +37,7 @@ public class SimulationDisplayTest extends DukeApplicationTest{
     mView = new MainView();
     resourceHandler = mView.getMyResourceHandler();
     stage.setScene(mView.makeSimulationScene());
-    mView.handleSelectedFile(new File("data/game_of_life/blinkers.csv"));
+    mView.handleSelectedFile(new File("data/game_of_life/blinkers.sim"));
     simDisp = mView.getSimDisplay();
     stage.show();
     stage.toFront();
@@ -139,6 +141,30 @@ public class SimulationDisplayTest extends DukeApplicationTest{
     setValue(s, newFPS);
     //line above actually does nothing since it isn't technicaly cliking on the slider, so I need the line below
     simDisp.changeAnimationSpeed(newFPS);
+  }
+
+  @Test
+  void testClickCellSimple(){
+    clickOn(resourceHandler.getStringFromKey(LanguageResourceHandler.PAUSE_KEY));
+    CellDisplay cellDisp = simDisp.getAllCellDisplays().get(0);
+    int state0 = cellDisp.getState();
+    Node dispNode = cellDisp.getMyDisplay();
+    clickOn(dispNode);
+    int state1 = cellDisp.getState();
+    assertEquals(state1, (state0 + 1) % cellDisp.getStateColors().length);
+  }
+
+  @Test
+  void testClickCellComplex(){
+    clickOn(resourceHandler.getStringFromKey(LanguageResourceHandler.PAUSE_KEY));
+    CellDisplay cellDisp = simDisp.getAllCellDisplays().get(7);
+    int state0 = cellDisp.getState();
+    Node dispNode = cellDisp.getMyDisplay();
+    for (int i = 0; i < 10; i++) {
+      clickOn(dispNode);
+    }
+    int state1 = cellDisp.getState();
+    assertEquals(state1, (state0 + 10) % cellDisp.getStateColors().length);
   }
 
   private boolean doublesEqual(double d1, double d2){

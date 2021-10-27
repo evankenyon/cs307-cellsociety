@@ -41,6 +41,7 @@ public class SimParser {
     // Borrowed code for making InputStream from
     // https://www.baeldung.com/convert-file-to-input-stream
     InputStream simFileInputStream = this.getClass().getClassLoader().getResourceAsStream(pathName.toString());
+    
     simulationConfig.load(simFileInputStream);
     handleIllegalInput();
   }

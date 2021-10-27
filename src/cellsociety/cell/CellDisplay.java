@@ -5,13 +5,38 @@ import javafx.scene.Node;
 
 public class CellDisplay {
   private Node myDisp;
+  private Cell myCell;
+  private int myState;
   public static final Color ON_COLOR = Color.BLUE;
   public static final Color OFF_COLOR = Color.BLACK;
-  private Color[] stateColors = {Color.BLUE, Color.BLACK};
+  private Color[] stateColors = {Color.BLACK, Color.BLUE};
 
-  public CellDisplay(int x, int y, int state){
-    myDisp = new Rectangle(x, y, Cell.DEFAULT_WIDTH, Cell.DEFAULT_HEIGHT);
+  public CellDisplay(double x, double y, int state){
+    this(x, y, Cell.DEFAULT_WIDTH, Cell.DEFAULT_HEIGHT, state);
+  }
+
+  public CellDisplay(double x, double y, double width, double height, int state){
+    myDisp = new Rectangle(x, y, width, height);
+    myDisp.setOnMouseClicked(e -> cellClicked());
+    myState = state;
     changeState(state);
+  }
+
+
+
+  /**
+   * set what cell corresponds to this cell display
+   * @param cell will be myCell
+   */
+  public void setCell(Cell cell){
+    myCell = cell;
+  }
+
+  private void cellClicked(){
+    //handle what happens when a cell is clicked on in the GUI
+    int nextState = (myCell.getCurrentState() + 1) % stateColors.length;
+    myCell.setFutureState(nextState);
+    myCell.updateState();
   }
 
   /**
@@ -60,14 +85,36 @@ public class CellDisplay {
    * @param state
    */
   public void changeState(int state){
-    if (state == 0) {
-      ((Rectangle) myDisp).setFill(OFF_COLOR);
-    }
-    else if (state == 1){
-      ((Rectangle) myDisp).setFill(ON_COLOR);
-    } else {
-      ((Rectangle) myDisp).setFill(Color.RED);
-    }
+    state = state % stateColors.length;
+    myState = state;
+    ((Rectangle) myDisp).setFill(stateColors[state]);
+
   }
+
+  /**
+   * get the array of possible colors
+   * @return stateColors
+   */
+  public Color[] getStateColors(){
+    return stateColors;
+  }
+
+  /**
+   * get the state of this cellDisplay
+   * @return myState
+   */
+  public int getState(){
+    return myState;
+  }
+
+  /**
+   * get the color of this cell display
+   * @return stateColors[myState]
+   */
+  public Color getMyColor(){
+    return stateColors[myState];
+  }
+
+
 
 }
