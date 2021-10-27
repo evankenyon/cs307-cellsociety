@@ -190,4 +190,12 @@ public class Model {
     return shape;
   }
 
+  /**
+   * get the simulation type, e.g. "GameOfLife" or "Percolation"
+   * @return the string simulationType
+   */
+  public String getSimulationType(){
+    return simulationType;
+  }
+
 }

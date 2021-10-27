@@ -73,7 +73,7 @@ public class SimulationDisplayTest extends DukeApplicationTest{
     int fileName = r.nextInt(9999999);
 
     //this isn't working. Need to figure out how to find specific text field
-    
+
     for (Node n : textFields){
       writeInputTo((TextInputControl)n, String.valueOf(fileName));
     }
