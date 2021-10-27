@@ -1,6 +1,5 @@
 package Rules;
 
-import cellsociety.Rule.GameOfLifeRules;
 import cellsociety.Rule.PercolationRules;
 import cellsociety.Rule.Rules;
 import cellsociety.cell.Cell;
@@ -24,7 +23,7 @@ public class PercolationRulesTest {
         for(Cell otherCell : allCells) {
             cell.updateNeighbors(otherCell, 2);
         }
-        cell.updateCellNeighborStates();
+        cell.updateCellNeighborStateMap();
         Rules rules=new PercolationRules(cell, new ArrayList<>());
         rules.setState();
         Assertions.assertEquals(0,cell.getFutureState());
@@ -42,7 +41,7 @@ public class PercolationRulesTest {
         for(Cell otherCell : allCells) {
             cell.updateNeighbors(otherCell, 2);
         }
-        cell.updateCellNeighborStates();
+        cell.updateCellNeighborStateMap();
         Rules rules=new PercolationRules(cell, new ArrayList<>());
         rules.setState();
         Assertions.assertEquals(1,cell.getFutureState());
@@ -60,7 +59,7 @@ public class PercolationRulesTest {
         for(Cell otherCell : allCells) {
             cell.updateNeighbors(otherCell, 2);
         }
-        cell.updateCellNeighborStates();
+        cell.updateCellNeighborStateMap();
         Rules rules=new PercolationRules(cell, new ArrayList<>());
         rules.setState();
         Assertions.assertEquals(2,cell.getFutureState());
@@ -78,7 +77,7 @@ public class PercolationRulesTest {
         for(Cell otherCell : allCells) {
             cell.updateNeighbors(otherCell, 2);
         }
-        cell.updateCellNeighborStates();
+        cell.updateCellNeighborStateMap();
         Rules rules=new PercolationRules(cell, new ArrayList<>());
         rules.setState();
         Assertions.assertEquals(2,cell.getFutureState());

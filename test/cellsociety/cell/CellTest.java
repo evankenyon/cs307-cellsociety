@@ -21,7 +21,7 @@ class CellTest {
     Cell potentialNeighborTwo = new Cell(1, 0, 1, DEFAULT_GRID_HEIGHT, DEFAULT_GRID_WIDTH);
     cell.updateNeighbors(potentialNeighborOne, 1);
     cell.updateNeighbors(potentialNeighborTwo, 1);
-    cell.updateCellNeighborStates();
+    cell.updateCellNeighborStateMap();
     assertEquals(2, cell.numOfStateNeighbors(1));
   }
 
@@ -46,7 +46,7 @@ class CellTest {
     Cell potentialNeighborTwo = new Cell(1, 0, 0, DEFAULT_GRID_HEIGHT, DEFAULT_GRID_WIDTH);
     cell.updateNeighbors(potentialNeighborOne, 1);
     cell.updateNeighbors(potentialNeighborTwo, 1);
-    cell.updateCellNeighborStates();
+    cell.updateCellNeighborStateMap();
     assertEquals(expected, cell.numOfStateNeighbors(1));
     assertEquals(expected, cell.numOfStateNeighbors(0));
   }
