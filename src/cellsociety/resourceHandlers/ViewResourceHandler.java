@@ -13,14 +13,14 @@ import javafx.scene.paint.Color;
 public class ViewResourceHandler {
   private ResourceBundle myResourceBundle;
   private Properties viewProperties, stateColorProperties;
-  private final String DISPLAY_PROPS_PATH = "src/cellsociety/resourceHandlers/DisplayProperties.properties";
-  private final String STATE_COLORS_PATH = "src/cellsociety/resourceHandlers/StateColor.properties";
-  private final String SIM_WIDTH_KEY = "SimulationWidth";
-  private final String SIM_HEIGHT_KEY = "SimulationHeight";
-  private final String WINDOW_WIDTH_KEY = "windowWidth";
-  private final String WINDOW_HEIGHT_KEY = "windowHeight";
-  private final String MIN_FRAMES_KEY = "MinFramesPerSecond";
-  private final String MAX_FRAMES_KEY = "MaxFramesPerSecond";
+  private final static String DISPLAY_PROPS_PATH = "src/cellsociety/resourceHandlers/DisplayProperties.properties";
+  private final static String STATE_COLORS_PATH = "src/cellsociety/resourceHandlers/StateColor.properties";
+  private final static String SIM_WIDTH_KEY = "SimulationWidth";
+  private final static String SIM_HEIGHT_KEY = "SimulationHeight";
+  private final static String WINDOW_WIDTH_KEY = "windowWidth";
+  private final static String WINDOW_HEIGHT_KEY = "windowHeight";
+  private final static String MIN_FRAMES_KEY = "MinFramesPerSecond";
+  private final static String MAX_FRAMES_KEY = "MaxFramesPerSecond";
 
 
   public ViewResourceHandler() {

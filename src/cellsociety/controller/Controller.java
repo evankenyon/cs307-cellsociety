@@ -66,6 +66,7 @@ public class Controller {
   }
 
   /**
+   *  SHUOLD DELETE THIS METHOD
    * get a list of the display nodes for each cell
    * @return a list of the display node for each cell
    */

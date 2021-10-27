@@ -37,8 +37,8 @@ import java.util.ArrayList;
  */
 public class SimulationDisplay extends ChangeableDisplay{
 
-  protected double framesPerSecond = 1;
-  protected double secondDelay = 1.0 / framesPerSecond;
+  private double framesPerSecond = 1;
+  private double secondDelay = 1.0 / framesPerSecond;
   private Controller myController;
   protected Timeline myAnimation;
   private boolean paused;

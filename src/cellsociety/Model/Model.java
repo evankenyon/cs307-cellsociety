@@ -121,7 +121,7 @@ public class Model {
   }
 
   /**
-   * We shoudl remove this method eventually
+   * SHOULD DELETE THIS METHOD
    * get a list of all the nodes to go on screen, representing displays of each cell
    * @return a list of nodes displaying the cells
    */
