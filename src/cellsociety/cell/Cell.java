@@ -40,7 +40,7 @@ public class Cell {
         this.currentState = initialState;
         corners = new RectangleCellCornerLocationGenerator(rows, columns).generateCorners(i, j);
         neighbors = new ArrayList<>();
-        //myDisplay = new CellDisplay(j * DEFAULT_WIDTH, i * DEFAULT_WIDTH, currentState);
+        myDisplay = new CellDisplay(j * DEFAULT_WIDTH, i * DEFAULT_WIDTH, currentState);
         neighborCellStateMap = new HashMap<>();
         shouldMove = false;
         chrononCounter = 0;
@@ -141,8 +141,6 @@ public class Cell {
 
     public int getFutureState() {return futureState;}
 
-    public List<Cell> getNeighbors() {return neighbors;}
-
     public List<CornerLocation> getCorners() {
         return corners;
     }
@@ -156,9 +154,6 @@ public class Cell {
             neighbors.add(potentialNeighbor);
         }
     }
-
-    //Testing purposes
-    public void setNeighbors(List<Cell> neighbors) {this.neighbors = neighbors;}
 
     public int numOfStateNeighbors(int state){
         if(neighborCellStateMap.containsKey(state)){
@@ -176,10 +171,17 @@ public class Cell {
         }
     }
 
-    public Map<Integer, List<Cell>> getNeighborCellStateMap() {
-        return neighborCellStateMap;
+    public int getNumNeighbors() {
+        return neighbors.size();
     }
 
+    // TODO: Remove
+    public void setNeighbors(List<Cell> neighbors) {this.neighbors = neighbors;}
+
+
+    public Cell getNeighborOfState(int state, int num) {
+        return neighborCellStateMap.get(state).get(num);
+    }
 
     private void setCellGrid(Cell[][] cellGrid){
         this.cellGrid = cellGrid;

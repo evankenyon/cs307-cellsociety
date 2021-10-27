@@ -87,7 +87,7 @@ public class Model {
         try {
           r = (RulesInterface) Class.forName(
                   String.format("%s%sRules", numCorners.getString("RulesPackageName"), simulationType))
-              .getConstructor(Cell.class).newInstance(cellGrid[row][col]);
+              .getConstructor(Cell.class, List.class).newInstance(cellGrid[row][col], new ArrayList<>());
         } catch (Exception e) {
           //TODO: Implement properly
           e.printStackTrace();

@@ -23,7 +23,7 @@ class SimParserTest {
     String[] expectedValues = {"GameOfLife", "Blinkers", "John Conway", "Examples of a blinker, a "
         + "line of cells 3 wide that switches back and forth from vertical to horizontal",
         "game_of_life/blinkers.csv"};
-    simParser.setupKeyValuePairs(new File("./data/game_of_life/blinkers.csv"));
+    simParser.setupKeyValuePairs(new File("./data/game_of_life/blinkers.sim"));
     for (String key : simParser.getSimulationConfig().stringPropertyNames()) {
       Assertions.assertTrue(Arrays.asList(expectedKeys).contains(key));
       Assertions.assertTrue(
@@ -34,6 +34,6 @@ class SimParserTest {
   @Test
   void setupKeyValuePairsIncorrect() {
     Assertions.assertThrows(NullPointerException.class,
-        () -> simParser.setupKeyValuePairs(new File("/data/game_of_life/blinkers-one-step.csv")));
+        () -> simParser.setupKeyValuePairs(new File("/data/game_of_life/blinkers-one-step.sim")));
   }
 }

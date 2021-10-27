@@ -31,9 +31,9 @@ class ControllerTest {
 
   @Test
   void parseFile() throws FileNotFoundException {
-    controller.parseFile(new File("./data/game_of_life/blinkers.csv"));
+    controller.parseFile(new File("./data/game_of_life/blinkers.sim"));
     Cell[][] cells = model.getCellGrid();
-    Scanner overallScanner = new Scanner("./data/game_of_life/blinkers.csv");
+    Scanner overallScanner = new Scanner("./data/game_of_life/blinkers.sim");
     overallScanner.nextLine();
     int row = 0;
     while (overallScanner.hasNextLine()) {
@@ -56,10 +56,10 @@ class ControllerTest {
 
   @Test
   void saveFile() throws IOException {
-    controller.parseFile(new File("./data/game_of_life/blinkers.csv"));
+    controller.parseFile(new File("./data/game_of_life/blinkers.sim"));
     Cell[][] expected = model.getCellGrid();
-    controller.saveFile("program-0");
-    controller.parseFile(new File("./data/game_of_life/saved/program-0.csv"));
+    controller.saveFile("0");
+    controller.parseFile(new File("./data/game_of_life/saved/program-0.sim"));
     Cell[][] actual = model.getCellGrid();
     for (int row = 0; row < expected.length; row++) {
       for (int col = 0; col < expected[0].length; col++) {
@@ -70,7 +70,7 @@ class ControllerTest {
 
   @Test
   void testStepWith1x1Grid() throws IOException{
-    controller.parseFile(new File("data/game_of_life/HandMadeTest1.csv"));
+    controller.parseFile(new File("data/game_of_life/HandMadeTest1.sim"));
     controller.step();
     assertEquals(CellDisplay.OFF_COLOR, ((Rectangle)controller.getCellDisplays().get(0)).getFill());
     controller.step();
@@ -79,7 +79,7 @@ class ControllerTest {
 
   @Test
   void testWith2x2CSV() throws IOException{
-    controller.parseFile(new File("data/game_of_life/HandMadeTest2.csv"));
+    controller.parseFile(new File("data/game_of_life/HandMadeTest2.sim"));
     controller.step();
     assertEquals(CellDisplay.ON_COLOR, ((Rectangle)controller.getCellDisplays().get(0)).getFill());
     assertEquals(CellDisplay.ON_COLOR, ((Rectangle)controller.getCellDisplays().get(1)).getFill());
@@ -96,7 +96,7 @@ class ControllerTest {
 
   @Test
   void testWith3x3Border() throws IOException{
-    controller.parseFile(new File("data/game_of_life/HandMadeTest3x3Border.csv"));
+    controller.parseFile(new File("data/game_of_life/HandMadeTest3x3Border.sim"));
     assertEquals(CellDisplay.ON_COLOR, ((Rectangle)controller.getCellDisplays().get(0)).getFill());
     assertEquals(CellDisplay.ON_COLOR, ((Rectangle)controller.getCellDisplays().get(1)).getFill());
     assertEquals(CellDisplay.ON_COLOR, ((Rectangle)controller.getCellDisplays().get(2)).getFill());
@@ -120,7 +120,7 @@ class ControllerTest {
 
   @Test
   void testWith3x3Full() throws IOException{
-    controller.parseFile(new File("data/game_of_life/HandMadeTest3x3Full.csv"));
+    controller.parseFile(new File("data/game_of_life/HandMadeTest3x3Full.sim"));
     assertEquals(CellDisplay.ON_COLOR, ((Rectangle)controller.getCellDisplays().get(0)).getFill());
     assertEquals(CellDisplay.ON_COLOR, ((Rectangle)controller.getCellDisplays().get(1)).getFill());
     assertEquals(CellDisplay.ON_COLOR, ((Rectangle)controller.getCellDisplays().get(2)).getFill());
