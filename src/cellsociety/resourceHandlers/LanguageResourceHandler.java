@@ -12,6 +12,7 @@ import java.util.HashMap;
 
 /**
  * objects of this class help handle properties relating to languages/text
+ * to do: make separate pause and resume button
  */
 public class LanguageResourceHandler {
   public static final String LANGUAGE_BUNDLE_NAME = "Langauge";

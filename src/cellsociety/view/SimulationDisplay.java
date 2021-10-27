@@ -6,6 +6,7 @@ import cellsociety.controller.Controller;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Collections;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.stage.FileChooser;
@@ -47,7 +48,7 @@ public class SimulationDisplay extends ChangeableDisplay{
   private Controller myController;
   protected Timeline myAnimation;
   private boolean paused;
-  private Button pauseButton, oneStepButton;
+  private Button pauseButton, resumeButton, oneStepButton;
   private TextField fileNameField;
   private ViewResourceHandler myViewResourceHandler;
   private List<CellDisplay> allCellDisplays;
@@ -112,25 +113,33 @@ public class SimulationDisplay extends ChangeableDisplay{
     double widthPerCell = myViewResourceHandler.simulationWidth() / (numCols + 0.01);
     double heightPerCell = myViewResourceHandler.simulationWidth() / (numRows + 0.01);
     for (Cell cell : allCells){
-      CellDisplay newDisplay = new CellDisplay(cell.getiIndex() * heightPerCell,
-          cell.getjIndex() * widthPerCell, widthPerCell, heightPerCell, cell.getCurrentState());
-      newDisplay.setCell(cell);
-      newDisplay.setColors(myViewResourceHandler.getColorsForSimulation(
-          myController.getSimulationType()));
-      cell.setDisplay(newDisplay);
-      displayNodes.add(newDisplay.getMyDisplay());
-      allCellDisplays.add(newDisplay);
+      displayNodes.add(makeACellDisplay(cell, widthPerCell, heightPerCell).getMyDisplay());
     }
     return displayNodes;
+  }
+
+  private CellDisplay makeACellDisplay(Cell cell, double widthPerCell, double heightPerCell){
+    //make a cell display for the cell with the width and height given as arguments
+    CellDisplay newDisplay = new CellDisplay(cell.getjIndex() * widthPerCell,
+        cell.getiIndex() * heightPerCell, widthPerCell, heightPerCell, cell.getCurrentState());
+    newDisplay.setCell(cell);
+    newDisplay.setColors(myViewResourceHandler.getColorsForSimulation(
+        myController.getSimulationType()));
+    cell.setDisplay(newDisplay);
+    allCellDisplays.add(newDisplay);
+    return newDisplay;
   }
 
   private Node makeControls(){
     VBox v = new VBox();
     HBox controlBox = new HBox();
     controlBox.getChildren().add(makeAButton(LanguageResourceHandler.ABOUT_KEY, () -> showAbout()));
-    pauseButton = makeAButton(LanguageResourceHandler.PAUSE_KEY, () -> playPauseSimulation());
+    pauseButton = makeAButton(LanguageResourceHandler.PAUSE_KEY, () -> pauseAnimation());
+    resumeButton = makeAButton(LanguageResourceHandler.RESUME_KEY, () -> resumeAnimation());
+    resumeButton.setVisible(false);
     oneStepButton = makeAButton(LanguageResourceHandler.ONE_STEP_KEY, () -> oneStep());
     controlBox.getChildren().add(pauseButton);
+    controlBox.getChildren().add(resumeButton);
     controlBox.getChildren().add(oneStepButton);
     controlBox.getChildren().add(makeAButton(LanguageResourceHandler.SAVE_FILE_KEY, () -> makePopup()));
     v.getChildren().add(controlBox);
@@ -183,13 +192,17 @@ public class SimulationDisplay extends ChangeableDisplay{
 
   private void pauseAnimation(){
     myAnimation.pause();
-    pauseButton.setText(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.RESUME_KEY));
+    //pauseButton.setText(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.RESUME_KEY));
+    pauseButton.setVisible(false);
+    resumeButton.setVisible(true);
     paused = true;
   }
 
   private void resumeAnimation(){
     myAnimation.play();
-    pauseButton.setText(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.PAUSE_KEY));
+    //pauseButton.setText(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.PAUSE_KEY));
+    resumeButton.setVisible(false);
+    pauseButton.setVisible(true);
     paused = false;
   }
 
@@ -241,7 +254,7 @@ public class SimulationDisplay extends ChangeableDisplay{
    * @return allCellDisplays
    */
   public List<CellDisplay> getAllCellDisplays(){
-    return allCellDisplays;
+    return Collections.unmodifiableList(allCellDisplays);
   }
 
   /**

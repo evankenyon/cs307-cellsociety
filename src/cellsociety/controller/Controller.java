@@ -53,7 +53,7 @@ public class Controller {
   // TODO: actually handle exception
   public void saveFile(String fileName, Map<String, String> propertyToValue) throws IOException {
     CSVGenerator csvGenerator = new CSVGenerator();
-    csvGenerator.createCSVFile(model.getCellGrid(), fileName);
+    csvGenerator.createCSVFile(model.getCellGrid(), propertyToValue.get(FileSavePopup.INITIAL_STATES));
 //    simGenerator.updateReplaceableSimInfo(updatedSimInfo);
 
     simGenerator.createSimFile(propertyToValue);
