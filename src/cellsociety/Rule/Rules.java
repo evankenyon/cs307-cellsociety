@@ -30,12 +30,9 @@ public abstract class Rules implements RulesInterface {
   }
 
 
-
-
   public void setCellState(int state){
     cell.setFutureState(state);
   }
-
 
 
   public void setCellStateZero() {
