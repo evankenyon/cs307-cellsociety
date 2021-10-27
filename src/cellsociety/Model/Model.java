@@ -142,8 +142,8 @@ public class Model {
   }
 
   public void createModelStateMap() {
+    modelStateMap = new HashMap<>();
     for(Cell cell: cellList){
-      modelStateMap = new HashMap<>();
       int cellCurrentState = cell.getCurrentState();
       modelStateMap.putIfAbsent(cellCurrentState, new ArrayList<>());
       modelStateMap.get(cellCurrentState).add(cell);
