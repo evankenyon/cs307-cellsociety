@@ -54,7 +54,8 @@ public abstract class Rules implements RulesInterface {
     while(temp)
     {
       Random random=new Random();
-      int randInt= random.nextInt(cell.numOfStateNeighbors(state)-1);
+      int stateNeighbors=cell.numOfStateNeighbors(state);
+      int randInt= random.nextInt(stateNeighbors);
       if(cell.getNeighborCellStateMap().get(state).get(randInt).getFutureState()==0)
       {
         cell.getNeighborCellStateMap().get(state).get(randInt).setFutureState(cell.getCurrentState());
