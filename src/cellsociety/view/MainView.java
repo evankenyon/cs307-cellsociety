@@ -170,6 +170,7 @@ public class MainView extends ChangeableDisplay{
 
   private void addSimulationDisplay(Node newDisplay, SimulationDisplay oldDisplay) throws Exception{
     //add display for a new simulation. First remove the old display, if there was one
+
     if (oldDisplay != null) {
       if (oldDisplay.getMyNode() != null) {
         Platform.runLater(new Runnable() {

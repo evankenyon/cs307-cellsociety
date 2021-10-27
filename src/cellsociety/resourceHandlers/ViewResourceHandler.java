@@ -11,7 +11,7 @@ import java.io.FileInputStream;
  */
 public class ViewResourceHandler {
   private ResourceBundle myResourceBundle;
-  private Properties viewProperties;
+  private Properties viewProperties, stateColorProperties;
   private final String DISPLAY_PROPS_PATH = "src/cellsociety/resourceHandlers/DisplayProperties.properties";
   private final String SIM_WIDTH_KEY = "SimulationWidth";
   private final String WINDOW_WIDTH_KEY = "windowWidth";

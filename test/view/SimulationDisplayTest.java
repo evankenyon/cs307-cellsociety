@@ -1,7 +1,7 @@
 package view;
 import cellsociety.cell.CellDisplay;
+import java.util.Set;
 import javafx.scene.control.TextInputControl;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -11,16 +11,13 @@ import cellsociety.view.MainView;
 import cellsociety.view.SimulationDisplay;
 import cellsociety.view.NodeWithText;
 import cellsociety.view.Button2;
-import cellsociety.cell.Cell;
 
 import java.io.File;
 import java.util.Random;
 
 import javafx.stage.Stage;
-import javafx.scene.Scene;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Slider;
 
 
@@ -66,14 +63,23 @@ public class SimulationDisplayTest extends DukeApplicationTest{
 
   @Test
   void testSaveFile(){
-
+    //need to check in the right directory
+    clickOn(resourceHandler.getStringFromKey(LanguageResourceHandler.SAVE_FILE_KEY));
     Node rootNode = myStage.getScene().getRoot();
-    TextField fileNameField = from(rootNode).lookup(".text-field").query();
+
+    Set<Node> textFields = from(rootNode).lookup(".text-field").queryAll();
+
     Random r = new Random();
     int fileName = r.nextInt(9999999);
 
-    writeInputTo((TextInputControl)fileNameField, String.valueOf(fileName));
-    clickOn(resourceHandler.getStringFromKey(LanguageResourceHandler.SAVE_FILE_KEY));
+    //this isn't working. Need to figure out how to find specific text field
+    
+    for (Node n : textFields){
+      writeInputTo((TextInputControl)n, String.valueOf(fileName));
+    }
+
+
+    clickOn(resourceHandler.getStringFromKey(LanguageResourceHandler.SAVE_BUTTON_POPUP_KEY));
     try {
       File f = new File("data/game_of_life/saved/program-" + fileName + ".csv");
       assertTrue(f.exists());
