@@ -95,10 +95,15 @@ public class Model {
         //TODO: Implement properly
         try {
           r.setState();
-          updateCellMovement(cellGrid[row][col]);
         } catch (Exception e) {
           e.printStackTrace();
         }
+      }
+    }
+
+    for (int row = 0; row < cellGrid.length; row++) {
+      for (int col = 0; col < cellGrid[0].length; col++) {
+        updateCellMovement(cellGrid[row][col]);
       }
     }
   }
@@ -121,6 +126,12 @@ public class Model {
       int state=cell.getCompareState();
       Random random=new Random();
       int randInt= random.nextInt(cell.numOfStateNeighbors(state)-1);
+//      if(cell.getNeighborCellStateMap().get(state).isEmpty()) {
+//        System.out.println("test");
+//      }
+//      while (cell.getNeighborCellStateMap().get(state).get(randInt).getFutureState() != 0) {
+//        randInt = random.nextInt(cell.numOfStateNeighbors(state)-1);
+//      }
       cell.getNeighborCellStateMap().get(state).get(randInt).setFutureState(cell.getCurrentState());
       cell.setShouldMove(false);
     }
