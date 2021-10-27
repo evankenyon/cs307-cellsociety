@@ -27,7 +27,7 @@ public class SegregationRulesTest {
         test.add(new Cell(0,0,1));
         test.add(new Cell(0,0,2));
         cell.setNeighbors(test);
-        cell.updateCellNeighborStates();
+        cell.updateCellNeighborStateMap();
         SegregationRules sr=new SegregationRules(cell, new ArrayList<>());
         sr.setState();
         Assertions.assertEquals(1,cell.getFutureState());
@@ -44,7 +44,7 @@ public class SegregationRulesTest {
         test.add(new Cell(0,0,2));
         test.add(new Cell(0,0,2));
         cell.setNeighbors(test);
-        cell.updateCellNeighborStates();
+        cell.updateCellNeighborStateMap();
         SegregationRules sr=new SegregationRules(cell, new ArrayList<>());
         sr.setState();
         Assertions.assertEquals(0,cell.getFutureState());
@@ -61,10 +61,10 @@ public class SegregationRulesTest {
         test.add(new Cell(0,0,2));
         test.add(new Cell(0,0,2));
         cell.setNeighbors(test);
-        cell.updateCellNeighborStates();
+        cell.updateCellNeighborStateMap();
         SegregationRules sr=new SegregationRules(cell, new ArrayList<>());
         sr.setState();
-        cell.updateCellNeighborStates();
+        cell.updateCellNeighborStateMap();
         Assertions.assertEquals(1,cell.numOfStateNeighbors(0));
     }
 

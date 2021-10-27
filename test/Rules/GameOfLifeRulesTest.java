@@ -57,7 +57,7 @@ public class GameOfLifeRulesTest {
         for(Cell otherCell : allCells) {
             cell.updateNeighbors(otherCell, 1);
         }
-        cell.updateCellNeighborStates();
+        cell.updateCellNeighborStateMap();
         GameOfLifeRules rules=new GameOfLifeRules(cell, new ArrayList<>());
         rules.setState();
         Assertions.assertEquals(1,cell.getFutureState());
@@ -74,7 +74,7 @@ public class GameOfLifeRulesTest {
         for(Cell otherCell : allCells) {
             cell.updateNeighbors(otherCell, 1);
         }
-        cell.updateCellNeighborStates();
+        cell.updateCellNeighborStateMap();
         GameOfLifeRules rules=new GameOfLifeRules(cell, new ArrayList<>());
         rules.setState();
         Assertions.assertEquals(1,cell.getFutureState());
@@ -92,7 +92,7 @@ public class GameOfLifeRulesTest {
         for(Cell otherCell : allCells) {
             cell.updateNeighbors(otherCell, 1);
         }
-        cell.updateCellNeighborStates();
+        cell.updateCellNeighborStateMap();
         GameOfLifeRules rules=new GameOfLifeRules(cell, new ArrayList<>());
         rules.setState();
         Assertions.assertEquals(0,cell.getFutureState());
@@ -109,7 +109,7 @@ public class GameOfLifeRulesTest {
         for(Cell otherCell : allCells) {
             cell.updateNeighbors(otherCell, 1);
         }
-        cell.updateCellNeighborStates();
+        cell.updateCellNeighborStateMap();
         GameOfLifeRules rules=new GameOfLifeRules(cell, new ArrayList<>());
         rules.setState();
         Assertions.assertEquals(1,cell.getFutureState());
@@ -130,7 +130,7 @@ public class GameOfLifeRulesTest {
             }
         }
         for (Cell cell : allCells) {
-            cell.updateCellNeighborStates();
+            cell.updateCellNeighborStateMap();
         }
         for(Cell cell : allCells) {
             GameOfLifeRules rules = new GameOfLifeRules(cell, new ArrayList<>());

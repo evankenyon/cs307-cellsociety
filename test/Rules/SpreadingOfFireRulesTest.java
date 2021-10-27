@@ -1,6 +1,5 @@
 package Rules;
 
-import cellsociety.Rule.PercolationRules;
 import cellsociety.Rule.Rules;
 import cellsociety.Rule.SpreadingOfFireRules;
 import cellsociety.cell.Cell;
@@ -21,7 +20,7 @@ public class SpreadingOfFireRulesTest {
         for(Cell otherCell : allCells) {
             cell.updateNeighbors(otherCell, 2);
         }
-        cell.updateCellNeighborStates();
+        cell.updateCellNeighborStateMap();
         List<Double> args = new ArrayList<>();
         args.add(1.0);
         args.add(0.0);
@@ -51,7 +50,7 @@ public class SpreadingOfFireRulesTest {
         for(Cell otherCell : allCells) {
             cell.updateNeighbors(otherCell, 2);
         }
-        cell.updateCellNeighborStates();
+        cell.updateCellNeighborStateMap();
         List<Double> args = new ArrayList<>();
         args.add(1.0);
         args.add(0.0);
@@ -70,7 +69,7 @@ public class SpreadingOfFireRulesTest {
         for(Cell otherCell : allCells) {
             cell.updateNeighbors(otherCell, 2);
         }
-        cell.updateCellNeighborStates();
+        cell.updateCellNeighborStateMap();
         List<Double> args = new ArrayList<>();
         args.add(1.0);
         args.add(0.0);
