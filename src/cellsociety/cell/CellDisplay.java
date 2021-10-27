@@ -9,7 +9,7 @@ public class CellDisplay {
   private int myState;
   public static final Color ON_COLOR = Color.BLUE;
   public static final Color OFF_COLOR = Color.BLACK;
-  private Color[] stateColors = {Color.BLACK, Color.BLUE};
+  private Color[] stateColors = {Color.BLACK, Color.RED, Color.GREEN};
 
   public CellDisplay(double x, double y, int state){
     this(x, y, Cell.DEFAULT_WIDTH, Cell.DEFAULT_HEIGHT, state);
@@ -45,6 +45,7 @@ public class CellDisplay {
    */
   public void setColors(Color[] colors){
     stateColors = colors;
+    changeState(myState);
   }
 
   /**

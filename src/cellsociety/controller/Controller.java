@@ -7,6 +7,7 @@ import cellsociety.Utilities.CSVParser;
 import cellsociety.Utilities.SimGenerator;
 import cellsociety.Utilities.SimParser;
 import cellsociety.view.MainView;
+import cellsociety.view.FileSavePopup;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -47,6 +48,15 @@ public class Controller {
     csvGenerator.createCSVFile(model.getCellGrid(), fileName);
 //    simGenerator.updateReplaceableSimInfo(updatedSimInfo);
     simGenerator.createSimFile(fileName);
+  }
+
+  // TODO: actually handle exception
+  public void saveFile(String fileName, Map<String, String> propertyToValue) throws IOException {
+    CSVGenerator csvGenerator = new CSVGenerator();
+    csvGenerator.createCSVFile(model.getCellGrid(), fileName);
+//    simGenerator.updateReplaceableSimInfo(updatedSimInfo);
+
+    simGenerator.createSimFile(propertyToValue);
   }
 
   public void setMainView(MainView mainView) {

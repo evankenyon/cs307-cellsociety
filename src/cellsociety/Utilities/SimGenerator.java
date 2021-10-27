@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import cellsociety.view.FileSavePopup;
+
 public class SimGenerator {
   Properties simInfo;
 
@@ -31,6 +33,31 @@ public class SimGenerator {
     // https://www.java2novice.com/java-file-io-operations/create-store-property-file/
     try {
       os = new FileOutputStream(filePath);
+      simInfo.store(os, null);
+    } catch (FileNotFoundException e) {
+      // TODO: handle exceptions
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * save a .sim file for the simulation, with properties specified in propertyToValue
+   * @param propertyToValue maps keys like "Author" and "Title" to their corresponding values for the simulation
+   */
+  public void createSimFile(Map<String, String> propertyToValue) {
+    OutputStream os = null;
+
+    for (String property : propertyToValue.keySet()){
+      simInfo.setProperty(property, propertyToValue.get(property));
+    }
+    //simInfo.setProperty("InitialStates", String.format("game_of_life/saved/program-" + "%s.csv", fileName));
+
+    // Borrowed code to output Properties to a file from
+    // https://www.java2novice.com/java-file-io-operations/create-store-property-file/
+    try {
+      os = new FileOutputStream(propertyToValue.get(FileSavePopup.INITIAL_STATES));
       simInfo.store(os, null);
     } catch (FileNotFoundException e) {
       // TODO: handle exceptions

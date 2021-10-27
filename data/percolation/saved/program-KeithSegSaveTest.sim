@@ -1,0 +1,8 @@
+#Wed Oct 27 04:21:00 EDT 2021
+=
+Type=Segregation
+Description=testing the save feature
+Title=KeithSegTest
+Author=keith
+InitialStates=./data/percolation/saved/program-KeithSegSaveTest.sim
+StateColors=FFFFFF,0000FF,000000
