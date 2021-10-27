@@ -26,7 +26,7 @@ class ControllerTest {
     model = new Model();
     MainView mainView = new MainView();
     controller.setModel(model);
-    controller.setMainView(mainView);
+    //controller.setMainView(mainView);
   }
 
   @Test

@@ -9,25 +9,19 @@ import java.io.FileNotFoundException;
 import java.util.Collections;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
-import javafx.stage.Stage;
+
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.Control;
-import javafx.scene.Scene;
+
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.control.Label;
+
 import javafx.scene.Group;
 import javafx.scene.shape.Rectangle;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Slider;
-import javafx.scene.control.DialogPane;
-import javafx.scene.control.TextArea;
 
 import cellsociety.cell.Cell;
 import cellsociety.cell.CellDisplay;
@@ -48,7 +42,7 @@ public class SimulationDisplay extends ChangeableDisplay{
   private Controller myController;
   protected Timeline myAnimation;
   private boolean paused;
-  private Button pauseButton, resumeButton, oneStepButton;
+  private Button pauseButton, resumeButton;
   private TextField fileNameField;
   private ViewResourceHandler myViewResourceHandler;
   private List<CellDisplay> allCellDisplays;
@@ -137,10 +131,9 @@ public class SimulationDisplay extends ChangeableDisplay{
     pauseButton = makeAButton(LanguageResourceHandler.PAUSE_KEY, () -> pauseAnimation());
     resumeButton = makeAButton(LanguageResourceHandler.RESUME_KEY, () -> resumeAnimation());
     resumeButton.setVisible(false);
-    oneStepButton = makeAButton(LanguageResourceHandler.ONE_STEP_KEY, () -> oneStep());
     controlBox.getChildren().add(pauseButton);
     controlBox.getChildren().add(resumeButton);
-    controlBox.getChildren().add(oneStepButton);
+    controlBox.getChildren().add(makeAButton(LanguageResourceHandler.ONE_STEP_KEY, () -> oneStep()));
     controlBox.getChildren().add(makeAButton(LanguageResourceHandler.SAVE_FILE_KEY, () -> makePopup()));
     v.getChildren().add(controlBox);
     fileNameField = new TextField();
@@ -168,9 +161,6 @@ public class SimulationDisplay extends ChangeableDisplay{
     framesPerSecond = newFramesPerSecond;
     secondDelay = 1.0 / framesPerSecond;
     myAnimation.setRate(framesPerSecond);
-    if (!paused){
-      myAnimation.play();
-    }
   }
 
   private void showAbout(){

@@ -59,9 +59,7 @@ public class Controller {
     simGenerator.createSimFile(propertyToValue);
   }
 
-  public void setMainView(MainView mainView) {
-    //this.mainView = mainView;
-  }
+
 
   public void setModel(Model model) {
     this.model = model;
