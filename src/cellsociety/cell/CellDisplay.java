@@ -11,12 +11,18 @@ public class CellDisplay {
   public static final Color OFF_COLOR = Color.BLACK;
   private Color[] stateColors = {Color.BLACK, Color.BLUE};
 
-  public CellDisplay(int x, int y, int state){
-    myDisp = new Rectangle(x, y, Cell.DEFAULT_WIDTH, Cell.DEFAULT_HEIGHT);
+  public CellDisplay(double x, double y, int state){
+    this(x, y, Cell.DEFAULT_WIDTH, Cell.DEFAULT_HEIGHT, state);
+  }
+
+  public CellDisplay(double x, double y, double width, double height, int state){
+    myDisp = new Rectangle(x, y, width, height);
     myDisp.setOnMouseClicked(e -> cellClicked());
     myState = state;
     changeState(state);
   }
+
+
 
   /**
    * set what cell corresponds to this cell display
@@ -28,7 +34,7 @@ public class CellDisplay {
 
   private void cellClicked(){
     //handle what happens when a cell is clicked on in the GUI
-    int nextState = myCell.getCurrentState() + 1 % stateColors.length;
+    int nextState = (myCell.getCurrentState() + 1) % stateColors.length;
     myCell.setFutureState(nextState);
     myCell.updateState();
   }
