@@ -1,7 +1,6 @@
 package Rules;
 
 import cellsociety.Rule.PredatorPreyRules;
-import cellsociety.Rule.SegregationRules;
 import cellsociety.cell.Cell;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -42,7 +41,7 @@ public class PredatorPreyRulesTest {
         test.add(new Cell(0,0,1));
         test.add(new Cell(0,0,0));
         cell.setNeighbors(test);
-        cell.updateCellNeighborStates();
+        cell.updateCellNeighborStateMap();
         PredatorPreyRules pp=new PredatorPreyRules(cell, new ArrayList<>());
         pp.setState();
         Assertions.assertTrue(cell.getFutureState()==0 && cell.getNeighborOfState(1, 0).getFutureState()==2);

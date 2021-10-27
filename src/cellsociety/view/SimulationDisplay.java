@@ -6,6 +6,7 @@ import cellsociety.controller.Controller;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -61,7 +62,17 @@ public class SimulationDisplay extends ChangeableDisplay{
   protected void setUpAnimation(){
     myAnimation = new Timeline();
     myAnimation.setCycleCount(Timeline.INDEFINITE);
-    myAnimation.getKeyFrames().add(new KeyFrame(Duration.seconds(secondDelay), e -> step()));
+    myAnimation.getKeyFrames().add(new KeyFrame(Duration.seconds(secondDelay), e -> {
+      try {
+        step();
+      } catch (InvocationTargetException ex) {
+        ex.printStackTrace();
+      } catch (NoSuchMethodException ex) {
+        ex.printStackTrace();
+      } catch (IllegalAccessException ex) {
+        ex.printStackTrace();
+      }
+    }));
 
     myAnimation.play();
     paused = false;
@@ -133,7 +144,17 @@ public class SimulationDisplay extends ChangeableDisplay{
     resumeButton.setVisible(false);
     controlBox.getChildren().add(pauseButton);
     controlBox.getChildren().add(resumeButton);
-    controlBox.getChildren().add(makeAButton(LanguageResourceHandler.ONE_STEP_KEY, () -> oneStep()));
+    controlBox.getChildren().add(makeAButton(LanguageResourceHandler.ONE_STEP_KEY, () -> {
+      try {
+        oneStep();
+      } catch (InvocationTargetException e) {
+        e.printStackTrace();
+      } catch (NoSuchMethodException e) {
+        e.printStackTrace();
+      } catch (IllegalAccessException e) {
+        e.printStackTrace();
+      }
+    }));
     controlBox.getChildren().add(makeAButton(LanguageResourceHandler.SAVE_FILE_KEY, () -> makePopup()));
     v.getChildren().add(controlBox);
     fileNameField = new TextField();
@@ -213,13 +234,13 @@ public class SimulationDisplay extends ChangeableDisplay{
     popup.makePopup();
   }
 
-  private void oneStep(){
+  private void oneStep() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
     //go through one step at a time
     pauseAnimation();
     step();
   }
 
-  protected void step(){
+  protected void step() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
     myController.step();
   }
 

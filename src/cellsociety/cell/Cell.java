@@ -154,7 +154,7 @@ public class Cell {
         return 0;
     }
 
-    public void updateCellNeighborStates(){
+    public void updateCellNeighborStateMap(){
         neighborCellStateMap = new HashMap<>();
         for(Cell neighbor: neighbors){
             int state = neighbor.getCurrentState();
