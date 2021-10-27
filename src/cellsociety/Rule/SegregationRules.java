@@ -8,7 +8,7 @@ import java.util.Random;
 public class SegregationRules extends Rules {
     private int cellCurrentState;
     private List<Cell> neighbors;
-    private double satisfactionThreshold=.15;
+    private double satisfactionThreshold=.25;
 
     public SegregationRules(Cell cell)
     {
@@ -16,12 +16,14 @@ public class SegregationRules extends Rules {
         this.neighbors=cell.getNeighbors();
     }
 
-
     public void setState()
     {
-        if(cell.getCurrentState() != 0) {
+        if(cell.getCurrentState() != 0 && cell.numOfStateNeighbors(0)>0)
+        {
             int countOfAgent = cell.numOfStateNeighbors(cell.getCurrentState());
-            if ((countOfAgent / neighbors.size()) < satisfactionThreshold) {moveCell();}
+            double satisfaction=1.0*countOfAgent / neighbors.size();
+            if ((satisfaction) <= satisfactionThreshold) {moveCell();}
+            else {cell.setFutureState(cell.getCurrentState());}
         }
         else {cell.setFutureState(cell.getCurrentState());}
     }

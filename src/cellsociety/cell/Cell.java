@@ -31,7 +31,7 @@ public class Cell {
     private CellDisplay myDisplay;
     private boolean shouldMove;
     private int chrononCounter;
-    private int energy;
+    private int energy=5;
     private int compareState;
 
     public Cell(int i, int j, int initialState, int rows, int columns){
