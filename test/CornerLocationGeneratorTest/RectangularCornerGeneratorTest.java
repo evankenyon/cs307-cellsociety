@@ -14,7 +14,7 @@ public class RectangularCornerGeneratorTest {
     @Test
     void TopLeftCornerTest0Index()
     {
-        RectangleCellCornerLocationGenerator r= new RectangleCellCornerLocationGenerator(8,8);
+        RectangleCellCornerLocationGenerator r= new RectangleCellCornerLocationGenerator(6,8);
         l=r.generateCorners(0,0);
         Assertions.assertTrue(l.get(0).getX_pos()==0 && l.get(0).getY_pos()==0);
     }
@@ -22,7 +22,7 @@ public class RectangularCornerGeneratorTest {
     @Test
     void TopRightCornerTest0Index()
     {
-        RectangleCellCornerLocationGenerator r= new RectangleCellCornerLocationGenerator(8,8);
+        RectangleCellCornerLocationGenerator r= new RectangleCellCornerLocationGenerator(6,8);
         l=r.generateCorners(0,0);
         Assertions.assertTrue(l.get(1).getX_pos()==100 && l.get(1).getY_pos()==0);
     }
@@ -30,7 +30,7 @@ public class RectangularCornerGeneratorTest {
     @Test
     void BottomLeftCornerTest0Index()
     {
-        RectangleCellCornerLocationGenerator r= new RectangleCellCornerLocationGenerator(8,8);
+        RectangleCellCornerLocationGenerator r= new RectangleCellCornerLocationGenerator(6,8);
         l=r.generateCorners(0,0);
         Assertions.assertTrue(l.get(2).getX_pos()==0 && l.get(2).getY_pos()==100);
     }
@@ -38,7 +38,7 @@ public class RectangularCornerGeneratorTest {
     @Test
     void BottomRightCornerTest0Index()
     {
-        RectangleCellCornerLocationGenerator r= new RectangleCellCornerLocationGenerator(8,8);
+        RectangleCellCornerLocationGenerator r= new RectangleCellCornerLocationGenerator(6,8);
         l=r.generateCorners(0,0);
         Assertions.assertTrue(l.get(3).getX_pos()==100 && l.get(3).getY_pos()==100);
     }
@@ -46,7 +46,7 @@ public class RectangularCornerGeneratorTest {
     @Test
     void TopLeftCornerTestRandIndex()
     {
-        RectangleCellCornerLocationGenerator r= new RectangleCellCornerLocationGenerator(8,8);
+        RectangleCellCornerLocationGenerator r= new RectangleCellCornerLocationGenerator(6,8);
         l=r.generateCorners(3,5);
         Assertions.assertTrue(l.get(0).getX_pos()==500 && l.get(0).getY_pos()==300);
     }
@@ -54,7 +54,7 @@ public class RectangularCornerGeneratorTest {
     @Test
     void TopRightCornerTestRandIndex()
     {
-        RectangleCellCornerLocationGenerator r= new RectangleCellCornerLocationGenerator(8,8);
+        RectangleCellCornerLocationGenerator r= new RectangleCellCornerLocationGenerator(6,8);
         l=r.generateCorners(3,5);
         Assertions.assertTrue(l.get(1).getX_pos()==600 && l.get(1).getY_pos()==300);
     }
@@ -62,7 +62,7 @@ public class RectangularCornerGeneratorTest {
     @Test
     void BottomLeftCornerTestRandIndex()
     {
-        RectangleCellCornerLocationGenerator r= new RectangleCellCornerLocationGenerator(8,8);
+        RectangleCellCornerLocationGenerator r= new RectangleCellCornerLocationGenerator(6,8);
         l=r.generateCorners(3,5);
         Assertions.assertTrue(l.get(2).getX_pos()==500 && l.get(2).getY_pos()==400);
     }
@@ -70,7 +70,7 @@ public class RectangularCornerGeneratorTest {
     @Test
     void BottomRightCornerTestRandIndex()
     {
-        RectangleCellCornerLocationGenerator r= new RectangleCellCornerLocationGenerator(8,8);
+        RectangleCellCornerLocationGenerator r= new RectangleCellCornerLocationGenerator(6,8);
         l=r.generateCorners(3,5);
         Assertions.assertTrue(l.get(3).getX_pos()==600 && l.get(3).getY_pos()==400);
     }
@@ -78,7 +78,7 @@ public class RectangularCornerGeneratorTest {
     @Test
     void TopLeftCornerTestMaxIndex()
     {
-        RectangleCellCornerLocationGenerator r= new RectangleCellCornerLocationGenerator(8,8);
+        RectangleCellCornerLocationGenerator r= new RectangleCellCornerLocationGenerator(6,8);
         l=r.generateCorners(7,7);
         Assertions.assertTrue(l.get(0).getX_pos()==700 && l.get(0).getY_pos()==700);
     }
@@ -86,7 +86,7 @@ public class RectangularCornerGeneratorTest {
     @Test
     void TopRightCornerTestMaxIndex()
     {
-        RectangleCellCornerLocationGenerator r= new RectangleCellCornerLocationGenerator(8,8);
+        RectangleCellCornerLocationGenerator r= new RectangleCellCornerLocationGenerator(6,8);
         l=r.generateCorners(7,7);
         Assertions.assertTrue(l.get(1).getX_pos()==800 && l.get(1).getY_pos()==700);
     }
@@ -94,7 +94,7 @@ public class RectangularCornerGeneratorTest {
     @Test
     void BottomLeftCornerTestMaxIndex()
     {
-        RectangleCellCornerLocationGenerator r= new RectangleCellCornerLocationGenerator(8,8);
+        RectangleCellCornerLocationGenerator r= new RectangleCellCornerLocationGenerator(6,8);
         l=r.generateCorners(7,7);
         Assertions.assertTrue(l.get(2).getX_pos()==700 && l.get(2).getY_pos()==800);
     }
@@ -102,7 +102,7 @@ public class RectangularCornerGeneratorTest {
     @Test
     void BottomRightCornerTestMaxIndex()
     {
-        RectangleCellCornerLocationGenerator r= new RectangleCellCornerLocationGenerator(8,8);
+        RectangleCellCornerLocationGenerator r= new RectangleCellCornerLocationGenerator(6,8);
         l=r.generateCorners(7,7);
         Assertions.assertTrue(l.get(3).getX_pos()==800 && l.get(3).getY_pos()==800);
     }
