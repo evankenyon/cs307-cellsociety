@@ -28,16 +28,16 @@ public class SimParser {
   }
 
   // TODO: handle exception properly
-  public void setupKeyValuePairs(File csvFile) throws IOException, InputMismatchException {
+  public void setupKeyValuePairs(File simFile) throws IOException, InputMismatchException {
     // Used https://mkyong.com/java/java-read-a-file-from-resources-folder/ to learn how to properly
     // setup pathname
-    String pathName = String.format("%s/%s", csvFile.getParentFile().getName(), csvFile.getName().replace(".csv", ".sim"));
-//    String pathName =
-//        getRelativeParentDirectory(csvFile.getParent()) + csvFile.getName().replace(".csv", ".sim");
+
+    String pathName = String.format("%s/%s", simFile.getParentFile().getName(), simFile.getName());
+
     // Borrowed code for making InputStream from
     // https://www.baeldung.com/convert-file-to-input-stream
     InputStream simFileInputStream = this.getClass().getClassLoader().getResourceAsStream(pathName);
-    System.out.println(csvFile.getParent());
+
     simulationConfig.load(simFileInputStream);
     handleIllegalInput();
   }
@@ -69,20 +69,5 @@ public class SimParser {
 
   public Properties getSimulationConfig() {
     return simulationConfig;
-  }
-
-  private String getRelativeParentDirectory(String absoluteDirectory) {
-    String[] allDirectories = absoluteDirectory.split("/");
-    String relativeDirectory = "";
-    boolean shouldAdd = false;
-    for (String directory : allDirectories) {
-      if (shouldAdd) {
-        relativeDirectory += directory + "/";
-      }
-      if (directory.equals("data")) {
-        shouldAdd = true;
-      }
-    }
-    return relativeDirectory;
   }
 }
