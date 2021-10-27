@@ -47,7 +47,7 @@ public class Model {
     updateAllNeighborsList();
 
 //    updateAllCellNeighborMaps();
-    affectAllCells("updateCellNeighborStates");
+    affectAllCells("updateCellNeighborStateMap");
 
   }
 
