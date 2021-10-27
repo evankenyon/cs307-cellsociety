@@ -30,9 +30,8 @@ public class Cell {
     private Map<Integer, List<Cell>> neighborCellStateMap;
     private CellDisplay myDisplay;
     private boolean shouldMove;
-    private int chrononCounter;
+    private int chrononCounter=0;
     private int energy=5;
-    private int compareState;
 
     public Cell(int i, int j, int initialState, int rows, int columns){
         this.iIndex = i;
@@ -117,13 +116,6 @@ public class Cell {
         return energy;
     }
 
-    public int getCompareState() {
-        return compareState;
-    }
-
-    public void setCompareState(int compareState) {
-        this.compareState = compareState;
-    }
 
     public void updateState(){
         currentState = futureState;
