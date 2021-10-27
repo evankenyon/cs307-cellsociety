@@ -5,6 +5,10 @@ import java.util.ResourceBundle;
 import java.io.FileInputStream;
 
 
+/**
+ * Objects of this class handle property files relating to the view
+ * @author Keith Cressman
+ */
 public class ViewResourceHandler {
   private ResourceBundle myResourceBundle;
   private Properties viewProperties;
