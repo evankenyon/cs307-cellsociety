@@ -29,9 +29,11 @@ public abstract class Rules implements RulesInterface {
     cellStateChange.invoke(this);
   }
 
+
   public void setCellState(int state){
     cell.setFutureState(state);
   }
+
 
   public void setCellStateZero() {
     cell.setFutureState(0);

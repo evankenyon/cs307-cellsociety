@@ -7,6 +7,7 @@ public class CellDisplay {
   private Node myDisp;
   public static final Color ON_COLOR = Color.BLUE;
   public static final Color OFF_COLOR = Color.BLACK;
+  private Color[] stateColors = {Color.BLUE, Color.BLACK};
 
   public CellDisplay(int x, int y, int state){
     myDisp = new Rectangle(x, y, Cell.DEFAULT_WIDTH, Cell.DEFAULT_HEIGHT);

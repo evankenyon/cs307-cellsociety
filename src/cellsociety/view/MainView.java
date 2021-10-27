@@ -29,7 +29,11 @@ import java.util.List;
 import java.util.ArrayList;
 
 
-
+/**
+ * Objects of this class represent a Simulation window, from which users can select a file (simulation) to run,
+ * change language, change style, or add a new window for another simulation
+ * @author Keith Cressman
+ */
 public class MainView extends ChangeableDisplay{
 
   private Stage myStage;
@@ -45,8 +49,6 @@ public class MainView extends ChangeableDisplay{
   public static final String DUKE_CSS_NAME = "Duke.css";
   public static final String BASIC_CSS_NAME = "Basic.css";
 
-  public static final int WIDTH = 800;
-  public static final int HEIGHT = 600;
 
   public MainView(){
     super();
