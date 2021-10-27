@@ -16,6 +16,7 @@ public class ViewResourceHandler {
   private final String DISPLAY_PROPS_PATH = "src/cellsociety/resourceHandlers/DisplayProperties.properties";
   private final String STATE_COLORS_PATH = "src/cellsociety/resourceHandlers/StateColor.properties";
   private final String SIM_WIDTH_KEY = "SimulationWidth";
+  private final String SIM_HEIGHT_KEY = "SimulationHeight";
   private final String WINDOW_WIDTH_KEY = "windowWidth";
   private final String WINDOW_HEIGHT_KEY = "windowHeight";
   private final String MIN_FRAMES_KEY = "MinFramesPerSecond";
@@ -39,6 +40,14 @@ public class ViewResourceHandler {
    */
   public int simulationWidth(){
     return Integer.parseInt(viewProperties.getProperty(SIM_WIDTH_KEY));
+  }
+
+  /**
+   * get the height of the simulation area
+   * @return the pixel height of the simulation area
+   */
+  public int simulationHeight(){
+    return Integer.parseInt(viewProperties.getProperty(SIM_HEIGHT_KEY));
   }
 
   /**

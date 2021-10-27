@@ -1,6 +1,7 @@
 package cellsociety.CornerLocationGenerator;
 
 import cellsociety.location.CornerLocation;
+import cellsociety.resourceHandlers.ViewResourceHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,8 +9,9 @@ import java.util.List;
 public abstract class CornerLocationGenerator {
 
     //Put these values in the properties file
-    protected final double VIEW_WIDTH=800;
-    protected final double VIEW_HEIGHT=600;
+    private ViewResourceHandler myViewResourceHandler;
+    private double VIEW_WIDTH;
+    private double VIEW_HEIGHT;
 
     protected List<CornerLocation> corners=new ArrayList<>();
     protected int rows;
@@ -19,12 +21,26 @@ public abstract class CornerLocationGenerator {
     {
         this.rows=0;
         this.columns=0;
+        myViewResourceHandler=new ViewResourceHandler();
+        VIEW_WIDTH=myViewResourceHandler.simulationWidth();
+        VIEW_HEIGHT=myViewResourceHandler.simulationHeight();
     }
     public CornerLocationGenerator(int rows, int columns)
     {
         this.rows=rows;
         this.columns=columns;
+        myViewResourceHandler=new ViewResourceHandler();
+        VIEW_WIDTH=myViewResourceHandler.simulationWidth();
+        VIEW_HEIGHT=myViewResourceHandler.simulationHeight();
     }
 
     public List<CornerLocation> generateCorners(int i, int j) {return corners;}
+
+    public double getVIEW_HEIGHT() {
+        return VIEW_HEIGHT;
+    }
+
+    public double getVIEW_WIDTH() {
+        return VIEW_WIDTH;
+    }
 }

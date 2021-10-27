@@ -5,8 +5,8 @@ import cellsociety.location.CornerLocation;
 import java.util.List;
 
 public class RectangleCellCornerLocationGenerator extends CornerLocationGenerator {
-    private double height=VIEW_HEIGHT/rows;
-    private double length=VIEW_WIDTH/columns;
+    private double height=getVIEW_HEIGHT()/rows;
+    private double length=getVIEW_WIDTH()/columns;
 
     public RectangleCellCornerLocationGenerator(int rows, int columns)
     {
