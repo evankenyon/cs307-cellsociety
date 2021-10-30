@@ -6,6 +6,8 @@ import cellsociety.cell.Cell;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+
+import cellsociety.cell.PercolationCell;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +16,7 @@ public class PercolationRulesTest {
     @Test
     void zeroStaysZero()
         throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-        Cell cell= new Cell(1,1,0);
+        PercolationCell cell= new PercolationCell(1,1,0);
         List<Cell> allCells = new ArrayList<>();
         allCells.add(new Cell(0,1,1));
         allCells.add(new Cell(1,0,1));
@@ -32,7 +34,7 @@ public class PercolationRulesTest {
     @Test
     void oneStaysOne()
         throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-        Cell cell= new Cell(1,1,1);
+        PercolationCell cell= new PercolationCell(1,1,1);
         List<Cell> allCells = new ArrayList<>();
         allCells.add(new Cell(0,1,0));
         allCells.add(new Cell(1,0,0));
@@ -50,7 +52,7 @@ public class PercolationRulesTest {
     @Test
     void oneTurnsTwo()
         throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-        Cell cell= new Cell(1,1,1);
+        PercolationCell cell= new PercolationCell(1,1,1);
         List<Cell> allCells = new ArrayList<>();
         allCells.add(new Cell(0,1,1));
         allCells.add(new Cell(1,0,1));
@@ -68,7 +70,7 @@ public class PercolationRulesTest {
     @Test
     void twoStaysTwo()
         throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-        Cell cell= new Cell(1,1,2);
+        PercolationCell cell= new PercolationCell(1,1,2);
         List<Cell> allCells = new ArrayList<>();
         allCells.add(new Cell(0,1,0));
         allCells.add(new Cell(1,0,1));

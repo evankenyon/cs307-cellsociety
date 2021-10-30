@@ -1,6 +1,7 @@
 package cellsociety.Rule;
 
 import cellsociety.cell.Cell;
+import cellsociety.cell.SegregationCell;
 
 import java.util.InputMismatchException;
 import java.util.List;
@@ -8,10 +9,12 @@ import java.util.Random;
 
 public class SegregationRules extends Rules {
     private double satisfactionThreshold=.25;
+    private SegregationCell scell;
 
-    public SegregationRules(Cell cell, List<Double> args)
+    public SegregationRules(SegregationCell cell, List<Double> args)
     {
         super(cell);
+        scell=cell;
         if(args.size() > 1) {
             //TODO: actually handle
             throw new InputMismatchException();
@@ -20,38 +23,38 @@ public class SegregationRules extends Rules {
 
     public void setState()
     {
-        int countOfAgent = cell.numOfStateNeighbors(cell.getCurrentState());
-        double satisfaction=1.0*countOfAgent / cell.getNumNeighbors();
-        if(cell.getCurrentState() != 0 && cell.numOfStateNeighbors(0)>0)
+        int countOfAgent = scell.numOfStateNeighbors(scell.getCurrentState());
+        double satisfaction=1.0*countOfAgent / scell.getNumNeighbors();
+        if(scell.getCurrentState() != 0 && scell.numOfStateNeighbors(0)>0)
         {
 
             if ((satisfaction) <= satisfactionThreshold) {moveCell();}
-            else {cell.setFutureState(cell.getCurrentState());}
+            else {scell.setFutureState(scell.getCurrentState());}
         }
         else {
             if ((satisfaction) <= satisfactionThreshold) {moveRandom(0);}
-            else {cell.setFutureState(cell.getCurrentState());}
+            else {scell.setFutureState(scell.getCurrentState());}
         }
     }
 
     public void moveCell()
     {
-        cell.setFutureState(0);
+        scell.setFutureState(0);
         move(0);
     }
 
     public void moveRandom(int state)
     {
-        cell.setFutureState(0);
+        scell.setFutureState(0);
         boolean temp=true;
         while(temp)
         {
             Random random=new Random();
-            int stateNeighbors=cell.numOfStateNeighbors(state);
+            int stateNeighbors=scell.numOfStateNeighbors(state);
             int randInt= random.nextInt(stateNeighbors);
-            if(cell.getNeighborOfState(state, randInt).getFutureState()==0)
+            if(scell.getNeighborOfState(state, randInt).getFutureState()==0)
             {
-                cell.getNeighborOfState(state, randInt).setFutureState(cell.getCurrentState());
+                scell.getNeighborOfState(state, randInt).setFutureState(scell.getCurrentState());
                 temp=false;
             }
 

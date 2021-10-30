@@ -2,6 +2,7 @@ package cellsociety.Rule;
 
 
 import cellsociety.cell.Cell;
+import cellsociety.cell.GameOfLifeCell;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -14,9 +15,11 @@ public class GameOfLifeRules extends Rules {
       GameOfLifeRules.class.getPackageName() + ".resources.";
   private static final String STATE_AND_NEIGHBORS_MAP_FILENAME = "GameOfLifeRules";
   private int numOneNeighbors;
+  private GameOfLifeCell gcell;
 
-  public GameOfLifeRules(Cell cell, List<Double> args) {
+  public GameOfLifeRules(GameOfLifeCell cell, List<Double> args) {
     super(cell);
+    gcell=cell;
     if(!args.isEmpty()) {
       // TODO: handle
       throw new InputMismatchException();
