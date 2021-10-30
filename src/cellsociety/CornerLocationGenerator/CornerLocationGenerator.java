@@ -8,7 +8,6 @@ import java.util.List;
 
 public abstract class CornerLocationGenerator {
 
-    //Put these values in the properties file
     private ViewResourceHandler myViewResourceHandler;
     private double VIEW_WIDTH;
     private double VIEW_HEIGHT;

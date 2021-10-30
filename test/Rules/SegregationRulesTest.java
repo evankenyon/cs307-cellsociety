@@ -2,6 +2,7 @@ package Rules;
 
 import cellsociety.Rule.SegregationRules;
 import cellsociety.cell.Cell;
+import cellsociety.cell.SegregationCell;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +13,7 @@ public class SegregationRulesTest {
     @Test
     void cellIsEmptyTest()
     {
-        Cell cell=new Cell(0,0,0);
+        SegregationCell cell=new SegregationCell(0,0,0);
         SegregationRules sr=new SegregationRules(cell, new ArrayList<>());
         Assertions.assertEquals(0,cell.getFutureState());
     }
@@ -20,7 +21,7 @@ public class SegregationRulesTest {
     @Test
     void checkFutureStateCurrentCellSatisfied()
     {
-        Cell cell=new Cell(0,0,1);
+        SegregationCell cell=new SegregationCell(0,0,1);
         List<Cell> test=new ArrayList<>();
         test.add(new Cell(0,0,1));
         test.add(new Cell(0,0,1));
@@ -36,7 +37,7 @@ public class SegregationRulesTest {
     @Test
     void checkFutureStateCurrentCellNotSatisfied()
     {
-        Cell cell=new Cell(0,0,1);
+        SegregationCell cell=new SegregationCell(0,0,1);
         List<Cell> test=new ArrayList<>();
         test.add(new Cell(0,0,2));
         test.add(new Cell(0,0,0));
@@ -53,7 +54,7 @@ public class SegregationRulesTest {
     @Test
     void checkFutureStateNeighborsNotSatisfied()
     {
-        Cell cell=new Cell(0,0,1);
+        SegregationCell cell=new SegregationCell(0,0,1);
         List<Cell> test=new ArrayList<>();
         test.add(new Cell(0,0,2));
         test.add(new Cell(0,0,0));
