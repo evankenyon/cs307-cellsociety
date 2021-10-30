@@ -19,7 +19,7 @@ public class GameOfLifeRulesTest {
         test.add(new GameOfLifeCell(0,0,0));
         cell.setNeighbors(test);
         GameOfLifeRules rules=new GameOfLifeRules(cell, new ArrayList<>());
-        rules.setCellStateZero();
+        rules.setCellState(0);
         Assertions.assertEquals(0,cell.getFutureState());
     }
 
@@ -31,7 +31,7 @@ public class GameOfLifeRulesTest {
         test.add(new GameOfLifeCell(0,0,0));
         cell.setNeighbors(test);
         GameOfLifeRules rules=new GameOfLifeRules(cell, new ArrayList<>());
-        rules.setCellStateOne();
+        rules.setCellState(1);
         Assertions.assertEquals(1,cell.getFutureState());
     }
 

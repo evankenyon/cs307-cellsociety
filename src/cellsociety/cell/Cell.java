@@ -1,7 +1,6 @@
 package cellsociety.cell;
 
 
-import cellsociety.view.SimulationDisplay;
 
 import cellsociety.location.CornerLocation;
 
@@ -11,9 +10,7 @@ import javafx.scene.Node;
 import cellsociety.CornerLocationGenerator.RectangleCellCornerLocationGenerator;
 import cellsociety.location.CornerLocation;
 
-import java.util.*;
 import java.util.stream.Collectors;
-import javafx.scene.shape.Rectangle;
 
 
 public class Cell {
@@ -23,10 +20,9 @@ public class Cell {
     private int currentState;
     private int futureState;
     private List<Cell> neighbors;
-    private Cell[][] cellGrid;
     private List<CornerLocation> corners;
-    private int iIndex;
-    private int jIndex;
+    private final int iIndex;
+    private final int jIndex;
     private Map<Integer, List<Cell>> neighborCellStateMap;
     private CellDisplay myDisplay;
 
@@ -105,7 +101,7 @@ public class Cell {
         neighborCellStateMap = new HashMap<>();
         for(Cell neighbor: neighbors){
             int state = neighbor.getCurrentState();
-            neighborCellStateMap.putIfAbsent(state, new ArrayList<Cell>());
+            neighborCellStateMap.putIfAbsent(state, new ArrayList<>());
             neighborCellStateMap.get(state).add(neighbor);
         }
     }
@@ -128,16 +124,13 @@ public class Cell {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Cell cell = (Cell) o;
-        return currentState == cell.currentState && futureState == cell.futureState && iIndex == cell.iIndex && jIndex == cell.jIndex && Objects.equals(neighbors, cell.neighbors) && Arrays.equals(cellGrid, cell.cellGrid) && Objects.equals(corners, cell.corners) && Objects.equals(neighborCellStateMap, cell.neighborCellStateMap);
+        return currentState == cell.currentState && futureState == cell.futureState && iIndex == cell.iIndex && jIndex == cell.jIndex && Objects.equals(neighbors, cell.neighbors) && Objects.equals(corners, cell.corners) && Objects.equals(neighborCellStateMap, cell.neighborCellStateMap) && Objects.equals(myDisplay, cell.myDisplay);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(currentState, futureState, neighbors, corners, iIndex, jIndex, neighborCellStateMap);
-        result = 31 * result + Arrays.hashCode(cellGrid);
-        return result;
+        return Objects.hash(currentState, futureState, neighbors, corners, iIndex, jIndex, neighborCellStateMap, myDisplay);
     }
-
 
     public Node getMyDisplay(){
         return myDisplay.getMyDisplay();
