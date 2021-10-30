@@ -33,7 +33,7 @@ public class PredatorPreyRules extends Rules {
     {
         if (ppcell.getChrononCounter()==reproductionCycle) {
             ppcell.setFutureState(ppcell.getCurrentState());
-            ppcell.setChrononCounter(0);
+            ppcell.resetChronon();
         }
         else {ppcell.setFutureState(0);}
     }
