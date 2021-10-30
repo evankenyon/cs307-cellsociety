@@ -31,9 +31,6 @@ public abstract class Rules implements RulesInterface {
   }
 
 
-  public void setCellState(int state){
-    cell.setFutureState(state);
-  }
 
 
   public void setCellStateZero() {
@@ -46,6 +43,10 @@ public abstract class Rules implements RulesInterface {
 
   public void setCellStateTwo() {
     cell.setFutureState(2);
+  }
+
+  public void setCellState(int state){
+    cell.setFutureState(state);
   }
 
   public void move(int state)
