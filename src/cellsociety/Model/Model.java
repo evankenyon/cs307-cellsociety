@@ -89,8 +89,8 @@ public class Model {
 
   private void affectAllCells(String method) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
     for(Cell cell: cellList) {
-      Method realMethod = cell.getClass().getDeclaredMethod(method);
-      realMethod.invoke(cell);
+      Method cellMethod = cell.getClass().getDeclaredMethod(method);
+      cellMethod.invoke(cell);
     }
   }
 

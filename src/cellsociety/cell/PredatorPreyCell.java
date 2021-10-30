@@ -42,4 +42,7 @@ public class PredatorPreyCell extends Cell{
 
     public int getEnergy() {return energy;}
 
+    public void setEnergy(int energy) {
+        this.energy = energy;
+    }
 }
