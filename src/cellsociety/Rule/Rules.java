@@ -32,7 +32,6 @@ public abstract class Rules implements RulesInterface {
 
 
 
-
   public void setCellStateZero() {
     cell.setFutureState(0);
   }

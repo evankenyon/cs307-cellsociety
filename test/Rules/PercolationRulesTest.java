@@ -16,7 +16,7 @@ public class PercolationRulesTest {
     @Test
     void zeroStaysZero()
         throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-        PercolationCell cell= new PercolationCell(1,1,0);
+        PercolationCell cell= new PercolationCell(1,1,0,10,10);
         List<Cell> allCells = new ArrayList<>();
         allCells.add(new Cell(0,1,1));
         allCells.add(new Cell(1,0,1));
@@ -34,7 +34,7 @@ public class PercolationRulesTest {
     @Test
     void oneStaysOne()
         throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-        PercolationCell cell= new PercolationCell(1,1,1);
+        PercolationCell cell= new PercolationCell(1,1,1, 10,10);
         List<Cell> allCells = new ArrayList<>();
         allCells.add(new Cell(0,1,0));
         allCells.add(new Cell(1,0,0));
@@ -52,7 +52,7 @@ public class PercolationRulesTest {
     @Test
     void oneTurnsTwo()
         throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-        PercolationCell cell= new PercolationCell(1,1,1);
+        PercolationCell cell= new PercolationCell(1,1,1,10,10);
         List<Cell> allCells = new ArrayList<>();
         allCells.add(new Cell(0,1,1));
         allCells.add(new Cell(1,0,1));
@@ -70,7 +70,7 @@ public class PercolationRulesTest {
     @Test
     void twoStaysTwo()
         throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-        PercolationCell cell= new PercolationCell(1,1,2);
+        PercolationCell cell= new PercolationCell(1,1,2,10,10);
         List<Cell> allCells = new ArrayList<>();
         allCells.add(new Cell(0,1,0));
         allCells.add(new Cell(1,0,1));
