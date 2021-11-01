@@ -33,6 +33,9 @@ public class SegregationRules extends Rules {
     }
   }
 
+  /**
+   * sets the state of the cell based on the rules of the game
+   */
   public void setState() {
     int countOfAgent = numberOfNeighborsWithSameState();
     int countOfOtherAgent=numberOfNeighborsWithOtherState();
@@ -46,17 +49,31 @@ public class SegregationRules extends Rules {
     else {cell.setFutureState(cell.getCurrentState());}
   }
 
+  /**
+   * moves the cell into a random open neighbor and sets current cell to state 0
+   */
   public void moveCell() {
     move(0);
     cell.setFutureState(0);
   }
 
+  /**
+   *
+   * @param cell
+   * Moves the current cell into an open cell and sets the current cell to state 0
+   */
   public void moveRandom(Cell cell)
   {
       findOpenCell(cell).setFutureState(cell.getCurrentState());
       cell.setFutureState(0);
   }
 
+  /**
+   *
+   * @param c the method takes in a cell, c
+   * @return a random cell with current and future state 0
+   * searches recursively through the neighbors of a cell's neighbors
+   */
   public Cell findOpenCell(Cell c)
   {
     List<Cell> cellNeighbors=c.getNeighbors();
@@ -72,6 +89,11 @@ public class SegregationRules extends Rules {
     return findOpenCell(neighborsNeighboringCells.get(chooseRandomIndex(neighborsNeighboringCells.size())));
   }
 
+  /**
+   *
+   * @param size
+   * @return a random integer between 0 and size-1
+   */
   public int chooseRandomIndex(int size)
   {
     Random random=new Random();
@@ -79,11 +101,18 @@ public class SegregationRules extends Rules {
     return randInt;
   }
 
+  /**
+   *
+   * @return the number of neighbors that are of the same state of the current cell
+   */
   public int numberOfNeighborsWithSameState() {
     return cell.numOfStateNeighbors(cell.getCurrentState());
   }
 
-
+  /**
+   *
+   * @return the number of neighbors that are of the opposite state as the current cell
+   */
   public int numberOfNeighborsWithOtherState() {
     if(cell.getCurrentState()==1) {return cell.numOfStateNeighbors(2);}
     return cell.numOfStateNeighbors(1);

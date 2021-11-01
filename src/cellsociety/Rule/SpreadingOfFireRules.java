@@ -48,6 +48,12 @@ public class SpreadingOfFireRules extends Rules {
         DEFAULT_RESOURCE_PACKAGE + STATE_AND_NEIGHBORS_MAP_FILENAME);
   }
 
+  /**
+   * Sets the state of the cell based on the rules of the game
+   * @throws NoSuchMethodException
+   * @throws InvocationTargetException
+   * @throws IllegalAccessException
+   */
   public void setState()
       throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
     Method cellStateChange = null;
@@ -65,6 +71,10 @@ public class SpreadingOfFireRules extends Rules {
     cellStateChange.invoke(this);
   }
 
+  /**
+   * If the random double is less than probGrow, it changes the state of the cell from 0 to 1
+   * where 0 is empty and 1 is tree
+   */
   private void growTree() {
     Random rand = new Random();
     if (rand.nextDouble() < probabilities.get("probGrow")) {
@@ -74,6 +84,11 @@ public class SpreadingOfFireRules extends Rules {
     }
   }
 
+  /**
+   * If the random double is less than probCatch and there is a neighbor in state 2,
+   * it changes the state of the cell from 1 to 2
+   * where 1 is tree and 2 is on fire
+   */
   private void burnTree() {
     Random rand = new Random();
     if (cell.numOfStateNeighbors(2) > 0 && rand.nextDouble() < probabilities.get("probCatch")) {
