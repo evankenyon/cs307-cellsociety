@@ -19,6 +19,12 @@ public abstract class Rules implements RulesInterface {
     }
   }
 
+  /**
+   * sets the state of the cell according to the rules of each game
+   * @throws InvocationTargetException
+   * @throws IllegalAccessException
+   * @throws NoSuchMethodException
+   */
   public void setState()
       throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
     Method cellStateChange = null;
@@ -35,23 +41,31 @@ public abstract class Rules implements RulesInterface {
   }
 
 
-
-  public void setCellStateZero() {
-    cell.setFutureState(0);
-  }
-
-  public void setCellStateOne() {
-    cell.setFutureState(1);
-  }
-
-  public void setCellStateTwo() {
-    cell.setFutureState(2);
-  }
-
+  /**
+   * sets the future state of the cell,
+   * @param state
+   */
   public void setCellState(int state){
     cell.setFutureState(state);
   }
 
+  public void setCellStateZero(){
+    cell.setFutureState(0);
+  }
+
+  public void setCellStateOne(){
+    cell.setFutureState(1);
+  }
+
+  public void setCellStateTwo(){
+    cell.setFutureState(2);
+  }
+
+
+  /**
+   * Moves cell into neighboring cell if the future state of the neighboring cell is empty
+   * @param state
+   */
   public void move(int state)
   {
     boolean temp=true;
