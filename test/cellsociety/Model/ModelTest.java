@@ -3,11 +3,13 @@ package cellsociety.Model;
 import static org.junit.jupiter.api.Assertions.*;
 
 import cellsociety.cell.Cell;
+import cellsociety.cell.IllegalCellStateException;
 import cellsociety.controller.Controller;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,7 +27,7 @@ class ModelTest {
 
   @Test
   void findNextStateForEachCell()
-      throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, ClassNotFoundException, InstantiationException {
+      throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, ClassNotFoundException, InstantiationException, IllegalCellStateException {
     controller.parseFile(new File("./data/game_of_life/blinkers.sim"));
     model.findNextStateForEachCell();
     model.updateModel();
@@ -33,13 +35,20 @@ class ModelTest {
     controller.parseFile(new File("./data/saved/GameOfLife/program-0.sim"));
     model.findNextStateForEachCell();
     model.updateModel();
-    List<Cell> actual = model.getCellList();
+    List<Cell> actual = new ArrayList<>();
+    for (int row = 0; row < model.getRows(); row++) {
+      for (int col = 0; col < model.getCols(); col++) {
+        actual.add(model.getCell(row, col));
+      }
+    }
     controller.parseFile(new File("./data/game_of_life/blinkers-one-step.sim"));
     model.findNextStateForEachCell();
     model.updateModel();
-    List<Cell> expected = model.getCellList();
-    for (int index = 0; index < expected.size(); index++) {
-      assertEquals(expected.get(index).getCurrentState(), actual.get(index).getCurrentState());
+    for (int row = 0; row < model.getRows(); row++) {
+      for (int col = 0; col < model.getCols(); col++) {
+        assertEquals(model.getCell(row, col).getCurrentState(),
+            actual.get(row + col).getCurrentState());
+      }
     }
   }
 

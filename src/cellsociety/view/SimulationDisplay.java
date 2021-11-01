@@ -1,6 +1,7 @@
 package cellsociety.view;
 
 
+import cellsociety.cell.IllegalCellStateException;
 import cellsociety.resourceHandlers.LanguageResourceHandler;
 import cellsociety.resourceHandlers.ViewResourceHandler;
 import cellsociety.controller.Controller;
@@ -9,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
+import java.util.InputMismatchException;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 
@@ -96,6 +98,16 @@ public class SimulationDisplay extends ChangeableDisplay{
       // TODO: move to props file
       displayErrorMessage("Reflection error occurred in backend model, please try restarting the"
           + "program");
+    } catch (IllegalCellStateException e) {
+      // TODO: move to props file
+      displayErrorMessage("Illegal cell state was found, please make sure you are not using any values"
+          + "that are not 0 or 1 for GameOfLife or not 0, 1, or 2 for other simulations");
+    } catch (InputMismatchException e) {
+      // TODO: move to props file
+      displayErrorMessage("A file that was not of .csv type was uploaded");
+    } catch (IllegalArgumentException e) {
+      // TODO: move to props file
+      displayErrorMessage("A cell was initialized to be outside of the grid's bounds, please try restarting the program");
     }
     VBox root = new VBox();
     root.getChildren().add(makeAllDisplays());
@@ -309,6 +321,9 @@ public class SimulationDisplay extends ChangeableDisplay{
       // TODO: move to props file
       displayErrorMessage("Reflection error occurred in backend model, please try restarting the"
           + "program");
+    } catch (IllegalCellStateException e) {
+      // TODO: move to props file
+      displayErrorMessage("A cell was set to an illegal state in the backend model, please try restarting the program");
     }
     myInfoDisplay.setNumOfEachType((getNumOfEachState()));
 

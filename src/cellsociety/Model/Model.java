@@ -3,6 +3,7 @@ package cellsociety.Model;
 import cellsociety.Rule.RulesInterface;
 import cellsociety.cell.Cell;
 
+import cellsociety.cell.IllegalCellStateException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -35,19 +36,18 @@ public class Model {
     keyAlternatives = ResourceBundle.getBundle(
         DEFAULT_RESOURCE_PACKAGE + KEY_ALTERNATIVES_FILENAME);
     simulationInfo = new HashMap<>();
+    cellList = new ArrayList<>();
   }
 
-  public void setRows(int rows) {
+  public void setupCells(List<Integer> cellStateList, int rows, int cols)
+      throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, IllegalArgumentException {
     this.rows = rows;
-  }
-
-  public void setCols(int cols) {
     this.cols = cols;
-  }
-
-  public void setCellList(List<Cell> cellList)
-      throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-    this.cellList = cellList;
+    for (int row = 0; row < rows; row++) {
+      for (int col = 0; col < cols; col++) {
+        cellList.add(new Cell(row, col, cellStateList.get(rows * row + col), rows, cols));
+      }
+    }
     updateAllNeighborsList();
     affectAllCells("updateCellNeighborStateMap");
   }
@@ -104,8 +104,16 @@ public class Model {
     return paramsList;
   }
 
-  public List<Cell> getCellList() {
-    return cellList;
+  public Cell getCell(int row, int col) {
+    return cellList.get(rows*row + col);
+  }
+
+  public int getRows() {
+    return rows;
+  }
+
+  public int getCols() {
+    return cols;
   }
 
   private void updateSingleCellNeighbors(Cell inputCell) {
@@ -128,10 +136,9 @@ public class Model {
    * find what the next state should be for each cell
    */
   public void findNextStateForEachCell()
-      throws ClassNotFoundException, InvocationTargetException, IllegalAccessException, NoSuchMethodException, InstantiationException {
+      throws ClassNotFoundException, InvocationTargetException, IllegalAccessException, NoSuchMethodException, InstantiationException, IllegalCellStateException {
     for (Cell cell : cellList) {
-      RulesInterface r = null;
-      r = (RulesInterface) Class.forName(
+      RulesInterface r = (RulesInterface) Class.forName(
               String.format("%s%sRules", numCorners.getString("RulesPackageName"),
                   simulationInfo.get("Type")))
           .getConstructor(Cell.class, List.class)
@@ -172,12 +179,6 @@ public class Model {
       modelStateMap.putIfAbsent(cellCurrentState, new ArrayList<>());
       modelStateMap.get(cellCurrentState).add(cell);
     }
-  }
-
-
-  public int[] getGridShape() {
-    int[] shape = {rows, cols};
-    return shape;
   }
 
   public String getSimulationType() {

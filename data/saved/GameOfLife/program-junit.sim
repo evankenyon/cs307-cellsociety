@@ -1,4 +1,4 @@
-#Sun Oct 31 22:28:41 EDT 2021
+#Mon Nov 01 15:13:52 EDT 2021
 Type=GameOfLife
 Description=Examples of a blinker, a line of cells 3 wide that switches back and forth from vertical to horizontal
 Title=Blinkers

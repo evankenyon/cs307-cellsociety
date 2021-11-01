@@ -5,14 +5,17 @@ import static org.junit.jupiter.api.Assertions.*;
 import cellsociety.Model.Model;
 import cellsociety.cell.Cell;
 import cellsociety.cell.CellDisplay;
+import cellsociety.cell.IllegalCellStateException;
 import cellsociety.view.MainView;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
+import javafx.scene.paint.Paint;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import javafx.scene.shape.Rectangle;
@@ -34,9 +37,9 @@ class ControllerTest {
 
   @Test
   void parseFile()
-      throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+      throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, IllegalCellStateException {
     controller.parseFile(new File("./data/game_of_life/blinkers.sim"));
-    List<Cell> cells = model.getCellList();
+//    List<Cell> cells = model.getCellList();
     Scanner overallScanner = new Scanner("./data/game_of_life/blinkers.sim");
     overallScanner.nextLine();
     int row = 0;
@@ -45,7 +48,7 @@ class ControllerTest {
       lineScanner.useDelimiter(",");
       int col = 0;
       while (lineScanner.hasNext()) {
-        assertEquals(Integer.parseInt(lineScanner.next()), cells.get(row + col).getCurrentState());
+        assertEquals(Integer.parseInt(lineScanner.next()), model.getCell(row, col).getCurrentState());
         col++;
       }
       row++;
@@ -60,20 +63,27 @@ class ControllerTest {
 
   @Test
   void saveFile()
-      throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+      throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, IllegalCellStateException {
     controller.parseFile(new File("./data/game_of_life/blinkers.sim"));
-    List<Cell> expected = model.getCellList();
+    List<Cell> expected = new ArrayList<>();
+    for (int row = 0; row < model.getRows(); row++) {
+      for (int col = 0; col < model.getCols(); col++) {
+        expected.add(model.getCell(row, col));
+      }
+    }
     controller.saveFile("junit", new HashMap<>());
-    controller.parseFile(new File("./data/game_of_life/saved/program-0.sim"));
-    List<Cell> actual = model.getCellList();
-    for (int index = 0; index < expected.size(); index++) {
-        assertEquals(expected.get(index).getCurrentState(), actual.get(index).getCurrentState());
+    controller.parseFile(new File("./data/saved/GameOfLife/program-junit.sim"));
+    for (int row = 0; row < model.getRows(); row++) {
+      for (int col = 0; col < model.getCols(); col++) {
+        assertEquals(expected.get(model.getRows() * row + col).getCurrentState(),
+            model.getCell(row, col).getCurrentState());
+      }
     }
   }
 
   @Test
   void testStepWith1x1Grid()
-      throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, ClassNotFoundException, InstantiationException {
+      throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, ClassNotFoundException, InstantiationException, IllegalCellStateException {
     controller.parseFile(new File("data/game_of_life/HandMadeTest1.sim"));
     controller.step();
     assertEquals(CellDisplay.OFF_COLOR, ((Rectangle)controller.getCellDisplays().get(0)).getFill());
@@ -83,7 +93,7 @@ class ControllerTest {
 
   @Test
   void testWith2x2CSV()
-      throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, ClassNotFoundException, InstantiationException {
+      throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, ClassNotFoundException, InstantiationException, IllegalCellStateException {
     controller.parseFile(new File("data/game_of_life/HandMadeTest2.sim"));
     controller.step();
     assertEquals(CellDisplay.ON_COLOR, ((Rectangle)controller.getCellDisplays().get(0)).getFill());
@@ -101,7 +111,7 @@ class ControllerTest {
 
   @Test
   void testWith3x3Border()
-      throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, ClassNotFoundException, InstantiationException {
+      throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, ClassNotFoundException, InstantiationException, IllegalCellStateException {
     controller.parseFile(new File("data/game_of_life/HandMadeTest3x3Border.sim"));
     assertEquals(CellDisplay.ON_COLOR, ((Rectangle)controller.getCellDisplays().get(0)).getFill());
     assertEquals(CellDisplay.ON_COLOR, ((Rectangle)controller.getCellDisplays().get(1)).getFill());
@@ -126,7 +136,7 @@ class ControllerTest {
 
   @Test
   void testWith3x3Full()
-      throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, ClassNotFoundException, InstantiationException {
+      throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, ClassNotFoundException, InstantiationException, IllegalCellStateException {
     controller.parseFile(new File("data/game_of_life/HandMadeTest3x3Full.sim"));
     assertEquals(CellDisplay.ON_COLOR, ((Rectangle)controller.getCellDisplays().get(0)).getFill());
     assertEquals(CellDisplay.ON_COLOR, ((Rectangle)controller.getCellDisplays().get(1)).getFill());
