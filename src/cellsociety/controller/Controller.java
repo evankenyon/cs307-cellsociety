@@ -32,22 +32,18 @@ public class Controller {
   }
 
   // TODO: actually handle exception
-  public void parseFile(File SimFile) throws FileNotFoundException {
+  public void parseFile(File SimFile)
+      throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
     CSVParser csvParser = new CSVParser();
     SimParser simParser = new SimParser();
-    try {
-      simParser.setupKeyValuePairs(SimFile);
-      csvParser.setFile(new File(String.format("./data/%s", simParser.getSimulationConfig().getProperty("InitialStates"))));
-      csvParser.initializeCellMatrix();
-      model.setSimulationInfo(simParser.getSimulationConfig());
-      simGenerator = new SimGenerator(simParser.getSimulationConfig());
-      model.setCellList(csvParser.getAllCells());
-      model.setCols(csvParser.getCols());
-      model.setRows(csvParser.getRows());
-    } catch(Exception e){
-      e.printStackTrace();
-      throw new FileNotFoundException();
-    }
+    simParser.setupKeyValuePairs(SimFile);
+    csvParser.setFile(new File(String.format("./data/%s", simParser.getSimulationConfig().getProperty("InitialStates"))));
+    csvParser.initializeCellMatrix();
+    model.setSimulationInfo(simParser.getSimulationConfig());
+    simGenerator = new SimGenerator(simParser.getSimulationConfig());
+    model.setCellList(csvParser.getAllCells());
+    model.setCols(csvParser.getCols());
+    model.setRows(csvParser.getRows());
   }
 
   // TODO: actually handle exception

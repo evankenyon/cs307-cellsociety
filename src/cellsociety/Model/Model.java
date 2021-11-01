@@ -27,7 +27,6 @@ public class Model {
   private int rows;
   private int cols;
   private HashMap<Integer, List<Cell>> modelStateMap;
-  private List<Double> args;
 
 
 

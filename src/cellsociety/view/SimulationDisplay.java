@@ -6,6 +6,7 @@ import cellsociety.controller.Controller;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
 import javafx.animation.KeyFrame;
@@ -72,12 +73,15 @@ public class SimulationDisplay extends ChangeableDisplay{
    * create the display (i.e. a grid with each cell) to put on the MainView
    * @return a Node to display on the MainView
    */
-  public Node makeDisplay(File SimFile) throws Exception{
+  public Node makeDisplay(File SimFile) {
     try {
       myController.parseFile(SimFile);
-    }catch (Exception e){
-      e.printStackTrace();
-      throw new Exception(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.BAD_FILE_KEY));
+    }catch (IOException e ){
+      displayErrorMessage(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.BAD_FILE_KEY));
+    } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
+      // TODO: move to props file
+      displayErrorMessage("Reflection error occurred in backend model, please try restarting the"
+          + "program");
     }
     VBox root = new VBox();
     root.getChildren().add(makeCellsAndBackground());
