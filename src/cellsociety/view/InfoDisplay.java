@@ -78,7 +78,7 @@ public class InfoDisplay extends ChangeableDisplay{
   private Node makeColumnForChange(){
     //make the column in the "table" for the state
     VBox column = new VBox();
-    column.getChildren().add(makeALabel(LanguageResourceHandler.INFO_STATE_KEY));
+    column.getChildren().add(makeALabel(LanguageResourceHandler.INFO_CHANGE_KEY));
     for (Integer state : myStateToCount.keySet()) {
       Label numChangeLabel = new Label(Integer.toString(0));
       stateToNumChangeLabel.put(state, numChangeLabel);

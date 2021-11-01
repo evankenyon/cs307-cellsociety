@@ -5,7 +5,16 @@ import javafx.scene.paint.Color;
 
 import static org.junit.jupiter.api.Assertions.*;
 import cellsociety.resourceHandlers.ViewResourceHandler;
+import cellsociety.CornerLocationGenerator.CornerLocationGenerator;
+import cellsociety.CornerLocationGenerator.RectangleCellCornerLocationGenerator;
+import cellsociety.CornerLocationGenerator.TriangularCellCornerLocationGenerator;
+import cellsociety.CornerLocationGenerator.HexagonalCellCornerLocationGenerator;
 
+import java.util.List;
+
+/**
+ * @author Keith Cressman
+ */
 public class ViewResourceHandlerTest {
   private ViewResourceHandler handler;
 
@@ -78,5 +87,33 @@ public class ViewResourceHandlerTest {
   void testHistogramWidth(){
     int width = handler.getViewSettingValueFromKey(ViewResourceHandler.HISTOGRAM_WIDTH_KEY);
     assertEquals(200, width);
+  }
+
+  @Test
+  void testGetCornerLocationGeneratorRectangular(){
+    CornerLocationGenerator clg = handler.getCornerLocationGenerator("Rectangle", 10, 10);
+    assertInstanceOf(RectangleCellCornerLocationGenerator.class, clg);
+  }
+
+  @Test
+  void testGetCornerLocationGeneratorTriangular(){
+    CornerLocationGenerator clg = handler.getCornerLocationGenerator("Triangle", 10, 10);
+    assertInstanceOf(TriangularCellCornerLocationGenerator.class, clg);
+  }
+
+  @Test
+  void testGetCornerLocationGeneratorHexagonal(){
+    CornerLocationGenerator clg = handler.getCornerLocationGenerator("Hexagon", 10, 10);
+    assertInstanceOf(HexagonalCellCornerLocationGenerator.class, clg);
+  }
+
+  @Test
+  void testShapesList(){
+    List<String> shapes = handler.getCellShapes();
+    assertEquals(3, shapes.size());
+    assertTrue(shapes.contains("Triangle"));
+    assertTrue(shapes.contains("Rectangle"));
+    assertTrue(shapes.contains("Hexagon"));
+
   }
 }

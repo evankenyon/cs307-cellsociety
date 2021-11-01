@@ -16,6 +16,7 @@ public class RectangleCellCornerLocationGenerator extends CornerLocationGenerato
     @Override
     public List<CornerLocation> generateCorners(int i, int j)
     {
+        corners.clear();
         CornerLocation topLeft=new CornerLocation(j*length,i*height);
         CornerLocation topRight=new CornerLocation((j+1)*length,i*height);
         CornerLocation bottomLeft=new CornerLocation((j)*length,(i+1)*height);

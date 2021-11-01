@@ -18,6 +18,7 @@ public class HexagonalCellCornerLocationGenerator extends CornerLocationGenerato
     @Override
     public List<CornerLocation> generateCorners(int i, int j)
     {
+        corners.clear();
         center.setY_pos(i*(height-.5* width *Math.cos(Math.toRadians(30)))+size);
         if (i%2==0)
         {

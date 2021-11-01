@@ -36,6 +36,8 @@ Features implemented:
 ### Notes/Assumptions
 
 Assumptions or Simplifications:
+ * In cellsociety.view.CellGridDisplay, I assume that the argument newShape is a String corresponding to a valid shape, i.e. "Rectangle", "Triangle", or "Hexagon". Currently in our code, those are the only possibilities, but if the code was extended for other purposes, people could misuse this method
+ * 
 
 Interesting data files:
 

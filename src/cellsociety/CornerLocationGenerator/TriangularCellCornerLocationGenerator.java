@@ -17,6 +17,7 @@ public class TriangularCellCornerLocationGenerator extends CornerLocationGenerat
     @Override
     public List<CornerLocation> generateCorners(int i, int j)
     {
+        corners.clear();
         if (i%2==0)
         {
             center.setX_pos(.5*j*length+.5*length);

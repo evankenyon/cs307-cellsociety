@@ -44,6 +44,7 @@ public class LanguageResourceHandler {
   public final static String INFO_NAME_KEY = "InfoName";
   public final static String INFO_DISPLAY_KEY = "InfoDisplay";
   public final static String INFO_CHANGE_KEY = "InfoChange";
+  public final static String SHAPES_KEY = "Shapes";
 
   public static final String ENGLISH = "English";
   public static final String SPANISH = "Spanish";

@@ -1,7 +1,6 @@
 package cellsociety.view;
 
-import cellsociety.CornerLocationGenerator.HexagonalCellCornerLocationGenerator;
-import cellsociety.CornerLocationGenerator.TriangularCellCornerLocationGenerator;
+
 import cellsociety.resourceHandlers.LanguageResourceHandler;
 import cellsociety.resourceHandlers.ViewResourceHandler;
 import cellsociety.controller.Controller;
@@ -15,6 +14,7 @@ import javafx.animation.Timeline;
 
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -27,8 +27,11 @@ import javafx.scene.control.Slider;
 
 import cellsociety.cell.Cell;
 import cellsociety.cell.CellDisplay;
+
 import cellsociety.CornerLocationGenerator.RectangleCellCornerLocationGenerator;
 import cellsociety.CornerLocationGenerator.CornerLocationGenerator;
+import cellsociety.CornerLocationGenerator.HexagonalCellCornerLocationGenerator;
+import cellsociety.CornerLocationGenerator.TriangularCellCornerLocationGenerator;
 import cellsociety.location.CornerLocation;
 
 
@@ -55,8 +58,11 @@ public class SimulationDisplay extends ChangeableDisplay{
   private ViewResourceHandler myViewResourceHandler;
   private List<CellDisplay> allCellDisplays;
   private Node myNode;
+  private CellGridDisplay myCellGridDisplay;
   private HistogramDisplay myHistogram;
   private InfoDisplay myInfoDisplay;
+
+
 
   public SimulationDisplay(){
     this(new LanguageResourceHandler());
@@ -103,10 +109,17 @@ public class SimulationDisplay extends ChangeableDisplay{
     //return a node with the grid, histogram, and other option
     HBox simulationsBox = new HBox();
     simulationsBox.setSpacing(20); //change magic valeu
-    simulationsBox.getChildren().add(makeCellsAndBackground());
+    //simulationsBox.getChildren().add(makeCellsAndBackground());
+    simulationsBox.getChildren().add(makeCellGridDisplay());
     simulationsBox.getChildren().add(makeHistogram());
     simulationsBox.getChildren().add(makeInfoDisplay());
     return simulationsBox;
+  }
+
+  private Node makeCellGridDisplay(){
+    //make a node containing the grid
+    myCellGridDisplay = new CellGridDisplay(myController);
+    return myCellGridDisplay.createGridDisplay();
   }
 
   private Node makeCellsAndBackground(){
@@ -166,7 +179,7 @@ public class SimulationDisplay extends ChangeableDisplay{
 
   private Node makeHistogram(){
     //create the histogram to add it onto the main node
-    myHistogram = new HistogramDisplay(allCellDisplays.size(), getNumOfEachState());
+    myHistogram = new HistogramDisplay(myController.getNumCells(), getNumOfEachState());
     return myHistogram.createHistogramDisplay();
   }
 
@@ -177,12 +190,12 @@ public class SimulationDisplay extends ChangeableDisplay{
 
   /**
    * Create/return a map that maps each state to the number of cells in that state
-   * This method should probably go in model, I don't like having it in here.
+   * This method should probably go in model, I don't like having it in here. It's kinda clunky.
    * @return a map used to find how many cells in each state
    */
   private Map<Integer, Integer> getNumOfEachState(){
     Map<Integer, Integer> stateToCount = new HashMap<>();
-    for (CellDisplay c : allCellDisplays){
+    for (CellDisplay c : myCellGridDisplay.getAllCellDisplays()){
       int state = c.getState();
       stateToCount.putIfAbsent(state, 0);
       stateToCount.put(state, 1 + stateToCount.get(state));
@@ -203,7 +216,9 @@ public class SimulationDisplay extends ChangeableDisplay{
     controlBox.getChildren().add(makeAButton(LanguageResourceHandler.ONE_STEP_KEY, () -> oneStep()));
     controlBox.getChildren().add(makeAButton(LanguageResourceHandler.SAVE_FILE_KEY, () -> makePopup()));
     v.getChildren().add(controlBox);
+    v.getChildren().add(makeShapeControlBox());
     v.getChildren().add(makeSlider());
+
     return v;
   }
 
@@ -220,6 +235,19 @@ public class SimulationDisplay extends ChangeableDisplay{
     sliderBox.getChildren().add(slider);
     return sliderBox;
   }
+
+  private Node makeShapeControlBox(){
+    //create a node on which users can select the shape of a cell
+    HBox shapesBox = new HBox();
+    shapesBox.getChildren().add(makeALabel(LanguageResourceHandler.SHAPES_KEY));
+    ComboBox cBox = new ComboBox();
+    cBox.getItems().addAll(myViewResourceHandler.getCellShapes());
+    cBox.setOnAction(e -> myCellGridDisplay.changeCellShapes(cBox.getSelectionModel().getSelectedItem().toString()));
+    shapesBox.getChildren().add(cBox);
+    return shapesBox;
+  }
+
+
 
   public void changeAnimationSpeed(double newFramesPerSecond){
     //change speed of animation
@@ -300,7 +328,7 @@ public class SimulationDisplay extends ChangeableDisplay{
    * @return allCellDisplays
    */
   public List<CellDisplay> getAllCellDisplays(){
-    return Collections.unmodifiableList(allCellDisplays);
+    return myCellGridDisplay.getAllCellDisplays();
   }
 
   /**

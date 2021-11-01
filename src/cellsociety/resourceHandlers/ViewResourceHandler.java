@@ -4,6 +4,14 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 import java.io.FileInputStream;
 import javafx.scene.paint.Color;
+import cellsociety.CornerLocationGenerator.CornerLocationGenerator;
+import cellsociety.CornerLocationGenerator.RectangleCellCornerLocationGenerator;
+import cellsociety.CornerLocationGenerator.TriangularCellCornerLocationGenerator;
+import cellsociety.CornerLocationGenerator.HexagonalCellCornerLocationGenerator;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.ArrayList;
 
 
 /**
@@ -12,9 +20,10 @@ import javafx.scene.paint.Color;
  */
 public class ViewResourceHandler {
   private ResourceBundle myResourceBundle;
-  private Properties viewProperties, stateColorProperties;
+  private Properties viewProperties, stateColorProperties, shapeToCornerProperties;
   public final static String DISPLAY_PROPS_PATH = "src/cellsociety/resourceHandlers/DisplayProperties.properties";
   public final static String STATE_COLORS_PATH = "src/cellsociety/resourceHandlers/StateColor.properties";
+  public final static String SHAPE_CORNER_PATH = "src/cellsociety/resourceHandlers/ShapeCornerGenerator.properties";
   public final static String SIM_WIDTH_KEY = "SimulationWidth";
   public final static String SIM_HEIGHT_KEY = "SimulationHeight";
   public final static String WINDOW_WIDTH_KEY = "windowWidth";
@@ -32,9 +41,11 @@ public class ViewResourceHandler {
   public ViewResourceHandler() {
     viewProperties = new Properties();
     stateColorProperties = new Properties();
+    shapeToCornerProperties = new Properties();
     try {
       viewProperties.load(new FileInputStream(DISPLAY_PROPS_PATH));
       stateColorProperties.load(new FileInputStream(STATE_COLORS_PATH));
+      shapeToCornerProperties.load(new FileInputStream(SHAPE_CORNER_PATH));
     } catch(Exception e){
       //impossible
     }
@@ -140,6 +151,31 @@ public class ViewResourceHandler {
       colors[i] = Color.web(colorStrings[i]);
     }
     return colors;
+  }
+
+  /**
+   * get an appropriate corner location generator for the specified shape
+   * @param shape is a shape like "Rectangle" or "Triangle" corresponding to a key in the properties file
+   * @param numRows is the number of rows in the simulation
+   * @param numCols is the number of columns in the simulation
+   * @return a CornerLocationGenerator corresponding to the desired shape
+   */
+  public CornerLocationGenerator getCornerLocationGenerator(String shape, int numRows, int numCols){
+    String className = shapeToCornerProperties.getProperty(shape);
+    try{
+      Class cornerGenClass = Class.forName(className);
+      return (CornerLocationGenerator) cornerGenClass.getConstructor(int.class, int.class).newInstance(numRows, numCols);
+    } catch (Exception e){
+      return new RectangleCellCornerLocationGenerator(numRows, numCols);
+    }
+  }
+
+  public List<String> getCellShapes(){
+    List<String> shapes = new ArrayList<>();
+    for (Object s : shapeToCornerProperties.keySet()){
+      shapes.add(s.toString());
+    }
+    return shapes;
   }
 
 

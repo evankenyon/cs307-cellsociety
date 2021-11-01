@@ -87,6 +87,14 @@ public class Controller {
   }
 
   /**
+   * get the number of cells in the simulation
+   * @return number of cells
+   */
+  public int getNumCells(){
+    return model.getCells().size();
+  }
+
+  /**
    * get the simulation type, e.g. "GameOfLife" or "Percolation"
    * @return the the model's string simulationType
    */
