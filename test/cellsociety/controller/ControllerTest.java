@@ -72,7 +72,8 @@ class ControllerTest {
   }
 
   @Test
-  void testStepWith1x1Grid() throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+  void testStepWith1x1Grid()
+      throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, ClassNotFoundException, InstantiationException {
     controller.parseFile(new File("data/game_of_life/HandMadeTest1.sim"));
     controller.step();
     assertEquals(CellDisplay.OFF_COLOR, ((Rectangle)controller.getCellDisplays().get(0)).getFill());
@@ -81,7 +82,8 @@ class ControllerTest {
   }
 
   @Test
-  void testWith2x2CSV() throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+  void testWith2x2CSV()
+      throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, ClassNotFoundException, InstantiationException {
     controller.parseFile(new File("data/game_of_life/HandMadeTest2.sim"));
     controller.step();
     assertEquals(CellDisplay.ON_COLOR, ((Rectangle)controller.getCellDisplays().get(0)).getFill());
@@ -98,7 +100,8 @@ class ControllerTest {
   }
 
   @Test
-  void testWith3x3Border() throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+  void testWith3x3Border()
+      throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, ClassNotFoundException, InstantiationException {
     controller.parseFile(new File("data/game_of_life/HandMadeTest3x3Border.sim"));
     assertEquals(CellDisplay.ON_COLOR, ((Rectangle)controller.getCellDisplays().get(0)).getFill());
     assertEquals(CellDisplay.ON_COLOR, ((Rectangle)controller.getCellDisplays().get(1)).getFill());
@@ -122,7 +125,8 @@ class ControllerTest {
   }
 
   @Test
-  void testWith3x3Full() throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+  void testWith3x3Full()
+      throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, ClassNotFoundException, InstantiationException {
     controller.parseFile(new File("data/game_of_life/HandMadeTest3x3Full.sim"));
     assertEquals(CellDisplay.ON_COLOR, ((Rectangle)controller.getCellDisplays().get(0)).getFill());
     assertEquals(CellDisplay.ON_COLOR, ((Rectangle)controller.getCellDisplays().get(1)).getFill());

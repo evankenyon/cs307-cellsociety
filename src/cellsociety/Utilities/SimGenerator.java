@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Properties;
 
 public class SimGenerator {
-  Properties simInfo;
+  private Properties simInfo;
 
   public SimGenerator(Properties simInfo) {
     this.simInfo = simInfo;

@@ -13,6 +13,10 @@ import java.io.FileInputStream;
  * @author Keith Cressman
  */
 public class CellDisplay {
+  // TODO: move to properties file
+  private static final int DEFAULT_WIDTH = 20;
+  private static final int DEFAULT_HEIGHT = 20;
+
   private Node myDisp;
   private Cell myCell;
   private int myState;
@@ -22,7 +26,7 @@ public class CellDisplay {
   private Color[] stateColors = {Color.BLACK, Color.RED, Color.GREEN};
 
   public CellDisplay(double x, double y, int state){
-    this(x, y, Cell.DEFAULT_WIDTH, Cell.DEFAULT_HEIGHT, state);
+    this(x, y, DEFAULT_WIDTH, DEFAULT_HEIGHT, state);
   }
 
   /**

@@ -10,9 +10,17 @@ import java.util.List;
 import cellsociety.cell.FireCell;
 import cellsociety.cell.IllegalCellStateException;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class SpreadingOfFireRulesTest {
+    private List<Integer> defaultNumCornersShared;
+
+    @BeforeEach
+    void setUp() {
+        defaultNumCornersShared = new ArrayList<>();
+        defaultNumCornersShared.add(2);
+    }
 
     @Test
     void treeIsBurned()
@@ -21,7 +29,7 @@ public class SpreadingOfFireRulesTest {
         List<Cell> allCells = new ArrayList<>();
         allCells.add(new Cell(0,1,2,10,10));
         for(Cell otherCell : allCells) {
-            cell.updateNeighbors(otherCell, 2);
+            cell.updateNeighbors(otherCell, defaultNumCornersShared);
         }
         cell.updateCellNeighborStateMap();
         List<Double> args = new ArrayList<>();
@@ -51,7 +59,7 @@ public class SpreadingOfFireRulesTest {
         List<Cell> allCells = new ArrayList<>();
         allCells.add(new Cell(0,1,1,10,10));
         for(Cell otherCell : allCells) {
-            cell.updateNeighbors(otherCell, 2);
+            cell.updateNeighbors(otherCell, defaultNumCornersShared);
         }
         cell.updateCellNeighborStateMap();
         List<Double> args = new ArrayList<>();
@@ -70,7 +78,7 @@ public class SpreadingOfFireRulesTest {
         allCells.add(new Cell(0,1,2,10,10));
         allCells.add(new Cell(1,0,1,10,10));
         for(Cell otherCell : allCells) {
-            cell.updateNeighbors(otherCell, 2);
+            cell.updateNeighbors(otherCell, defaultNumCornersShared);
         }
         cell.updateCellNeighborStateMap();
         List<Double> args = new ArrayList<>();

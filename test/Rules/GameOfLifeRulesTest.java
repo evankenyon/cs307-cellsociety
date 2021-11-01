@@ -7,12 +7,22 @@ import java.lang.reflect.InvocationTargetException;
 
 import cellsociety.cell.IllegalCellStateException;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameOfLifeRulesTest {
+    private List<Integer> defaultNumCornersShared;
+
+    @BeforeEach
+    void setUp() {
+        defaultNumCornersShared = new ArrayList<>();
+        defaultNumCornersShared.add(1);
+        defaultNumCornersShared.add(2);
+    }
+
     @Test
     void killCellTest() throws IllegalCellStateException {
         GameOfLifeCell cell=new GameOfLifeCell(0,0,1,10,10);
@@ -56,7 +66,7 @@ public class GameOfLifeRulesTest {
         allCells.add(new GameOfLifeCell(0,1,1,10,10));
         allCells.add(new GameOfLifeCell(1,0,1,10,10));
         for(GameOfLifeCell otherCell : allCells) {
-            cell.updateNeighbors(otherCell, 1);
+            cell.updateNeighbors(otherCell, defaultNumCornersShared);
         }
         cell.updateCellNeighborStateMap();
         GameOfLifeRules rules=new GameOfLifeRules(cell, new ArrayList<>());
@@ -73,7 +83,7 @@ public class GameOfLifeRulesTest {
         allCells.add(new GameOfLifeCell(1,0,1,10,10));
         allCells.add(new GameOfLifeCell(1,1,1,10,10));
         for(GameOfLifeCell otherCell : allCells) {
-            cell.updateNeighbors(otherCell, 1);
+            cell.updateNeighbors(otherCell, defaultNumCornersShared);
         }
         cell.updateCellNeighborStateMap();
         GameOfLifeRules rules=new GameOfLifeRules(cell, new ArrayList<>());
@@ -91,7 +101,7 @@ public class GameOfLifeRulesTest {
         allCells.add(new GameOfLifeCell(1,1,1,10,10));
         allCells.add(new GameOfLifeCell(2,1,1,10,10));
         for(GameOfLifeCell otherCell : allCells) {
-            cell.updateNeighbors(otherCell, 1);
+            cell.updateNeighbors(otherCell, defaultNumCornersShared);
         }
         cell.updateCellNeighborStateMap();
         GameOfLifeRules rules=new GameOfLifeRules(cell, new ArrayList<>());
@@ -108,7 +118,7 @@ public class GameOfLifeRulesTest {
         allCells.add(new GameOfLifeCell(1,0,1,10,10));
         allCells.add(new GameOfLifeCell(1,1,1,10,10));
         for(GameOfLifeCell otherCell : allCells) {
-            cell.updateNeighbors(otherCell, 1);
+            cell.updateNeighbors(otherCell, defaultNumCornersShared);
         }
         cell.updateCellNeighborStateMap();
         GameOfLifeRules rules=new GameOfLifeRules(cell, new ArrayList<>());
@@ -127,7 +137,7 @@ public class GameOfLifeRulesTest {
         allCells.add(new GameOfLifeCell(2, 1, 0,10,10));
         for (GameOfLifeCell cell: allCells) {
             for (GameOfLifeCell otherCell: allCells) {
-                cell.updateNeighbors(otherCell, 1);
+                cell.updateNeighbors(otherCell, defaultNumCornersShared);
             }
         }
         for (GameOfLifeCell cell : allCells) {

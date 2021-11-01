@@ -24,7 +24,8 @@ class ModelTest {
   }
 
   @Test
-  void findNextStateForEachCell() throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+  void findNextStateForEachCell()
+      throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, ClassNotFoundException, InstantiationException {
     controller.parseFile(new File("./data/game_of_life/blinkers.sim"));
     model.findNextStateForEachCell();
     model.updateModel();

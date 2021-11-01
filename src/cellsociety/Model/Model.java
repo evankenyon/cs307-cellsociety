@@ -19,7 +19,7 @@ public class Model {
   private static final String KEY_ALTERNATIVES_FILENAME = "KeyAlternatives";
   private List<Cell> cellList;
   private Map<String, String> simulationInfo;
-//  private String simulationType;
+  //  private String simulationType;
   private ResourceBundle numCorners;
   private ResourceBundle valueAlternatives;
   private ResourceBundle keyAlternatives;
@@ -28,11 +28,12 @@ public class Model {
   private HashMap<Integer, List<Cell>> modelStateMap;
 
 
-
   public Model() {
     numCorners = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + NUM_CORNERS_FILENAME);
-    valueAlternatives = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + VALUE_ALTERNATIVES_FILENAME);
-    keyAlternatives = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + KEY_ALTERNATIVES_FILENAME);
+    valueAlternatives = ResourceBundle.getBundle(
+        DEFAULT_RESOURCE_PACKAGE + VALUE_ALTERNATIVES_FILENAME);
+    keyAlternatives = ResourceBundle.getBundle(
+        DEFAULT_RESOURCE_PACKAGE + KEY_ALTERNATIVES_FILENAME);
     simulationInfo = new HashMap<>();
   }
 
@@ -44,13 +45,15 @@ public class Model {
     this.cols = cols;
   }
 
-  public void setCellList(List<Cell> cellList) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+  public void setCellList(List<Cell> cellList)
+      throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
     this.cellList = cellList;
     updateAllNeighborsList();
     affectAllCells("updateCellNeighborStateMap");
   }
 
-  public void updateModel() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+  public void updateModel()
+      throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
     affectAllCells("updateState");
     affectAllCells("updateCellNeighborStateMap");
     createModelStateMap();
@@ -58,14 +61,14 @@ public class Model {
 
 
   private void updateAllNeighborsList() {
-    for(Cell cell: cellList){
+    for (Cell cell : cellList) {
       updateSingleCellNeighbors(cell);
     }
   }
 
   private void affectAllCells(String method)
       throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-    for(Cell cell: cellList) {
+    for (Cell cell : cellList) {
       Method cellMethod = cell.getClass().getDeclaredMethod(method);
       cellMethod.invoke(cell);
     }
@@ -79,7 +82,8 @@ public class Model {
 //      System.out.println(key);
       if (keyAlternatives.containsKey(key)) {
         try {
-          this.simulationInfo.put(keyAlternatives.getString(key), valueAlternatives.getString(simulationInfo.getProperty(key)));
+          this.simulationInfo.put(keyAlternatives.getString(key),
+              valueAlternatives.getString(simulationInfo.getProperty(key)));
         } catch (MissingResourceException e) {
           this.simulationInfo.put(keyAlternatives.getString(key), simulationInfo.getProperty(key));
         }
@@ -104,44 +108,49 @@ public class Model {
     return cellList;
   }
 
-  private void updateSingleCellNeighbors(Cell inputCell){
-    for(Cell cell: cellList){
-      inputCell.updateNeighbors(cell, Integer.parseInt(numCorners.getString(simulationInfo.get("Type"))));
+  private void updateSingleCellNeighbors(Cell inputCell) {
+    for (Cell cell : cellList) {
+      inputCell.updateNeighbors(cell,
+          parseNumCornersList(numCorners.getString(simulationInfo.get("Type"))));
     }
+  }
+
+  private List<Integer> parseNumCornersList(String numCorners) {
+    String[] numCornersStringArr = numCorners.split(",");
+    List<Integer> numCornersList = new ArrayList<>();
+    for (String numCorner : numCornersStringArr) {
+      numCornersList.add(Integer.parseInt(numCorner));
+    }
+    return numCornersList;
   }
 
   /**
    * find what the next state should be for each cell
    */
-  public void findNextStateForEachCell() {
-    for(Cell cell: cellList){
+  public void findNextStateForEachCell()
+      throws ClassNotFoundException, InvocationTargetException, IllegalAccessException, NoSuchMethodException, InstantiationException {
+    for (Cell cell : cellList) {
       RulesInterface r = null;
-      try {
-        r = (RulesInterface) Class.forName(
-                        String.format("%s%sRules", numCorners.getString("RulesPackageName"), simulationInfo.get("Type")))
-                .getConstructor(Cell.class, List.class).newInstance(cell, createParamsDoubleList(simulationInfo.get("Parameters")));
-      } catch (Exception e) {
-        //TODO: Implement properly
-        e.printStackTrace();
-      }
-      //TODO: Implement properly
-      try {
-        r.setState();
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
+      r = (RulesInterface) Class.forName(
+              String.format("%s%sRules", numCorners.getString("RulesPackageName"),
+                  simulationInfo.get("Type")))
+          .getConstructor(Cell.class, List.class)
+          .newInstance(cell, createParamsDoubleList(simulationInfo.get("Parameters")));
+
+      r.setState();
     }
 
   }
 
   /**
-   * SHOULD DELETE THIS METHOD
-   * get a list of all the nodes to go on screen, representing displays of each cell
+   * SHOULD DELETE THIS METHOD get a list of all the nodes to go on screen, representing displays of
+   * each cell
+   *
    * @return a list of nodes displaying the cells
    */
   public List<Node> getCellDisplays() {
     List<Node> nodeList = new ArrayList<>();
-    for(Cell cell: cellList){
+    for (Cell cell : cellList) {
       nodeList.add(cell.getMyDisplay());
     }
     return nodeList;
@@ -149,6 +158,7 @@ public class Model {
 
   /**
    * get a list of all the nodes to go on screen, representing displays of each cell
+   *
    * @return a list of nodes displaying the cells
    */
   public List<Cell> getCells() {
@@ -157,7 +167,7 @@ public class Model {
 
   public void createModelStateMap() {
     modelStateMap = new HashMap<>();
-    for(Cell cell: cellList){
+    for (Cell cell : cellList) {
       int cellCurrentState = cell.getCurrentState();
       modelStateMap.putIfAbsent(cellCurrentState, new ArrayList<>());
       modelStateMap.get(cellCurrentState).add(cell);
@@ -165,12 +175,12 @@ public class Model {
   }
 
 
-  public int[] getGridShape(){
+  public int[] getGridShape() {
     int[] shape = {rows, cols};
     return shape;
   }
 
-  public String getSimulationType(){
+  public String getSimulationType() {
     return simulationInfo.get("Type");
   }
 
