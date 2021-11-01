@@ -2,6 +2,9 @@ package cellsociety.cell;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.Color;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import java.io.FileInputStream;
 
 public class CellDisplay {
   private Node myDisp;
@@ -9,6 +12,7 @@ public class CellDisplay {
   private int myState;
   public static final Color ON_COLOR = Color.BLUE;
   public static final Color OFF_COLOR = Color.BLACK;
+
   private Color[] stateColors = {Color.BLACK, Color.RED, Color.GREEN};
 
   public CellDisplay(double x, double y, int state){
@@ -16,6 +20,15 @@ public class CellDisplay {
   }
 
   public CellDisplay(double x, double y, double width, double height, int state){
+    /*
+    try {
+      FileInputStream input = new FileInputStream("src/cellsociety/cell/DukeLogo.png");
+      Image image = new Image(input);
+      ImageView imageView = new ImageView(image);
+      myDisp = imageView;
+    } catch (Exception e){
+
+    }*/
     myDisp = new Rectangle(x, y, width, height);
     myDisp.setOnMouseClicked(e -> cellClicked());
     myState = state;

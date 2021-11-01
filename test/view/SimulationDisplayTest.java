@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Set;
 import javafx.scene.control.TextInputControl;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 import cellsociety.resourceHandlers.LanguageResourceHandler;

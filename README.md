@@ -21,6 +21,7 @@ Hours Spent:
 https://medium.com/@mglover/java-fx-testing-with-testfx-c3858b571320
 https://www.w3schools.com/java/java_lambda.asp
 https://www.callicoder.com/javafx-css-tutorial/
+http://tutorials.jenkov.com/javafx/imageview.html
 
 ### Running the Program
 
