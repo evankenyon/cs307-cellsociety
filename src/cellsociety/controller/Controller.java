@@ -10,6 +10,7 @@ import cellsociety.cell.IllegalCellStateException;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -30,7 +31,7 @@ public class Controller {
   }
 
   public void parseFile(File SimFile)
-      throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, IllegalCellStateException {
+      throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, IllegalCellStateException, InputMismatchException {
     CSVParser csvParser = new CSVParser();
     SimParser simParser = new SimParser();
     simParser.setupKeyValuePairs(SimFile);

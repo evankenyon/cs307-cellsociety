@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
+import java.util.InputMismatchException;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 
@@ -101,6 +102,9 @@ public class SimulationDisplay extends ChangeableDisplay{
       // TODO: move to props file
       displayErrorMessage("Illegal cell state was found, please make sure you are not using any values"
           + "that are not 0 or 1 for GameOfLife or not 0, 1, or 2 for other simulations");
+    } catch (InputMismatchException e) {
+      // TODO: move to props file
+      displayErrorMessage("A file that was not of .csv type was uploaded");
     }
     VBox root = new VBox();
     root.getChildren().add(makeAllDisplays());

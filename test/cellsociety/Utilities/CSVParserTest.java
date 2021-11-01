@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import cellsociety.cell.IllegalCellStateException;
 import java.io.File;
+import java.util.InputMismatchException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,6 +26,11 @@ class CSVParserTest {
   void initializeCellMatrixExceptionFire() {
     csvParser.setFile(new File("./data/fire/bad.csv"));
     Assertions.assertThrows(IllegalCellStateException.class, () -> csvParser.initializeCellMatrix("Fire"));
+  }
+
+  @Test
+  void initializeCellMatrixExceptionNonCSV() {
+    Assertions.assertThrows(InputMismatchException.class, () -> csvParser.setFile(new File("./data/fire/fire_corner.sim")));
   }
 
   @Test

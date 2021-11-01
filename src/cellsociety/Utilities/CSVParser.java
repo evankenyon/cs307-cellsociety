@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Scanner;
@@ -26,7 +27,10 @@ public class CSVParser {
         cellStates = new ArrayList<>();
     }
 
-    public void setFile(File file) {
+    public void setFile(File file) throws InputMismatchException {
+        if(!file.getName().endsWith(".csv")) {
+            throw new InputMismatchException();
+        }
         this.file = file;
     }
 
