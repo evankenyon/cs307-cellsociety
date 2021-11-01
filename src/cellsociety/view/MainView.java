@@ -35,9 +35,9 @@ public class MainView extends ChangeableDisplay{
   private Pane mainPane;
 
 
-  public static final String DARK_CSS_NAME = "DarkMode.css";
-  public static final String DUKE_CSS_NAME = "Duke.css";
-  public static final String BASIC_CSS_NAME = "Basic.css";
+  public static final String DARK_CSS_NAME = "CSSFiles/DarkMode.css";
+  public static final String DUKE_CSS_NAME = "CSSFiles/Duke.css";
+  public static final String BASIC_CSS_NAME = "CSSFiles/Basic.css";
 
 
   public MainView(){

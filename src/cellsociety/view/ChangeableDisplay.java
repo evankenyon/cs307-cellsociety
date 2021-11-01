@@ -8,6 +8,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.Node;
+import javafx.scene.layout.Pane;
 import java.util.HashMap;
 
 
@@ -32,16 +33,28 @@ public abstract class ChangeableDisplay {
   public ChangeableDisplay(LanguageResourceHandler l){
     myLanguageResourceHandler = l;
     myNodesToTextKey = new HashMap<>();
+    myDisp = new Pane();
   }
 
-  protected Button makeAButton(String ResourceKey, ButtonClickedMethod method){
+  /**
+   * create a button whose text comes from the key ResourceKey, and calls method when clicked
+   * @param ResourceKey is a key to the Properties files in the Language bundle used to get the text on the button
+   * @param method will be called when the buton is clicked
+   * @return a button with the attributes above
+   */
+  public Button makeAButton(String ResourceKey, ButtonClickedMethod method){
     Button2 button = new Button2(myLanguageResourceHandler.getStringFromKey(ResourceKey));
     button.setOnAction(e -> method.actionOnClick());
     myNodesToTextKey.put(button, ResourceKey);
     return button;
   }
 
-  protected Label makeALabel(String resourceKey){
+  /**
+   * create a label whose text comes from the key resourceKey
+   * @param resourceKey is a key to the Properties files in the Language bundle used to get the text on the label
+   * @return a label with the attributes above
+   */
+  public Label makeALabel(String resourceKey){
     Label2 l = new Label2(myLanguageResourceHandler.getStringFromKey(resourceKey));
     myNodesToTextKey.put(l, resourceKey);
     return l;
