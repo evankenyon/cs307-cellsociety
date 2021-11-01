@@ -51,20 +51,10 @@ public class Controller {
   }
 
   // TODO: actually handle exception
-  public void saveFile(String fileName) throws IOException {
-    CSVGenerator csvGenerator = new CSVGenerator();
-    csvGenerator.createCSVFile(model.getCellGrid(), fileName);
-//    simGenerator.updateReplaceableSimInfo(updatedSimInfo);
-    simGenerator.createSimFile(fileName);
-  }
-
-  // TODO: actually handle exception
   public void saveFile(String fileName, Map<String, String> propertyToValue) throws IOException {
+    simGenerator.createSimFile(fileName, propertyToValue);
     CSVGenerator csvGenerator = new CSVGenerator();
-    csvGenerator.createCSVFile(model.getCellGrid(), propertyToValue.get(FileSavePopup.INITIAL_STATES));
-//    simGenerator.updateReplaceableSimInfo(updatedSimInfo);
-
-    simGenerator.createSimFile(propertyToValue);
+    csvGenerator.createCSVFile(model.getCellList(), model.getGridShape()[0], model.getGridShape()[1], fileName, getSimulationType());
   }
 
 

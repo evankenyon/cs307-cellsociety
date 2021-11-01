@@ -18,7 +18,6 @@ public class Model {
   private static final String NUM_CORNERS_FILENAME = "NumCorners";
   private static final String VALUE_ALTERNATIVES_FILENAME = "ValuesAlternatives";
   private static final String KEY_ALTERNATIVES_FILENAME = "KeyAlternatives";
-  private Cell[][] cellGrid;
   private List<Cell> cellList;
   private Map<String, String> simulationInfo;
 //  private String simulationType;
@@ -128,10 +127,6 @@ public class Model {
     return cellList;
   }
 
-  public Cell[][] getCellGrid() {
-    return cellGrid;
-  }
-
   private void updateSingleCellNeighbors(Cell inputCell){
     for(Cell cell: cellList){
       inputCell.updateNeighbors(cell, Integer.parseInt(numCorners.getString(simulationInfo.get("Type"))));
@@ -199,6 +194,7 @@ public class Model {
   }
 
   public String getSimulationType(){
+    System.out.println(simulationInfo.get("Type"));
     return simulationInfo.get("Type");
   }
 

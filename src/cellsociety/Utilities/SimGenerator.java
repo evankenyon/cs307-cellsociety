@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import cellsociety.view.FileSavePopup;
+import org.apache.commons.lang3.ObjectUtils.Null;
 
 public class SimGenerator {
   Properties simInfo;
@@ -24,39 +25,28 @@ public class SimGenerator {
     }
   }
 
-  public void createSimFile(String fileName) {
-    OutputStream os = null;
-    String filePath = String.format("./data/game_of_life/saved/program-" + "%s.sim", fileName);
-    simInfo.setProperty("InitialStates", String.format("game_of_life/saved/program-" + "%s.csv", fileName));
-
-    // Borrowed code to output Properties to a file from
-    // https://www.java2novice.com/java-file-io-operations/create-store-property-file/
-    try {
-      os = new FileOutputStream(filePath);
-      simInfo.store(os, null);
-    } catch (FileNotFoundException e) {
-      // TODO: handle exceptions
-      e.printStackTrace();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-  }
-
   /**
    * Save a .sim file for the simulation, with properties specified in propertyToValue
    * @param propertyToValue maps keys like "Author" and "Title" to their corresponding values for the simulation
    */
-  public void createSimFile(Map<String, String> propertyToValue) throws IOException{
-    OutputStream os = null;
+  public void createSimFile(String fileName, Map<String, String> propertyToValue) throws IOException{
+    String filePath = String.format("./data/saved/%s/program-" + "%s.sim", simInfo.getProperty("Type"), fileName);
+    simInfo.setProperty("InitialStates", String.format("/saved/%s/program-" + "%s.csv", simInfo.getProperty("Type"), fileName));
 
-    for (String property : propertyToValue.keySet()){
-      simInfo.setProperty(property, propertyToValue.get(property));
+    try {
+      for (String property : propertyToValue.keySet()){
+        simInfo.setProperty(property, propertyToValue.get(property));
+      }
+    } catch (NullPointerException e) {
+      // Don't do anything since shouldn't change simInfo if propertyToValue map is null
     }
-    //simInfo.setProperty("InitialStates", String.format("game_of_life/saved/program-" + "%s.csv", fileName));
+
+
+
 
     // Borrowed code to output Properties to a file from
     // https://www.java2novice.com/java-file-io-operations/create-store-property-file/
-    os = new FileOutputStream(propertyToValue.get(FileSavePopup.INITIAL_STATES));
+    OutputStream os = new FileOutputStream(filePath);
     simInfo.store(os, null);
   }
 }

@@ -17,9 +17,9 @@ public class GameOfLifeRules extends Rules {
   private int numOneNeighbors;
   private GameOfLifeCell gcell;
 
-  public GameOfLifeRules(GameOfLifeCell cell, List<Double> args) {
+  public GameOfLifeRules(Cell cell, List<Double> args) {
     super(cell);
-    gcell=cell;
+//    gcell=cell;
     if(!args.isEmpty()) {
       // TODO: handle
       throw new InputMismatchException();
