@@ -5,7 +5,8 @@ import java.util.List;
 
 public class HexagonalCellCornerLocationGenerator extends CornerLocationGenerator{
     private double height=getVIEW_HEIGHT()/rows;
-    private double length=getVIEW_WIDTH()/columns;
+    private double size=height/2;
+    private double width =size*Math.sqrt(3);
     private CornerLocation center;
 
     public HexagonalCellCornerLocationGenerator(int rows, int columns)
@@ -16,19 +17,27 @@ public class HexagonalCellCornerLocationGenerator extends CornerLocationGenerato
     @Override
     public List<CornerLocation> generateCorners(int i, int j)
     {
-        center.setX_pos(j*length+.5*length);
-        center.setY_pos(i*height+.5*height);
-        CornerLocation top=new CornerLocation(center.getX_pos(), center.getY_pos()-.5*height);
-        CornerLocation bottom=new CornerLocation(center.getX_pos(), center.getY_pos()+.5*height);
-        CornerLocation bottomLeft=new CornerLocation((j)*length,center.getY_pos()+.5*length-.5*length*Math.cos(Math.toRadians(30)));
-        CornerLocation bottomRight=new CornerLocation((j+1)*length,center.getY_pos()+.5*length-.5*length*Math.cos(Math.toRadians(30)));
-        CornerLocation topLeft=new CornerLocation((j)*length,i*length+.5*length*Math.cos(Math.toRadians(30)));
-        CornerLocation topRight=new CornerLocation((j+1)*length,i*length+.5*length*Math.cos(Math.toRadians(30)));
+        center.setY_pos(i*height+size);
+        if (i%2==0)
+        {
+            center.setX_pos(j*width+.5*width);
+        }
+        else
+        {
+            center.setX_pos(j*width+width);
+        }
+
+        CornerLocation top=new CornerLocation(center.getX_pos(), center.getY_pos()-size);
+        CornerLocation bottom=new CornerLocation(center.getX_pos(), center.getY_pos()+size);
+        CornerLocation bottomLeft=new CornerLocation((j)*width,center.getY_pos()+size-.5* width *Math.cos(Math.toRadians(30)));
+        CornerLocation bottomRight=new CornerLocation((j+1)*width,center.getY_pos()+size -.5* width *Math.cos(Math.toRadians(30)));
+        CornerLocation topLeft=new CornerLocation((j)* width,center.getY_pos()-size+.5* width *Math.cos(Math.toRadians(30)));
+        CornerLocation topRight=new CornerLocation((j+1)* width,center.getY_pos()-size+.5* width *Math.cos(Math.toRadians(30)));
         corners.add(top);
-        corners.add(bottom);
-        corners.add(bottomLeft);
-        corners.add(bottomRight);
         corners.add(topLeft);
+        corners.add(bottomLeft);
+        corners.add(bottom);
+        corners.add(bottomRight);
         corners.add(topRight);
         return corners;
     }

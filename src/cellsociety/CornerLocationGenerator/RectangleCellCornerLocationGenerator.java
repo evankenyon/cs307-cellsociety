@@ -22,8 +22,8 @@ public class RectangleCellCornerLocationGenerator extends CornerLocationGenerato
         CornerLocation bottomRight=new CornerLocation((j+1)*length,(i+1)*height);
         corners.add(topLeft);
         corners.add(topRight);
-        corners.add(bottomLeft);
         corners.add(bottomRight);
+        corners.add(bottomLeft);
         return corners;
     }
 }
