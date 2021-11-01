@@ -259,7 +259,7 @@ public class SimulationDisplay extends ChangeableDisplay{
     try {
       myController.step();
       myHistogram.setNumOfEachType(getNumOfEachState());
-    } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+    } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
       // TODO: move to props file
       displayErrorMessage("Reflection error occurred in backend model, please try restarting the"
           + "program");

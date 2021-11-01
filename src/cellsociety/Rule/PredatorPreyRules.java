@@ -3,11 +3,16 @@ package cellsociety.Rule;
 import cellsociety.cell.Cell;
 import cellsociety.cell.PredatorPreyCell;
 
+import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class PredatorPreyRules extends Rules {
-    private int reproductionCycle=3;
+    private static final String DEFAULT_RESOURCE_PACKAGE =
+        GameOfLifeRules.class.getPackageName() + ".resources.";
+    private static final String DEFAULT_PARAMS_FILENAME = "PredatorPreyDefaultParams";
+    private int reproductionCycle;
 
     public PredatorPreyRules(Cell cell, List<Double> args)
     {
@@ -15,6 +20,12 @@ public class PredatorPreyRules extends Rules {
         if(args.size() > 1) {
             //TODO: actually handle
             throw new InputMismatchException();
+        }
+        ResourceBundle defaultParams = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_PARAMS_FILENAME);
+        try {
+            reproductionCycle = args.get(0).intValue();
+        } catch (IndexOutOfBoundsException e) {
+            reproductionCycle = Integer.parseInt(defaultParams.getString("reproductionCycle"));
         }
     }
 

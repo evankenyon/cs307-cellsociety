@@ -113,23 +113,15 @@ public class Model {
   /**
    * find what the next state should be for each cell
    */
-  public void findNextStateForEachCell() {
+  public void findNextStateForEachCell()
+      throws ClassNotFoundException, InvocationTargetException, IllegalAccessException, NoSuchMethodException, InstantiationException {
     for(Cell cell: cellList){
       RulesInterface r = null;
-      try {
-        r = (RulesInterface) Class.forName(
-                        String.format("%s%sRules", numCorners.getString("RulesPackageName"), simulationInfo.get("Type")))
-                .getConstructor(Cell.class, List.class).newInstance(cell, createParamsDoubleList(simulationInfo.get("Parameters")));
-      } catch (Exception e) {
-        //TODO: Implement properly
-        e.printStackTrace();
-      }
-      //TODO: Implement properly
-      try {
-        r.setState();
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
+      r = (RulesInterface) Class.forName(
+                      String.format("%s%sRules", numCorners.getString("RulesPackageName"), simulationInfo.get("Type")))
+              .getConstructor(Cell.class, List.class).newInstance(cell, createParamsDoubleList(simulationInfo.get("Parameters")));
+
+      r.setState();
     }
 
   }
