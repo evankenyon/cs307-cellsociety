@@ -139,7 +139,6 @@ public class CellDisplay {
     state = state % stateColors.length;
     myState = state;
     ((Shape) myDisp).setFill(stateColors[state]);
-
   }
 
   /**

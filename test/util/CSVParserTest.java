@@ -1,9 +1,11 @@
 package util;
-import cellsociety.cell.Cell;
-import cellsociety.Utilities.CSVParser;
+import cellsociety.Utilities.CSVParser.CSVParser;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import cellsociety.Utilities.CSVParser.DefaultCSVParser;
+import cellsociety.cell.IllegalCellStateException;
+import java.io.FileNotFoundException;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,19 +20,19 @@ public class CSVParserTest {
 
   @BeforeEach
   void setup(){
-    parser = new CSVParser();
+    parser = new DefaultCSVParser();
   }
 
 
   @Test
-  void testBlinkerSetup(){
+  void testBlinkerSetup() throws FileNotFoundException, IllegalCellStateException {
     parser.setFile(new File(blinkerPath));
     try {
-      parser.initializeCellMatrix("GameOfLife");
+      parser.getCellStates("GameOfLife");
     } catch (Exception e){
       assertTrue(false);
     }
-    List<Integer> allCells = parser.getCellStates();
+    List<Integer> allCells = parser.getCellStates("GameOfLife");
     //testing some random values
     assertEquals(allCells.get(0), 0);
     assertEquals(allCells.get(9), 1);
@@ -38,14 +40,14 @@ public class CSVParserTest {
   }
 
   @Test
-  void testGliderSetup(){
+  void testGliderSetup() throws FileNotFoundException, IllegalCellStateException {
     parser.setFile(new File(gliderPath));
     try {
-      parser.initializeCellMatrix("GameOfLife");
+      parser.getCellStates("GameOfLife");
     } catch (Exception e){
       assertTrue(false);
     }
-    List<Integer> allCells = parser.getCellStates();
+    List<Integer> allCells = parser.getCellStates("GameOfLife");
     //testing some random values
     assertEquals(allCells.get(0), 0);
     assertEquals(allCells.get(27), 1);

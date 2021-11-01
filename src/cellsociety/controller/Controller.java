@@ -1,9 +1,10 @@
 package cellsociety.controller;
 
+import cellsociety.Utilities.CSVParser.DefaultCSVParser;
 import cellsociety.cell.Cell;
 import cellsociety.Model.Model;
 import cellsociety.Utilities.CSVGenerator;
-import cellsociety.Utilities.CSVParser;
+import cellsociety.Utilities.CSVParser.CSVParser;
 import cellsociety.Utilities.SimGenerator;
 import cellsociety.Utilities.SimParser;
 import cellsociety.cell.IllegalCellStateException;
@@ -32,14 +33,14 @@ public class Controller {
 
   public void parseFile(File SimFile)
       throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, IllegalCellStateException, InputMismatchException, IllegalArgumentException {
-    CSVParser csvParser = new CSVParser();
+    CSVParser csvParser = new DefaultCSVParser();
     SimParser simParser = new SimParser();
     simParser.setupKeyValuePairs(SimFile);
     csvParser.setFile(new File(String.format("./data/%s", simParser.getSimulationConfig().getProperty("InitialStates"))));
-    csvParser.initializeCellMatrix(simParser.getSimulationConfig().getProperty("Type"));
+    csvParser.getCellStates(simParser.getSimulationConfig().getProperty("Type"));
     model.setSimulationInfo(simParser.getSimulationConfig());
     simGenerator = new SimGenerator(simParser.getSimulationConfig());
-    model.setupCells(csvParser.getCellStates(), csvParser.getRows(), csvParser.getCols());
+    model.setupCells(csvParser.getCellStates(simParser.getSimulationConfig().getProperty("Type")), csvParser.getRows(), csvParser.getCols());
   }
 
   public void saveFile(String fileName, Map<String, String> propertyToValue) throws IOException {
