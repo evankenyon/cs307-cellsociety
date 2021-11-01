@@ -37,9 +37,10 @@ public class RawNumsCSVParser extends CSVParser {
       try {
         numStates.add(Integer.parseInt(dimensions[3]));
       } catch (IndexOutOfBoundsException e) {
-        if(!getValidStatesList(simType).contains(2)) {
+        if(getValidStatesList(simType).contains(2)) {
           throw new InputMismatchException();
         }
+        numStates.add(0);
       }
     }
   }
@@ -51,7 +52,7 @@ public class RawNumsCSVParser extends CSVParser {
     for (int row = 0; row < getRows(); row++) {
       for (int col = 0; col < getCols(); col++) {
         while(numStates.get(currState) <= 0) {
-          currState++;
+          currState = (currState + 1) % 3;
         }
         cellStates.add(currState);
         numStates.set(currState, numStates.get(currState) - 1);
