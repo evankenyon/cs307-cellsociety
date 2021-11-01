@@ -1,11 +1,17 @@
 package cellsociety.cell;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
+import javafx.scene.shape.Polygon;
 import javafx.scene.paint.Color;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import java.io.FileInputStream;
 
+/**
+ * Objects of this class are used to represent the display for a single cell in the grid display
+ * @author Keith Cressman
+ */
 public class CellDisplay {
   private Node myDisp;
   private Cell myCell;
@@ -19,6 +25,14 @@ public class CellDisplay {
     this(x, y, Cell.DEFAULT_WIDTH, Cell.DEFAULT_HEIGHT, state);
   }
 
+  /**
+   * instantiate a rectangular cell display with the given arguments
+   * @param x is the top left x value
+   * @param y is the y value of the top left of the display
+   * @param width is the widht of the rectangle
+   * @param height is the height of the rectangle
+   * @param state is the state of the corresponding cell
+   */
   public CellDisplay(double x, double y, double width, double height, int state){
     /*
     try {
@@ -30,6 +44,16 @@ public class CellDisplay {
 
     }*/
     myDisp = new Rectangle(x, y, width, height);
+    commonConstructorSetup(state);
+  }
+
+  public CellDisplay(double[] cornerXYs, int state){
+    myDisp = new Polygon(cornerXYs);
+    commonConstructorSetup(state);
+  }
+
+  private void commonConstructorSetup(int state){
+    //functionality common to both constructors
     myDisp.setOnMouseClicked(e -> cellClicked());
     myState = state;
     changeState(state);
@@ -109,7 +133,7 @@ public class CellDisplay {
   public void changeState(int state){
     state = state % stateColors.length;
     myState = state;
-    ((Rectangle) myDisp).setFill(stateColors[state]);
+    ((Shape) myDisp).setFill(stateColors[state]);
 
   }
 
