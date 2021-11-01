@@ -55,6 +55,7 @@ public class SimulationDisplay extends ChangeableDisplay{
   private List<CellDisplay> allCellDisplays;
   private Node myNode;
   private HistogramDisplay myHistogram;
+  private InfoDisplay myInfoDisplay;
 
   public SimulationDisplay(){
     this(new LanguageResourceHandler());
@@ -111,6 +112,7 @@ public class SimulationDisplay extends ChangeableDisplay{
     simulationsBox.setSpacing(20); //change magic valeu
     simulationsBox.getChildren().add(makeCellsAndBackground());
     simulationsBox.getChildren().add(makeHistogram());
+    simulationsBox.getChildren().add(makeInfoDisplay());
     return simulationsBox;
   }
 
@@ -153,6 +155,7 @@ public class SimulationDisplay extends ChangeableDisplay{
   }
 
   private double[] generateXYs(Cell cell){
+    //generate an array of x and y coordinates that will be used to create a polygon
     int i = cell.getiIndex();
     int j = cell.getjIndex();
     CornerLocationGenerator cornerGenerator = new RectangleCellCornerLocationGenerator(myController.getGridShape()[0], myController.getGridShape()[1]);
@@ -172,6 +175,11 @@ public class SimulationDisplay extends ChangeableDisplay{
     //create the histogram to add it onto the main node
     myHistogram = new HistogramDisplay(allCellDisplays.size(), getNumOfEachState());
     return myHistogram.createHistogramDisplay();
+  }
+
+  private Node makeInfoDisplay(){
+    myInfoDisplay = new InfoDisplay(getNumOfEachState());
+    return myInfoDisplay.createInfoDisplay();
   }
 
   /**
@@ -278,6 +286,7 @@ public class SimulationDisplay extends ChangeableDisplay{
   protected void step() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
     myController.step();
     myHistogram.setNumOfEachType(getNumOfEachState());
+    myInfoDisplay.setNumOfEachType(getNumOfEachState());
   }
 
   /**

@@ -1,6 +1,7 @@
 package cellsociety.view;
 
 
+import cellsociety.resourceHandlers.LanguageResourceHandler;
 import java.util.Collections;
 import java.util.Map;
 import java.util.HashMap;
@@ -35,6 +36,7 @@ public class HistogramDisplay extends ChangeableDisplay{
    * @param stateToCount maps each state to the number of cells in that state. It must contain a key for each possible state!
    */
   public HistogramDisplay(int numCells, Map<Integer, Integer> stateToCount){
+    super();
     initializeSettings();
     maxNumCells = numCells;
     stateToBar = new HashMap<>();
@@ -51,7 +53,7 @@ public class HistogramDisplay extends ChangeableDisplay{
 
   private void initializeRectangles(Map<Integer, Integer> stateToCount){
     //create the bar/rectangle for each state in the histogram
-    int startX = 0;
+    int startX = viewSettings.getViewSettingValueFromKey(ViewResourceHandler.DIST_BTWN_HISTOGRAM_BARS_KEY);
     int barWidth = viewSettings.getViewSettingValueFromKey(ViewResourceHandler.HISTOGRAM_WIDTH_KEY) / (2* stateToCount.size());
     for (Integer state: stateToCount.keySet()){
       stateToBar.put(state, new Rectangle(startX, zeroBarY, barWidth, 0));
@@ -71,9 +73,9 @@ public class HistogramDisplay extends ChangeableDisplay{
         viewSettings.getViewSettingValueFromKey(ViewResourceHandler.HISTOGRAM_HEIGHT_KEY));
     backGround.setFill(Color.CYAN);
     container.getChildren().add(backGround);
+    container.getChildren().add(makeALabel(LanguageResourceHandler.HISTOGRAM_TITLE_KEY));
     container.getChildren().add(new Line(0,zeroBarY, viewSettings.getViewSettingValueFromKey(ViewResourceHandler.HISTOGRAM_WIDTH_KEY), zeroBarY));
     addRectanglesToDisplay(container);
-
     return container;
   }
 

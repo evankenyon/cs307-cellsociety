@@ -14,3 +14,7 @@
   -fx-text-fill: #FFFFFF
 }
 
+HBox{
+  -fx-spacing: 10;
+}
+
