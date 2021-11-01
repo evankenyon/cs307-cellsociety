@@ -105,6 +105,9 @@ public class SimulationDisplay extends ChangeableDisplay{
     } catch (InputMismatchException e) {
       // TODO: move to props file
       displayErrorMessage("A file that was not of .csv type was uploaded");
+    } catch (IllegalArgumentException e) {
+      // TODO: move to props file
+      displayErrorMessage("A cell was initialized to be outside of the grid's bounds, please try restarting the program");
     }
     VBox root = new VBox();
     root.getChildren().add(makeAllDisplays());

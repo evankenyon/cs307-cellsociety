@@ -40,7 +40,7 @@ public class Model {
   }
 
   public void setupCells(List<Integer> cellStateList, int rows, int cols)
-      throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+      throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, IllegalArgumentException {
     this.rows = rows;
     this.cols = cols;
     for (int row = 0; row < rows; row++) {
