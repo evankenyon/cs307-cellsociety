@@ -7,7 +7,8 @@ public class HexagonalCellCornerLocationGenerator extends CornerLocationGenerato
     private double height=getVIEW_HEIGHT()/rows;
     private double size=height/2;
     private double width =size*Math.sqrt(3);
-    private CornerLocation center;
+    private CornerLocation center=new CornerLocation(0,0);
+    private int ROUND_VALUE=100;
 
     public HexagonalCellCornerLocationGenerator(int rows, int columns)
     {
@@ -17,7 +18,7 @@ public class HexagonalCellCornerLocationGenerator extends CornerLocationGenerato
     @Override
     public List<CornerLocation> generateCorners(int i, int j)
     {
-        center.setY_pos(i*height+size);
+        center.setY_pos(i*(height-.5* width *Math.cos(Math.toRadians(30)))+size);
         if (i%2==0)
         {
             center.setX_pos(j*width+.5*width);
@@ -29,10 +30,10 @@ public class HexagonalCellCornerLocationGenerator extends CornerLocationGenerato
 
         CornerLocation top=new CornerLocation(center.getX_pos(), center.getY_pos()-size);
         CornerLocation bottom=new CornerLocation(center.getX_pos(), center.getY_pos()+size);
-        CornerLocation bottomLeft=new CornerLocation((j)*width,center.getY_pos()+size-.5* width *Math.cos(Math.toRadians(30)));
-        CornerLocation bottomRight=new CornerLocation((j+1)*width,center.getY_pos()+size -.5* width *Math.cos(Math.toRadians(30)));
-        CornerLocation topLeft=new CornerLocation((j)* width,center.getY_pos()-size+.5* width *Math.cos(Math.toRadians(30)));
-        CornerLocation topRight=new CornerLocation((j+1)* width,center.getY_pos()-size+.5* width *Math.cos(Math.toRadians(30)));
+        CornerLocation bottomLeft=new CornerLocation(center.getX_pos()-.5*width,center.getY_pos()+size-.5* width *Math.cos(Math.toRadians(30)));
+        CornerLocation bottomRight=new CornerLocation(center.getX_pos()+.5*width,center.getY_pos()+size -.5* width *Math.cos(Math.toRadians(30)));
+        CornerLocation topLeft=new CornerLocation(center.getX_pos()-.5*width,center.getY_pos()-size+.5* width *Math.cos(Math.toRadians(30)));
+        CornerLocation topRight=new CornerLocation(center.getX_pos()+.5*width,center.getY_pos()-size+.5* width *Math.cos(Math.toRadians(30)));
         corners.add(top);
         corners.add(topLeft);
         corners.add(bottomLeft);
