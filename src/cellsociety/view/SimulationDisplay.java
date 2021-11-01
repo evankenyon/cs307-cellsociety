@@ -1,6 +1,7 @@
 package cellsociety.view;
 
 
+import cellsociety.cell.IllegalCellStateException;
 import cellsociety.resourceHandlers.LanguageResourceHandler;
 import cellsociety.resourceHandlers.ViewResourceHandler;
 import cellsociety.controller.Controller;
@@ -249,6 +250,9 @@ public class SimulationDisplay extends ChangeableDisplay{
       // TODO: move to props file
       displayErrorMessage("Reflection error occurred in backend model, please try restarting the"
           + "program");
+    } catch (IllegalCellStateException e) {
+      // TODO: move to props file
+      displayErrorMessage("A cell was set to an illegal state in the backend model, please try restarting the program");
     }
     myInfoDisplay.setNumOfEachType((getNumOfEachState()));
 

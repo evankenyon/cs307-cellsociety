@@ -3,6 +3,7 @@ package cellsociety.Model;
 import static org.junit.jupiter.api.Assertions.*;
 
 import cellsociety.cell.Cell;
+import cellsociety.cell.IllegalCellStateException;
 import cellsociety.controller.Controller;
 import java.io.File;
 import java.io.IOException;
@@ -26,7 +27,7 @@ class ModelTest {
 
   @Test
   void findNextStateForEachCell()
-      throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, ClassNotFoundException, InstantiationException {
+      throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, ClassNotFoundException, InstantiationException, IllegalCellStateException {
     controller.parseFile(new File("./data/game_of_life/blinkers.sim"));
     model.findNextStateForEachCell();
     model.updateModel();

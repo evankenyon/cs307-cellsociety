@@ -6,6 +6,7 @@ import cellsociety.Utilities.CSVGenerator;
 import cellsociety.Utilities.CSVParser;
 import cellsociety.Utilities.SimGenerator;
 import cellsociety.Utilities.SimParser;
+import cellsociety.cell.IllegalCellStateException;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -71,7 +72,7 @@ public class Controller {
    * perform the next step in the simulation
    */
   public void step()
-      throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, ClassNotFoundException, InstantiationException {
+      throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, ClassNotFoundException, InstantiationException, IllegalCellStateException {
     model.findNextStateForEachCell();
     model.updateModel();
   }

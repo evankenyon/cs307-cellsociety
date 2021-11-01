@@ -3,6 +3,7 @@ package cellsociety.Model;
 import cellsociety.Rule.RulesInterface;
 import cellsociety.cell.Cell;
 
+import cellsociety.cell.IllegalCellStateException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -135,10 +136,9 @@ public class Model {
    * find what the next state should be for each cell
    */
   public void findNextStateForEachCell()
-      throws ClassNotFoundException, InvocationTargetException, IllegalAccessException, NoSuchMethodException, InstantiationException {
+      throws ClassNotFoundException, InvocationTargetException, IllegalAccessException, NoSuchMethodException, InstantiationException, IllegalCellStateException {
     for (Cell cell : cellList) {
-      RulesInterface r = null;
-      r = (RulesInterface) Class.forName(
+      RulesInterface r = (RulesInterface) Class.forName(
               String.format("%s%sRules", numCorners.getString("RulesPackageName"),
                   simulationInfo.get("Type")))
           .getConstructor(Cell.class, List.class)
