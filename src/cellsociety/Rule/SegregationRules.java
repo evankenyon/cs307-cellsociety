@@ -4,10 +4,7 @@ import cellsociety.cell.Cell;
 import cellsociety.cell.IllegalCellStateException;
 import cellsociety.cell.SegregationCell;
 
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Random;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class SegregationRules extends Rules {
 
@@ -38,49 +35,58 @@ public class SegregationRules extends Rules {
 
   public void setState() {
     int countOfAgent = numberOfNeighborsWithSameState();
-    double satisfaction = 1.0 * countOfAgent / cell.getNumNeighbors();
-    if (cell.getCurrentState() != 0 && cell.numOfStateNeighbors(0) > 0) {
-
-      if ((satisfaction) <= satisfactionThreshold) {
-        moveCell();
-      } else {
-        cell.setFutureState(cell.getCurrentState());
-      }
-    } else {
-      if ((satisfaction) <= satisfactionThreshold) {
-      }//moveRandom(0);}
-      else {
-        cell.setFutureState(cell.getCurrentState());
-      }
+    int countOfOtherAgent=numberOfNeighborsWithOtherState();
+    double satisfaction = 1.0 * countOfAgent / (countOfOtherAgent+countOfAgent);
+    if ((satisfaction) <= satisfactionThreshold && cell.getCurrentState()!=0)
+    {
+      if (cell.getCurrentState() != 0 && cell.numOfStateNeighbors(0) > 0) {moveCell();}
+      else if (cell.getCurrentState() != 0 && cell.numOfStateNeighbors(0) == 0) {moveRandom(cell);}
+      else {cell.setFutureState(cell.getCurrentState());}
     }
+    else {cell.setFutureState(cell.getCurrentState());}
   }
 
   public void moveCell() {
-    cell.setFutureState(0);
     move(0);
+    cell.setFutureState(0);
   }
 
-//    public void moveRandom(int state)
-//    {
-//        cell.setFutureState(0);
-//        boolean temp=true;
-//        while(temp)
-//        {
-//            Random random=new Random();
-//            int stateNeighbors= cell.numOfStateNeighbors(state);
-//            int randInt= random.nextInt(stateNeighbors);
-//            if(cell.getGridState(state, randInt).getFutureState()==0)
-//            {
-//                cell.getGridState(state, randInt).setFutureState(cell.getCurrentState());
-//                temp=false;
-//            }
-//
-//        }
-//    }
+  public void moveRandom(Cell cell)
+  {
+      findOpenCell(cell).setFutureState(cell.getCurrentState());
+      cell.setFutureState(0);
+  }
+
+  public Cell findOpenCell(Cell c)
+  {
+    List<Cell> cellNeighbors=c.getNeighbors();
+    List<Cell> neighborsNeighboringCells=new ArrayList<>();
+    for (Cell cell:cellNeighbors)
+    {
+      neighborsNeighboringCells.addAll(cell.getNeighbors());
+    }
+    for (Cell cell2: neighborsNeighboringCells)
+    {
+      if (cell2.getFutureState()==0 && cell2.getCurrentState()==0) {return cell2;}
+    }
+    return findOpenCell(neighborsNeighboringCells.get(chooseRandomIndex(neighborsNeighboringCells.size())));
+  }
+
+  public int chooseRandomIndex(int size)
+  {
+    Random random=new Random();
+    int randInt= random.nextInt(size);
+    return randInt;
+  }
 
   public int numberOfNeighborsWithSameState() {
     return cell.numOfStateNeighbors(cell.getCurrentState());
   }
 
+
+  public int numberOfNeighborsWithOtherState() {
+    if(cell.getCurrentState()==1) {return cell.numOfStateNeighbors(2);}
+    return cell.numOfStateNeighbors(1);
+  }
 
 }
