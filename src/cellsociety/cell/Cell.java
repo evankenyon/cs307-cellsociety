@@ -25,6 +25,8 @@ public class Cell {
     private final int jIndex;
     private Map<Integer, List<Cell>> neighborCellStateMap;
     private CellDisplay myDisplay;
+    private int chrononCounter=0;
+    private int energy=5;
 
 
     public Cell(int i, int j, int initialState, int rows, int columns){
@@ -134,6 +136,38 @@ public class Cell {
 
     public Node getMyDisplay(){
         return myDisplay.getMyDisplay();
+    }
+
+    public void updateChronon()
+    {
+        chrononCounter++;
+    }
+
+    public void resetChronon()
+    {
+        chrononCounter=0;
+    }
+
+    public void gainEnergy()
+    {
+        energy++;
+    }
+
+    public void loseEnergy()
+    {
+        energy--;
+    }
+
+
+    //Testing Purposes
+    public void setChrononCounter(int chrononCounter) {this.chrononCounter = chrononCounter;}
+
+    public int getChrononCounter() {return chrononCounter;}
+
+    public int getEnergy() {return energy;}
+
+    public void setEnergy(int energy) {
+        this.energy = energy;
     }
 
 }

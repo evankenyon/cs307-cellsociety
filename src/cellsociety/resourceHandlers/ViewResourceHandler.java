@@ -13,14 +13,19 @@ import javafx.scene.paint.Color;
 public class ViewResourceHandler {
   private ResourceBundle myResourceBundle;
   private Properties viewProperties, stateColorProperties;
-  private static final String DISPLAY_PROPS_PATH = "src/cellsociety/resourceHandlers/DisplayProperties.properties";
-  private static final String STATE_COLORS_PATH = "src/cellsociety/resourceHandlers/StateColor.properties";
-  private static final String SIM_WIDTH_KEY = "SimulationWidth";
-  private static final String SIM_HEIGHT_KEY = "SimulationHeight";
-  private static final String WINDOW_WIDTH_KEY = "windowWidth";
-  private static final String WINDOW_HEIGHT_KEY = "windowHeight";
-  private static final String MIN_FRAMES_KEY = "MinFramesPerSecond";
-  private static final String MAX_FRAMES_KEY = "MaxFramesPerSecond";
+  public final static String DISPLAY_PROPS_PATH = "src/cellsociety/resourceHandlers/DisplayProperties.properties";
+  public final static String STATE_COLORS_PATH = "src/cellsociety/resourceHandlers/StateColor.properties";
+  public final static String SIM_WIDTH_KEY = "SimulationWidth";
+  public final static String SIM_HEIGHT_KEY = "SimulationHeight";
+  public final static String WINDOW_WIDTH_KEY = "windowWidth";
+  public final static String WINDOW_HEIGHT_KEY = "windowHeight";
+  public final static String MIN_FRAMES_KEY = "MinFramesPerSecond";
+  public final static String MAX_FRAMES_KEY = "MaxFramesPerSecond";
+  public final static String HISTOGRAM_WIDTH_KEY = "HistogramWidth";
+  public final static String HISTOGRAM_HEIGHT_KEY = "HistogramHeight";
+  public final static String MAX_HISTOGRAM_BAR_HEIGHT_KEY = "MaxHistogramBarHeight";
+  public final static String DIST_BTWN_HISTOGRAM_BARS_KEY = "DistanceBetweenHistogramBars";
+  public final static String ZERO_BAR_Y_KEY = "ZeroBarY";
 
 
   public ViewResourceHandler() {
@@ -83,6 +88,43 @@ public class ViewResourceHandler {
   public int getMaxFramesPerSecond(){
     return Integer.parseInt(viewProperties.getProperty(MAX_FRAMES_KEY));
   }
+
+  /**
+   * get the width of the entire node containing the histogram
+   * @return histogram width
+   */
+  public int getHistogramWidth(){
+    return Integer.parseInt(viewProperties.getProperty(HISTOGRAM_WIDTH_KEY));
+  }
+
+
+
+
+  /**
+   * get the maximum height of a bar on the histogram
+   * @return histogram bar max height
+   */
+  public int getMaxHistogramBarHeight(){
+    return Integer.parseInt(viewProperties.getProperty(MAX_HISTOGRAM_BAR_HEIGHT_KEY));
+  }
+
+  /**
+   * get the distance between bars on the histogram
+   * @return number of pixels between each bar
+   */
+  public int getDistanceBetweenHistogramBars(){
+    return Integer.parseInt(viewProperties.getProperty(DIST_BTWN_HISTOGRAM_BARS_KEY));
+  }
+
+  /**
+   * Get the (integer) value associated with the given key
+   * @param key is a key in DisplayProperties.properties
+   * @return the Integer version of the corresponding value in DisplayProperties
+   */
+  public int getViewSettingValueFromKey(String key){
+    return Integer.parseInt(viewProperties.getProperty(key));
+  }
+
 
   /**
    * get an array of the colors for the specified simultion type
