@@ -3,7 +3,6 @@ package view;
 import javafx.scene.shape.Rectangle;
 
 import cellsociety.view.HistogramDisplay;
-import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

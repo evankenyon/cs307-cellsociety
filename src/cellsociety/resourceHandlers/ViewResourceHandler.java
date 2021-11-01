@@ -28,6 +28,7 @@ public class ViewResourceHandler {
   public final static String ZERO_BAR_Y_KEY = "ZeroBarY";
 
 
+
   public ViewResourceHandler() {
     viewProperties = new Properties();
     stateColorProperties = new Properties();

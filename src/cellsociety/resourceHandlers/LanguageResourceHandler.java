@@ -38,6 +38,12 @@ public class LanguageResourceHandler {
   public static final String SIM_OTHER_SAVE_KEY = "OtherSave";
   public static final String SAVE_BUTTON_POPUP_KEY = "FinalSave";
   public static final String FAILED_SAVE_KEY = "FailedToSave";
+  public static final String HISTOGRAM_TITLE_KEY = "HistogramTitle";
+  public final static String INFO_DISPLAY_TITLE_KEY = "InfoTitle";
+  public final static String INFO_STATE_KEY = "InfoState";
+  public final static String INFO_NAME_KEY = "InfoName";
+  public final static String INFO_DISPLAY_KEY = "InfoDisplay";
+  public final static String INFO_CHANGE_KEY = "InfoChange";
 
   public static final String ENGLISH = "English";
   public static final String SPANISH = "Spanish";
