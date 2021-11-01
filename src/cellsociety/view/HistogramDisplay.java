@@ -9,7 +9,9 @@ import javafx.scene.shape.Line;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.HBox;
+import javafx.scene.Group;
 import javafx.scene.paint.Color;
+import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 
 import cellsociety.resourceHandlers.ViewResourceHandler;
@@ -20,7 +22,7 @@ import cellsociety.resourceHandlers.ViewResourceHandler;
  * This class is here to represent a histogram display, as part of the changes
  * @author Keith Cressman
  */
-public class HistogramDisplay {
+public class HistogramDisplay extends ChangeableDisplay{
   private int maxNumCells;
   private int maxBarHeight;
   private int zeroBarY;
@@ -53,8 +55,10 @@ public class HistogramDisplay {
     int barWidth = viewSettings.getViewSettingValueFromKey(ViewResourceHandler.HISTOGRAM_WIDTH_KEY) / (2* stateToCount.size());
     for (Integer state: stateToCount.keySet()){
       stateToBar.put(state, new Rectangle(startX, zeroBarY, barWidth, 0));
+      stateToBar.get(state).setLayoutX(startX);
       startX = startX + barWidth + viewSettings.getViewSettingValueFromKey(ViewResourceHandler.DIST_BTWN_HISTOGRAM_BARS_KEY);
     }
+
   }
 
   /**
@@ -62,10 +66,10 @@ public class HistogramDisplay {
    * @return the Node representing the display of the histogram
    */
   public Node createHistogramDisplay(){
-    Pane container = new HBox();
+    Group container = new Group();
     Rectangle backGround = new Rectangle(0, 0, viewSettings.getViewSettingValueFromKey(ViewResourceHandler.HISTOGRAM_WIDTH_KEY),
         viewSettings.getViewSettingValueFromKey(ViewResourceHandler.HISTOGRAM_HEIGHT_KEY));
-    backGround.setFill(Color.WHITE);
+    backGround.setFill(Color.CYAN);
     container.getChildren().add(backGround);
     container.getChildren().add(new Line(0,zeroBarY, viewSettings.getViewSettingValueFromKey(ViewResourceHandler.HISTOGRAM_WIDTH_KEY), zeroBarY));
     addRectanglesToDisplay(container);
@@ -73,11 +77,15 @@ public class HistogramDisplay {
     return container;
   }
 
-  private void addRectanglesToDisplay(Pane container){
+  private void addRectanglesToDisplay(Group container){
     //add the rectangles (bars) to the display
     for (Integer state : stateToBar.keySet()){
-      container.getChildren().add(stateToBar.get(state));
-      container.getChildren().add(new Text(Integer.toString(state)));
+      Rectangle rect = stateToBar.get(state);
+      container.getChildren().add(rect);
+      Label stateLabel = new Label(Integer.toString(state));
+      stateLabel.setLayoutY(zeroBarY);
+      stateLabel.setLayoutX(rect.getLayoutX());
+      container.getChildren().add(stateLabel);
     }
   }
 
@@ -101,7 +109,7 @@ public class HistogramDisplay {
     double height = fraction * maxBarHeight;
 
     Rectangle stateBar = stateToBar.get(state);
-    stateBar.setLayoutY(zeroBarY);
+    stateBar.setLayoutY(-1*height); //this is weird, maybe look into later if we have time
     stateBar.setHeight(height);
   }
 

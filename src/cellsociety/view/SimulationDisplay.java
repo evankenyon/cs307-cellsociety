@@ -51,6 +51,7 @@ public class SimulationDisplay extends ChangeableDisplay{
   private ViewResourceHandler myViewResourceHandler;
   private List<CellDisplay> allCellDisplays;
   private Node myNode;
+  private HistogramDisplay myHistogram;
 
   public SimulationDisplay(){
     this(new LanguageResourceHandler());
@@ -104,6 +105,7 @@ public class SimulationDisplay extends ChangeableDisplay{
   private Node makeAllDisplays(){
     //return a node with the grid, histogram, and other option
     HBox simulationsBox = new HBox();
+    simulationsBox.setSpacing(20); //change magic valeu
     simulationsBox.getChildren().add(makeCellsAndBackground());
     simulationsBox.getChildren().add(makeHistogram());
     return simulationsBox;
@@ -148,8 +150,8 @@ public class SimulationDisplay extends ChangeableDisplay{
 
   private Node makeHistogram(){
     //create the histogram to add it onto the main node
-    HistogramDisplay histogram = new HistogramDisplay(allCellDisplays.size(), getNumOfEachState());
-    return histogram.createHistogramDisplay();
+    myHistogram = new HistogramDisplay(allCellDisplays.size(), getNumOfEachState());
+    return myHistogram.createHistogramDisplay();
   }
 
   /**
@@ -255,6 +257,7 @@ public class SimulationDisplay extends ChangeableDisplay{
 
   protected void step() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
     myController.step();
+    myHistogram.setNumOfEachType(getNumOfEachState());
   }
 
   /**
