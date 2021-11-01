@@ -54,6 +54,7 @@ public class CellDisplay {
   public CellDisplay(double[] cornerXYs, int state){
     myDisp = new Polygon(cornerXYs);
     Polygon x = new Polygon(1, 1, 1,1 );
+    Rectangle r = new Rectangle();
     commonConstructorSetup(state);
   }
 

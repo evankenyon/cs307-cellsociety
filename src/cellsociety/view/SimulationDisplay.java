@@ -154,6 +154,10 @@ public class SimulationDisplay extends ChangeableDisplay{
    */
   private Map<Integer, Integer> getNumOfEachState(){
     Map<Integer, Integer> stateToCount = new HashMap<>();
+    int numStates = myCellGridDisplay.getAllCellDisplays().get(0).getStateColors().length; //dumb way to find num states but it work
+    for (int i = 0; i < numStates; i++){
+      stateToCount.put(i, 0);
+    }
     for (CellDisplay c : myCellGridDisplay.getAllCellDisplays()){
       int state = c.getState();
       stateToCount.putIfAbsent(state, 0);
@@ -161,6 +165,7 @@ public class SimulationDisplay extends ChangeableDisplay{
     }
     return stateToCount;
   }
+
 
   private Node makeControls(){
     //make the box with options to pause/resume, do one step, change speed, etc..
