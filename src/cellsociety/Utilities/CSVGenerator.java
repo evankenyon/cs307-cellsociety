@@ -1,5 +1,6 @@
 package cellsociety.Utilities;
 
+import cellsociety.Model.Model;
 import cellsociety.cell.Cell;
 import com.opencsv.CSVWriter;
 import java.io.FileWriter;
@@ -12,19 +13,19 @@ public class CSVGenerator {
   private int numProgramsSaved;
 
   // TODO: handle exception properly
-  public void createCSVFile(List<Cell> cellList, int rows, int cols, String filePath, String simType) throws IOException {
+  public void createCSVFile(Model model, String filePath, String simType) throws IOException {
     String realFilePath =  String.format("./data/saved/%s/program-" + "%s.csv", simType, filePath);
     // Setup code for CSVWriter borrowed from https://www.baeldung.com/opencsv
     CSVWriter csvWriter = new CSVWriter(
         new FileWriter(realFilePath),
         ',', CSVWriter.NO_QUOTE_CHARACTER, '"', "\n");
-    String[] cellGridSizeArray = new String[]{String.valueOf(rows),
-        String.valueOf(cols)};
+    String[] cellGridSizeArray = new String[]{String.valueOf(model.getRows()),
+        String.valueOf(model.getCols())};
     csvWriter.writeNext(cellGridSizeArray);
-    for (int row = 0; row < rows; row++) {
+    for (int row = 0; row < model.getRows(); row++) {
       List<Cell> cellRow = new ArrayList<>();
-      for (int col = 0; col < cols; col++) {
-        cellRow.add(cellList.get(row + col));
+      for (int col = 0; col < model.getCols(); col++) {
+        cellRow.add(model.getCell(row, col));
       }
       csvWriter.writeNext(cellGridRowToStates(cellRow));
     }
