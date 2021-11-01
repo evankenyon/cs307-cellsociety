@@ -36,6 +36,7 @@ public class PredatorPreyCell extends Cell{
     }
 
 
+    //Testing Purposes
     public void setChrononCounter(int chrononCounter) {this.chrononCounter = chrononCounter;}
 
     public int getChrononCounter() {return chrononCounter;}
