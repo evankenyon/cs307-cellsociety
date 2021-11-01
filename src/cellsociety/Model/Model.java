@@ -49,19 +49,12 @@ public class Model {
   public void setCellList(List<Cell> cellList) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
     this.cellList = cellList;
     updateAllNeighborsList();
-
-//    updateAllCellNeighborMaps();
     affectAllCells("updateCellNeighborStateMap");
-
   }
 
   public void updateModel() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-//    updateAllCellStates();
     affectAllCells("updateState");
-
-//    updateAllCellNeighborMaps();
     affectAllCells("updateCellNeighborStateMap");
-
     createModelStateMap();
   }
 
@@ -72,22 +65,8 @@ public class Model {
     }
   }
 
-
-  private void updateAllCellStates() {
-    for(Cell cell: cellList){
-      cell.updateState();
-    }
-  }
-
-  private void updateAllCellNeighborMaps(){
-    for(Cell cell: cellList){
-      cell.updateCellNeighborStateMap();
-    }
-
-  }
-
-
-  private void affectAllCells(String method) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+  private void affectAllCells(String method)
+      throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
     for(Cell cell: cellList) {
       Method cellMethod = cell.getClass().getDeclaredMethod(method);
       cellMethod.invoke(cell);
@@ -194,7 +173,6 @@ public class Model {
   }
 
   public String getSimulationType(){
-    System.out.println(simulationInfo.get("Type"));
     return simulationInfo.get("Type");
   }
 
