@@ -30,11 +30,11 @@ public class CSVParserTest {
     } catch (Exception e){
       assertTrue(false);
     }
-    List<Cell> allCells = parser.getAllCells();
+    List<Integer> allCells = parser.getCellStates();
     //testing some random values
-    assertEquals(allCells.get(0).getCurrentState(), 0);
-    assertEquals(allCells.get(9).getCurrentState(), 1);
-    assertEquals(allCells.get(94).getCurrentState(), 1);
+    assertEquals(allCells.get(0), 0);
+    assertEquals(allCells.get(9), 1);
+    assertEquals(allCells.get(94), 1);
   }
 
   @Test
@@ -45,11 +45,11 @@ public class CSVParserTest {
     } catch (Exception e){
       assertTrue(false);
     }
-    List<Cell> allCells = parser.getAllCells();
+    List<Integer> allCells = parser.getCellStates();
     //testing some random values
-    assertEquals(allCells.get(0).getCurrentState(), 0);
-    assertEquals(allCells.get(27).getCurrentState(), 1);
-    assertEquals(allCells.get(16).getCurrentState(), 1);
+    assertEquals(allCells.get(0), 0);
+    assertEquals(allCells.get(27), 1);
+    assertEquals(allCells.get(16), 1);
   }
 
 

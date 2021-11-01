@@ -37,15 +37,13 @@ public class Controller {
     csvParser.initializeCellMatrix();
     model.setSimulationInfo(simParser.getSimulationConfig());
     simGenerator = new SimGenerator(simParser.getSimulationConfig());
-    model.setCellList(csvParser.getAllCells());
-    model.setCols(csvParser.getCols());
-    model.setRows(csvParser.getRows());
+    model.setupCells(csvParser.getCellStates(), csvParser.getRows(), csvParser.getCols());
   }
 
   public void saveFile(String fileName, Map<String, String> propertyToValue) throws IOException {
     simGenerator.createSimFile(fileName, propertyToValue);
     CSVGenerator csvGenerator = new CSVGenerator();
-    csvGenerator.createCSVFile(model.getCellList(), model.getGridShape()[0], model.getGridShape()[1], fileName, getSimulationType());
+    csvGenerator.createCSVFile(model, fileName, getSimulationType());
   }
 
   public void setModel(Model model) {
@@ -83,7 +81,7 @@ public class Controller {
    * @return model.getGridShape()
    */
   public int[] getGridShape(){
-    return model.getGridShape();
+    return new int[]{model.getRows(), model.getCols()};
   }
 
   /**

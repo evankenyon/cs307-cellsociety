@@ -14,10 +14,10 @@ public class CSVParser {
     private int rows;
     private int cols;
     private int [][] integer2DArray;
-    private List<Cell> cells;
+    private List<Integer> cellStates;
 
     public CSVParser() {
-        cells = new ArrayList<>();
+        cellStates = new ArrayList<>();
     }
 
     public void setFile(File file) {
@@ -54,16 +54,17 @@ public class CSVParser {
         this.makeInteger2DArray();
         for(int row = 0; row < integer2DArray.length; row++){
             for(int col = 0; col<integer2DArray[0].length; col++){
-                Cell newCell = new Cell(row, col, integer2DArray[row][col], integer2DArray.length, integer2DArray[0].length);
-                //setCellShapeAndPosition(newCell, SimulationDisplay.DEFAULT_WIDTH / cols,
-                    //SimulationDisplay.DEFAULT_WIDTH / rows, row, col);
-                cells.add(newCell);
+//                Cell newCell = new Cell(row, col, integer2DArray[row][col], integer2DArray.length, integer2DArray[0].length);
+//                //setCellShapeAndPosition(newCell, SimulationDisplay.DEFAULT_WIDTH / cols,
+//                    //SimulationDisplay.DEFAULT_WIDTH / rows, row, col);
+//                cellStates.add(newCell);
+                cellStates.add(integer2DArray[row][col]);
             }
         }
     }
 
-    public List<Cell> getAllCells() {
-        return cells;
+    public List<Integer> getCellStates() {
+        return cellStates;
     }
 
     public int getRows() {
