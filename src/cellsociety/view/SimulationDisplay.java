@@ -26,6 +26,9 @@ import javafx.scene.control.Slider;
 
 import cellsociety.cell.Cell;
 import cellsociety.cell.CellDisplay;
+import cellsociety.CornerLocationGenerator.RectangleCellCornerLocationGenerator;
+import cellsociety.CornerLocationGenerator.CornerLocationGenerator;
+import cellsociety.location.CornerLocation;
 
 
 import java.util.List;
@@ -138,14 +141,31 @@ public class SimulationDisplay extends ChangeableDisplay{
 
   private CellDisplay makeACellDisplay(Cell cell, double widthPerCell, double heightPerCell){
     //make a cell display for the cell with the width and height given as arguments
-    CellDisplay newDisplay = new CellDisplay(cell.getjIndex() * widthPerCell,
-        cell.getiIndex() * heightPerCell, widthPerCell, heightPerCell, cell.getCurrentState());
+   // CellDisplay newDisplay = new CellDisplay(cell.getjIndex() * widthPerCell,
+        //cell.getiIndex() * heightPerCell, widthPerCell, heightPerCell, cell.getCurrentState());
+    CellDisplay newDisplay = new CellDisplay(generateXYs(cell), cell.getCurrentState());
     newDisplay.setCell(cell);
     newDisplay.setColors(myViewResourceHandler.getColorsForSimulation(
         myController.getSimulationType()));
     cell.setDisplay(newDisplay);
     allCellDisplays.add(newDisplay);
     return newDisplay;
+  }
+
+  private double[] generateXYs(Cell cell){
+    int i = cell.getiIndex();
+    int j = cell.getjIndex();
+    CornerLocationGenerator cornerGenerator = new RectangleCellCornerLocationGenerator(myController.getGridShape()[0], myController.getGridShape()[1]);
+    List<CornerLocation> locations = cornerGenerator.generateCorners(i, j);
+    double[] retXYs = new double[2*locations.size()];
+    int index = 0;
+    for (CornerLocation corner : locations){
+      retXYs[2*index] = corner.getX_pos();
+      retXYs[2*index + 1] = corner.getY_pos();
+      index = index + 1;
+    }
+    return retXYs;
+
   }
 
   private Node makeHistogram(){
