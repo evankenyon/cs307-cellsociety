@@ -11,9 +11,6 @@ public class GameOfLifeCell extends Cell{
     }
 
 
-    public GameOfLifeCell(int i,int j, int intialState){
-        super(i,j,intialState);
-    }
 
 
 

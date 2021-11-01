@@ -7,6 +7,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
+import cellsociety.cell.IllegalCellStateException;
 import cellsociety.cell.PercolationCell;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,13 +24,13 @@ public class PercolationRulesTest {
 
     @Test
     void zeroStaysZero()
-        throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+            throws InvocationTargetException, IllegalAccessException, NoSuchMethodException, IllegalCellStateException {
         PercolationCell cell= new PercolationCell(1,1,0,10,10);
         List<Cell> allCells = new ArrayList<>();
-        allCells.add(new Cell(0,1,0));
-        allCells.add(new Cell(1,0,0));
-        allCells.add(new Cell(1, 2,0));
-        allCells.add(new Cell(2, 1,0));
+        allCells.add(new Cell(0,1,0,10,10));
+        allCells.add(new Cell(1,0,0,10,10));
+        allCells.add(new Cell(1, 2,0,10,10));
+        allCells.add(new Cell(2, 1,0,10,10));
         for(Cell otherCell : allCells) {
             cell.updateNeighbors(otherCell, defaultNumCornersShared);
         }
@@ -41,13 +42,13 @@ public class PercolationRulesTest {
 
     @Test
     void zeroTurnsOne()
-        throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+            throws InvocationTargetException, IllegalAccessException, NoSuchMethodException, IllegalCellStateException {
         PercolationCell cell= new PercolationCell(1,1,0,10,10);
         List<Cell> allCells = new ArrayList<>();
-        allCells.add(new Cell(0,1,0));
-        allCells.add(new Cell(1,0,1));
-        allCells.add(new Cell(1, 2,1));
-        allCells.add(new Cell(2, 1,0));
+        allCells.add(new Cell(0,1,0,10,10));
+        allCells.add(new Cell(1,0,1,10,10));
+        allCells.add(new Cell(1, 2,1,10,10));
+        allCells.add(new Cell(2, 1,0,10,10));
         for(Cell otherCell : allCells) {
             cell.updateNeighbors(otherCell, defaultNumCornersShared);
         }
@@ -59,13 +60,13 @@ public class PercolationRulesTest {
 
     @Test
     void oneStaysOne()
-        throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+            throws InvocationTargetException, IllegalAccessException, NoSuchMethodException, IllegalCellStateException {
         PercolationCell cell= new PercolationCell(1,1,1, 10,10);
         List<Cell> allCells = new ArrayList<>();
-        allCells.add(new Cell(0,1,0));
-        allCells.add(new Cell(1,0,0));
-        allCells.add(new Cell(1, 2,0));
-        allCells.add(new Cell(2, 1,0));
+        allCells.add(new Cell(0,1,0,10,10));
+        allCells.add(new Cell(1,0,0,10,10));
+        allCells.add(new Cell(1, 2,0,10,10));
+        allCells.add(new Cell(2, 1,0,10,10));
         for(Cell otherCell : allCells) {
             cell.updateNeighbors(otherCell, defaultNumCornersShared);
         }
@@ -77,13 +78,13 @@ public class PercolationRulesTest {
 
     @Test
     void twoStaysTwo()
-        throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+            throws InvocationTargetException, IllegalAccessException, NoSuchMethodException, IllegalCellStateException {
         PercolationCell cell= new PercolationCell(1,1,2,10,10);
         List<Cell> allCells = new ArrayList<>();
-        allCells.add(new Cell(0,1,0));
-        allCells.add(new Cell(1,0,1));
-        allCells.add(new Cell(1, 2,0));
-        allCells.add(new Cell(2, 1,1));
+        allCells.add(new Cell(0,1,0,10,10));
+        allCells.add(new Cell(1,0,1,10,10));
+        allCells.add(new Cell(1, 2,0,10,10));
+        allCells.add(new Cell(2, 1,1,10,10));
         for(Cell otherCell : allCells) {
             cell.updateNeighbors(otherCell, defaultNumCornersShared);
         }

@@ -2,6 +2,7 @@ package Rules;
 
 import cellsociety.Rule.SegregationRules;
 import cellsociety.cell.Cell;
+import cellsociety.cell.IllegalCellStateException;
 import cellsociety.cell.SegregationCell;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -11,16 +12,14 @@ import java.util.List;
 
 public class SegregationRulesTest {
     @Test
-    void cellIsEmptyTest()
-    {
+    void cellIsEmptyTest() throws IllegalCellStateException {
         SegregationCell cell=new SegregationCell(0,0,0,10,10);
         SegregationRules sr=new SegregationRules(cell, new ArrayList<>());
         Assertions.assertEquals(0,cell.getFutureState());
     }
 
     @Test
-    void checkFutureStateCurrentCellSatisfied()
-    {
+    void checkFutureStateCurrentCellSatisfied() throws IllegalCellStateException {
         SegregationCell cell=new SegregationCell(0,0,1,10,10);
         List<Cell> test=new ArrayList<>();
         test.add(new Cell(0,0,1,10,10));
@@ -35,8 +34,7 @@ public class SegregationRulesTest {
     }
 
     @Test
-    void checkFutureStateCurrentCellNotSatisfied()
-    {
+    void checkFutureStateCurrentCellNotSatisfied() throws IllegalCellStateException {
         SegregationCell cell=new SegregationCell(0,0,1,10,10);
         List<Cell> test=new ArrayList<>();
         test.add(new Cell(0,0,2,10,10));
@@ -52,8 +50,7 @@ public class SegregationRulesTest {
     }
 
     @Test
-    void checkFutureStateNeighborsNotSatisfied()
-    {
+    void checkFutureStateNeighborsNotSatisfied() throws IllegalCellStateException {
         SegregationCell cell=new SegregationCell(0,0,1,10,10);
         List<Cell> test=new ArrayList<>();
         test.add(new Cell(0,0,2,10,10));
