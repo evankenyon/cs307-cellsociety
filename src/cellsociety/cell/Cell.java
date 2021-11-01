@@ -94,9 +94,46 @@ public class Cell {
         .collect(Collectors.toSet());
     if (numCornersShared.contains(sharedCorners.size()) && !neighbors.contains(potentialNeighbor)
         && !potentialNeighbor.equals(this)) {
+      addUniqueNeighborToList(potentialNeighbor);
+    }
+  }
+
+  public void updateNeighborsFinite(int rows, int cols, Cell potentialNeighbor, List<Integer> numCornersShared){
+    updateNeighbors(potentialNeighbor, numCornersShared);
+  }
+
+  public void updateNeighborsToroidal(int rows, int cols, Cell potentialNeighbor, List<Integer> numCornersShared){
+    updateNeighbors(potentialNeighbor,numCornersShared);
+    int indexedRows = rows--;
+    int indexedCols = cols--;
+    boolean onOppositeTopBottom = iIndexDifference(potentialNeighbor)==indexedRows &&
+            jIndexDifference(potentialNeighbor) == 0;
+
+    boolean onOppositeLeftRight = iIndexDifference(potentialNeighbor)==0 &&
+            jIndexDifference(potentialNeighbor) == indexedCols;
+
+    boolean onOppositeCorners =  iIndexDifference(potentialNeighbor)==indexedRows &&
+            jIndexDifference(potentialNeighbor) == indexedCols;
+
+    if(onOppositeTopBottom || onOppositeLeftRight || onOppositeCorners){
+      addUniqueNeighborToList(potentialNeighbor);
+    }
+  }
+
+  public int iIndexDifference(Cell potentialNeighbor){
+    return Math.abs(this.iIndex-potentialNeighbor.getiIndex());
+  }
+
+  public int jIndexDifference(Cell potentialNeighbor){
+    return Math.abs(this.jIndex-potentialNeighbor.getjIndex());
+  }
+
+  public void addUniqueNeighborToList(Cell potentialNeighbor){
+    if(!neighbors.contains(potentialNeighbor)){
       neighbors.add(potentialNeighbor);
     }
   }
+
 
   public int numOfStateNeighbors(int state) {
     if (neighborCellStateMap.containsKey(state)) {
