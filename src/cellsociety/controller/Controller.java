@@ -6,9 +6,11 @@ import cellsociety.Utilities.CSVGenerator;
 import cellsociety.Utilities.CSVParser;
 import cellsociety.Utilities.SimGenerator;
 import cellsociety.Utilities.SimParser;
+import cellsociety.cell.IllegalCellStateException;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -29,12 +31,12 @@ public class Controller {
   }
 
   public void parseFile(File SimFile)
-      throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+      throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, IllegalCellStateException, InputMismatchException, IllegalArgumentException {
     CSVParser csvParser = new CSVParser();
     SimParser simParser = new SimParser();
     simParser.setupKeyValuePairs(SimFile);
     csvParser.setFile(new File(String.format("./data/%s", simParser.getSimulationConfig().getProperty("InitialStates"))));
-    csvParser.initializeCellMatrix();
+    csvParser.initializeCellMatrix(simParser.getSimulationConfig().getProperty("Type"));
     model.setSimulationInfo(simParser.getSimulationConfig());
     simGenerator = new SimGenerator(simParser.getSimulationConfig());
     model.setupCells(csvParser.getCellStates(), csvParser.getRows(), csvParser.getCols());
@@ -71,7 +73,7 @@ public class Controller {
    * perform the next step in the simulation
    */
   public void step()
-      throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, ClassNotFoundException, InstantiationException {
+      throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, ClassNotFoundException, InstantiationException, IllegalCellStateException {
     model.findNextStateForEachCell();
     model.updateModel();
   }

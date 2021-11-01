@@ -26,7 +26,7 @@ public class CSVParserTest {
   void testBlinkerSetup(){
     parser.setFile(new File(blinkerPath));
     try {
-      parser.initializeCellMatrix();
+      parser.initializeCellMatrix("GameOfLife");
     } catch (Exception e){
       assertTrue(false);
     }
@@ -41,7 +41,7 @@ public class CSVParserTest {
   void testGliderSetup(){
     parser.setFile(new File(gliderPath));
     try {
-      parser.initializeCellMatrix();
+      parser.initializeCellMatrix("GameOfLife");
     } catch (Exception e){
       assertTrue(false);
     }

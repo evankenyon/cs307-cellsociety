@@ -30,7 +30,10 @@ public class Cell {
   private int energy;
 
 
-  public Cell(int i, int j, int initialState, int rows, int columns) {
+  public Cell(int i, int j, int initialState, int rows, int columns) throws IllegalArgumentException {
+    if(i > rows || j > columns) {
+      throw new IllegalArgumentException();
+    }
     ResourceBundle defaultVals = ResourceBundle.getBundle(
         DEFAULT_RESOURCE_PACKAGE + DEFAULT_VALUES_FILENAME);
     this.iIndex = i;
