@@ -19,11 +19,11 @@ public class SpreadingOfFireRules extends Rules {
   private static final String STATE_AND_NEIGHBORS_MAP_FILENAME = "SpreadingOfFireRules";
   private static final String DEFAULT_PARAMS_FILENAME = "SpreadingOfFireDefaultParams";
   private Map<String, Double> probabilities;
-  private FireCell fcell;
+  //private FireCell fcell;
 
-  public SpreadingOfFireRules(FireCell cell, List<Double> args) {
+  public SpreadingOfFireRules(Cell cell, List<Double> args) {
     super(cell);
-    fcell=cell;
+    //fcell=cell;
     if(args.size() > 2) {
       //TODO: actually handle
       throw new InputMismatchException();
