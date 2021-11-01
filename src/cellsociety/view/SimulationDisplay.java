@@ -137,7 +137,7 @@ public class SimulationDisplay extends ChangeableDisplay{
 
   /**
    * Create/return a map that maps each state to the number of cells in that state
-   * This method should probably go in model, I don't like having it in here. It's kinda clunky.
+   * This method should probably go in model, I don't like having it in here. It's kinda clunky. -Keith
    * @return a map used to find how many cells in each state
    */
   private Map<Integer, Integer> getNumOfEachState(){
@@ -153,6 +153,28 @@ public class SimulationDisplay extends ChangeableDisplay{
   private Node makeControls(){
     //make the box with options to pause/resume, do one step, change speed, etc..
     VBox v = new VBox();
+    v.getChildren().add(makeShowHideBox());
+    v.getChildren().add(makeMiscellaneousControls());
+    v.getChildren().add(makeParametersControlBox());
+    v.getChildren().add(makeSlider());
+
+    return v;
+  }
+
+  private Node makeShowHideBox(){
+    //make a node with buttons for users to show/hide the grid, histogram, and info
+    HBox showHideBox = new HBox();
+    showHideBox.getChildren().add(makeAButton(LanguageResourceHandler.SHOW_GRID_KEY, () -> myCellGridDisplay.setVisible(true)));
+    showHideBox.getChildren().add(makeAButton(LanguageResourceHandler.HIDE_GRID_KEY, () -> myCellGridDisplay.setVisible(false)));
+    showHideBox.getChildren().add(makeAButton(LanguageResourceHandler.SHOW_HISTOGRAM_KEY, () -> myHistogram.setVisible(true)));
+    showHideBox.getChildren().add(makeAButton(LanguageResourceHandler.HIDE_HISTOGRAM_KEY, () -> myHistogram.setVisible(false)));
+    showHideBox.getChildren().add(makeAButton(LanguageResourceHandler.SHOW_INFO_KEY, () -> myInfoDisplay.setVisible(true)));
+    showHideBox.getChildren().add(makeAButton(LanguageResourceHandler.HIDE_INFO_KEY, () -> myInfoDisplay.setVisible(false)));
+    return showHideBox;
+  }
+
+  private Node makeMiscellaneousControls(){
+    //make a node with buttons for users to pause/resume, see about, do one step, or save file
     HBox controlBox = new HBox();
     controlBox.getChildren().add(makeAButton(LanguageResourceHandler.ABOUT_KEY, () -> showAbout()));
     pauseButton = makeAButton(LanguageResourceHandler.PAUSE_KEY, () -> pauseAnimation());
@@ -162,11 +184,7 @@ public class SimulationDisplay extends ChangeableDisplay{
     controlBox.getChildren().add(resumeButton);
     controlBox.getChildren().add(makeAButton(LanguageResourceHandler.ONE_STEP_KEY, () -> oneStep()));
     controlBox.getChildren().add(makeAButton(LanguageResourceHandler.SAVE_FILE_KEY, () -> makePopup()));
-    v.getChildren().add(controlBox);
-    v.getChildren().add(makeShapeControlBox());
-    v.getChildren().add(makeSlider());
-
-    return v;
+    return controlBox;
   }
 
   private Node makeSlider(){
@@ -183,6 +201,18 @@ public class SimulationDisplay extends ChangeableDisplay{
     return sliderBox;
   }
 
+  private Node makeParametersControlBox(){
+    HBox parametersControlBox = new HBox();
+    parametersControlBox.getChildren().add(makeShapeControlBox());
+    parametersControlBox.getChildren().add(makeNeighborArrangementBox());
+    parametersControlBox.getChildren().add(makeEdgePolicyBox());
+    return parametersControlBox;
+  }
+
+  /**
+   * might be able to refactor this. Looks quite similar to the makeGridOptions and makeEdgeOptions methods
+   * @return
+   */
   private Node makeShapeControlBox(){
     //create a node on which users can select the shape of a cell
     HBox shapesBox = new HBox();
@@ -190,6 +220,36 @@ public class SimulationDisplay extends ChangeableDisplay{
     ComboBox cBox = new ComboBox();
     cBox.getItems().addAll(myViewResourceHandler.getCellShapes());
     cBox.setOnAction(e -> myCellGridDisplay.changeCellShapes(cBox.getSelectionModel().getSelectedItem().toString()));
+    shapesBox.getChildren().add(cBox);
+    return shapesBox;
+  }
+
+  /**
+   * might be able to refactor this. Looks quite similar to the makeGridOptions and makeEdgeOptions methods
+   * @return
+   */
+  private Node makeNeighborArrangementBox(){
+    //create a node on which users can select the neighbor arrangement
+    HBox shapesBox = new HBox();
+    shapesBox.getChildren().add(makeALabel(LanguageResourceHandler.NEIGHBOR_ARRANGEMENT_KEY));
+    ComboBox cBox = new ComboBox();
+    cBox.getItems().addAll(myViewResourceHandler.getNeighborArrangements());
+    //cBox.setOnAction(e -> myController.changeNeighborArrangement(cBox.getSelectionModel().getSelectedItem().toString()));
+    shapesBox.getChildren().add(cBox);
+    return shapesBox;
+  }
+
+  /**
+   * might be able to refactor this. Looks quite similar to the makeGridOptions and makeEdgeOptions methods
+   * @return
+   */
+  private Node makeEdgePolicyBox(){
+    //create a node on which users can select the neighbor arrangement
+    HBox shapesBox = new HBox();
+    shapesBox.getChildren().add(makeALabel(LanguageResourceHandler.EDGE_POLICY_KEY));
+    ComboBox cBox = new ComboBox();
+    cBox.getItems().addAll(myViewResourceHandler.getEdgePolicies());
+    //cBox.setOnAction(e -> myController.changeEdgePolicy(cBox.getSelectionModel().getSelectedItem().toString()));
     shapesBox.getChildren().add(cBox);
     return shapesBox;
   }
