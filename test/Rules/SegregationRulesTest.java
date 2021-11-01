@@ -13,7 +13,7 @@ public class SegregationRulesTest {
     @Test
     void cellIsEmptyTest()
     {
-        SegregationCell cell=new SegregationCell(0,0,0);
+        SegregationCell cell=new SegregationCell(0,0,0,10,10);
         SegregationRules sr=new SegregationRules(cell, new ArrayList<>());
         Assertions.assertEquals(0,cell.getFutureState());
     }
@@ -21,12 +21,12 @@ public class SegregationRulesTest {
     @Test
     void checkFutureStateCurrentCellSatisfied()
     {
-        SegregationCell cell=new SegregationCell(0,0,1);
+        SegregationCell cell=new SegregationCell(0,0,1,10,10);
         List<Cell> test=new ArrayList<>();
-        test.add(new Cell(0,0,1));
-        test.add(new Cell(0,0,1));
-        test.add(new Cell(0,0,1));
-        test.add(new Cell(0,0,2));
+        test.add(new Cell(0,0,1,10,10));
+        test.add(new Cell(0,0,1,10,10));
+        test.add(new Cell(0,0,1,10,10));
+        test.add(new Cell(0,0,2,10,10));
         cell.setNeighbors(test);
         cell.updateCellNeighborStateMap();
         SegregationRules sr=new SegregationRules(cell, new ArrayList<>());
@@ -37,13 +37,13 @@ public class SegregationRulesTest {
     @Test
     void checkFutureStateCurrentCellNotSatisfied()
     {
-        SegregationCell cell=new SegregationCell(0,0,1);
+        SegregationCell cell=new SegregationCell(0,0,1,10,10);
         List<Cell> test=new ArrayList<>();
-        test.add(new Cell(0,0,2));
-        test.add(new Cell(0,0,0));
-        test.add(new Cell(0,0,1));
-        test.add(new Cell(0,0,2));
-        test.add(new Cell(0,0,2));
+        test.add(new Cell(0,0,2,10,10));
+        test.add(new Cell(0,0,0,10,10));
+        test.add(new Cell(0,0,1,10,10));
+        test.add(new Cell(0,0,2,10,10));
+        test.add(new Cell(0,0,2,10,10));
         cell.setNeighbors(test);
         cell.updateCellNeighborStateMap();
         SegregationRules sr=new SegregationRules(cell, new ArrayList<>());
@@ -54,13 +54,13 @@ public class SegregationRulesTest {
     @Test
     void checkFutureStateNeighborsNotSatisfied()
     {
-        SegregationCell cell=new SegregationCell(0,0,1);
+        SegregationCell cell=new SegregationCell(0,0,1,10,10);
         List<Cell> test=new ArrayList<>();
-        test.add(new Cell(0,0,2));
-        test.add(new Cell(0,0,0));
-        test.add(new Cell(0,0,1));
-        test.add(new Cell(0,0,2));
-        test.add(new Cell(0,0,2));
+        test.add(new Cell(0,0,2,10,10));
+        test.add(new Cell(0,0,0,10,10));
+        test.add(new Cell(0,0,1,10,10));
+        test.add(new Cell(0,0,2,10,10));
+        test.add(new Cell(0,0,2,10,10));
         cell.setNeighbors(test);
         cell.updateCellNeighborStateMap();
         SegregationRules sr=new SegregationRules(cell, new ArrayList<>());

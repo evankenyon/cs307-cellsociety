@@ -4,6 +4,8 @@ import cellsociety.Rule.GameOfLifeRules;
 import cellsociety.cell.Cell;
 import cellsociety.cell.GameOfLifeCell;
 import java.lang.reflect.InvocationTargetException;
+
+import cellsociety.cell.IllegalCellStateException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -12,11 +14,10 @@ import java.util.List;
 
 public class GameOfLifeRulesTest {
     @Test
-    void killCellTest()
-    {
-        GameOfLifeCell cell=new GameOfLifeCell(0,0,1);
+    void killCellTest() throws IllegalCellStateException {
+        GameOfLifeCell cell=new GameOfLifeCell(0,0,1,10,10);
         List<Cell> test=new ArrayList<>();
-        test.add(new GameOfLifeCell(0,0,0));
+        test.add(new GameOfLifeCell(0,0,0,10,10));
         cell.setNeighbors(test);
         GameOfLifeRules rules=new GameOfLifeRules(cell, new ArrayList<>());
         rules.setCellState(0);
@@ -24,11 +25,10 @@ public class GameOfLifeRulesTest {
     }
 
     @Test
-    void createCellTest()
-    {
-        GameOfLifeCell cell=new GameOfLifeCell(0,0,0);
+    void createCellTest() throws IllegalCellStateException {
+        GameOfLifeCell cell=new GameOfLifeCell(0,0,0,10,10);
         List<Cell> test=new ArrayList<>();
-        test.add(new GameOfLifeCell(0,0,0));
+        test.add(new GameOfLifeCell(0,0,0,10,10));
         cell.setNeighbors(test);
         GameOfLifeRules rules=new GameOfLifeRules(cell, new ArrayList<>());
         rules.setCellState(1);
@@ -37,10 +37,10 @@ public class GameOfLifeRulesTest {
 
     @Test
     void setStateLessThanTwoNeighbors()
-        throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-        GameOfLifeCell cell=new GameOfLifeCell(0,0,1);
+            throws InvocationTargetException, IllegalAccessException, NoSuchMethodException, IllegalCellStateException {
+        GameOfLifeCell cell=new GameOfLifeCell(0,0,1,10,10);
         List<Cell> test=new ArrayList<>();
-        test.add(new GameOfLifeCell(0,0,0));
+        test.add(new GameOfLifeCell(0,0,0,10,10));
         cell.setNeighbors(test);
         GameOfLifeRules rules=new GameOfLifeRules(cell, new ArrayList<>());
         rules.setNumOneNeighbors(1);
@@ -50,11 +50,11 @@ public class GameOfLifeRulesTest {
 
     @Test
     void setStateLiveTwoNeighbors()
-        throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-        GameOfLifeCell cell=new GameOfLifeCell(0,0,1);
+            throws InvocationTargetException, IllegalAccessException, NoSuchMethodException, IllegalCellStateException {
+        GameOfLifeCell cell=new GameOfLifeCell(0,0,1,10,10);
         List<GameOfLifeCell> allCells = new ArrayList<>();
-        allCells.add(new GameOfLifeCell(0,1,1));
-        allCells.add(new GameOfLifeCell(1,0,1));
+        allCells.add(new GameOfLifeCell(0,1,1,10,10));
+        allCells.add(new GameOfLifeCell(1,0,1,10,10));
         for(GameOfLifeCell otherCell : allCells) {
             cell.updateNeighbors(otherCell, 1);
         }
@@ -66,12 +66,12 @@ public class GameOfLifeRulesTest {
 
     @Test
     void setStateLiveThreeNeighbors()
-        throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-        GameOfLifeCell cell=new GameOfLifeCell(0,0,1);
+            throws InvocationTargetException, IllegalAccessException, NoSuchMethodException, IllegalCellStateException {
+        GameOfLifeCell cell=new GameOfLifeCell(0,0,1,10,10);
         List<GameOfLifeCell> allCells = new ArrayList<>();
-        allCells.add(new GameOfLifeCell(0,1,1));
-        allCells.add(new GameOfLifeCell(1,0,1));
-        allCells.add(new GameOfLifeCell(1,1,1));
+        allCells.add(new GameOfLifeCell(0,1,1,10,10));
+        allCells.add(new GameOfLifeCell(1,0,1,10,10));
+        allCells.add(new GameOfLifeCell(1,1,1,10,10));
         for(GameOfLifeCell otherCell : allCells) {
             cell.updateNeighbors(otherCell, 1);
         }
@@ -83,13 +83,13 @@ public class GameOfLifeRulesTest {
 
     @Test
     void setStateLiveMoreThanThreeNeighbors()
-        throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-        GameOfLifeCell cell=new GameOfLifeCell(1,0,1);
+            throws InvocationTargetException, IllegalAccessException, NoSuchMethodException, IllegalCellStateException {
+        GameOfLifeCell cell=new GameOfLifeCell(1,0,1,10,10);
         List<GameOfLifeCell> allCells = new ArrayList<>();
-        allCells.add(new GameOfLifeCell(0,1,1));
-        allCells.add(new GameOfLifeCell(0,0,1));
-        allCells.add(new GameOfLifeCell(1,1,1));
-        allCells.add(new GameOfLifeCell(2,1,1));
+        allCells.add(new GameOfLifeCell(0,1,1,10,10));
+        allCells.add(new GameOfLifeCell(0,0,1,10,10));
+        allCells.add(new GameOfLifeCell(1,1,1,10,10));
+        allCells.add(new GameOfLifeCell(2,1,1,10,10));
         for(GameOfLifeCell otherCell : allCells) {
             cell.updateNeighbors(otherCell, 1);
         }
@@ -101,12 +101,12 @@ public class GameOfLifeRulesTest {
 
     @Test
     void setStateDeadThreeNeighbors()
-        throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-        GameOfLifeCell cell=new GameOfLifeCell(0,0,0);
+            throws InvocationTargetException, IllegalAccessException, NoSuchMethodException, IllegalCellStateException {
+        GameOfLifeCell cell=new GameOfLifeCell(0,0,0,10,10);
         List<GameOfLifeCell> allCells = new ArrayList<>();
-        allCells.add(new GameOfLifeCell(0,1,1));
-        allCells.add(new GameOfLifeCell(1,0,1));
-        allCells.add(new GameOfLifeCell(1,1,1));
+        allCells.add(new GameOfLifeCell(0,1,1,10,10));
+        allCells.add(new GameOfLifeCell(1,0,1,10,10));
+        allCells.add(new GameOfLifeCell(1,1,1,10,10));
         for(GameOfLifeCell otherCell : allCells) {
             cell.updateNeighbors(otherCell, 1);
         }
@@ -118,13 +118,13 @@ public class GameOfLifeRulesTest {
 
     @Test
     void setStateBasicBlinker()
-        throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+            throws InvocationTargetException, IllegalAccessException, NoSuchMethodException, IllegalCellStateException {
         List<GameOfLifeCell> allCells = new ArrayList<>();
-        allCells.add(new GameOfLifeCell(1, 1, 1));
-        allCells.add(new GameOfLifeCell(1, 0, 1));
-        allCells.add(new GameOfLifeCell(1, 2, 1));
-        allCells.add(new GameOfLifeCell(0, 1, 0));
-        allCells.add(new GameOfLifeCell(2, 1, 0));
+        allCells.add(new GameOfLifeCell(1, 1, 1,10,10));
+        allCells.add(new GameOfLifeCell(1, 0, 1,10,10));
+        allCells.add(new GameOfLifeCell(1, 2, 1,10,10));
+        allCells.add(new GameOfLifeCell(0, 1, 0,10,10));
+        allCells.add(new GameOfLifeCell(2, 1, 0,10,10));
         for (GameOfLifeCell cell: allCells) {
             for (GameOfLifeCell otherCell: allCells) {
                 cell.updateNeighbors(otherCell, 1);

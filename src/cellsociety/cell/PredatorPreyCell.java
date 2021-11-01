@@ -5,15 +5,15 @@ public class PredatorPreyCell extends Cell{
     private int chrononCounter=0;
     private int energy=5;
 
-    public PredatorPreyCell(int i, int j, int initialState, int rows, int columns)
+    public PredatorPreyCell(int i, int j, int initialState, int rows, int cols) throws IllegalCellStateException
     {
-        super(i,j,initialState,rows,columns);
+        super(i,j,initialState,rows,cols);
+        if(initialState>3 || initialState <0){
+            throw new IllegalCellStateException();
+        }
     }
 
-    public PredatorPreyCell(int i, int j, int initialState)
-    {
-        super(i,j,initialState);
-    }
+
 
     public void updateChronon()
     {
