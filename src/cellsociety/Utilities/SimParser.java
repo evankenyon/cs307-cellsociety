@@ -1,13 +1,9 @@
 package cellsociety.Utilities;
 
-import cellsociety.Model.Model;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 import java.util.ResourceBundle;
 

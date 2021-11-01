@@ -3,7 +3,6 @@ package cellsociety.Rule;
 import cellsociety.cell.Cell;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
 

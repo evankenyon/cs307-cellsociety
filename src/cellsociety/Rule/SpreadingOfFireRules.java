@@ -24,17 +24,19 @@ public class SpreadingOfFireRules extends Rules {
   public SpreadingOfFireRules(Cell cell, List<Double> args) {
     super(cell);
     //fcell=cell;
-    if(args.size() > 2) {
+    if (args.size() > 2) {
       //TODO: actually handle
       throw new InputMismatchException();
     }
-    ResourceBundle defaultParams = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_PARAMS_FILENAME);
+    ResourceBundle defaultParams = ResourceBundle.getBundle(
+        DEFAULT_RESOURCE_PACKAGE + DEFAULT_PARAMS_FILENAME);
     probabilities = new HashMap<>();
     for (int index = 0; index < 2; index++) {
       try {
         probabilities.put(defaultParams.getString(String.valueOf(index)), args.get(index));
       } catch (IndexOutOfBoundsException e) {
-        probabilities.put(defaultParams.getString(String.valueOf(index)), Double.parseDouble(defaultParams.getString(defaultParams.getString(String.valueOf(index)))));
+        probabilities.put(defaultParams.getString(String.valueOf(index)), Double.parseDouble(
+            defaultParams.getString(defaultParams.getString(String.valueOf(index)))));
       }
     }
 
@@ -47,10 +49,12 @@ public class SpreadingOfFireRules extends Rules {
     Method cellStateChange = null;
     try {
       cellStateChange = this.getClass()
-          .getDeclaredMethod(stateAndNeighborsMap.getString(String.valueOf(cell.getCurrentState())));
+          .getDeclaredMethod(
+              stateAndNeighborsMap.getString(String.valueOf(cell.getCurrentState())));
     } catch (NoSuchMethodException e) {
       cellStateChange = this.getClass().getSuperclass()
-          .getDeclaredMethod(stateAndNeighborsMap.getString(String.valueOf(cell.getCurrentState())));
+          .getDeclaredMethod(
+              stateAndNeighborsMap.getString(String.valueOf(cell.getCurrentState())));
     }
 
     cellStateChange.setAccessible(true);

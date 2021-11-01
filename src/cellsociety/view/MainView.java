@@ -4,7 +4,6 @@ import cellsociety.resourceHandlers.LanguageResourceHandler;
 import cellsociety.resourceHandlers.ViewResourceHandler;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -159,7 +158,7 @@ public class MainView extends ChangeableDisplay{
 
 
 
-  private void addSimulationDisplay(Node newDisplay, SimulationDisplay oldDisplay) throws Exception{
+  private void addSimulationDisplay(Node newDisplay, SimulationDisplay oldDisplay) {
     //add display for a new simulation. First remove the old display, if there was one
 
     if (oldDisplay != null) {

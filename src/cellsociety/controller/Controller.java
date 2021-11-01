@@ -6,10 +6,7 @@ import cellsociety.Utilities.CSVGenerator;
 import cellsociety.Utilities.CSVParser;
 import cellsociety.Utilities.SimGenerator;
 import cellsociety.Utilities.SimParser;
-import cellsociety.view.MainView;
-import cellsociety.view.FileSavePopup;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
@@ -31,43 +28,25 @@ public class Controller {
     optionalKeys = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + OPTIONAL_KEYS_FILENAME);
   }
 
-  // TODO: actually handle exception
-  public void parseFile(File SimFile) throws FileNotFoundException {
+  public void parseFile(File SimFile)
+      throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
     CSVParser csvParser = new CSVParser();
     SimParser simParser = new SimParser();
-    try {
-      simParser.setupKeyValuePairs(SimFile);
-      csvParser.setFile(new File(String.format("./data/%s", simParser.getSimulationConfig().getProperty("InitialStates"))));
-      csvParser.initializeCellMatrix();
-      model.setSimulationInfo(simParser.getSimulationConfig());
-      simGenerator = new SimGenerator(simParser.getSimulationConfig());
-      model.setCellList(csvParser.getAllCells());
-      model.setCols(csvParser.getCols());
-      model.setRows(csvParser.getRows());
-    } catch(Exception e){
-      e.printStackTrace();
-      throw new FileNotFoundException();
-    }
+    simParser.setupKeyValuePairs(SimFile);
+    csvParser.setFile(new File(String.format("./data/%s", simParser.getSimulationConfig().getProperty("InitialStates"))));
+    csvParser.initializeCellMatrix();
+    model.setSimulationInfo(simParser.getSimulationConfig());
+    simGenerator = new SimGenerator(simParser.getSimulationConfig());
+    model.setCellList(csvParser.getAllCells());
+    model.setCols(csvParser.getCols());
+    model.setRows(csvParser.getRows());
   }
 
-  // TODO: actually handle exception
-  public void saveFile(String fileName) throws IOException {
-    CSVGenerator csvGenerator = new CSVGenerator();
-    csvGenerator.createCSVFile(model.getCellGrid(), fileName);
-//    simGenerator.updateReplaceableSimInfo(updatedSimInfo);
-    simGenerator.createSimFile(fileName);
-  }
-
-  // TODO: actually handle exception
   public void saveFile(String fileName, Map<String, String> propertyToValue) throws IOException {
+    simGenerator.createSimFile(fileName, propertyToValue);
     CSVGenerator csvGenerator = new CSVGenerator();
-    csvGenerator.createCSVFile(model.getCellGrid(), propertyToValue.get(FileSavePopup.INITIAL_STATES));
-//    simGenerator.updateReplaceableSimInfo(updatedSimInfo);
-
-    simGenerator.createSimFile(propertyToValue);
+    csvGenerator.createCSVFile(model.getCellList(), model.getGridShape()[0], model.getGridShape()[1], fileName, getSimulationType());
   }
-
-
 
   public void setModel(Model model) {
     this.model = model;
@@ -93,7 +72,8 @@ public class Controller {
   /**
    * perform the next step in the simulation
    */
-  public void step() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+  public void step()
+      throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, ClassNotFoundException, InstantiationException {
     model.findNextStateForEachCell();
     model.updateModel();
   }

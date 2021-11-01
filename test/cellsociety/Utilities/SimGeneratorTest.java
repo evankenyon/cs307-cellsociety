@@ -28,7 +28,7 @@ class SimGeneratorTest {
 
   @Test
   void createSimFile() throws IOException {
-    simGenerator.createSimFile("junit");
+    simGenerator.createSimFile("junit", null);
     Properties expectedProps = new Properties();
     FileInputStream stream = new FileInputStream("./data/game_of_life/blinkers.sim");
     expectedProps.load(stream);

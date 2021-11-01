@@ -46,15 +46,6 @@ public class InfoDisplay extends ChangeableDisplay{
     return container;
   }
 
-  private Node makeContainerForState(int state){
-    //create an HBox for a state, with its number, name, change since last time, and display
-    HBox stateBox = new HBox();
-    stateBox.getChildren().add(new Label(Integer.toString(state)));
-    Label numChangeLabel = new Label(Integer.toString(0));
-    stateToNumChangeLabel.put(state, numChangeLabel);
-    stateBox.getChildren().add(numChangeLabel);
-    return stateBox;
-  }
 
   /**
    * note: the following several methods should be refactored because they are very similar
