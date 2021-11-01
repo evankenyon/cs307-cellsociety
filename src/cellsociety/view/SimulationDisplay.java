@@ -1,5 +1,7 @@
 package cellsociety.view;
 
+import cellsociety.CornerLocationGenerator.HexagonalCellCornerLocationGenerator;
+import cellsociety.CornerLocationGenerator.TriangularCellCornerLocationGenerator;
 import cellsociety.resourceHandlers.LanguageResourceHandler;
 import cellsociety.resourceHandlers.ViewResourceHandler;
 import cellsociety.controller.Controller;
@@ -149,7 +151,7 @@ public class SimulationDisplay extends ChangeableDisplay{
     //generate an array of x and y coordinates that will be used to create a polygon
     int i = cell.getiIndex();
     int j = cell.getjIndex();
-    CornerLocationGenerator cornerGenerator = new RectangleCellCornerLocationGenerator(myController.getGridShape()[0], myController.getGridShape()[1]);
+    CornerLocationGenerator cornerGenerator = new HexagonalCellCornerLocationGenerator(myController.getGridShape()[0], myController.getGridShape()[1]);
     List<CornerLocation> locations = cornerGenerator.generateCorners(i, j);
     double[] retXYs = new double[2*locations.size()];
     int index = 0;
