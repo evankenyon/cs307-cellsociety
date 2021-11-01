@@ -39,14 +39,24 @@ public class SimParser {
     InputStream simFileInputStream = this.getClass().getClassLoader().getResourceAsStream(pathName.toString());
     simulationConfig.load(simFileInputStream);
     standardizeKeys();
-    handleIllegalInput();
+    try {
+      handleIllegalInput();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
   }
 
   private void standardizeKeys() {
     for (String key : simulationConfig.stringPropertyNames()) {
       ResourceBundle keyStandardization = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + KEY_STANDARDIZATION_FILENAME);
-      simulationConfig.setProperty(keyStandardization.getString(key), simulationConfig.getProperty(key));
+      String value = simulationConfig.getProperty(key);
       simulationConfig.remove(key);
+      simulationConfig.setProperty(keyStandardization.getString(key), value);
+    }
+
+    for (String key : simulationConfig.stringPropertyNames()) {
+      System.out.println(key + "," + simulationConfig.getProperty(key));
     }
   }
 
