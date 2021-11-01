@@ -27,6 +27,7 @@ public class SimulationDisplayTest extends DukeApplicationTest{
   MainView mView;
   private LanguageResourceHandler resourceHandler;
   private Stage myStage;
+  public static final String BLINKERS_PATH = "data/game_of_life/blinkers.sim";
 
   @Override
   public void start(Stage stage) throws Exception {
@@ -34,7 +35,7 @@ public class SimulationDisplayTest extends DukeApplicationTest{
     mView = new MainView();
     resourceHandler = mView.getMyResourceHandler();
     stage.setScene(mView.makeSimulationScene());
-    mView.handleSelectedFile(new File("data/game_of_life/blinkers.sim"));
+    mView.handleSelectedFile(new File(BLINKERS_PATH));
     simDisp = mView.getSimDisplay();
     stage.show();
     stage.toFront();
