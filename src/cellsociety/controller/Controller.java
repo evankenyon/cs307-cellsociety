@@ -1,5 +1,6 @@
 package cellsociety.controller;
 
+import cellsociety.Rule.RulesInterface;
 import cellsociety.Utilities.CSVParser.DefaultCSVParser;
 import cellsociety.cell.Cell;
 import cellsociety.Model.Model;
@@ -8,6 +9,7 @@ import cellsociety.Utilities.CSVParser.CSVParser;
 import cellsociety.Utilities.SimGenerator;
 import cellsociety.Utilities.SimParser;
 import cellsociety.cell.IllegalCellStateException;
+import com.opencsv.ICSVParser;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -33,11 +35,19 @@ public class Controller {
 
   public void parseFile(File SimFile)
       throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, IllegalCellStateException, InputMismatchException, IllegalArgumentException {
-    CSVParser csvParser = new DefaultCSVParser();
+    CSVParser csvParser = null;
     SimParser simParser = new SimParser();
     simParser.setupKeyValuePairs(SimFile);
+    try {
+      csvParser = (CSVParser) Class.forName(
+              String.format("%s.%sCSVParser", CSVParser.class.getPackage().getName(), simParser.getSimulationConfig().getProperty("CSVType")))
+          .getConstructor()
+          .newInstance();
+    } catch (ClassNotFoundException | InstantiationException e) {
+      e.printStackTrace();
+      csvParser = new DefaultCSVParser();
+    }
     csvParser.setFile(new File(String.format("./data/%s", simParser.getSimulationConfig().getProperty("InitialStates"))));
-    csvParser.getCellStates(simParser.getSimulationConfig().getProperty("Type"));
     model.setSimulationInfo(simParser.getSimulationConfig());
     simGenerator = new SimGenerator(simParser.getSimulationConfig());
     model.setupCells(csvParser.getCellStates(simParser.getSimulationConfig().getProperty("Type")), csvParser.getRows(), csvParser.getCols());

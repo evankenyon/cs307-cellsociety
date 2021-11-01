@@ -46,6 +46,7 @@ public class RawNumsCSVParser extends CSVParser {
   }
 
   private List<Integer> initializeCellStates() {
+
     int currState = 0;
     List<Integer> cellStates = new ArrayList<>();
     numStates.set(0, getRows() * getCols() - numStates.get(1) - numStates.get(2));

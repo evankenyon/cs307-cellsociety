@@ -47,6 +47,7 @@ public class ProbabilityCSVParser extends CSVParser {
       dimensionInformation = dimensionInformation.strip();
       String[] dimensions = dimensionInformation.split(",");
       //FIXME: Need to throw an exception when it isnt an integer
+
       setRows(Integer.parseInt(dimensions[1]));
       setCols(Integer.parseInt(dimensions[0]));
       stateOneProbability = Double.parseDouble(dimensions[2]);
