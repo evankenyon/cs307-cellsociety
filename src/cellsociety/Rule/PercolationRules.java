@@ -1,6 +1,7 @@
 package cellsociety.Rule;
 
 import cellsociety.cell.Cell;
+import cellsociety.cell.IllegalCellStateException;
 import cellsociety.cell.PercolationCell;
 
 import java.util.InputMismatchException;
@@ -14,8 +15,12 @@ public class PercolationRules extends Rules {
   private static final String STATE_AND_NEIGHBORS_MAP_FILENAME = "PercolationRules";
   //private PercolationCell pcell;
 
-  public PercolationRules(Cell cell, List<Double> args) {
+  public PercolationRules(Cell cell, List<Double> args) throws IllegalCellStateException {
     super(cell);
+    if(cell.getCurrentState()>4){
+      throw new IllegalCellStateException();
+    }
+
     //pcell=cell;
     if (!args.isEmpty()) {
       //TODO: actually handle

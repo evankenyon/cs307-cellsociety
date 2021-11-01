@@ -2,6 +2,7 @@ package cellsociety.Rule;
 
 import cellsociety.cell.Cell;
 import cellsociety.cell.FireCell;
+import cellsociety.cell.IllegalCellStateException;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -21,8 +22,11 @@ public class SpreadingOfFireRules extends Rules {
   private Map<String, Double> probabilities;
   //private FireCell fcell;
 
-  public SpreadingOfFireRules(Cell cell, List<Double> args) {
+  public SpreadingOfFireRules(Cell cell, List<Double> args) throws IllegalCellStateException {
     super(cell);
+    if(cell.getCurrentState()>4){
+      throw new IllegalCellStateException();
+    }
     //fcell=cell;
     if (args.size() > 2) {
       //TODO: actually handle

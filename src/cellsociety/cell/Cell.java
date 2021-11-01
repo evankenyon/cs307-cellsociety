@@ -46,9 +46,6 @@ public class Cell {
   }
 
 
-  public Cell(int i, int j, int initialState) {
-    this(i, j, initialState, 10, 10);
-  }
 
   /**
    * set what myDisplay refers to

@@ -1,6 +1,8 @@
 package cellsociety.Rule;
 
 import cellsociety.cell.Cell;
+import cellsociety.cell.IllegalCellStateException;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Random;
@@ -10,8 +12,11 @@ public abstract class Rules implements RulesInterface {
   protected Cell cell;
   protected ResourceBundle stateAndNeighborsMap;
 
-  public Rules(Cell cell) {
+  public Rules(Cell cell) throws IllegalCellStateException {
     this.cell=cell;
+    if(cell.getCurrentState()<0){
+      throw new IllegalCellStateException();
+    }
   }
 
   public void setState()

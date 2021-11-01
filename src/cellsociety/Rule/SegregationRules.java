@@ -1,6 +1,7 @@
 package cellsociety.Rule;
 
 import cellsociety.cell.Cell;
+import cellsociety.cell.IllegalCellStateException;
 import cellsociety.cell.SegregationCell;
 
 import java.util.InputMismatchException;
@@ -16,8 +17,11 @@ public class SegregationRules extends Rules {
   private double satisfactionThreshold;
   //private SegregationCell segregationCell;
 
-  public SegregationRules(Cell cell, List<Double> args) {
+  public SegregationRules(Cell cell, List<Double> args) throws IllegalCellStateException {
     super(cell);
+    if(cell.getCurrentState()>4){
+      throw new IllegalCellStateException();
+    }
     //segregationCell =cell;
     if (args.size() > 1) {
       //TODO: actually handle
