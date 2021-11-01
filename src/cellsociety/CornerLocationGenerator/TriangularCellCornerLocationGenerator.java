@@ -7,7 +7,7 @@ import java.util.List;
 public class TriangularCellCornerLocationGenerator extends CornerLocationGenerator{
     private double height=getVIEW_HEIGHT()/rows;
     private double length=getVIEW_WIDTH()/columns;
-    private CornerLocation center;
+    private CornerLocation center=new CornerLocation(0,0);
 
     public TriangularCellCornerLocationGenerator(int rows, int columns)
     {
@@ -19,7 +19,7 @@ public class TriangularCellCornerLocationGenerator extends CornerLocationGenerat
     {
         center.setX_pos(.5*j*length+.5*length);
         center.setY_pos(i*height+.5*height);
-        if (i%2==0)
+        if (j%2==0)
         {
             CornerLocation top=new CornerLocation(center.getX_pos(),center.getY_pos()-.5*height);
             CornerLocation bottomLeft=new CornerLocation(center.getX_pos()-.5*length,center.getY_pos()+.5*height);
