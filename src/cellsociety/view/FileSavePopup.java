@@ -7,6 +7,7 @@ import cellsociety.controller.Controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Properties;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -120,7 +121,7 @@ public class FileSavePopup extends ChangeableDisplay{
     propertyToValue.put(OTHER, otherArea.getText());
     try {
       myController.saveFile(fileNameField.getText(), propertyToValue);
-    } catch (Exception e){
+    } catch (IOException e){
       displayErrorMessage(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.FAILED_SAVE_KEY));
     }
     myStage.close();
