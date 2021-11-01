@@ -8,6 +8,7 @@ import java.lang.reflect.Method;
 import java.util.*;
 
 import javafx.scene.Node;
+import org.apache.commons.lang3.ObjectUtils.Null;
 
 public class Model {
 
@@ -112,9 +113,14 @@ public class Model {
 
   private List<Double> createParamsDoubleList(String params) {
     List<Double> paramsList = new ArrayList<>();
-    for (String param : params.split(",")) {
-      paramsList.add(Double.parseDouble(param));
+    try {
+      for (String param : params.split(",")) {
+        paramsList.add(Double.parseDouble(param));
+      }
+    } catch (NullPointerException e) {
+      return new ArrayList<>();
     }
+
     return paramsList;
   }
 

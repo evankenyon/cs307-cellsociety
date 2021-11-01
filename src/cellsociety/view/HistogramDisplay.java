@@ -99,7 +99,7 @@ public class HistogramDisplay {
   private void changeBarHeight(int state, int count){
     double fraction = ((double) count) / ((double)maxNumCells);
     double height = fraction * maxBarHeight;
-    
+
     Rectangle stateBar = stateToBar.get(state);
     stateBar.setLayoutY(zeroBarY);
     stateBar.setHeight(height);
