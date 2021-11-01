@@ -160,6 +160,7 @@ public class Cell {
     this.neighbors = neighbors;
   }
 
+  public List<Cell> getNeighbors() {return neighbors;}
 
   public Cell getNeighborOfState(int state, int num) {
     return neighborCellStateMap.get(state).get(num);
