@@ -63,11 +63,11 @@ public class SegregationRules extends Rules {
 //        while(temp)
 //        {
 //            Random random=new Random();
-//            int stateNeighbors= segregationCell.numOfStateNeighbors(state);
+//            int stateNeighbors= cell.numOfStateNeighbors(state);
 //            int randInt= random.nextInt(stateNeighbors);
-//            if(segregationCell.getNeighborOfState(state, randInt).getFutureState()==0)
+//            if(cell.getGridState(state, randInt).getFutureState()==0)
 //            {
-//                segregationCell.getNeighborOfState(state, randInt).setFutureState(segregationCell.getCurrentState());
+//                cell.getGridState(state, randInt).setFutureState(cell.getCurrentState());
 //                temp=false;
 //            }
 //
