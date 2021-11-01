@@ -19,12 +19,6 @@ public class SimGenerator {
     this.simInfo = simInfo;
   }
 
-  public void updateReplaceableSimInfo(Map<String, String> newSimInfo) {
-    for(String key : newSimInfo.keySet()) {
-      simInfo.replace(key, newSimInfo.get(key));
-    }
-  }
-
   /**
    * Save a .sim file for the simulation, with properties specified in propertyToValue
    * @param propertyToValue maps keys like "Author" and "Title" to their corresponding values for the simulation
@@ -40,9 +34,6 @@ public class SimGenerator {
     } catch (NullPointerException e) {
       // Don't do anything since shouldn't change simInfo if propertyToValue map is null
     }
-
-
-
 
     // Borrowed code to output Properties to a file from
     // https://www.java2novice.com/java-file-io-operations/create-store-property-file/

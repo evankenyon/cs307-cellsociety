@@ -134,8 +134,8 @@ public class FileSavePopup extends ChangeableDisplay{
     Properties pathProperties = new Properties();
     try {
       pathProperties.load(new FileInputStream(DIRECTORY_PROPERTIES_PATH));
-    } catch(Exception e){
-
+    } catch (IOException e) {
+      displayErrorMessage(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.FAILED_SAVE_KEY));
     }
     String folder = pathProperties.getProperty(myController.getSimulationType());
     String filePath = String.format("./data/" + folder + "/saved/program-" + "%s.sim", fileName);
