@@ -26,7 +26,7 @@ class CellTest {
   void constructorThrowsException() {
     assertThrows(IllegalArgumentException.class, () -> new Cell(2, 2, 1, 1, 1));
   }
-  
+
   @Test
   void updateNeighborsAnyCornersCorrect() {
     Cell potentialNeighborOne = new Cell(1, 2, 1, DEFAULT_GRID_HEIGHT, DEFAULT_GRID_WIDTH);
