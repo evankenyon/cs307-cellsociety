@@ -122,60 +122,6 @@ public class SimulationDisplay extends ChangeableDisplay{
     return myCellGridDisplay.createGridDisplay();
   }
 
-  private Node makeCellsAndBackground(){
-    //make a Node containing a background and all the cell displays on top of it
-    Group simAreaGroup = new Group();
-    simAreaGroup.getChildren().add(new Rectangle(0, 0, myViewResourceHandler.simulationWidth(), myViewResourceHandler.simulationWidth()));
-    //simAreaGroup.getChildren().addAll(myController.getCellDisplays());
-    simAreaGroup.getChildren().addAll(makeCellDisplays());
-    return simAreaGroup;
-  }
-
-  private List<Node> makeCellDisplays(){
-    //take all the cells in the simulation and create a cell display for them,
-    allCellDisplays = new ArrayList<>();
-    List<Node> displayNodes = new ArrayList<>();
-    List<Cell> allCells = myController.getCells();
-    int[] gridShape = myController.getGridShape();
-    int numRows = gridShape[0];
-    int numCols = gridShape[1];
-    double widthPerCell = myViewResourceHandler.simulationWidth() / (numCols + 0.01);
-    double heightPerCell = myViewResourceHandler.simulationWidth() / (numRows + 0.01);
-    for (Cell cell : allCells){
-      displayNodes.add(makeACellDisplay(cell, widthPerCell, heightPerCell).getMyDisplay());
-    }
-    return displayNodes;
-  }
-
-  private CellDisplay makeACellDisplay(Cell cell, double widthPerCell, double heightPerCell){
-    //make a cell display for the cell with the width and height given as arguments
-   // CellDisplay newDisplay = new CellDisplay(cell.getjIndex() * widthPerCell,
-        //cell.getiIndex() * heightPerCell, widthPerCell, heightPerCell, cell.getCurrentState());
-    CellDisplay newDisplay = new CellDisplay(generateXYs(cell), cell.getCurrentState());
-    newDisplay.setCell(cell);
-    newDisplay.setColors(myViewResourceHandler.getColorsForSimulation(
-        myController.getSimulationType()));
-    cell.setDisplay(newDisplay);
-    allCellDisplays.add(newDisplay);
-    return newDisplay;
-  }
-
-  private double[] generateXYs(Cell cell){
-    //generate an array of x and y coordinates that will be used to create a polygon
-    int i = cell.getiIndex();
-    int j = cell.getjIndex();
-    CornerLocationGenerator cornerGenerator = new HexagonalCellCornerLocationGenerator(myController.getGridShape()[0], myController.getGridShape()[1]);
-    List<CornerLocation> locations = cornerGenerator.generateCorners(i, j);
-    double[] retXYs = new double[2*locations.size()];
-    int index = 0;
-    for (CornerLocation corner : locations){
-      retXYs[2*index] = corner.getX_pos();
-      retXYs[2*index + 1] = corner.getY_pos();
-      index = index + 1;
-    }
-    return retXYs;
-
-  }
 
   private Node makeHistogram(){
     //create the histogram to add it onto the main node
@@ -184,6 +130,7 @@ public class SimulationDisplay extends ChangeableDisplay{
   }
 
   private Node makeInfoDisplay(){
+    //make the node with the info display to add it onto the main node
     myInfoDisplay = new InfoDisplay(getNumOfEachState());
     return myInfoDisplay.createInfoDisplay();
   }
