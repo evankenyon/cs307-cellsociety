@@ -46,7 +46,7 @@ public class LanguageResourceHandler {
 
   public static final String ENGLISH = "English";
   public static final String SPANISH = "Spanish";
-  public static final String[] SUPPORTED_LANGUAGES = {ENGLISH, SPANISH};
+//  public static final String[] SUPPORTED_LANGUAGES = {ENGLISH, SPANISH};
   private final Locale englishLocale = new Locale(ENGLISH, "EN");
   private final Locale spanishLocale = new Locale(SPANISH, "ES");
   private Map<String, Locale> langToLocale;

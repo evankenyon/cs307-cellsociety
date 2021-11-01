@@ -43,10 +43,10 @@ public class SimGenerator {
   }
 
   /**
-   * save a .sim file for the simulation, with properties specified in propertyToValue
+   * Save a .sim file for the simulation, with properties specified in propertyToValue
    * @param propertyToValue maps keys like "Author" and "Title" to their corresponding values for the simulation
    */
-  public void createSimFile(Map<String, String> propertyToValue) {
+  public void createSimFile(Map<String, String> propertyToValue) throws IOException{
     OutputStream os = null;
 
     for (String property : propertyToValue.keySet()){
@@ -56,14 +56,7 @@ public class SimGenerator {
 
     // Borrowed code to output Properties to a file from
     // https://www.java2novice.com/java-file-io-operations/create-store-property-file/
-    try {
-      os = new FileOutputStream(propertyToValue.get(FileSavePopup.INITIAL_STATES));
-      simInfo.store(os, null);
-    } catch (FileNotFoundException e) {
-      // TODO: handle exceptions
-      e.printStackTrace();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+    os = new FileOutputStream(propertyToValue.get(FileSavePopup.INITIAL_STATES));
+    simInfo.store(os, null);
   }
 }
