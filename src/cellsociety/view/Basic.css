@@ -17,3 +17,8 @@ HBox{
   -fx-spacing: 10;
 }
 
+VBox{
+  -fx-spacing: 5;
+}
+
+

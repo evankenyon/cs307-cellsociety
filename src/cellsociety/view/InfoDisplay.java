@@ -43,6 +43,7 @@ public class InfoDisplay extends ChangeableDisplay{
     table.getChildren().add(makeColumnForDisplay());
     table.getChildren().add(makeColumnForChange());
     container.getChildren().add(table);
+    myDisp = container;
     return container;
   }
 
@@ -110,6 +111,8 @@ public class InfoDisplay extends ChangeableDisplay{
   public Map<Integer, Label> getStateToNumChangeLabel(){
     return Collections.unmodifiableMap(stateToNumChangeLabel);
   }
+
+
 
 
 

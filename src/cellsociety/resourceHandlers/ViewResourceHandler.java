@@ -20,10 +20,13 @@ import java.util.ArrayList;
  */
 public class ViewResourceHandler {
   private ResourceBundle myResourceBundle;
-  private Properties viewProperties, stateColorProperties, shapeToCornerProperties;
+  private Properties viewProperties, stateColorProperties, shapeToCornerProperties, edgePolicyProperties, neighborArrangementProperties;
   public final static String DISPLAY_PROPS_PATH = "src/cellsociety/resourceHandlers/DisplayProperties.properties";
   public final static String STATE_COLORS_PATH = "src/cellsociety/resourceHandlers/StateColor.properties";
   public final static String SHAPE_CORNER_PATH = "src/cellsociety/resourceHandlers/ShapeCornerGenerator.properties";
+  public final static String EDGE_POLICY_PATH = "src/cellsociety/resourceHandlers/EdgePolicies.properties";
+  public final static String NEIGHBOR_ARRANGEMENTS_PATH = "src/cellsociety/resourceHandlers/NeighborArrangements.properties";
+
   public final static String SIM_WIDTH_KEY = "SimulationWidth";
   public final static String SIM_HEIGHT_KEY = "SimulationHeight";
   public final static String WINDOW_WIDTH_KEY = "windowWidth";
@@ -42,10 +45,14 @@ public class ViewResourceHandler {
     viewProperties = new Properties();
     stateColorProperties = new Properties();
     shapeToCornerProperties = new Properties();
+    edgePolicyProperties = new Properties();
+    neighborArrangementProperties = new Properties();
     try {
       viewProperties.load(new FileInputStream(DISPLAY_PROPS_PATH));
       stateColorProperties.load(new FileInputStream(STATE_COLORS_PATH));
       shapeToCornerProperties.load(new FileInputStream(SHAPE_CORNER_PATH));
+      edgePolicyProperties.load(new FileInputStream(EDGE_POLICY_PATH));
+      neighborArrangementProperties.load(new FileInputStream(NEIGHBOR_ARRANGEMENTS_PATH));
     } catch(Exception e){
       //impossible
     }
@@ -170,12 +177,38 @@ public class ViewResourceHandler {
     }
   }
 
+  /**
+   * get a list of all the possible cell shapes
+   * @return a list like {"Rectangle", "Triangle", "Hexagon"}
+   */
   public List<String> getCellShapes(){
-    List<String> shapes = new ArrayList<>();
-    for (Object s : shapeToCornerProperties.keySet()){
-      shapes.add(s.toString());
+    return getPropertyKeys(shapeToCornerProperties);
+  }
+
+
+  /**
+   * get a list of all the possible edge policies
+   * @return a list like {"Finite", "Toroidal", "Mirror"}
+   */
+  public List<String> getEdgePolicies(){
+    return getPropertyKeys(edgePolicyProperties);
+  }
+
+  /**
+   * get a list of all possible neighbor arrangement policies
+   * @return a list like {"Complete", "Cardinal"}
+   */
+  public List<String> getNeighborArrangements(){
+    return getPropertyKeys(neighborArrangementProperties);
+  }
+
+  private List<String> getPropertyKeys(Properties prop){
+    //get all the keys associated with the given properties file
+    List<String> keys = new ArrayList<>();
+    for (Object s : prop.keySet()){
+      keys.add(s.toString());
     }
-    return shapes;
+    return keys;
   }
 
 

@@ -22,7 +22,7 @@ import cellsociety.location.CornerLocation;
  * Objects of this class represent the grid display for a simulation
  * @author Keith Cressman
  */
-public class CellGridDisplay {
+public class CellGridDisplay extends ChangeableDisplay{
   private Controller myController;
   private ViewResourceHandler myViewResourceHandler;
   private CornerLocationGenerator myCornerGenerator;
@@ -48,9 +48,11 @@ public class CellGridDisplay {
   public Node createGridDisplay(){
     //make a Node containing a background and all the cell displays on top of it
     myGroup = new Group();
+    Rectangle r = new Rectangle();
     myGroup.getChildren().add(new Rectangle(0, 0, myViewResourceHandler.simulationWidth(), myViewResourceHandler.simulationWidth()));
     myCornerGenerator = new RectangleCellCornerLocationGenerator(myController.getGridShape()[0], myController.getGridShape()[1]);
     myGroup.getChildren().addAll(makeCellDisplays());
+    myDisp = myGroup;
     return myGroup;
   }
 
