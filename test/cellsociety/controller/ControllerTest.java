@@ -37,7 +37,7 @@ class ControllerTest {
 
   @Test
   void parseFile()
-      throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+      throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, IllegalCellStateException {
     controller.parseFile(new File("./data/game_of_life/blinkers.sim"));
 //    List<Cell> cells = model.getCellList();
     Scanner overallScanner = new Scanner("./data/game_of_life/blinkers.sim");
@@ -63,7 +63,7 @@ class ControllerTest {
 
   @Test
   void saveFile()
-      throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+      throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, IllegalCellStateException {
     controller.parseFile(new File("./data/game_of_life/blinkers.sim"));
     List<Cell> expected = new ArrayList<>();
     for (int row = 0; row < model.getRows(); row++) {

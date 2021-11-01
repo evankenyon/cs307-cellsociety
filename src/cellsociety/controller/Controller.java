@@ -30,12 +30,12 @@ public class Controller {
   }
 
   public void parseFile(File SimFile)
-      throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+      throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, IllegalCellStateException {
     CSVParser csvParser = new CSVParser();
     SimParser simParser = new SimParser();
     simParser.setupKeyValuePairs(SimFile);
     csvParser.setFile(new File(String.format("./data/%s", simParser.getSimulationConfig().getProperty("InitialStates"))));
-    csvParser.initializeCellMatrix();
+    csvParser.initializeCellMatrix(simParser.getSimulationConfig().getProperty("Type"));
     model.setSimulationInfo(simParser.getSimulationConfig());
     simGenerator = new SimGenerator(simParser.getSimulationConfig());
     model.setupCells(csvParser.getCellStates(), csvParser.getRows(), csvParser.getCols());

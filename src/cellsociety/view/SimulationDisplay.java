@@ -97,6 +97,10 @@ public class SimulationDisplay extends ChangeableDisplay{
       // TODO: move to props file
       displayErrorMessage("Reflection error occurred in backend model, please try restarting the"
           + "program");
+    } catch (IllegalCellStateException e) {
+      // TODO: move to props file
+      displayErrorMessage("Illegal cell state was found, please make sure you are not using any values"
+          + "that are not 0 or 1 for GameOfLife or not 0, 1, or 2 for other simulations");
     }
     VBox root = new VBox();
     root.getChildren().add(makeAllDisplays());

@@ -54,10 +54,6 @@ public class SimParser {
       simulationConfig.remove(key);
       simulationConfig.setProperty(keyStandardization.getString(key), value);
     }
-
-    for (String key : simulationConfig.stringPropertyNames()) {
-      System.out.println(key + "," + simulationConfig.getProperty(key));
-    }
   }
 
   private void handleIllegalInput() {
