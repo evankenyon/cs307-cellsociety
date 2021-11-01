@@ -13,12 +13,12 @@ public class PercolationRules extends Rules {
     private static final String DEFAULT_RESOURCE_PACKAGE =
         GameOfLifeRules.class.getPackageName() + ".resources.";
     private static final String STATE_AND_NEIGHBORS_MAP_FILENAME = "PercolationRules";
-    private PercolationCell pcell;
+    //private PercolationCell pcell;
 
-    public PercolationRules(PercolationCell cell, List<Double> args)
+    public PercolationRules(Cell cell, List<Double> args)
     {
         super(cell);
-        pcell=cell;
+        //pcell=cell;
         if(!args.isEmpty()) {
             //TODO: actually handle
             throw new InputMismatchException();
