@@ -1,9 +1,9 @@
 package view;
 import cellsociety.cell.CellDisplay;
+import java.util.List;
 import java.util.Set;
 import javafx.scene.control.TextInputControl;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 import cellsociety.resourceHandlers.LanguageResourceHandler;
@@ -63,21 +63,19 @@ public class SimulationDisplayTest extends DukeApplicationTest{
 
   @Test
   void testSaveFile(){
+    //Make sure to do setid on the nodes
     //need to check in the right directory
     clickOn(resourceHandler.getStringFromKey(LanguageResourceHandler.SAVE_FILE_KEY));
     Node rootNode = myStage.getScene().getRoot();
 
-    Set<Node> textFields = from(rootNode).lookup(".text-field").queryAll();
+    Collection<Node> textFields = from(rootNode).lookup(".text-field").queryAll();
 
     Random r = new Random();
     int fileName = r.nextInt(9999999);
-
     //this isn't working. Need to figure out how to find specific text field
-
     for (Node n : textFields){
       writeInputTo((TextInputControl)n, String.valueOf(fileName));
     }
-
 
     clickOn(resourceHandler.getStringFromKey(LanguageResourceHandler.SAVE_BUTTON_POPUP_KEY));
     try {

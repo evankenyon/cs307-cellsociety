@@ -67,4 +67,16 @@ public class ViewResourceHandlerTest {
     assertEquals(pColors[1], Color.web("#FF0000"));
     assertEquals(pColors[2], Color.web("#00FF00"));
   }
+
+  @Test
+  void testHistogramBarHeight(){
+    int barHeight = handler.getViewSettingValueFromKey(ViewResourceHandler.MAX_HISTOGRAM_BAR_HEIGHT_KEY);
+    assertEquals(200, barHeight);
+  }
+
+  @Test
+  void testHistogramWidth(){
+    int width = handler.getViewSettingValueFromKey(ViewResourceHandler.HISTOGRAM_WIDTH_KEY);
+    assertEquals(200, width);
+  }
 }

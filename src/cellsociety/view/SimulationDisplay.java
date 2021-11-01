@@ -26,10 +26,16 @@ import javafx.scene.control.Slider;
 
 import cellsociety.cell.Cell;
 import cellsociety.cell.CellDisplay;
+import cellsociety.CornerLocationGenerator.RectangleCellCornerLocationGenerator;
+import cellsociety.CornerLocationGenerator.CornerLocationGenerator;
+import cellsociety.location.CornerLocation;
 
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
+
 
 /**
  * Objects of this class represent the display for a single simulation (I say single since there can be multiple
@@ -38,8 +44,8 @@ import java.util.ArrayList;
  */
 public class SimulationDisplay extends ChangeableDisplay{
 
-  protected double framesPerSecond = 1;
-  protected double secondDelay = 1.0 / framesPerSecond;
+  private double framesPerSecond = 1;
+  private double secondDelay = 1.0 / framesPerSecond;
   private Controller myController;
   protected Timeline myAnimation;
   private boolean paused;
@@ -48,6 +54,7 @@ public class SimulationDisplay extends ChangeableDisplay{
   private ViewResourceHandler myViewResourceHandler;
   private List<CellDisplay> allCellDisplays;
   private Node myNode;
+  private HistogramDisplay myHistogram;
 
   public SimulationDisplay(){
     this(new LanguageResourceHandler());
@@ -91,11 +98,20 @@ public class SimulationDisplay extends ChangeableDisplay{
       throw new Exception(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.BAD_FILE_KEY));
     }
     VBox root = new VBox();
-    root.getChildren().add(makeCellsAndBackground());
+    root.getChildren().add(makeAllDisplays());
     root.getChildren().add(makeControls());
     setUpAnimation();
     myNode = root;
     return root;
+  }
+
+  private Node makeAllDisplays(){
+    //return a node with the grid, histogram, and other option
+    HBox simulationsBox = new HBox();
+    simulationsBox.setSpacing(20); //change magic valeu
+    simulationsBox.getChildren().add(makeCellsAndBackground());
+    simulationsBox.getChildren().add(makeHistogram());
+    return simulationsBox;
   }
 
   private Node makeCellsAndBackground(){
@@ -125,8 +141,9 @@ public class SimulationDisplay extends ChangeableDisplay{
 
   private CellDisplay makeACellDisplay(Cell cell, double widthPerCell, double heightPerCell){
     //make a cell display for the cell with the width and height given as arguments
-    CellDisplay newDisplay = new CellDisplay(cell.getjIndex() * widthPerCell,
-        cell.getiIndex() * heightPerCell, widthPerCell, heightPerCell, cell.getCurrentState());
+   // CellDisplay newDisplay = new CellDisplay(cell.getjIndex() * widthPerCell,
+        //cell.getiIndex() * heightPerCell, widthPerCell, heightPerCell, cell.getCurrentState());
+    CellDisplay newDisplay = new CellDisplay(generateXYs(cell), cell.getCurrentState());
     newDisplay.setCell(cell);
     newDisplay.setColors(myViewResourceHandler.getColorsForSimulation(
         myController.getSimulationType()));
@@ -135,7 +152,45 @@ public class SimulationDisplay extends ChangeableDisplay{
     return newDisplay;
   }
 
+  private double[] generateXYs(Cell cell){
+    int i = cell.getiIndex();
+    int j = cell.getjIndex();
+    CornerLocationGenerator cornerGenerator = new RectangleCellCornerLocationGenerator(myController.getGridShape()[0], myController.getGridShape()[1]);
+    List<CornerLocation> locations = cornerGenerator.generateCorners(i, j);
+    double[] retXYs = new double[2*locations.size()];
+    int index = 0;
+    for (CornerLocation corner : locations){
+      retXYs[2*index] = corner.getX_pos();
+      retXYs[2*index + 1] = corner.getY_pos();
+      index = index + 1;
+    }
+    return retXYs;
+
+  }
+
+  private Node makeHistogram(){
+    //create the histogram to add it onto the main node
+    myHistogram = new HistogramDisplay(allCellDisplays.size(), getNumOfEachState());
+    return myHistogram.createHistogramDisplay();
+  }
+
+  /**
+   * Create/return a map that maps each state to the number of cells in that state
+   * This method should probably go in model, I don't like having it in here.
+   * @return a map used to find how many cells in each state
+   */
+  private Map<Integer, Integer> getNumOfEachState(){
+    Map<Integer, Integer> stateToCount = new HashMap<>();
+    for (CellDisplay c : allCellDisplays){
+      int state = c.getState();
+      stateToCount.putIfAbsent(state, 0);
+      stateToCount.put(state, 1 + stateToCount.get(state));
+    }
+    return stateToCount;
+  }
+
   private Node makeControls(){
+    //make the box with options to pause/resume, do one step, change speed, etc..
     VBox v = new VBox();
     HBox controlBox = new HBox();
     controlBox.getChildren().add(makeAButton(LanguageResourceHandler.ABOUT_KEY, () -> showAbout()));
@@ -157,8 +212,6 @@ public class SimulationDisplay extends ChangeableDisplay{
     }));
     controlBox.getChildren().add(makeAButton(LanguageResourceHandler.SAVE_FILE_KEY, () -> makePopup()));
     v.getChildren().add(controlBox);
-    fileNameField = new TextField();
-    v.getChildren().add(fileNameField);
     v.getChildren().add(makeSlider());
     return v;
   }
@@ -192,15 +245,6 @@ public class SimulationDisplay extends ChangeableDisplay{
 
 
 
-  private void playPauseSimulation(){
-    //pause or resume the simulation
-    if (paused){
-      resumeAnimation();
-    }else{
-      pauseAnimation();
-    }
-  }
-
   private void pauseAnimation(){
     myAnimation.pause();
     //pauseButton.setText(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.RESUME_KEY));
@@ -217,15 +261,6 @@ public class SimulationDisplay extends ChangeableDisplay{
     paused = false;
   }
 
-  private void saveFile(){
-    //save the simulation, with a file name specified by user
-    try {
-      String fileName = fileNameField.getText();
-      myController.saveFile(fileName);
-    } catch (Exception e){
-      displayErrorMessage(e.getMessage());
-    }
-  }
 
   private void makePopup(){
     //make a poup which the user can interact with to save the simulation
@@ -242,6 +277,7 @@ public class SimulationDisplay extends ChangeableDisplay{
 
   protected void step() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
     myController.step();
+    myHistogram.setNumOfEachType(getNumOfEachState());
   }
 
   /**

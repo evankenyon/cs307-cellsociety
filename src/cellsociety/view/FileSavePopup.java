@@ -50,7 +50,7 @@ public class FileSavePopup extends ChangeableDisplay{
   public static final String AUTHOR = "Author";
   public static final String DESCRIPTION = "Description";
   public static final String OTHER = "";
-  private final String DIRECTORY_PROPERTIES_PATH = "src/cellsociety/Utilities/DataDirectory.properties";
+  public final static String DIRECTORY_PROPERTIES_PATH = "src/cellsociety/Utilities/DataDirectory.properties";
 
   private TextField typeField, titleField, authorField, descriptionField, fileNameField;
   private TextArea otherArea;
