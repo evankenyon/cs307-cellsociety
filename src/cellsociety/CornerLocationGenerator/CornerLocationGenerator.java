@@ -33,7 +33,7 @@ public abstract class CornerLocationGenerator {
         VIEW_HEIGHT=myViewResourceHandler.simulationHeight();
     }
 
-    public List<CornerLocation> generateCorners(int i, int j) {return corners;}
+    public abstract List<CornerLocation> generateCorners(int i, int j);
 
     public double getVIEW_HEIGHT() {
         return VIEW_HEIGHT;
