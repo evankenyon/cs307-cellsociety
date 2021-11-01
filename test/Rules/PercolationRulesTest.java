@@ -9,9 +9,17 @@ import java.util.List;
 
 import cellsociety.cell.PercolationCell;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class PercolationRulesTest {
+    private List<Integer> defaultNumCornersShared;
+
+    @BeforeEach
+    void setUp() {
+        defaultNumCornersShared = new ArrayList<>();
+        defaultNumCornersShared.add(2);
+    }
 
     @Test
     void zeroStaysZero()
@@ -23,7 +31,7 @@ public class PercolationRulesTest {
         allCells.add(new Cell(1, 2,0));
         allCells.add(new Cell(2, 1,0));
         for(Cell otherCell : allCells) {
-            cell.updateNeighbors(otherCell, 2);
+            cell.updateNeighbors(otherCell, defaultNumCornersShared);
         }
         cell.updateCellNeighborStateMap();
         Rules rules=new PercolationRules(cell, new ArrayList<>());
@@ -41,7 +49,7 @@ public class PercolationRulesTest {
         allCells.add(new Cell(1, 2,1));
         allCells.add(new Cell(2, 1,0));
         for(Cell otherCell : allCells) {
-            cell.updateNeighbors(otherCell, 2);
+            cell.updateNeighbors(otherCell, defaultNumCornersShared);
         }
         cell.updateCellNeighborStateMap();
         Rules rules=new PercolationRules(cell, new ArrayList<>());
@@ -59,7 +67,7 @@ public class PercolationRulesTest {
         allCells.add(new Cell(1, 2,0));
         allCells.add(new Cell(2, 1,0));
         for(Cell otherCell : allCells) {
-            cell.updateNeighbors(otherCell, 2);
+            cell.updateNeighbors(otherCell, defaultNumCornersShared);
         }
         cell.updateCellNeighborStateMap();
         Rules rules=new PercolationRules(cell, new ArrayList<>());
@@ -77,7 +85,7 @@ public class PercolationRulesTest {
         allCells.add(new Cell(1, 2,0));
         allCells.add(new Cell(2, 1,1));
         for(Cell otherCell : allCells) {
-            cell.updateNeighbors(otherCell, 2);
+            cell.updateNeighbors(otherCell, defaultNumCornersShared);
         }
         cell.updateCellNeighborStateMap();
         Rules rules=new PercolationRules(cell, new ArrayList<>());

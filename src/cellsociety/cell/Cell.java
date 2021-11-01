@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 public class Cell {
   private static final String DEFAULT_RESOURCE_PACKAGE =
-      Model.class.getPackageName() + ".resources.";
+      Cell.class.getPackageName() + ".resources.";
   private static final String DEFAULT_VALUES_FILENAME = "DefaultValues";
 
   private int currentState;
@@ -90,12 +90,12 @@ public class Cell {
     return corners;
   }
 
-  public void updateNeighbors(Cell potentialNeighbor, int numCornersShared) {
+  public void updateNeighbors(Cell potentialNeighbor, List<Integer> numCornersShared) {
     Set<CornerLocation> sharedCorners = corners.stream()
         .distinct()
         .filter(potentialNeighbor.corners::contains)
         .collect(Collectors.toSet());
-    if (sharedCorners.size() >= numCornersShared && !neighbors.contains(potentialNeighbor)
+    if (numCornersShared.contains(sharedCorners.size()) && !neighbors.contains(potentialNeighbor)
         && !potentialNeighbor.equals(this)) {
       neighbors.add(potentialNeighbor);
     }
