@@ -45,6 +45,14 @@ public class LanguageResourceHandler {
   public final static String INFO_DISPLAY_KEY = "InfoDisplay";
   public final static String INFO_CHANGE_KEY = "InfoChange";
   public final static String SHAPES_KEY = "Shapes";
+  public final static String SHOW_GRID_KEY = "ShowCellGrid";
+  public final static String HIDE_GRID_KEY = "HideCellGrid";
+  public final static String SHOW_HISTOGRAM_KEY = "ShowHistogram";
+  public final static String HIDE_HISTOGRAM_KEY = "HideHistogram";
+  public final static String SHOW_INFO_KEY = "ShowInfo";
+  public final static String HIDE_INFO_KEY = "HideInfo";
+  public final static String EDGE_POLICY_KEY = "EdgePolicy";
+  public final static String NEIGHBOR_ARRANGEMENT_KEY = "NeighborArrangement";
 
   public static final String ENGLISH = "English";
   public static final String SPANISH = "Spanish";

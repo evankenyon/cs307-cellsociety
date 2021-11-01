@@ -114,6 +114,22 @@ public class ViewResourceHandlerTest {
     assertTrue(shapes.contains("Triangle"));
     assertTrue(shapes.contains("Rectangle"));
     assertTrue(shapes.contains("Hexagon"));
+  }
 
+  @Test
+  void testEdgePoliciesList(){
+    List<String> policies = handler.getEdgePolicies();
+    assertEquals(3, policies.size());
+    assertTrue(policies.contains("Finite"));
+    assertTrue(policies.contains("Toroidal"));
+    assertTrue(policies.contains("Mirror"));
+  }
+
+  @Test
+  void testEdgeNeighborArrangementsList(){
+    List<String> policies = handler.getNeighborArrangements();
+    assertEquals(2, policies.size());
+    assertTrue(policies.contains("Complete"));
+    assertTrue(policies.contains("Cardinal"));
   }
 }

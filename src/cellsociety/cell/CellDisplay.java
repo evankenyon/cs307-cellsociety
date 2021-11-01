@@ -66,6 +66,8 @@ public class CellDisplay {
 
 
 
+
+
   /**
    * set what cell corresponds to this cell display
    * @param cell will be myCell

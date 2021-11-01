@@ -7,18 +7,22 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.Node;
 import java.util.HashMap;
+
 
 /**
  * This class represents a display aspect with text that can be displayed in another language,
  * and with components whose styling can change.
- * It is extnded by MainView and SimulationDisplay, since those classes are used to represent display
- * components that can be displayed in another language/style.
+ * It is extnded by MainView, SimulationDisplay, CellGridDisplay, HistogramDisplay, and InfoDisplay
+ * since those classes are used to represent display components that can be displayed in another language/style.
+ * I maybe could've split up the button/label creating functionality into a separate class -Keith
  * @author Keith Cressman
  */
 public abstract class ChangeableDisplay {
   protected LanguageResourceHandler myLanguageResourceHandler;
   private Map<NodeWithText, String> myNodesToTextKey;
+  protected Node myDisp;
 
 
   public ChangeableDisplay(){
@@ -96,6 +100,19 @@ public abstract class ChangeableDisplay {
     Alert a = new Alert(AlertType.WARNING);
     a.setContentText(message);
     a.show();
+  }
+
+  /**
+   * set the display visible/invisible, or display an error message if myDisp is null, which is only possible
+   * if the code is being misused.
+   * @param visible should be true to set the display visible
+   */
+  public void setVisible(boolean visible){
+    try{
+      myDisp.setVisible(visible);
+    } catch(Exception e){
+      displayErrorMessage(e.getMessage());
+    }
   }
 
 }

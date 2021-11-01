@@ -76,6 +76,7 @@ public class HistogramDisplay extends ChangeableDisplay{
     container.getChildren().add(makeALabel(LanguageResourceHandler.HISTOGRAM_TITLE_KEY));
     container.getChildren().add(new Line(0,zeroBarY, viewSettings.getViewSettingValueFromKey(ViewResourceHandler.HISTOGRAM_WIDTH_KEY), zeroBarY));
     addRectanglesToDisplay(container);
+    myDisp = container;
     return container;
   }
 
