@@ -200,16 +200,6 @@ public class SimulationDisplay extends ChangeableDisplay{
     paused = false;
   }
 
-//  private void saveFile(){
-//    //save the simulation, with a file name specified by user
-//    try {
-//      String fileName = fileNameField.getText();
-//      myController.saveFile(fileName);
-//    } catch (Exception e){
-//      displayErrorMessage(e.getMessage());
-//    }
-//  }
-
   private void makePopup(){
     //make a poup which the user can interact with to save the simulation
     pauseAnimation();

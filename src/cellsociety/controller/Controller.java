@@ -31,7 +31,6 @@ public class Controller {
     optionalKeys = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + OPTIONAL_KEYS_FILENAME);
   }
 
-  // TODO: actually handle exception
   public void parseFile(File SimFile)
       throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
     CSVParser csvParser = new CSVParser();
@@ -46,14 +45,11 @@ public class Controller {
     model.setRows(csvParser.getRows());
   }
 
-  // TODO: actually handle exception
   public void saveFile(String fileName, Map<String, String> propertyToValue) throws IOException {
     simGenerator.createSimFile(fileName, propertyToValue);
     CSVGenerator csvGenerator = new CSVGenerator();
     csvGenerator.createCSVFile(model.getCellList(), model.getGridShape()[0], model.getGridShape()[1], fileName, getSimulationType());
   }
-
-
 
   public void setModel(Model model) {
     this.model = model;
