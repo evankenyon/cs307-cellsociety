@@ -18,10 +18,10 @@ public class PercolationRulesTest {
         throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         PercolationCell cell= new PercolationCell(1,1,0,10,10);
         List<Cell> allCells = new ArrayList<>();
-        allCells.add(new Cell(0,1,1));
-        allCells.add(new Cell(1,0,1));
-        allCells.add(new Cell(1, 2,1));
-        allCells.add(new Cell(2, 1,1));
+        allCells.add(new Cell(0,1,0));
+        allCells.add(new Cell(1,0,0));
+        allCells.add(new Cell(1, 2,0));
+        allCells.add(new Cell(2, 1,0));
         for(Cell otherCell : allCells) {
             cell.updateNeighbors(otherCell, 2);
         }
@@ -29,6 +29,24 @@ public class PercolationRulesTest {
         Rules rules=new PercolationRules(cell, new ArrayList<>());
         rules.setState();
         Assertions.assertEquals(0,cell.getFutureState());
+    }
+
+    @Test
+    void zeroTurnsOne()
+        throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+        PercolationCell cell= new PercolationCell(1,1,0,10,10);
+        List<Cell> allCells = new ArrayList<>();
+        allCells.add(new Cell(0,1,0));
+        allCells.add(new Cell(1,0,1));
+        allCells.add(new Cell(1, 2,1));
+        allCells.add(new Cell(2, 1,0));
+        for(Cell otherCell : allCells) {
+            cell.updateNeighbors(otherCell, 2);
+        }
+        cell.updateCellNeighborStateMap();
+        Rules rules=new PercolationRules(cell, new ArrayList<>());
+        rules.setState();
+        Assertions.assertEquals(1,cell.getFutureState());
     }
 
     @Test
@@ -47,24 +65,6 @@ public class PercolationRulesTest {
         Rules rules=new PercolationRules(cell, new ArrayList<>());
         rules.setState();
         Assertions.assertEquals(1,cell.getFutureState());
-    }
-
-    @Test
-    void oneTurnsTwo()
-        throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-        PercolationCell cell= new PercolationCell(1,1,1,10,10);
-        List<Cell> allCells = new ArrayList<>();
-        allCells.add(new Cell(0,1,1));
-        allCells.add(new Cell(1,0,1));
-        allCells.add(new Cell(1, 2,1));
-        allCells.add(new Cell(2, 1,0));
-        for(Cell otherCell : allCells) {
-            cell.updateNeighbors(otherCell, 2);
-        }
-        cell.updateCellNeighborStateMap();
-        Rules rules=new PercolationRules(cell, new ArrayList<>());
-        rules.setState();
-        Assertions.assertEquals(2,cell.getFutureState());
     }
 
     @Test

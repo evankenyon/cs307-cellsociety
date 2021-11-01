@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -24,22 +25,20 @@ class ModelTest {
 
   @Test
   void findNextStateForEachCell() throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-    controller.parseFile(new File("./data/game_of_life/blinkers.csv"));
+    controller.parseFile(new File("./data/game_of_life/blinkers.sim"));
     model.findNextStateForEachCell();
     model.updateModel();
-    controller.saveFile("program-0");
-    controller.parseFile(new File("./data/game_of_life/saved/program-0.csv"));
+    controller.saveFile("0", null);
+    controller.parseFile(new File("./data/saved/GameOfLife/program-0.sim"));
     model.findNextStateForEachCell();
     model.updateModel();
-    Cell[][] actual = model.getCellGrid();
-    controller.parseFile(new File("./data/game_of_life/blinkers-one-step.csv"));
+    List<Cell> actual = model.getCellList();
+    controller.parseFile(new File("./data/game_of_life/blinkers-one-step.sim"));
     model.findNextStateForEachCell();
     model.updateModel();
-    Cell[][] expected = model.getCellGrid();
-    for (int row = 0; row < expected.length; row++) {
-      for (int col = 0; col < expected[0].length; col++) {
-        assertEquals(expected[row][col].getCurrentState(), actual[row][col].getCurrentState());
-      }
+    List<Cell> expected = model.getCellList();
+    for (int index = 0; index < expected.size(); index++) {
+      assertEquals(expected.get(index).getCurrentState(), actual.get(index).getCurrentState());
     }
   }
 

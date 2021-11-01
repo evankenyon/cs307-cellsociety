@@ -1,12 +1,7 @@
 package cellsociety.resourceHandlers;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Properties;
 import java.util.ResourceBundle;
-import java.io.FileInputStream;
 import java.util.Locale;
-
 import java.util.Map;
 import java.util.HashMap;
 

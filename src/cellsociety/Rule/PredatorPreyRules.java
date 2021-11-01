@@ -5,7 +5,6 @@ import cellsociety.cell.PredatorPreyCell;
 
 import java.util.InputMismatchException;
 import java.util.List;
-import java.util.Random;
 
 public class PredatorPreyRules extends Rules {
     private int reproductionCycle=3;

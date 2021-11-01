@@ -5,7 +5,7 @@ import cellsociety.resourceHandlers.ViewResourceHandler;
 import cellsociety.controller.Controller;
 
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
 import javafx.animation.KeyFrame;
@@ -19,7 +19,6 @@ import javafx.scene.layout.VBox;
 
 import javafx.scene.Group;
 import javafx.scene.shape.Rectangle;
-import javafx.animation.Timeline;
 import javafx.util.Duration;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Slider;
@@ -69,18 +68,7 @@ public class SimulationDisplay extends ChangeableDisplay{
   protected void setUpAnimation(){
     myAnimation = new Timeline();
     myAnimation.setCycleCount(Timeline.INDEFINITE);
-    myAnimation.getKeyFrames().add(new KeyFrame(Duration.seconds(secondDelay), e -> {
-      try {
-        step();
-      } catch (InvocationTargetException ex) {
-        ex.printStackTrace();
-      } catch (NoSuchMethodException ex) {
-        ex.printStackTrace();
-      } catch (IllegalAccessException ex) {
-        ex.printStackTrace();
-      }
-    }));
-
+    myAnimation.getKeyFrames().add(new KeyFrame(Duration.seconds(secondDelay), e -> step()));
     myAnimation.play();
     paused = false;
   }
@@ -90,12 +78,15 @@ public class SimulationDisplay extends ChangeableDisplay{
    * create the display (i.e. a grid with each cell) to put on the MainView
    * @return a Node to display on the MainView
    */
-  public Node makeDisplay(File SimFile) throws Exception{
+  public Node makeDisplay(File SimFile) {
     try {
       myController.parseFile(SimFile);
-    }catch (Exception e){
-      e.printStackTrace();
-      throw new Exception(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.BAD_FILE_KEY));
+    }catch (IOException e ){
+      displayErrorMessage(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.BAD_FILE_KEY));
+    } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
+      // TODO: move to props file
+      displayErrorMessage("Reflection error occurred in backend model, please try restarting the"
+          + "program");
     }
     VBox root = new VBox();
     root.getChildren().add(makeAllDisplays());
@@ -199,17 +190,7 @@ public class SimulationDisplay extends ChangeableDisplay{
     resumeButton.setVisible(false);
     controlBox.getChildren().add(pauseButton);
     controlBox.getChildren().add(resumeButton);
-    controlBox.getChildren().add(makeAButton(LanguageResourceHandler.ONE_STEP_KEY, () -> {
-      try {
-        oneStep();
-      } catch (InvocationTargetException e) {
-        e.printStackTrace();
-      } catch (NoSuchMethodException e) {
-        e.printStackTrace();
-      } catch (IllegalAccessException e) {
-        e.printStackTrace();
-      }
-    }));
+    controlBox.getChildren().add(makeAButton(LanguageResourceHandler.ONE_STEP_KEY, () -> oneStep()));
     controlBox.getChildren().add(makeAButton(LanguageResourceHandler.SAVE_FILE_KEY, () -> makePopup()));
     v.getChildren().add(controlBox);
     v.getChildren().add(makeSlider());
@@ -261,7 +242,6 @@ public class SimulationDisplay extends ChangeableDisplay{
     paused = false;
   }
 
-
   private void makePopup(){
     //make a poup which the user can interact with to save the simulation
     pauseAnimation();
@@ -269,15 +249,21 @@ public class SimulationDisplay extends ChangeableDisplay{
     popup.makePopup();
   }
 
-  private void oneStep() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+  private void oneStep() {
     //go through one step at a time
     pauseAnimation();
     step();
   }
 
-  protected void step() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-    myController.step();
-    myHistogram.setNumOfEachType(getNumOfEachState());
+  protected void step() {
+    try {
+      myController.step();
+      myHistogram.setNumOfEachType(getNumOfEachState());
+    } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+      // TODO: move to props file
+      displayErrorMessage("Reflection error occurred in backend model, please try restarting the"
+          + "program");
+    }
   }
 
   /**

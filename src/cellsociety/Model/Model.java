@@ -8,7 +8,6 @@ import java.lang.reflect.Method;
 import java.util.*;
 
 import javafx.scene.Node;
-import org.apache.commons.lang3.ObjectUtils.Null;
 
 public class Model {
 
@@ -18,7 +17,6 @@ public class Model {
   private static final String NUM_CORNERS_FILENAME = "NumCorners";
   private static final String VALUE_ALTERNATIVES_FILENAME = "ValuesAlternatives";
   private static final String KEY_ALTERNATIVES_FILENAME = "KeyAlternatives";
-  private Cell[][] cellGrid;
   private List<Cell> cellList;
   private Map<String, String> simulationInfo;
 //  private String simulationType;
@@ -28,7 +26,6 @@ public class Model {
   private int rows;
   private int cols;
   private HashMap<Integer, List<Cell>> modelStateMap;
-  private List<Double> args;
 
 
 
@@ -50,19 +47,12 @@ public class Model {
   public void setCellList(List<Cell> cellList) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
     this.cellList = cellList;
     updateAllNeighborsList();
-
-//    updateAllCellNeighborMaps();
     affectAllCells("updateCellNeighborStateMap");
-
   }
 
   public void updateModel() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-//    updateAllCellStates();
     affectAllCells("updateState");
-
-//    updateAllCellNeighborMaps();
     affectAllCells("updateCellNeighborStateMap");
-
     createModelStateMap();
   }
 
@@ -73,22 +63,8 @@ public class Model {
     }
   }
 
-
-  private void updateAllCellStates() {
-    for(Cell cell: cellList){
-      cell.updateState();
-    }
-  }
-
-  private void updateAllCellNeighborMaps(){
-    for(Cell cell: cellList){
-      cell.updateCellNeighborStateMap();
-    }
-
-  }
-
-
-  private void affectAllCells(String method) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+  private void affectAllCells(String method)
+      throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
     for(Cell cell: cellList) {
       Method cellMethod = cell.getClass().getDeclaredMethod(method);
       cellMethod.invoke(cell);
@@ -126,10 +102,6 @@ public class Model {
 
   public List<Cell> getCellList() {
     return cellList;
-  }
-
-  public Cell[][] getCellGrid() {
-    return cellGrid;
   }
 
   private void updateSingleCellNeighbors(Cell inputCell){

@@ -10,6 +10,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,9 +33,10 @@ class ControllerTest {
   }
 
   @Test
-  void parseFile() throws FileNotFoundException {
+  void parseFile()
+      throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
     controller.parseFile(new File("./data/game_of_life/blinkers.sim"));
-    Cell[][] cells = model.getCellGrid();
+    List<Cell> cells = model.getCellList();
     Scanner overallScanner = new Scanner("./data/game_of_life/blinkers.sim");
     overallScanner.nextLine();
     int row = 0;
@@ -42,7 +45,7 @@ class ControllerTest {
       lineScanner.useDelimiter(",");
       int col = 0;
       while (lineScanner.hasNext()) {
-        assertEquals(Integer.parseInt(lineScanner.next()), cells[row][col].getCurrentState());
+        assertEquals(Integer.parseInt(lineScanner.next()), cells.get(row + col).getCurrentState());
         col++;
       }
       row++;
@@ -56,16 +59,15 @@ class ControllerTest {
   }
 
   @Test
-  void saveFile() throws IOException {
+  void saveFile()
+      throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
     controller.parseFile(new File("./data/game_of_life/blinkers.sim"));
-    Cell[][] expected = model.getCellGrid();
-    controller.saveFile("0");
+    List<Cell> expected = model.getCellList();
+    controller.saveFile("junit", new HashMap<>());
     controller.parseFile(new File("./data/game_of_life/saved/program-0.sim"));
-    Cell[][] actual = model.getCellGrid();
-    for (int row = 0; row < expected.length; row++) {
-      for (int col = 0; col < expected[0].length; col++) {
-        assertEquals(expected[row][col].getCurrentState(), actual[row][col].getCurrentState());
-      }
+    List<Cell> actual = model.getCellList();
+    for (int index = 0; index < expected.size(); index++) {
+        assertEquals(expected.get(index).getCurrentState(), actual.get(index).getCurrentState());
     }
   }
 

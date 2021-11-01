@@ -1,11 +1,8 @@
 package cellsociety.Rule;
 
-
 import cellsociety.cell.Cell;
 import cellsociety.cell.GameOfLifeCell;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -19,6 +16,7 @@ public class GameOfLifeRules extends Rules {
 
   public GameOfLifeRules(Cell cell, List<Double> args) {
     super(cell);
+//    gcell=cell;
     if(!args.isEmpty()) {
       // TODO: handle
       throw new InputMismatchException();
