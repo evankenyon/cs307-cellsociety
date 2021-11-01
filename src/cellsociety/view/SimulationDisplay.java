@@ -5,7 +5,6 @@ import cellsociety.resourceHandlers.ViewResourceHandler;
 import cellsociety.controller.Controller;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
@@ -20,7 +19,6 @@ import javafx.scene.layout.VBox;
 
 import javafx.scene.Group;
 import javafx.scene.shape.Rectangle;
-import javafx.animation.Timeline;
 import javafx.util.Duration;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Slider;

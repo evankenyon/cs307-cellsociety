@@ -1,11 +1,8 @@
 package cellsociety.Rule;
 
-
 import cellsociety.cell.Cell;
 import cellsociety.cell.GameOfLifeCell;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.ResourceBundle;

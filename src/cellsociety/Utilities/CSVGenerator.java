@@ -2,7 +2,6 @@ package cellsociety.Utilities;
 
 import cellsociety.cell.Cell;
 import com.opencsv.CSVWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ public class CSVGenerator {
   // TODO: handle exception properly
   public void createCSVFile(List<Cell> cellList, int rows, int cols, String filePath, String simType) throws IOException {
     String realFilePath =  String.format("./data/saved/%s/program-" + "%s.csv", simType, filePath);
-//    File createFile = new File(realFilePath);
     // Setup code for CSVWriter borrowed from https://www.baeldung.com/opencsv
     CSVWriter csvWriter = new CSVWriter(
         new FileWriter(realFilePath),

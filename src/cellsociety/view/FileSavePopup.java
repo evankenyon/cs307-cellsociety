@@ -1,34 +1,18 @@
 package cellsociety.view;
 
 import cellsociety.resourceHandlers.LanguageResourceHandler;
-import cellsociety.resourceHandlers.ViewResourceHandler;
 import cellsociety.controller.Controller;
 
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Control;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.control.Label;
-import javafx.scene.Group;
-import javafx.scene.shape.Rectangle;
-import javafx.animation.Timeline;
-import javafx.util.Duration;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Slider;
-import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextArea;
 import java.util.Map;
 import java.util.HashMap;

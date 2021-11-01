@@ -1,9 +1,5 @@
 package cellsociety.location;
 
-import cellsociety.cell.Cell;
-import java.util.Arrays;
-import java.util.Objects;
-
 public class CornerLocation {
     private double x_pos;
     private double y_pos;

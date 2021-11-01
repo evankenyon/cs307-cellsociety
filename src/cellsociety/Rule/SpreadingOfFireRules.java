@@ -1,6 +1,5 @@
 package cellsociety.Rule;
 
-import cellsociety.cell.Cell;
 import cellsociety.cell.FireCell;
 
 import java.lang.reflect.InvocationTargetException;
