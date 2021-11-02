@@ -27,7 +27,7 @@ public abstract class CSVParser {
         this.file = file;
     }
 
-    public abstract List<Integer> getCellStates(String simType) throws FileNotFoundException, IllegalCellStateException;
+    public abstract List<Integer> getCellStates(String simType) throws FileNotFoundException, IllegalCellStateException, IllegalRowSizeException, InvalidDimensionException;
 
     public List<Integer> getValidStatesList(String simType) {
         ResourceBundle validStatesBundle = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + VALID_STATES_FILENAME);

@@ -24,7 +24,7 @@ public class SpreadingOfFireRules extends Rules {
 
   public SpreadingOfFireRules(Cell cell, List<Double> args) throws IllegalCellStateException {
     super(cell);
-    if(cell.getCurrentState()>4){
+    if(cell.getCurrentState()>2){
       throw new IllegalCellStateException();
     }
     //fcell=cell;

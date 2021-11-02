@@ -2,6 +2,8 @@ package cellsociety.controller;
 
 import cellsociety.Rule.RulesInterface;
 import cellsociety.Utilities.CSVParser.DefaultCSVParser;
+import cellsociety.Utilities.CSVParser.IllegalRowSizeException;
+import cellsociety.Utilities.CSVParser.InvalidDimensionException;
 import cellsociety.cell.Cell;
 import cellsociety.Model.Model;
 import cellsociety.Utilities.CSVGenerator;
@@ -34,7 +36,7 @@ public class Controller {
   }
 
   public void parseFile(File SimFile)
-      throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, IllegalCellStateException, InputMismatchException, IllegalArgumentException {
+          throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, IllegalCellStateException, InputMismatchException, IllegalArgumentException, InvalidDimensionException, IllegalRowSizeException {
     CSVParser csvParser = null;
     SimParser simParser = new SimParser();
     simParser.setupKeyValuePairs(SimFile);

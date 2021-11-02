@@ -17,6 +17,10 @@ public class PercolationRules extends Rules {
 
   public PercolationRules(Cell cell, List<Double> args) throws IllegalCellStateException {
     super(cell);
+    if(cell.getCurrentState()>2){
+      throw new IllegalCellStateException();
+    }
+
     if(cell.getCurrentState()>4){
       throw new IllegalCellStateException();
     }
