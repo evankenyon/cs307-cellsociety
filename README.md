@@ -93,14 +93,50 @@ Assumptions or Simplifications:
  * In cellsociety.view.CellGridDisplay, I assume that the argument newShape is a String corresponding to a valid shape, i.e. "Rectangle", "Triangle", or "Hexagon". Currently in our code, those are the only possibilities, but if the code was extended for other purposes, people could misuse this method
  * Assumes that cells are going to be colored, not using images
 
+How potential errors are handled:
+* required value not given
+
+Propagated from SimParser to frontend, frontend displays an error message that is contained in a
+properties file.
+
+* invalid value given (like a non-existent simulation, edge policy, neighborhood arrangement, or negative percentage)
+
+Propagated from SimParser to frontend, frontend displays an error message that is contained in a
+properties file.
+
+* invalid cell state values given
+
+Propagated from CSVParser to frontend, frontend displays an error message that is contained in a
+properties file.
+
+* cell locations given that are outside the bounds of the grid's size 
+
+Propagated from CSVParser to frontend, frontend displays an error message that is contained in a
+properties file.
+
+* empty, badly formatted, or non-CSV files given
+
+Propagated from CSVParser to frontend, frontend displays an error message that is contained in a
+properties file.
+
+Added Key Names for Config Files:
+* EdgePolicy (can equal Toroidal, Finite, or Mirror)
+* Shape (can equal Triangle, Hexagon, or Rectangle)
+* NeighborArrangement (can equal Corner, )
 
 Interesting data files:
-* 
+* fire/bad.csv
+* fire/basic.csv
+* fire/probabilityAllTwo.sim (/csv)
+* fire/rawNumsHalfandHalf.sim (/csv)
+* game_of_life/invalidDimension.sim (/csv)
+* game_of_life/rawNumsHalfAndHalf.sim (/csv)
+* game_of_life/probabilityAll.sim (/csv)
 
 Known Bugs:
 * In segregation, some of the cells spontaneously disappear
 * If the grid is made into a rectangle instead of a square, there are issues with triangle and hexagon cell shape
-* 
+* Can't dynamically set edge policy from frontend
 
 Noteworthy Features:
 The games work for the most part besides a couple of glitches. The view has some nice features like changing the color of the window, the shape of the cell, and the animation speed. It also has a histogram of cell states and an info display.
