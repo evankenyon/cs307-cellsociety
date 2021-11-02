@@ -136,9 +136,8 @@ public class Cell implements ImmutableCell {
     updateNeighbors(potentialNeighbor, numCornersShared);
   }
 
-  public void updateNeighborsToroidal(int rows, int cols, Cell potentialNeighbor,
-      List<Integer> numCornersShared) {
-    updateNeighbors(potentialNeighbor, numCornersShared);
+  public void updateNeighborsToroidal(int rows, int cols, Cell potentialNeighbor, List<Integer> numCornersShared){
+    updateNeighbors(potentialNeighbor,numCornersShared);
     int indexedRows = rows--;
     int indexedCols = cols--;
     boolean onOppositeTopBottom = iIndexDifference(potentialNeighbor) == indexedRows &&
@@ -155,16 +154,41 @@ public class Cell implements ImmutableCell {
     }
   }
 
-  public int iIndexDifference(Cell potentialNeighbor) {
-    return Math.abs(this.iIndex - potentialNeighbor.getiIndex());
+  public void updateNeighborsMirror(int rows, int cols, Cell potentialNeighbor, List<Integer> numCornersShared){
+    updateNeighbors(potentialNeighbor,numCornersShared);
+
+    int indexedRows = rows--;
+    int indexedCols = cols--;
+
+    if(this.getiIndex() == 0||this.getiIndex()==indexedRows){
+      if(Math.abs(this.getiIndex()-potentialNeighbor.getjIndex())==indexedCols){
+        if(potentialNeighbor.getjIndex()==0 || potentialNeighbor.getjIndex() == indexedCols){
+          addUniqueNeighborToList(potentialNeighbor);
+        }
+      }
+    }
+
+
+    if(this.getjIndex() == 0||this.getjIndex()==indexedRows){
+      if(Math.abs(this.getjIndex()-potentialNeighbor.getiIndex())==indexedRows){
+        if(potentialNeighbor.getiIndex()==0 || potentialNeighbor.getiIndex() == indexedRows){
+          addUniqueNeighborToList(potentialNeighbor);
+        }
+      }
+    }
+
+  }
+
+  public int iIndexDifference(Cell potentialNeighbor){
+    return Math.abs(this.iIndex-potentialNeighbor.getiIndex());
   }
 
   public int jIndexDifference(Cell potentialNeighbor) {
     return Math.abs(this.jIndex - potentialNeighbor.getjIndex());
   }
 
-  public void addUniqueNeighborToList(Cell potentialNeighbor) {
-    if (!neighbors.contains(potentialNeighbor)) {
+  public void addUniqueNeighborToList(Cell potentialNeighbor){
+    if(!neighbors.contains(potentialNeighbor) && !potentialNeighbor.equals(this)){
       neighbors.add(potentialNeighbor);
     }
   }

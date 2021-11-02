@@ -142,8 +142,7 @@ public class SimulationDisplayTest extends DukeApplicationTest{
 
   private void changeSpeedSlider(Slider s, double newFPS){
     setValue(s, newFPS);
-    //line above actually does nothing since it isn't technicaly cliking on the slider, so I need the line below
-    simDisp.changeAnimationSpeed(newFPS);
+    //line above actually does nothing since it isn't technicaly cliking on the slider
   }
 
   @Test
