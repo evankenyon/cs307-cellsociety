@@ -4,6 +4,7 @@ package cellsociety.Utilities;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,6 +35,12 @@ class SimParserTest {
   @Test
   void setupKeyValuePairsIncorrect() {
     Assertions.assertThrows(NullPointerException.class,
-        () -> simParser.setupKeyValuePairs(new File("/data/game_of_life/blinkers-one-step.sim")));
+        () -> simParser.setupKeyValuePairs(new File("/data/game_of_life/blinkers-two-step.sim")));
+  }
+
+  @Test
+  void setupKeyValuePairsInputMismatchException() {
+    Assertions.assertThrows(InputMismatchException.class,
+        () -> simParser.setupKeyValuePairs(new File("/data/game_of_life")));
   }
 }
