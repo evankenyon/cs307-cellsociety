@@ -131,8 +131,14 @@ public class Model {
 
   private void updateSingleCellNeighbors(Cell inputCell) {
     for (Cell cell : cellList) {
-      inputCell.updateNeighbors(cell,
-          parseNumCornersList(numCorners.getString(simulationInfo.get("Type"))));
+      try {
+        inputCell.updateNeighbors(cell,
+            parseNumCornersList(numCorners.getString(simulationInfo.get("NeighborArrangement"))));
+      } catch (NullPointerException e) {
+        inputCell.updateNeighbors(cell,
+            parseNumCornersList(numCorners.getString("Complete")));
+      }
+
     }
   }
 
