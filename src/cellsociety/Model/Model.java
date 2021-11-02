@@ -45,7 +45,11 @@ public class Model {
     this.cols = cols;
     for (int row = 0; row < rows; row++) {
       for (int col = 0; col < cols; col++) {
-        cellList.add(new Cell(row, col, cellStateList.get(rows * row + col), rows, cols));
+        try {
+          cellList.add(new Cell(row, col, cellStateList.get(rows * row + col), rows, cols, simulationInfo.get("Shape")));
+        } catch (NullPointerException e) {
+          cellList.add(new Cell(row, col, cellStateList.get(rows * row + col), rows, cols, "Rectangle"));
+        }
       }
     }
     updateAllNeighborsList();
@@ -80,6 +84,7 @@ public class Model {
     // https://www.boraji.com/how-to-iterate-properites-in-java
     for (String key : simulationInfo.stringPropertyNames()) {
 //      System.out.println(key);
+
       if (keyAlternatives.containsKey(key)) {
         try {
           this.simulationInfo.put(keyAlternatives.getString(key),

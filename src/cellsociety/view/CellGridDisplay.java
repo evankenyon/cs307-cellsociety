@@ -93,10 +93,7 @@ public class CellGridDisplay extends ChangeableDisplay{
   }
 
   private double[] generateXYs(ImmutableCell cell){
-    //generate an array of x and y coordinates that will be used to create a polygon
-    int i = cell.getiIndex();
-    int j = cell.getjIndex();
-   List<CornerLocation> locations = myCornerGenerator.generateCorners(i, j);
+    List<CornerLocation> locations = cell.getCorners();
     double[] retXYs = new double[2*locations.size()];
     int index = 0;
     for (CornerLocation corner : locations){

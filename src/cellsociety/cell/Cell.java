@@ -1,9 +1,11 @@
 package cellsociety.cell;
 
 
+import cellsociety.CornerLocationGenerator.CornerLocationGenerator;
 import cellsociety.Model.Model;
 import cellsociety.location.CornerLocation;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.function.Consumer;
 import javafx.scene.Node;
@@ -15,6 +17,7 @@ import java.util.stream.Collectors;
 
 
 public class Cell implements ImmutableCell {
+
   private static final String DEFAULT_RESOURCE_PACKAGE =
       Cell.class.getPackageName() + ".resources.";
   private static final String DEFAULT_VALUES_FILENAME = "DefaultValues";
@@ -30,9 +33,13 @@ public class Cell implements ImmutableCell {
   private int energy;
   private List<Consumer<Integer>> myObservers;
 
+  public Cell(int i, int j, int initialState, int rows, int columns) {
+    this(i, j, initialState, rows, columns, "Rectangle");
+  }
 
-  public Cell(int i, int j, int initialState, int rows, int columns) throws IllegalArgumentException {
-    if(i > rows || j > columns) {
+  public Cell(int i, int j, int initialState, int rows, int columns, String shape)
+      throws IllegalArgumentException {
+    if (i > rows || j > columns) {
       throw new IllegalArgumentException();
     }
     ResourceBundle defaultVals = ResourceBundle.getBundle(
@@ -40,7 +47,17 @@ public class Cell implements ImmutableCell {
     this.iIndex = i;
     this.jIndex = j;
     this.currentState = initialState;
-    corners = new RectangleCellCornerLocationGenerator(rows, columns).generateCorners(i, j);
+    CornerLocationGenerator cornerLocationGenerator = null;
+    try {
+      System.out.println(shape);
+      cornerLocationGenerator = (CornerLocationGenerator) Class.forName(
+              String.format("%s.%sCellCornerLocationGenerator",
+                  CornerLocationGenerator.class.getPackageName(), shape))
+          .getConstructor(int.class, int.class).newInstance(rows, columns);
+    } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
+      cornerLocationGenerator = new RectangleCellCornerLocationGenerator(rows, columns);
+    }
+    corners = cornerLocationGenerator.generateCorners(i, j);
     neighbors = new ArrayList<>();
 //    myDisplay = new CellDisplay(j * Integer.parseInt(defaultVals.getString("defaultWidth")),
 //        i * Integer.parseInt(defaultVals.getString("defaultHeight")), currentState);
@@ -69,7 +86,7 @@ public class Cell implements ImmutableCell {
   }
 
   private void updateObservers() {
-    for(Consumer<Integer> observer : myObservers) {
+    for (Consumer<Integer> observer : myObservers) {
       observer.accept(getCurrentState());
     }
   }
@@ -101,38 +118,40 @@ public class Cell implements ImmutableCell {
     }
   }
 
-  public void updateNeighborsFinite(int rows, int cols, Cell potentialNeighbor, List<Integer> numCornersShared){
+  public void updateNeighborsFinite(int rows, int cols, Cell potentialNeighbor,
+      List<Integer> numCornersShared) {
     updateNeighbors(potentialNeighbor, numCornersShared);
   }
 
-  public void updateNeighborsToroidal(int rows, int cols, Cell potentialNeighbor, List<Integer> numCornersShared){
-    updateNeighbors(potentialNeighbor,numCornersShared);
+  public void updateNeighborsToroidal(int rows, int cols, Cell potentialNeighbor,
+      List<Integer> numCornersShared) {
+    updateNeighbors(potentialNeighbor, numCornersShared);
     int indexedRows = rows--;
     int indexedCols = cols--;
-    boolean onOppositeTopBottom = iIndexDifference(potentialNeighbor)==indexedRows &&
-            jIndexDifference(potentialNeighbor) == 0;
+    boolean onOppositeTopBottom = iIndexDifference(potentialNeighbor) == indexedRows &&
+        jIndexDifference(potentialNeighbor) == 0;
 
-    boolean onOppositeLeftRight = iIndexDifference(potentialNeighbor)==0 &&
-            jIndexDifference(potentialNeighbor) == indexedCols;
+    boolean onOppositeLeftRight = iIndexDifference(potentialNeighbor) == 0 &&
+        jIndexDifference(potentialNeighbor) == indexedCols;
 
-    boolean onOppositeCorners =  iIndexDifference(potentialNeighbor)==indexedRows &&
-            jIndexDifference(potentialNeighbor) == indexedCols;
+    boolean onOppositeCorners = iIndexDifference(potentialNeighbor) == indexedRows &&
+        jIndexDifference(potentialNeighbor) == indexedCols;
 
-    if(onOppositeTopBottom || onOppositeLeftRight || onOppositeCorners){
+    if (onOppositeTopBottom || onOppositeLeftRight || onOppositeCorners) {
       addUniqueNeighborToList(potentialNeighbor);
     }
   }
 
-  public int iIndexDifference(Cell potentialNeighbor){
-    return Math.abs(this.iIndex-potentialNeighbor.getiIndex());
+  public int iIndexDifference(Cell potentialNeighbor) {
+    return Math.abs(this.iIndex - potentialNeighbor.getiIndex());
   }
 
-  public int jIndexDifference(Cell potentialNeighbor){
-    return Math.abs(this.jIndex-potentialNeighbor.getjIndex());
+  public int jIndexDifference(Cell potentialNeighbor) {
+    return Math.abs(this.jIndex - potentialNeighbor.getjIndex());
   }
 
-  public void addUniqueNeighborToList(Cell potentialNeighbor){
-    if(!neighbors.contains(potentialNeighbor)){
+  public void addUniqueNeighborToList(Cell potentialNeighbor) {
+    if (!neighbors.contains(potentialNeighbor)) {
       neighbors.add(potentialNeighbor);
     }
   }
@@ -154,7 +173,9 @@ public class Cell implements ImmutableCell {
     }
   }
 
-  public List<Cell> getNeighbors() {return neighbors;}
+  public List<Cell> getNeighbors() {
+    return neighbors;
+  }
 
   public Cell getNeighborOfState(int state, int num) {
     return neighborCellStateMap.get(state).get(num);
@@ -163,12 +184,12 @@ public class Cell implements ImmutableCell {
 
   @Override
   public boolean equals(Object o) {
-      if (this == o) {
-          return true;
-      }
-      if (o == null || getClass() != o.getClass()) {
-          return false;
-      }
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
     Cell cell = (Cell) o;
     return currentState == cell.currentState && futureState == cell.futureState
         && iIndex == cell.iIndex && jIndex == cell.jIndex && Objects.equals(neighbors,
