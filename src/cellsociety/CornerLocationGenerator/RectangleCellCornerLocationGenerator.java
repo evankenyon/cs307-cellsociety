@@ -13,6 +13,13 @@ public class RectangleCellCornerLocationGenerator extends CornerLocationGenerato
         super(rows,columns);
     }
 
+    /**
+     *
+     * @param i
+     * @param j
+     * @return a list of the corners for each individual rectangle based on its index
+     * and the size of the simulation window
+     */
     @Override
     public List<CornerLocation> generateCorners(int i, int j)
     {
