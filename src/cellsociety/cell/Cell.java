@@ -69,10 +69,13 @@ public class Cell implements ImmutableCell {
   }
 
   public void changeShape(String shape, int rows, int columns) {
-    System.out.println("test");
     updateCornerLoationGenerator(shape, rows, columns);
     neighbors.clear();
     corners = cornerLocationGenerator.generateCorners(iIndex, jIndex);
+  }
+
+  public void setNoNeighbors() {
+    neighbors.clear();
   }
 
   private void updateCornerLoationGenerator(String shape, int rows, int columns) {

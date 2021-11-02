@@ -117,8 +117,9 @@ public class Controller {
    * as a key in resourceHandlers.NeighborArrangements.Properties to get something
    * @param newArrangement is a String like "Complete" or "Cardinal"
    */
-  public void changeNeighborArrangement(String newArrangement){
-
+  public void changeNeighborArrangement(String newArrangement)
+      throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+    model.updateNeighborArrangement(newArrangement);
   }
 
   /**

@@ -80,9 +80,15 @@ public class Model {
 
   public void changeShapeOfCells(String shape) {
     for (Cell cell : cellList) {
-
       cell.changeShape(shape, rows, cols);
     }
+    updateAllNeighborsList();
+  }
+
+  public void updateNeighborArrangement(String arrangement)
+      throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+    simulationInfo.put("NeighborArrangement", arrangement);
+    affectAllCells("setNoNeighbors");
     updateAllNeighborsList();
   }
 

@@ -220,7 +220,14 @@ public class SimulationDisplay extends ChangeableDisplay{
     parametersControlBox.getChildren().add(shapeControlBox);
 
     Node neighborArrangementBox = makeOptionsBox(LanguageResourceHandler.NEIGHBOR_ARRANGEMENT_KEY,
-        myViewResourceHandler.getNeighborArrangements(), (s) -> myController.changeNeighborArrangement(s));
+        myViewResourceHandler.getNeighborArrangements(), (s) -> {
+          try {
+            myController.changeNeighborArrangement(s);
+          } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+            // TODO: move to props file
+            displayErrorMessage("Error with reflection in the backend, please try restarting the program and trying again");
+          }
+        });
     parametersControlBox.getChildren().add(neighborArrangementBox);
 
     Node edgePolicyBox = makeOptionsBox(LanguageResourceHandler.EDGE_POLICY_KEY,
