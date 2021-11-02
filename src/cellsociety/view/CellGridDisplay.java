@@ -62,7 +62,12 @@ public class CellGridDisplay extends ChangeableDisplay{
     //take all the cells in the simulation and create a cell display for them,
 
     List<Node> displayNodes = new ArrayList<>();
-    List<Cell> allCells = myController.getCells();
+    List<Cell> allCells = new ArrayList<>();
+    for(int row = 0; row < myController.getGridShape()[0]; row++) {
+      for(int col = 0; col < myController.getGridShape()[1]; col++) {
+        allCells.add(myController.getCell(row, col));
+      }
+    }
     int[] gridShape = myController.getGridShape();
     int numRows = gridShape[0];
     int numCols = gridShape[1];

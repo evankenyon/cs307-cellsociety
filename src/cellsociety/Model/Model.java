@@ -150,15 +150,6 @@ public class Model {
 
   }
 
-  /**
-   * get a list of all the nodes to go on screen, representing displays of each cell
-   *
-   * @return a list of nodes displaying the cells
-   */
-  public List<Cell> getCells() {
-    return cellList;
-  }
-
   public void createModelStateMap() {
     modelStateMap = new HashMap<>();
     for (Cell cell : cellList) {
