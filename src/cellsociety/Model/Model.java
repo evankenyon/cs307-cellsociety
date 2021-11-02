@@ -150,20 +150,6 @@ public class Model {
   }
 
   /**
-   * SHOULD DELETE THIS METHOD get a list of all the nodes to go on screen, representing displays of
-   * each cell
-   *
-   * @return a list of nodes displaying the cells
-   */
-  public List<Node> getCellDisplays() {
-    List<Node> nodeList = new ArrayList<>();
-    for (Cell cell : cellList) {
-      nodeList.add(cell.getMyDisplay());
-    }
-    return nodeList;
-  }
-
-  /**
    * get a list of all the nodes to go on screen, representing displays of each cell
    *
    * @return a list of nodes displaying the cells

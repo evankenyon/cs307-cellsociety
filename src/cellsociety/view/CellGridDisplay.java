@@ -34,7 +34,7 @@ public class CellGridDisplay extends ChangeableDisplay{
    * @param controller will be used to get things like grid shape and a list of cells.
    *                   I don't love the idea of making myController an instance variable here but it's convenient -Keith
    */
-  public CellGridDisplay( Controller controller){
+  public CellGridDisplay(Controller controller){
     allCellDisplays = new ArrayList<>();
     myViewResourceHandler = new ViewResourceHandler();
     myController = controller;
@@ -80,8 +80,8 @@ public class CellGridDisplay extends ChangeableDisplay{
     newDisplay.setCell(cell);
     newDisplay.setColors(myViewResourceHandler.getColorsForSimulation(
         myController.getSimulationType()));
-    cell.setDisplay(newDisplay);
     allCellDisplays.add(newDisplay);
+    cell.addObserver(cellState -> newDisplay.changeState(cellState));
     return newDisplay;
   }
 

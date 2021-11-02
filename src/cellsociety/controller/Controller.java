@@ -44,7 +44,6 @@ public class Controller {
           .getConstructor()
           .newInstance();
     } catch (ClassNotFoundException | InstantiationException e) {
-      e.printStackTrace();
       csvParser = new DefaultCSVParser();
     }
     csvParser.setFile(new File(String.format("./data/%s", simParser.getSimulationConfig().getProperty("InitialStates"))));
@@ -61,15 +60,6 @@ public class Controller {
 
   public void setModel(Model model) {
     this.model = model;
-  }
-
-  /**
-   *  SHUOLD DELETE THIS METHOD
-   * get a list of the display nodes for each cell
-   * @return a list of the display node for each cell
-   */
-  public List<Node> getCellDisplays(){
-    return model.getCellDisplays();
   }
 
   /**

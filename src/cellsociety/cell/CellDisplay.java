@@ -1,4 +1,5 @@
 package cellsociety.cell;
+import cellsociety.controller.Controller;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.shape.Polygon;
@@ -20,6 +21,7 @@ public class CellDisplay {
   private Node myDisp;
   private Cell myCell;
   private int myState;
+  private Controller myController;
   public static final Color ON_COLOR = Color.BLUE;
   public static final Color OFF_COLOR = Color.BLACK;
 

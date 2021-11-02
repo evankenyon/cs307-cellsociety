@@ -66,20 +66,6 @@ class CellTest {
   }
 
   @Test
-  void changeDisplayStateOn(){
-    cell.setFutureState(1);
-    cell.updateState();
-    assertEquals(((Rectangle)cell.getMyDisplay()).getFill(), CellDisplay.ON_COLOR);
-  }
-
-  @Test
-  void changeDisplayStateOff(){
-    cell.setFutureState(0);
-    cell.updateState();
-    assertEquals(((Rectangle)cell.getMyDisplay()).getFill(), CellDisplay.OFF_COLOR);
-  }
-
-  @Test
   void createNeighborStateMapCorrect() {
     int expected = 1;
     Cell potentialNeighborOne = new Cell(1, 2, 1, DEFAULT_GRID_HEIGHT, DEFAULT_GRID_WIDTH);
