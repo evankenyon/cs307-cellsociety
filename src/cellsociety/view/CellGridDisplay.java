@@ -1,6 +1,8 @@
 package cellsociety.view;
 
 import cellsociety.cell.ImmutableCell;
+import cellsociety.resourceHandlers.LanguageResourceHandler;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -110,7 +112,12 @@ public class CellGridDisplay extends ChangeableDisplay{
   public void changeCellShapes(String newShape){
     myCornerGenerator = myViewResourceHandler.getCornerLocationGenerator(newShape, myController.getGridShape()[0],
         myController.getGridShape()[1]);
-    myController.changeShape(newShape);
+    try {
+      myController.changeShape(newShape);
+    } catch (IllegalAccessException | InvocationTargetException e) {
+      displayErrorMessage(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.FAILED_REFLECT_KEY));
+    }
+
     removeCellDisplays();
     myGroup.getChildren().addAll(makeCellDisplays());
   }
