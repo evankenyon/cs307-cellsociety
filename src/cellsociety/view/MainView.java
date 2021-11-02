@@ -15,9 +15,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.Pane;
 import javafx.application.Platform;
+import javafx.scene.control.ComboBox;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collection;
 
 
 /**
@@ -39,14 +43,27 @@ public class MainView extends ChangeableDisplay{
   public static final String DARK_CSS_NAME = "CSSFiles/DarkMode.css";
   public static final String DUKE_CSS_NAME = "CSSFiles/Duke.css";
   public static final String BASIC_CSS_NAME = "CSSFiles/Basic.css";
+  private Map<String, String> styleNameToPath;
 
 
+  /**
+   * create a main view
+   */
   public MainView(){
     super();
     myResourceHandler = new LanguageResourceHandler();
     myViewResourceHandler = new ViewResourceHandler();
     myNodesToTextKey = new HashMap<>();
     mySimulationDisplay = null;
+    setUpStyleNameToPathMap();
+  }
+
+  private void setUpStyleNameToPathMap(){
+    //set up the map that goes from style name to css file path
+    styleNameToPath = new HashMap<>();
+    styleNameToPath.put(myResourceHandler.getStringFromKey(LanguageResourceHandler.BASIC_MODE_KEY), BASIC_CSS_NAME);
+    styleNameToPath.put(myResourceHandler.getStringFromKey(LanguageResourceHandler.DARK_MODE_KEY), DARK_CSS_NAME);
+    styleNameToPath.put(myResourceHandler.getStringFromKey(LanguageResourceHandler.DUKE_MODE_KEY), DUKE_CSS_NAME);
   }
 
 
@@ -86,24 +103,14 @@ public class MainView extends ChangeableDisplay{
   }
 
   private Node makeLanguageSelector(){
-    //make a combo box with which users can select the language on screen
-    HBox languageSelector = new HBox();
-    languageSelector.getChildren().add(makeALabel(LanguageResourceHandler.LANGUAGE_KEY));
-
-    languageSelector.getChildren().add(makeAButton(LanguageResourceHandler.CHANGE_ENGLISH_KEY, () -> changeToEnglish()));
-    languageSelector.getChildren().add(makeAButton(LanguageResourceHandler.CHANGE_SPANISH_KEY, () -> changeToSpanish()));
-
-    return languageSelector;
+    Collection<String> languages = myLanguageResourceHandler.getSupportedLanguages();
+    return makeOptionsBox(LanguageResourceHandler.LANGUAGE_KEY, languages, (s) -> changeLanguage(s));
   }
+
 
   private Node makeStyleSelector(){
     //make GUI component allowing user to choose between dark mode, Duke colors, basic style, etc..
-    HBox styleBox = new HBox();
-    styleBox.getChildren().add(makeALabel(LanguageResourceHandler.STYLE_SELECTOR_KEY));
-    styleBox.getChildren().add(makeAButton(LanguageResourceHandler.DARK_MODE_KEY, () -> changeStyle(DARK_CSS_NAME)));
-    styleBox.getChildren().add(makeAButton(LanguageResourceHandler.DUKE_MODE_KEY, () -> changeStyle(DUKE_CSS_NAME)));
-    styleBox.getChildren().add(makeAButton(LanguageResourceHandler.BASIC_MODE_KEY, () -> changeStyle(BASIC_CSS_NAME)));
-    return styleBox;
+    return makeOptionsBox(LanguageResourceHandler.STYLE_SELECTOR_KEY, styleNameToPath.keySet(), (s) -> changeStyle(styleNameToPath.get(s)));
   }
 
   private void changeStyle(String newStyle){
@@ -112,7 +119,6 @@ public class MainView extends ChangeableDisplay{
     myStage.getScene().getStylesheets().clear();
     myStage.getScene().getStylesheets().add(getClass().getResource(newStyle).toExternalForm());
   }
-
 
 
 
@@ -180,19 +186,6 @@ public class MainView extends ChangeableDisplay{
     });
   }
 
-
-
-  /**
-   * get the number of simulations being run. This is for testing purposes
-   * @return the number of simulations being run
-   */
-  public int getNumSimulations(){
-    if (mySimulationDisplay == null){
-      return 0;
-    }else{
-      return 1;
-    }
-  }
 
   /**
    * get the simulation display. Used only for testing
