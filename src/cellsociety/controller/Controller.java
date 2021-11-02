@@ -131,7 +131,7 @@ public class Controller {
 
   }
 
-  public void changeShape(String shape) {
+  public void changeShape(String shape) throws InvocationTargetException, IllegalAccessException {
     model.changeShapeOfCells(shape);
   }
 

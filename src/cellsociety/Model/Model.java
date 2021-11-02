@@ -64,7 +64,7 @@ public class Model {
   }
 
 
-  private void updateAllNeighborsList() {
+  private void updateAllNeighborsList() throws InvocationTargetException, IllegalAccessException {
     for (Cell cell : cellList) {
       updateSingleCellNeighbors(cell);
     }
@@ -78,7 +78,8 @@ public class Model {
     }
   }
 
-  public void changeShapeOfCells(String shape) {
+  public void changeShapeOfCells(String shape)
+      throws InvocationTargetException, IllegalAccessException {
     for (Cell cell : cellList) {
       cell.changeShape(shape, rows, cols);
     }
@@ -135,17 +136,37 @@ public class Model {
     return cols;
   }
 
-  private void updateSingleCellNeighbors(Cell inputCell) {
+  private void updateSingleCellNeighbors(Cell inputCell)
+      throws InvocationTargetException, IllegalAccessException {
     for (Cell cell : cellList) {
+      Method cellMethod = null;
       try {
-        inputCell.updateNeighbors(cell,
-            parseNumCornersList(numCorners.getString(simulationInfo.get("NeighborArrangement"))));
-      } catch (NullPointerException e) {
-        inputCell.updateNeighbors(cell,
-            parseNumCornersList(numCorners.getString("Complete")));
+        cellMethod = cell.getClass().getDeclaredMethod(String.format("updateNeighbors%s", simulationInfo.get("EdgePolicy")), int.class, int.class, Cell.class, List.class);
+      } catch (NoSuchMethodException e) {
+        try {
+          cellMethod = cell.getClass()
+              .getDeclaredMethod("updateNeighborsFinite", int.class, int.class, Cell.class,
+                  List.class);
+        } catch (NoSuchMethodException f) {
+          // Won't fail
+        }
       }
-
+      List<Integer> numCornersList = setNumCornersList();
+      cellMethod.invoke(inputCell, rows, cols, cell, numCornersList);
     }
+  }
+
+  private List<Integer> setNumCornersList() {
+    List<Integer> numCornersList = null;
+    try {
+      numCornersList =
+          parseNumCornersList(numCorners.getString(simulationInfo.get("NeighborArrangement")));
+    }
+    catch (NullPointerException e) {
+      numCornersList =
+          parseNumCornersList(numCorners.getString("Complete"));
+    }
+    return numCornersList;
   }
 
   private List<Integer> parseNumCornersList(String numCorners) {
