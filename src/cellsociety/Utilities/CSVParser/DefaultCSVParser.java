@@ -10,7 +10,8 @@ import java.util.Scanner;
 public class DefaultCSVParser extends CSVParser {
 
   @Override
-  public List<Integer> getCellStates(String simType) throws FileNotFoundException, IllegalCellStateException, IllegalRowSizeException, InvalidDimensionException {
+  public List<Integer> getCellStates(String simType)
+      throws FileNotFoundException, IllegalCellStateException, IllegalRowSizeException, InvalidDimensionException {
     Scanner scanner;
     scanner = new Scanner(getFile());
 
@@ -18,7 +19,8 @@ public class DefaultCSVParser extends CSVParser {
     return integer2DArrayToCellList(integer2DArray, simType);
   }
 
-  private int[][] initializeInteger2DArray(Scanner scanner) throws IllegalRowSizeException, InvalidDimensionException {
+  private int[][] initializeInteger2DArray(Scanner scanner)
+      throws IllegalRowSizeException, InvalidDimensionException {
     if (scanner.hasNextLine()) {
       String dimensionInformation = scanner.nextLine();
       dimensionInformation = dimensionInformation.strip();
@@ -36,7 +38,7 @@ public class DefaultCSVParser extends CSVParser {
     while (scanner.hasNextLine()) {
       String xIndexInfo = scanner.nextLine();
       xIndexInfo = xIndexInfo.strip();
-      if(xIndexInfo.split(",").length != getRows()){
+      if (xIndexInfo.split(",").length != getRows()) {
         throw new IllegalRowSizeException();
       }
 
@@ -53,8 +55,8 @@ public class DefaultCSVParser extends CSVParser {
       throws IllegalCellStateException {
     List<Integer> cellStates = new ArrayList<>();
     List<Integer> validStatesList = getValidStatesList(simType);
-    for(int row = 0; row < integer2DArray.length; row++){
-      for(int col = 0; col < integer2DArray[0].length; col++){
+    for (int row = 0; row < integer2DArray.length; row++) {
+      for (int col = 0; col < integer2DArray[0].length; col++) {
         if (!validStatesList.contains(integer2DArray[row][col])) {
           throw new IllegalCellStateException();
         }

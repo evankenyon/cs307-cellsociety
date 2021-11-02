@@ -19,9 +19,10 @@ import javafx.util.Duration;
 
 /**
  * Objects of this class represent the display of the settings for the simulation
+ *
  * @author Keith Cressman
  */
-public class SettingsDisplay extends ChangeableDisplay{
+public class SettingsDisplay extends ChangeableDisplay {
 
   private double framesPerSecond = 1;
   private double secondDelay = 1.0 / framesPerSecond;
@@ -35,10 +36,12 @@ public class SettingsDisplay extends ChangeableDisplay{
 
   /**
    * create a settingsDisplay with the specified controller and language resource handler
+   *
    * @param controller will be myController
-   * @param l will be myLanguageResourceHandler
+   * @param l          will be myLanguageResourceHandler
    */
-  public SettingsDisplay(Controller controller, LanguageResourceHandler l, SimulationDisplay simDisp){
+  public SettingsDisplay(Controller controller, LanguageResourceHandler l,
+      SimulationDisplay simDisp) {
     super(l);
     myController = controller;
     mySimulationDisplay = simDisp;
@@ -46,9 +49,10 @@ public class SettingsDisplay extends ChangeableDisplay{
 
   /**
    * get the node representing the display for hte
+   *
    * @return
    */
-  public Node createSettingsDisplay(){
+  public Node createSettingsDisplay() {
     VBox v = new VBox();
     v.getChildren().add(makeShowHideBox());
     v.getChildren().add(makeMiscellaneousControls());
@@ -60,22 +64,28 @@ public class SettingsDisplay extends ChangeableDisplay{
     return v;
   }
 
-  private Node makeShowHideBox(){
+  private Node makeShowHideBox() {
     //make a node with buttons for users to show/hide the grid, histogram, and info
     HBox showHideBox = new HBox();
 
-    showHideBox.getChildren().add(makeAButton(LanguageResourceHandler.SHOW_GRID_KEY, () -> mySimulationDisplay.showGrid(true)));
-    showHideBox.getChildren().add(makeAButton(LanguageResourceHandler.HIDE_GRID_KEY, () -> mySimulationDisplay.showGrid(false)));
-    showHideBox.getChildren().add(makeAButton(LanguageResourceHandler.SHOW_HISTOGRAM_KEY, () -> mySimulationDisplay.showHistogram(true)));
-    showHideBox.getChildren().add(makeAButton(LanguageResourceHandler.HIDE_HISTOGRAM_KEY, () -> mySimulationDisplay.showHistogram(false)));
-    showHideBox.getChildren().add(makeAButton(LanguageResourceHandler.SHOW_INFO_KEY, () -> mySimulationDisplay.showInfoDisplay(true)));
-    showHideBox.getChildren().add(makeAButton(LanguageResourceHandler.HIDE_INFO_KEY, () -> mySimulationDisplay.showInfoDisplay(false)));
+    showHideBox.getChildren().add(makeAButton(LanguageResourceHandler.SHOW_GRID_KEY,
+        () -> mySimulationDisplay.showGrid(true)));
+    showHideBox.getChildren().add(makeAButton(LanguageResourceHandler.HIDE_GRID_KEY,
+        () -> mySimulationDisplay.showGrid(false)));
+    showHideBox.getChildren().add(makeAButton(LanguageResourceHandler.SHOW_HISTOGRAM_KEY,
+        () -> mySimulationDisplay.showHistogram(true)));
+    showHideBox.getChildren().add(makeAButton(LanguageResourceHandler.HIDE_HISTOGRAM_KEY,
+        () -> mySimulationDisplay.showHistogram(false)));
+    showHideBox.getChildren().add(makeAButton(LanguageResourceHandler.SHOW_INFO_KEY,
+        () -> mySimulationDisplay.showInfoDisplay(true)));
+    showHideBox.getChildren().add(makeAButton(LanguageResourceHandler.HIDE_INFO_KEY,
+        () -> mySimulationDisplay.showInfoDisplay(false)));
 
     return showHideBox;
 
   }
 
-  private Node makeMiscellaneousControls(){
+  private Node makeMiscellaneousControls() {
     //make a node with buttons for users to pause/resume, see about, do one step, or save file
     HBox controlBox = new HBox();
     controlBox.getChildren().add(makeAButton(LanguageResourceHandler.ABOUT_KEY, () -> showAbout()));
@@ -84,15 +94,17 @@ public class SettingsDisplay extends ChangeableDisplay{
     resumeButton.setVisible(false);
     controlBox.getChildren().add(pauseButton);
     controlBox.getChildren().add(resumeButton);
-    controlBox.getChildren().add(makeAButton(LanguageResourceHandler.ONE_STEP_KEY, () -> oneStep()));
-    controlBox.getChildren().add(makeAButton(LanguageResourceHandler.SAVE_FILE_KEY, () -> makeFileSavePopup()));
+    controlBox.getChildren()
+        .add(makeAButton(LanguageResourceHandler.ONE_STEP_KEY, () -> oneStep()));
+    controlBox.getChildren()
+        .add(makeAButton(LanguageResourceHandler.SAVE_FILE_KEY, () -> makeFileSavePopup()));
     return controlBox;
   }
 
-  private Node makeSlider(){
+  private Node makeSlider() {
     //make the slider controlling the speed of the animation
     HBox sliderBox = new HBox();
-    Slider slider =new Slider();
+    Slider slider = new Slider();
     slider.setMin(getMyViewResourceHandler().getMinFramesPerSecond());
     slider.setMax(getMyViewResourceHandler().getMaxFramesPerSecond());
     slider.setShowTickLabels(true);
@@ -103,7 +115,7 @@ public class SettingsDisplay extends ChangeableDisplay{
     return sliderBox;
   }
 
-  private Node makeParametersControlBox(){
+  private Node makeParametersControlBox() {
 
     HBox parametersControlBox = new HBox();
 
@@ -116,7 +128,8 @@ public class SettingsDisplay extends ChangeableDisplay{
           try {
             myController.changeNeighborArrangement(s);
           } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
-            displayErrorMessage(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.FAILED_REFLECT_KEY));
+            displayErrorMessage(myLanguageResourceHandler.getStringFromKey(
+                LanguageResourceHandler.FAILED_REFLECT_KEY));
           }
         });
     parametersControlBox.getChildren().add(neighborArrangementBox);
@@ -128,23 +141,21 @@ public class SettingsDisplay extends ChangeableDisplay{
   }
 
 
-
-  public void changeAnimationSpeed(double newFramesPerSecond){
+  public void changeAnimationSpeed(double newFramesPerSecond) {
     //change speed of animation
     framesPerSecond = newFramesPerSecond;
     secondDelay = 1.0 / framesPerSecond;
     myAnimation.setRate(framesPerSecond);
   }
 
-  private void showAbout(){
+  private void showAbout() {
     //when the user presses the about button, show them a dialogue box with info about the simulations
     //use the controller to get info about the simulation
     System.out.println("about");
   }
 
 
-
-  private void pauseAnimation(){
+  private void pauseAnimation() {
     //pause teh animation
     myAnimation.pause();
     //pauseButton.setText(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.RESUME_KEY));
@@ -153,7 +164,7 @@ public class SettingsDisplay extends ChangeableDisplay{
     paused = true;
   }
 
-  private void resumeAnimation(){
+  private void resumeAnimation() {
     //resume the animation
     myAnimation.play();
     //pauseButton.setText(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.PAUSE_KEY));
@@ -162,7 +173,7 @@ public class SettingsDisplay extends ChangeableDisplay{
     paused = false;
   }
 
-  private void makeFileSavePopup(){
+  private void makeFileSavePopup() {
     //make a poup which the user can interact with to save the simulation
     pauseAnimation();
     FileSavePopup popup = new FileSavePopup(myLanguageResourceHandler, myController);
@@ -182,7 +193,7 @@ public class SettingsDisplay extends ChangeableDisplay{
   }
 
 
-  protected void setUpAnimation(){
+  protected void setUpAnimation() {
     myAnimation = new Timeline();
     myAnimation.setCycleCount(Timeline.INDEFINITE);
     myAnimation.getKeyFrames().add(new KeyFrame(Duration.seconds(secondDelay), e -> step()));
@@ -192,9 +203,10 @@ public class SettingsDisplay extends ChangeableDisplay{
 
   /**
    * get the speed of the animation;
+   *
    * @return secondDelay
    */
-  public double getAnimationSpeed(){
+  public double getAnimationSpeed() {
     return secondDelay;
   }
 

@@ -10,6 +10,7 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class SimParser {
+
   private static final String DEFAULT_RESOURCE_PACKAGE =
       SimParser.class.getPackageName() + ".resources.";
   private static final String REQUIRED_KEYS_FILENAME = "RequiredKeys";
@@ -37,7 +38,8 @@ public class SimParser {
     }
     // Borrowed code for making InputStream from
     // https://www.baeldung.com/convert-file-to-input-stream
-    InputStream simFileInputStream = this.getClass().getClassLoader().getResourceAsStream(pathName.toString());
+    InputStream simFileInputStream = this.getClass().getClassLoader()
+        .getResourceAsStream(pathName.toString());
     try {
       simulationConfig.load(simFileInputStream);
     } catch (IOException e) {
@@ -49,7 +51,8 @@ public class SimParser {
 
   private void standardizeKeys() {
     for (String key : simulationConfig.stringPropertyNames()) {
-      ResourceBundle keyStandardization = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + KEY_STANDARDIZATION_FILENAME);
+      ResourceBundle keyStandardization = ResourceBundle.getBundle(
+          DEFAULT_RESOURCE_PACKAGE + KEY_STANDARDIZATION_FILENAME);
       String value = simulationConfig.getProperty(key);
       simulationConfig.remove(key);
       try {
@@ -62,25 +65,29 @@ public class SimParser {
 
   private void handleIllegalInput() {
     int numRequiredKeys = 0;
-    for(String key: requiredKeys.keySet()) {
+    for (String key : requiredKeys.keySet()) {
       if (!simulationConfigContainsRequiredKey(key)) {
         throw new InputMismatchException();
       }
       numRequiredKeys++;
     }
-    if(numRequiredKeys != Integer.parseInt(ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + NUM_REQUIRED_KEYS_FILENAME).getString("NumRequiredKeys"))) {
+    if (numRequiredKeys != Integer.parseInt(
+        ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + NUM_REQUIRED_KEYS_FILENAME)
+            .getString("NumRequiredKeys"))) {
       throw new InputMismatchException();
     }
 
-    ResourceBundle validSimulationNames = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + VALID_VALUES);
-    if(!List.of(validSimulationNames.getString("ValidSimulationNames").split(",")).contains(simulationConfig.getProperty("Type"))) {
+    ResourceBundle validSimulationNames = ResourceBundle.getBundle(
+        DEFAULT_RESOURCE_PACKAGE + VALID_VALUES);
+    if (!List.of(validSimulationNames.getString("ValidSimulationNames").split(","))
+        .contains(simulationConfig.getProperty("Type"))) {
       throw new InputMismatchException();
     }
   }
 
   private boolean simulationConfigContainsRequiredKey(String key) {
     for (String possibleKey : requiredKeys.getString(key).split(",")) {
-      if(simulationConfig.containsKey(possibleKey)) {
+      if (simulationConfig.containsKey(possibleKey)) {
         return true;
       }
     }

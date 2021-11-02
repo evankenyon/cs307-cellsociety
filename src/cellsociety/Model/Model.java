@@ -46,9 +46,11 @@ public class Model {
     for (int row = 0; row < rows; row++) {
       for (int col = 0; col < cols; col++) {
         try {
-          cellList.add(new Cell(row, col, cellStateList.get(rows * row + col), rows, cols, simulationInfo.get("Shape")));
+          cellList.add(new Cell(row, col, cellStateList.get(rows * row + col), rows, cols,
+              simulationInfo.get("Shape")));
         } catch (NullPointerException e) {
-          cellList.add(new Cell(row, col, cellStateList.get(rows * row + col), rows, cols, "Rectangle"));
+          cellList.add(
+              new Cell(row, col, cellStateList.get(rows * row + col), rows, cols, "Rectangle"));
         }
       }
     }
@@ -125,7 +127,7 @@ public class Model {
   }
 
   public Cell getCell(int row, int col) {
-    return cellList.get(rows*row + col);
+    return cellList.get(rows * row + col);
   }
 
   public int getRows() {
@@ -141,7 +143,9 @@ public class Model {
     for (Cell cell : cellList) {
       Method cellMethod = null;
       try {
-        cellMethod = cell.getClass().getDeclaredMethod(String.format("updateNeighbors%s", simulationInfo.get("EdgePolicy")), int.class, int.class, Cell.class, List.class);
+        cellMethod = cell.getClass()
+            .getDeclaredMethod(String.format("updateNeighbors%s", simulationInfo.get("EdgePolicy")),
+                int.class, int.class, Cell.class, List.class);
       } catch (NoSuchMethodException e) {
         try {
           cellMethod = cell.getClass()
@@ -161,8 +165,7 @@ public class Model {
     try {
       numCornersList =
           parseNumCornersList(numCorners.getString(simulationInfo.get("NeighborArrangement")));
-    }
-    catch (NullPointerException e) {
+    } catch (NullPointerException e) {
       numCornersList =
           parseNumCornersList(numCorners.getString("Complete"));
     }

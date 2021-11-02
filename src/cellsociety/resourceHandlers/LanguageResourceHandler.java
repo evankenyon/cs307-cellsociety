@@ -11,10 +11,11 @@ import java.util.Collection;
 import java.util.Collections;
 
 /**
- * objects of this class help handle properties relating to languages/text
- * to do: make separate pause and resume button
+ * objects of this class help handle properties relating to languages/text to do: make separate
+ * pause and resume button
  */
 public class LanguageResourceHandler {
+
   public static final String LANGUAGE_BUNDLE_NAME = "Langauge";
   public static final String SETTINGS_KEY = "Settings";
   public static final String ABOUT_KEY = "About";
@@ -79,12 +80,12 @@ public class LanguageResourceHandler {
 
   private ResourceBundle myResourceBundle;
 
-  public LanguageResourceHandler(){
+  public LanguageResourceHandler() {
     setUpLangToLocaleMap();
     myResourceBundle = ResourceBundle.getBundle(LANGUAGE_BUNDLE_NAME, langToLocale.get(ENGLISH));
   }
 
-  private void setUpLangToLocaleMap(){
+  private void setUpLangToLocaleMap() {
     langToLocale = new HashMap<>();
     langToLocale.put(ENGLISH, englishLocale);
     langToLocale.put(SPANISH, spanishLocale);
@@ -92,81 +93,89 @@ public class LanguageResourceHandler {
   }
 
 
-
   /**
    * Get the String used to display Settings
+   *
    * @return a String like "Settings" which is meant for the GUI
    */
-  public String getSettingsString(){
+  public String getSettingsString() {
     return myResourceBundle.getString(SETTINGS_KEY);
   }
 
 
   /**
    * Get the String used on the About button on the GUI
+   *
    * @return a String like "About" which is meant for the GUI
    */
-  public String getAboutString(){
+  public String getAboutString() {
     return myResourceBundle.getString(ABOUT_KEY);
   }
 
   /**
    * Get the String used on the Language label on the GUI
+   *
    * @return a String like "Language" which is meant for the GUI
    */
-  public String getLanguageString(){
+  public String getLanguageString() {
     return myResourceBundle.getString(LANGUAGE_KEY);
   }
 
   /**
    * Get the String used on the Select File button
+   *
    * @return a String like "Select File" which is meant for the GUI
    */
-  public String getSelectFileString(){
+  public String getSelectFileString() {
     return myResourceBundle.getString(SELECT_FILE_KEY);
   }
 
   /**
    * Get the String used on the Start Simulations Button
+   *
    * @return a String like "Start Simulation(s)" which is meant for the GUI
    */
-  public String getStartSimulationsString(){
+  public String getStartSimulationsString() {
     return myResourceBundle.getString(START_SIMULATIONS_KEY);
   }
 
   /**
    * Get the String used on the Change to English Button
+   *
    * @return a String like "English" which is meant for the GUI
    */
-  public String getChangeEnglishString(){
+  public String getChangeEnglishString() {
     return myResourceBundle.getString(CHANGE_ENGLISH_KEY);
   }
 
   /**
    * Get the String used on the Change to Spanish Button
+   *
    * @return a String like "Spanish" which is meant for the GUI
    */
-  public String getChangeSpanishString(){
+  public String getChangeSpanishString() {
     return myResourceBundle.getString(CHANGE_SPANISH_KEY);
   }
 
   /**
    * Get the String used on the title of the file selector
+   *
    * @return a String like "File selector" which is meant for the GUI
    */
-  public String getSelectFileTitleString(){
+  public String getSelectFileTitleString() {
     return myResourceBundle.getString(SELECT_FILE_KEY);
   }
 
   /**
    * change the  language being used
+   *
    * @param newLanguage should be a string like "English" or "Spanish"
    */
-  public void changeLanguage(String newLanguage){
+  public void changeLanguage(String newLanguage) {
     try {
       myResourceBundle = ResourceBundle.getBundle(LANGUAGE_BUNDLE_NAME,
           langToLocale.get(newLanguage));
-    } catch (Exception e){
+    } catch (Exception e) {
       //do nothing
     }
   }
@@ -174,26 +183,22 @@ public class LanguageResourceHandler {
 
   /**
    * get the key/label associated with this key
+   *
    * @param key should be one of the static final String constants defiened in this class
    * @return the label associated with the key
    */
-  public String getStringFromKey(String key){
+  public String getStringFromKey(String key) {
     return myResourceBundle.getString(key);
   }
 
   /**
    * get the strings representing all the possible languages
+   *
    * @return a collection like {"English", "Spanish", "German"}
    */
-  public Collection<String> getSupportedLanguages(){
+  public Collection<String> getSupportedLanguages() {
     return langToLocale.keySet();
   }
-
-
-
-
-
-
 
 
 }

@@ -11,7 +11,7 @@ import java.util.List;
 public class CSVGenerator {
 
   public void createCSVFile(Model model, String filePath, String simType) throws IOException {
-    String realFilePath =  String.format("./data/saved/%s/program-" + "%s.csv", simType, filePath);
+    String realFilePath = String.format("./data/saved/%s/program-" + "%s.csv", simType, filePath);
     // Setup code for CSVWriter borrowed from https://www.baeldung.com/opencsv
     CSVWriter csvWriter = new CSVWriter(
         new FileWriter(realFilePath),
