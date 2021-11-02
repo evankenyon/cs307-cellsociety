@@ -3,6 +3,10 @@ package cellsociety.view;
 import cellsociety.resourceHandlers.LanguageResourceHandler;
 
 
+import cellsociety.view.ViewUtilities.Button2;
+import cellsociety.view.ViewUtilities.ButtonClickedMethod;
+import cellsociety.view.ViewUtilities.Label2;
+import cellsociety.view.ViewUtilities.NodeWithText;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;

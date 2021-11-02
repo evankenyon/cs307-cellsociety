@@ -1,6 +1,5 @@
 package view;
 
-import java.io.File;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,7 +12,6 @@ import javafx.scene.Group;
 
 import cellsociety.view.ChangeableDisplay;
 import cellsociety.view.MainView;
-import cellsociety.view.Label2;
 import cellsociety.resourceHandlers.LanguageResourceHandler;
 
 public class ChangeableDisplayTest extends DukeApplicationTest{

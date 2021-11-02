@@ -6,8 +6,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import cellsociety.resourceHandlers.LanguageResourceHandler;
 import cellsociety.view.MainView;
-import cellsociety.view.NodeWithText;
-import cellsociety.view.Button2;
+import cellsociety.view.ViewUtilities.NodeWithText;
+import cellsociety.view.ViewUtilities.Button2;
 
 import java.io.File;
 
@@ -15,7 +15,6 @@ import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 
 
 import java.util.Collection;

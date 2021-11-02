@@ -1,4 +1,4 @@
-package cellsociety.view;
+package cellsociety.view.ViewUtilities;
 
 /**
  * Classes which implement this interface will have elements that can change their text.

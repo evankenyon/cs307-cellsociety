@@ -20,3 +20,11 @@ HBox{
 VBox{
   -fx-spacing: 5;
 }
+
+#HistogramBackground{
+  -fx-fill: rgb(150, 150, 150);
+}
+
+#InfoDisplayBackground{
+  -fx-fill: rgb(150, 150, 150);
+}

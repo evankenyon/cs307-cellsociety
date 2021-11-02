@@ -1,4 +1,4 @@
-package cellsociety.view;
+package cellsociety.view.ViewUtilities;
 
 import javafx.scene.control.Button;
 

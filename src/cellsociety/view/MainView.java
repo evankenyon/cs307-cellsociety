@@ -3,6 +3,7 @@ package cellsociety.view;
 import cellsociety.resourceHandlers.LanguageResourceHandler;
 import cellsociety.resourceHandlers.ViewResourceHandler;
 
+import cellsociety.view.ViewUtilities.NodeWithText;
 import java.io.File;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
