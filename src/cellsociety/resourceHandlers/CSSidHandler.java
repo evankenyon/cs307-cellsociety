@@ -13,6 +13,9 @@ public class CSSidHandler {
 
   public static final String HISTOGRAM_BACKGROUND_KEY = "HistogramBackground";
   public static final String INFO_DISPLAY_BACKGROUND_KEY = "InfoBackground";
+  public static final String FILENAME_SAVE_KEY = "FileNameSave";
+  public static final String LANGUAGE_COMBOBOX_KEY = "LanguageBox";
+  public static final String STYLE_COMBOBOX_KEY = "StyleBox";
 
   private Properties idProperties;
 

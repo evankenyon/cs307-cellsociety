@@ -96,21 +96,6 @@ public abstract class ChangeableDisplay {
     return container;
   }
 
-  /**
-   * change the language of everything on screen to english
-   */
-  protected void changeToEnglish(){
-    myLanguageResourceHandler.changeLanguage(LanguageResourceHandler.ENGLISH);
-    changeLanguageOfText();
-  }
-
-  /**
-   * change the language of everything on screen to spanish
-   */
-  protected void changeToSpanish(){
-    myLanguageResourceHandler.changeLanguage(LanguageResourceHandler.SPANISH);
-    changeLanguageOfText();
-  }
 
   /**
    * change the language of all text on screen

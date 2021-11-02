@@ -1,6 +1,7 @@
 package cellsociety.view;
 
 import cellsociety.resourceHandlers.LanguageResourceHandler;
+import cellsociety.resourceHandlers.CSSidHandler;
 import cellsociety.controller.Controller;
 
 import java.io.FileInputStream;
@@ -47,6 +48,7 @@ public class FileSavePopup extends ChangeableDisplay{
     authorField = new TextField();
     descriptionField = new TextField();
     fileNameField = new TextField();
+    fileNameField.setId((new CSSidHandler()).getStringFromKey(CSSidHandler.FILENAME_SAVE_KEY));
 
     myLanguageResourceHandler = lrh;
     myController = controller;
