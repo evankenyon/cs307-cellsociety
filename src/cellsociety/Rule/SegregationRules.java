@@ -16,7 +16,7 @@ public class SegregationRules extends Rules {
 
   public SegregationRules(Cell cell, List<Double> args) throws IllegalCellStateException {
     super(cell);
-    if(cell.getCurrentState()>4){
+    if(cell.getCurrentState()>2){
       throw new IllegalCellStateException();
     }
     //segregationCell =cell;

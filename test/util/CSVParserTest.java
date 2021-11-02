@@ -4,6 +4,8 @@ import cellsociety.Utilities.CSVParser.CSVParser;
 import static org.junit.jupiter.api.Assertions.*;
 
 import cellsociety.Utilities.CSVParser.DefaultCSVParser;
+import cellsociety.Utilities.CSVParser.IllegalRowSizeException;
+import cellsociety.Utilities.CSVParser.InvalidDimensionException;
 import cellsociety.cell.IllegalCellStateException;
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -25,7 +27,7 @@ public class CSVParserTest {
 
 
   @Test
-  void testBlinkerSetup() throws FileNotFoundException, IllegalCellStateException {
+  void testBlinkerSetup() throws FileNotFoundException, IllegalCellStateException, InvalidDimensionException, IllegalRowSizeException {
     parser.setFile(new File(blinkerPath));
     try {
       parser.getCellStates("GameOfLife");
@@ -40,7 +42,7 @@ public class CSVParserTest {
   }
 
   @Test
-  void testGliderSetup() throws FileNotFoundException, IllegalCellStateException {
+  void testGliderSetup() throws FileNotFoundException, IllegalCellStateException, InvalidDimensionException, IllegalRowSizeException {
     parser.setFile(new File(gliderPath));
     try {
       parser.getCellStates("GameOfLife");

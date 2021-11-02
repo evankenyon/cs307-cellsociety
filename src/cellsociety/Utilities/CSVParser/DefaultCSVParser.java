@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class DefaultCSVParser extends CSVParser {
 
   @Override
-  public List<Integer> getCellStates(String simType) throws FileNotFoundException, IllegalCellStateException {
+  public List<Integer> getCellStates(String simType) throws FileNotFoundException, IllegalCellStateException, IllegalRowSizeException, InvalidDimensionException {
     Scanner scanner;
     scanner = new Scanner(getFile());
 
@@ -18,20 +18,29 @@ public class DefaultCSVParser extends CSVParser {
     return integer2DArrayToCellList(integer2DArray, simType);
   }
 
-  private int[][] initializeInteger2DArray(Scanner scanner) {
+  private int[][] initializeInteger2DArray(Scanner scanner) throws IllegalRowSizeException, InvalidDimensionException {
     if (scanner.hasNextLine()) {
       String dimensionInformation = scanner.nextLine();
       dimensionInformation = dimensionInformation.strip();
       String[] dimensions = dimensionInformation.split(",");
+
       //FIXME: Need to throw an exception when it isnt an integer
-      setRows(Integer.parseInt(dimensions[1]));
-      setCols(Integer.parseInt(dimensions[0]));
+      try {
+        setCols(Integer.parseInt(dimensions[0]));
+        setRows(Integer.parseInt(dimensions[1]));
+      } catch (NumberFormatException e) {
+        throw new InvalidDimensionException();
+      }
+
     }
     int[][] integer2DArray = new int[getRows()][getCols()];
     int currentXIndex = 0;
     while (scanner.hasNextLine()) {
       String xIndexInfo = scanner.nextLine();
       xIndexInfo = xIndexInfo.strip();
+      if(xIndexInfo.split(",").length != getRows()){
+        throw new IllegalRowSizeException();
+      }
       integer2DArray[currentXIndex] = Arrays.stream(xIndexInfo.split(","))
           .mapToInt(Integer::parseInt).toArray();
       currentXIndex++;

@@ -17,7 +17,7 @@ public class PredatorPreyRules extends Rules {
 
     public PredatorPreyRules(Cell cell, List<Double> args) throws IllegalCellStateException {
         super(cell);
-        if(cell.getCurrentState()>4){
+        if(cell.getCurrentState()>2){
             throw new IllegalCellStateException();
         }
         if(args.size() > 1) {

@@ -1,6 +1,8 @@
 package cellsociety.view;
 
 
+import cellsociety.Utilities.CSVParser.IllegalRowSizeException;
+import cellsociety.Utilities.CSVParser.InvalidDimensionException;
 import cellsociety.cell.IllegalCellStateException;
 import cellsociety.resourceHandlers.LanguageResourceHandler;
 import cellsociety.resourceHandlers.ViewResourceHandler;
@@ -108,6 +110,10 @@ public class SimulationDisplay extends ChangeableDisplay{
     } catch (IllegalArgumentException e) {
       // TODO: move to props file
       displayErrorMessage("A cell was initialized to be outside of the grid's bounds, please try restarting the program");
+    } catch (InvalidDimensionException e) {
+      e.printStackTrace();
+    } catch (IllegalRowSizeException e) {
+      e.printStackTrace();
     }
     VBox root = new VBox();
     root.getChildren().add(makeAllDisplays());
