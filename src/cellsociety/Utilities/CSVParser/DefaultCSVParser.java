@@ -30,7 +30,6 @@ public class DefaultCSVParser extends CSVParser {
       } catch (NumberFormatException e) {
         throw new InvalidDimensionException();
       }
-
     }
     int[][] integer2DArray = new int[getRows()][getCols()];
     int currentXIndex = 0;
@@ -40,6 +39,7 @@ public class DefaultCSVParser extends CSVParser {
       if(xIndexInfo.split(",").length != getRows()){
         throw new IllegalRowSizeException();
       }
+
       integer2DArray[currentXIndex] = Arrays.stream(xIndexInfo.split(","))
           .mapToInt(Integer::parseInt).toArray();
       currentXIndex++;
