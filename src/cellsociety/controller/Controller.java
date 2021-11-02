@@ -19,6 +19,7 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
 import javafx.scene.Node;
 
 public class Controller {
@@ -46,13 +47,16 @@ public class Controller {
           .getConstructor()
           .newInstance();
     } catch (ClassNotFoundException | InstantiationException e) {
-      e.printStackTrace();
       csvParser = new DefaultCSVParser();
     }
     csvParser.setFile(new File(String.format("./data/%s", simParser.getSimulationConfig().getProperty("InitialStates"))));
     model.setSimulationInfo(simParser.getSimulationConfig());
     simGenerator = new SimGenerator(simParser.getSimulationConfig());
     model.setupCells(csvParser.getCellStates(simParser.getSimulationConfig().getProperty("Type")), csvParser.getRows(), csvParser.getCols());
+  }
+
+  public void addCellObserver(int row, int col, Consumer<Integer> observer) {
+    model.getCell(row, col).addObserver(observer);
   }
 
   public void saveFile(String fileName, Map<String, String> propertyToValue) throws IOException {
@@ -66,20 +70,17 @@ public class Controller {
   }
 
   /**
-   *  SHUOLD DELETE THIS METHOD
-   * get a list of the display nodes for each cell
-   * @return a list of the display node for each cell
-   */
-  public List<Node> getCellDisplays(){
-    return model.getCellDisplays();
-  }
-
-  /**
    * get a list of the cells in the simulation
    * @return a list of each cell
    */
   public List<Cell> getCells(){
     return model.getCells();
+  }
+
+  public void setCellState(int row, int col, int state) {
+    Cell cellToUpdate = model.getCell(row, col);
+    cellToUpdate.setFutureState(state);
+    cellToUpdate.updateState();
   }
 
   /**
