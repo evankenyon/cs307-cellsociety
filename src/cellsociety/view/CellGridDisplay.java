@@ -4,7 +4,6 @@ import cellsociety.cell.ImmutableCell;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Consumer;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.shape.Rectangle;
@@ -16,8 +15,7 @@ import cellsociety.controller.Controller;
 
 import cellsociety.CornerLocationGenerator.RectangleCellCornerLocationGenerator;
 import cellsociety.CornerLocationGenerator.CornerLocationGenerator;
-import cellsociety.CornerLocationGenerator.HexagonalCellCornerLocationGenerator;
-import cellsociety.CornerLocationGenerator.TriangularCellCornerLocationGenerator;
+import cellsociety.CornerLocationGenerator.HexagonCellCornerLocationGenerator;
 import cellsociety.location.CornerLocation;
 
 /**
@@ -40,7 +38,7 @@ public class CellGridDisplay extends ChangeableDisplay{
     allCellDisplays = new ArrayList<>();
     myViewResourceHandler = new ViewResourceHandler();
     myController = controller;
-    myCornerGenerator = new HexagonalCellCornerLocationGenerator(controller.getGridShape()[0], controller.getGridShape()[1]);
+    myCornerGenerator = new HexagonCellCornerLocationGenerator(controller.getGridShape()[0], controller.getGridShape()[1]);
   }
 
   /**
@@ -112,6 +110,7 @@ public class CellGridDisplay extends ChangeableDisplay{
   public void changeCellShapes(String newShape){
     myCornerGenerator = myViewResourceHandler.getCornerLocationGenerator(newShape, myController.getGridShape()[0],
         myController.getGridShape()[1]);
+    myController.changeShape(newShape);
     removeCellDisplays();
     myGroup.getChildren().addAll(makeCellDisplays());
   }

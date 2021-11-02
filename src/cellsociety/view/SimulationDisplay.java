@@ -11,36 +11,24 @@ import cellsociety.controller.Controller;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Collections;
 import java.util.InputMismatchException;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-import javafx.scene.Group;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Slider;
 
-import cellsociety.cell.Cell;
 import cellsociety.cell.CellDisplay;
-
-import cellsociety.CornerLocationGenerator.RectangleCellCornerLocationGenerator;
-import cellsociety.CornerLocationGenerator.CornerLocationGenerator;
-import cellsociety.CornerLocationGenerator.HexagonalCellCornerLocationGenerator;
-import cellsociety.CornerLocationGenerator.TriangularCellCornerLocationGenerator;
-import cellsociety.location.CornerLocation;
 
 
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 

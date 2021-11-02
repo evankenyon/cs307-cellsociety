@@ -6,10 +6,7 @@ import java.io.FileInputStream;
 import javafx.scene.paint.Color;
 import cellsociety.CornerLocationGenerator.CornerLocationGenerator;
 import cellsociety.CornerLocationGenerator.RectangleCellCornerLocationGenerator;
-import cellsociety.CornerLocationGenerator.TriangularCellCornerLocationGenerator;
-import cellsociety.CornerLocationGenerator.HexagonalCellCornerLocationGenerator;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.ArrayList;
 

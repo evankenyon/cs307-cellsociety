@@ -78,6 +78,14 @@ public class Model {
     }
   }
 
+  public void changeShapeOfCells(String shape) {
+    for (Cell cell : cellList) {
+
+      cell.changeShape(shape, rows, cols);
+    }
+    updateAllNeighborsList();
+  }
+
 
   public void setSimulationInfo(Properties simulationInfo) {
     // Borrowed code to loop through props keys and values from

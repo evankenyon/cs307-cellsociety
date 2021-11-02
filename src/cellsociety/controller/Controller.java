@@ -130,4 +130,8 @@ public class Controller {
 
   }
 
+  public void changeShape(String shape) {
+    model.changeShapeOfCells(shape);
+  }
+
 }

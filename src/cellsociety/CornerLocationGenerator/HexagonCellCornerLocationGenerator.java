@@ -3,14 +3,14 @@ package cellsociety.CornerLocationGenerator;
 import cellsociety.location.CornerLocation;
 import java.util.List;
 
-public class HexagonalCellCornerLocationGenerator extends CornerLocationGenerator{
+public class HexagonCellCornerLocationGenerator extends CornerLocationGenerator{
     private double height=getVIEW_HEIGHT()/rows;
     private double size=height/2;
     private double width =size*Math.sqrt(3);
     private CornerLocation center=new CornerLocation(0,0);
     private int ROUND_VALUE=100;
 
-    public HexagonalCellCornerLocationGenerator(int rows, int columns)
+    public HexagonCellCornerLocationGenerator(int rows, int columns)
     {
         super(rows,columns);
     }

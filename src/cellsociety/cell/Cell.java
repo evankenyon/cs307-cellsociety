@@ -32,6 +32,7 @@ public class Cell implements ImmutableCell {
   private int chrononCounter;
   private int energy;
   private List<Consumer<Integer>> myObservers;
+  private CornerLocationGenerator cornerLocationGenerator;
 
   public Cell(int i, int j, int initialState, int rows, int columns) {
     this(i, j, initialState, rows, columns, "Rectangle");
@@ -47,16 +48,8 @@ public class Cell implements ImmutableCell {
     this.iIndex = i;
     this.jIndex = j;
     this.currentState = initialState;
-    CornerLocationGenerator cornerLocationGenerator = null;
-    try {
-      System.out.println(shape);
-      cornerLocationGenerator = (CornerLocationGenerator) Class.forName(
-              String.format("%s.%sCellCornerLocationGenerator",
-                  CornerLocationGenerator.class.getPackageName(), shape))
-          .getConstructor(int.class, int.class).newInstance(rows, columns);
-    } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
-      cornerLocationGenerator = new RectangleCellCornerLocationGenerator(rows, columns);
-    }
+    cornerLocationGenerator = null;
+    updateCornerLoationGenerator(shape, rows, columns);
     corners = cornerLocationGenerator.generateCorners(i, j);
     neighbors = new ArrayList<>();
 //    myDisplay = new CellDisplay(j * Integer.parseInt(defaultVals.getString("defaultWidth")),
@@ -75,6 +68,23 @@ public class Cell implements ImmutableCell {
     return iIndex;
   }
 
+  public void changeShape(String shape, int rows, int columns) {
+    System.out.println("test");
+    updateCornerLoationGenerator(shape, rows, columns);
+    neighbors.clear();
+    corners = cornerLocationGenerator.generateCorners(iIndex, jIndex);
+  }
+
+  private void updateCornerLoationGenerator(String shape, int rows, int columns) {
+    try {
+      cornerLocationGenerator = (CornerLocationGenerator) Class.forName(
+              String.format("%s.%sCellCornerLocationGenerator",
+                  CornerLocationGenerator.class.getPackageName(), shape))
+          .getConstructor(int.class, int.class).newInstance(rows, columns);
+    } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
+      cornerLocationGenerator = new RectangleCellCornerLocationGenerator(rows, columns);
+    }
+  }
 
   public void updateState() {
     currentState = futureState;
