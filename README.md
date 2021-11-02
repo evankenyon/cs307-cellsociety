@@ -119,10 +119,21 @@ properties file.
 Propagated from CSVParser to frontend, frontend displays an error message that is contained in a
 properties file.
 
-Added Key Names for Config Files:
+Added Key Names for Config Files (all of these are optional):
 * EdgePolicy (can equal Toroidal, Finite, or Mirror)
+  * Default is Finite
 * Shape (can equal Triangle, Hexagon, or Rectangle)
-* NeighborArrangement (can equal Corner, )
+  * Default is Rectangle
+* NeighborArrangement (can equal Corner, Cardinal, Edge)
+  * Default is Edge
+* CSVType (can equal Probability, RawNums, or Default)
+  * Default is Default
+
+CSV Type Formats:
+* Probability is of the format cols,rows,probabilityStateOne,probabilityStateTwo
+  * probabilityStateZero = 1 - probabilityStateOne - probabilityStateTwo
+* RawNums is of the format cols,rows,numStateOne,numStateTwo
+  * numStateZero = cols*rows - numStateOne - numStateTwo
 
 Interesting data files:
 * fire/bad.csv
