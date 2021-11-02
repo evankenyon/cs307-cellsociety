@@ -157,7 +157,7 @@ public class SimulationDisplay extends ChangeableDisplay{
 
 
 
-  
+
 
   /**
    * perform the next step in the simulation
