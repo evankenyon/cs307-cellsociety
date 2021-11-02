@@ -14,14 +14,13 @@ public class SegregationRules extends Rules {
   private double satisfactionThreshold;
   //private SegregationCell segregationCell;
 
-  public SegregationRules(Cell cell, List<Double> args) throws IllegalCellStateException {
+  public SegregationRules(Cell cell, List<Double> args) throws IllegalCellStateException, InputMismatchException {
     super(cell);
     if(cell.getCurrentState()>2){
       throw new IllegalCellStateException();
     }
     //segregationCell =cell;
     if (args.size() > 1) {
-      //TODO: actually handle
       throw new InputMismatchException();
     }
     ResourceBundle defaultParams = ResourceBundle.getBundle(

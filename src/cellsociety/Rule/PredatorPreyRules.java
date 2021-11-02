@@ -15,13 +15,12 @@ public class PredatorPreyRules extends Rules {
     private static final String DEFAULT_PARAMS_FILENAME = "PredatorPreyDefaultParams";
     private int reproductionCycle;
 
-    public PredatorPreyRules(Cell cell, List<Double> args) throws IllegalCellStateException{
+    public PredatorPreyRules(Cell cell, List<Double> args) throws IllegalCellStateException, InputMismatchException{
         super(cell);
         if(cell.getCurrentState()>2){
             throw new IllegalCellStateException();
         }
         if(args.size() > 1) {
-            //TODO: actually handle
             throw new InputMismatchException();
         }
         ResourceBundle defaultParams = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_PARAMS_FILENAME);

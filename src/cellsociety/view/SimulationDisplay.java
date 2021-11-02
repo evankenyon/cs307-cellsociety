@@ -288,6 +288,8 @@ public class SimulationDisplay extends ChangeableDisplay{
       displayErrorMessage(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.FAILED_REFLECT_KEY));
     } catch (IllegalCellStateException e) {
       displayErrorMessage(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.ILLEGAL_STATE_KEY));
+    } catch (InputMismatchException e) {
+      displayErrorMessage(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.ILLEGAL_PARAMS_KEY));
     }
     myInfoDisplay.setNumOfEachType((getNumOfEachState()));
 

@@ -83,7 +83,7 @@ public class Controller {
    * perform the next step in the simulation
    */
   public void step()
-      throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, ClassNotFoundException, InstantiationException, IllegalCellStateException {
+      throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, ClassNotFoundException, InstantiationException, IllegalCellStateException, InputMismatchException {
     model.findNextStateForEachCell();
     model.updateModel();
   }

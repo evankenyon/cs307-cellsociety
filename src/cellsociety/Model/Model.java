@@ -161,7 +161,7 @@ public class Model {
    * find what the next state should be for each cell
    */
   public void findNextStateForEachCell()
-      throws ClassNotFoundException, InvocationTargetException, IllegalAccessException, NoSuchMethodException, InstantiationException, IllegalCellStateException {
+      throws ClassNotFoundException, InvocationTargetException, IllegalAccessException, NoSuchMethodException, InstantiationException, InputMismatchException {
     for (Cell cell : cellList) {
       cell.updateCellNeighborStateMap();
       RulesInterface r = (RulesInterface) Class.forName(

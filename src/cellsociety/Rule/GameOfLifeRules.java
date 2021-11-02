@@ -14,14 +14,13 @@ public class GameOfLifeRules extends Rules {
   private static final String STATE_AND_NEIGHBORS_MAP_FILENAME = "GameOfLifeRules";
   private GameOfLifeCell gcell;
 
-  public GameOfLifeRules(Cell cell, List<Double> args) throws IllegalCellStateException {
+  public GameOfLifeRules(Cell cell, List<Double> args) throws IllegalCellStateException, InputMismatchException {
     super(cell);
     if(cell.getCurrentState()>1){
       throw new IllegalCellStateException();
     }
 //    gcell=cell;
     if(!args.isEmpty()) {
-      // TODO: handle
       throw new InputMismatchException();
     }
     stateAndNeighborsMap = ResourceBundle.getBundle(

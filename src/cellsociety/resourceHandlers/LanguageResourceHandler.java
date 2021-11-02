@@ -58,6 +58,7 @@ public class LanguageResourceHandler {
   public final static String ILLEGAL_STATE_USER_KEY = "IllegalStateUser";
   public final static String WRONG_FILE_TYPE_KEY = "WrongFileType";
   public final static String OUT_OF_BOUNDS_KEY = "OutOfBounds";
+  public final static String ILLEGAL_PARAMS_KEY = "IllegalParams";
 
   public static final String ENGLISH = "English";
   public static final String SPANISH = "Spanish";
