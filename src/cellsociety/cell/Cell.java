@@ -138,10 +138,15 @@ public class Cell implements ImmutableCell {
 
   public void updateNeighborsToroidal(int rows, int cols, Cell potentialNeighbor, List<Integer> numCornersShared){
     updateNeighbors(potentialNeighbor,numCornersShared);
-    int indexedRows = rows--;
-    int indexedCols = cols--;
-    boolean onOppositeTopBottom = iIndexDifference(potentialNeighbor) == indexedRows &&
-        jIndexDifference(potentialNeighbor) == 0;
+
+    int indexedRows = rows-1;
+    int indexedCols = cols-1;
+    boolean onOppositeTopBottom = iIndexDifference(potentialNeighbor)==indexedRows &&
+            jIndexDifference(potentialNeighbor) == 0;
+    System.out.println("Indexed rows" + indexedRows);
+    System.out.println("Indexed cols" + indexedCols);
+    System.out.println("I difference" + iIndexDifference(potentialNeighbor));
+    System.out.println("J difference" + jIndexDifference(potentialNeighbor));
 
     boolean onOppositeLeftRight = iIndexDifference(potentialNeighbor) == 0 &&
         jIndexDifference(potentialNeighbor) == indexedCols;
@@ -157,8 +162,8 @@ public class Cell implements ImmutableCell {
   public void updateNeighborsMirror(int rows, int cols, Cell potentialNeighbor, List<Integer> numCornersShared){
     updateNeighbors(potentialNeighbor,numCornersShared);
 
-    int indexedRows = rows--;
-    int indexedCols = cols--;
+    int indexedRows = rows-1;
+    int indexedCols = cols-1;
 
     if(this.getiIndex() == 0||this.getiIndex()==indexedRows){
       if(Math.abs(this.getiIndex()-potentialNeighbor.getjIndex())==indexedCols){
