@@ -25,7 +25,8 @@ public class InfoDisplay extends ChangeableDisplay{
    * Create an info Display. The createInfoDisplay method is needed to actually get the node and put it on the scene
    * @param stateToCount maps each state to the number of cells in that state
    */
-  public InfoDisplay(Map<Integer, Integer> stateToCount){
+  public InfoDisplay(Map<Integer, Integer> stateToCount, LanguageResourceHandler l){
+    super(l);
     myStateToCount = stateToCount;
     stateToNumChangeLabel = new HashMap<>();
   }
