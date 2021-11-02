@@ -22,12 +22,8 @@ public class SpreadingOfFireRules extends Rules {
   private Map<String, Double> probabilities;
   //private FireCell fcell;
 
-  public SpreadingOfFireRules(Cell cell, List<Double> args) throws IllegalCellStateException, InputMismatchException {
+  public SpreadingOfFireRules(Cell cell, List<Double> args) throws InputMismatchException {
     super(cell);
-    if(cell.getCurrentState()>2){
-      throw new IllegalCellStateException();
-    }
-    //fcell=cell;
     if (args.size() > 2) {
       throw new InputMismatchException();
     }

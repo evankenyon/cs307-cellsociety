@@ -1,7 +1,6 @@
 package cellsociety.Rule;
 
 import cellsociety.cell.Cell;
-import cellsociety.cell.IllegalCellStateException;
 import cellsociety.cell.PredatorPreyCell;
 
 import java.util.HashMap;
@@ -15,11 +14,8 @@ public class PredatorPreyRules extends Rules {
     private static final String DEFAULT_PARAMS_FILENAME = "PredatorPreyDefaultParams";
     private int reproductionCycle;
 
-    public PredatorPreyRules(Cell cell, List<Double> args) throws IllegalCellStateException, InputMismatchException{
+    public PredatorPreyRules(Cell cell, List<Double> args) throws InputMismatchException{
         super(cell);
-        if(cell.getCurrentState()>2){
-            throw new IllegalCellStateException();
-        }
         if(args.size() > 1) {
             throw new InputMismatchException();
         }
