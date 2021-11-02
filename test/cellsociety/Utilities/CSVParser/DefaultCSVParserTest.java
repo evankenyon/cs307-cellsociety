@@ -3,6 +3,7 @@ package cellsociety.Utilities.CSVParser;
 import cellsociety.Utilities.CSVParser.DefaultCSVParser;
 import cellsociety.cell.IllegalCellStateException;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.InputMismatchException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +14,26 @@ class DefaultCSVParserTest {
   @BeforeEach
   void setUp() {
     defaultCSVParser = new DefaultCSVParser();
+  }
+
+  @Test
+  void getCellStatesTypicalGameOfLife()
+      throws FileNotFoundException, InvalidDimensionException, IllegalRowSizeException, IllegalCellStateException {
+    defaultCSVParser.setFile(new File("./data/game_of_life/basic.csv"));
+    Assertions.assertEquals(1, defaultCSVParser.getCellStates("GameOfLife").get(0));
+    Assertions.assertEquals(0, defaultCSVParser.getCellStates("GameOfLife").get(1));
+    Assertions.assertEquals(0, defaultCSVParser.getCellStates("GameOfLife").get(2));
+    Assertions.assertEquals(1, defaultCSVParser.getCellStates("GameOfLife").get(3));
+  }
+
+  @Test
+  void getCellStatesTypicalFire()
+      throws FileNotFoundException, InvalidDimensionException, IllegalRowSizeException, IllegalCellStateException {
+    defaultCSVParser.setFile(new File("./data/fire/basic.csv"));
+    Assertions.assertEquals(0, defaultCSVParser.getCellStates("Fire").get(0));
+    Assertions.assertEquals(1, defaultCSVParser.getCellStates("Fire").get(1));
+    Assertions.assertEquals(2, defaultCSVParser.getCellStates("Fire").get(2));
+    Assertions.assertEquals(0, defaultCSVParser.getCellStates("Fire").get(3));
   }
 
   @Test
