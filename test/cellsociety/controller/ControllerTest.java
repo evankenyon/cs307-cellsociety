@@ -41,7 +41,6 @@ class ControllerTest {
   void parseFile()
           throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, IllegalCellStateException, InvalidDimensionException, IllegalRowSizeException {
     controller.parseFile(new File("./data/game_of_life/blinkers.sim"));
-//    List<Cell> cells = model.getCellList();
     Scanner overallScanner = new Scanner("./data/game_of_life/blinkers.sim");
     overallScanner.nextLine();
     int row = 0;
@@ -57,10 +56,12 @@ class ControllerTest {
     }
   }
 
+
+
   @Test
-  void parseFileThrowsException() {
-    assertThrows(FileNotFoundException.class,
-        () -> controller.parseFile(new File("./data/game_of_life/nonexistent.csv")));
+  void parseFileThrowsNullPointerException() {
+    assertThrows(NullPointerException.class,
+        () -> controller.parseFile(new File("./data/game_of_life/nonexistent.sim")));
   }
 
   @Test

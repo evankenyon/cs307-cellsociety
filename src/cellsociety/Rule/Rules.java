@@ -5,6 +5,7 @@ import cellsociety.cell.IllegalCellStateException;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.ResourceBundle;
 
@@ -12,11 +13,8 @@ public abstract class Rules implements RulesInterface {
   protected Cell cell;
   protected ResourceBundle stateAndNeighborsMap;
 
-  public Rules(Cell cell) throws IllegalCellStateException {
+  public Rules(Cell cell) throws InputMismatchException {
     this.cell=cell;
-    if(cell.getCurrentState()<0){
-      throw new IllegalCellStateException();
-    }
   }
 
   /**

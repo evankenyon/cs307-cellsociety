@@ -37,7 +37,7 @@ public class Controller {
   }
 
   public void parseFile(File SimFile)
-          throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, IllegalCellStateException, InputMismatchException, IllegalArgumentException, InvalidDimensionException, IllegalRowSizeException {
+      throws NullPointerException, IOException, InputMismatchException, IllegalArgumentException, InvalidDimensionException, IllegalRowSizeException, IllegalCellStateException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
     CSVParser csvParser = null;
     SimParser simParser = new SimParser();
     simParser.setupKeyValuePairs(SimFile);
@@ -46,7 +46,7 @@ public class Controller {
               String.format("%s.%sCSVParser", CSVParser.class.getPackage().getName(), simParser.getSimulationConfig().getProperty("CSVType")))
           .getConstructor()
           .newInstance();
-    } catch (ClassNotFoundException | InstantiationException e) {
+    } catch (ClassNotFoundException | InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
       csvParser = new DefaultCSVParser();
     }
     csvParser.setFile(new File(String.format("./data/%s", simParser.getSimulationConfig().getProperty("InitialStates"))));
@@ -83,7 +83,7 @@ public class Controller {
    * perform the next step in the simulation
    */
   public void step()
-      throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, ClassNotFoundException, InstantiationException, IllegalCellStateException {
+      throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, ClassNotFoundException, InstantiationException, IllegalCellStateException, InputMismatchException {
     model.findNextStateForEachCell();
     model.updateModel();
   }

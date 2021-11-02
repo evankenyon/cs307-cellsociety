@@ -18,6 +18,13 @@ class ProbabilityCSVParserTest {
   }
 
   @Test
+  void fileNotFoundException() {
+    probabilityCSVParser.setFile(new File("blah.csv"));
+    Assertions.assertThrows(FileNotFoundException.class, () -> probabilityCSVParser.getCellStates("GameOfLife"));
+
+  }
+
+  @Test
   void getCellStatesGameOfLifeProbabilityOne() throws FileNotFoundException {
     probabilityCSVParser.setFile(new File("./data/game_of_life/probabilityAll.csv"));
     List<Integer> cellStates = probabilityCSVParser.getCellStates("GameOfLife");

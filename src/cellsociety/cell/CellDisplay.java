@@ -14,7 +14,6 @@ import java.io.FileInputStream;
  * @author Keith Cressman
  */
 public class CellDisplay {
-  // TODO: move to properties file
   private static final int DEFAULT_WIDTH = 20;
   private static final int DEFAULT_HEIGHT = 20;
 

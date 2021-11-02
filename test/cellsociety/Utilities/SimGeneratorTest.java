@@ -41,4 +41,9 @@ class SimGeneratorTest {
       Assertions.assertTrue(actualProps.stringPropertyNames().contains(key));
     }
   }
+
+  @Test
+  void createSimFileException() {
+    Assertions.assertThrows(IOException.class, () -> simGenerator.createSimFile("./data", null));
+  }
 }

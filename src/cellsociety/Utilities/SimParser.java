@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.InputMismatchException;
 import java.util.List;
+import java.util.MissingResourceException;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
@@ -25,7 +26,7 @@ public class SimParser {
     requiredKeys = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + REQUIRED_KEYS_FILENAME);
   }
 
-  public void setupKeyValuePairs(File simFile) throws IOException, InputMismatchException {
+  public void setupKeyValuePairs(File simFile) throws InputMismatchException, NullPointerException {
     // Used https://mkyong.com/java/java-read-a-file-from-resources-folder/ to learn how to properly
     // setup pathname
     File currFile = simFile;
@@ -37,14 +38,13 @@ public class SimParser {
     // Borrowed code for making InputStream from
     // https://www.baeldung.com/convert-file-to-input-stream
     InputStream simFileInputStream = this.getClass().getClassLoader().getResourceAsStream(pathName.toString());
-    simulationConfig.load(simFileInputStream);
-    standardizeKeys();
     try {
-      handleIllegalInput();
-    } catch (Exception e) {
-      e.printStackTrace();
+      simulationConfig.load(simFileInputStream);
+    } catch (IOException e) {
+      throw new NullPointerException();
     }
-
+    standardizeKeys();
+    handleIllegalInput();
   }
 
   private void standardizeKeys() {
@@ -52,7 +52,11 @@ public class SimParser {
       ResourceBundle keyStandardization = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + KEY_STANDARDIZATION_FILENAME);
       String value = simulationConfig.getProperty(key);
       simulationConfig.remove(key);
-      simulationConfig.setProperty(keyStandardization.getString(key), value);
+      try {
+        simulationConfig.setProperty(keyStandardization.getString(key), value);
+      } catch (MissingResourceException e) {
+        throw new InputMismatchException();
+      }
     }
   }
 
