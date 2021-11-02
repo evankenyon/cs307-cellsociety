@@ -77,5 +77,23 @@ class CellTest {
     assertEquals(expected, cell.numOfStateNeighbors(0));
   }
 
+  @Test
+  void torodialTest(){
+    Cell oppositeSideCell = new Cell(0,99,1,100,100);
+    Cell firstSideCell = new Cell(0, 0, 1, 100, 100);
+    firstSideCell.updateNeighborsToroidal(100,100, oppositeSideCell, defaultNumCornersShared);
+    assertTrue(firstSideCell.getNeighbors().contains(oppositeSideCell));
+
+  }
+
+  @Test
+  void mirrorTest(){
+    Cell firstSideCell = new Cell(0, 0, 1, 8, 8);
+    Cell oppositeSideCell = new Cell(0,7,1,8,8);
+    firstSideCell.updateNeighborsMirror(8,8, oppositeSideCell, defaultNumCornersShared);
+    assertTrue(firstSideCell.getNeighbors().contains(oppositeSideCell));
+
+  }
+
 
 }
