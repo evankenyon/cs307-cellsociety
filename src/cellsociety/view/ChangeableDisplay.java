@@ -1,6 +1,7 @@
 package cellsociety.view;
 
 import cellsociety.resourceHandlers.LanguageResourceHandler;
+import cellsociety.resourceHandlers.ViewResourceHandler;
 
 
 import cellsociety.view.ViewUtilities.Button2;
@@ -20,6 +21,8 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Collection;
 import java.util.function.Consumer;
+import java.util.List;
+import java.util.ArrayList;
 
 
 /**
@@ -33,7 +36,9 @@ import java.util.function.Consumer;
 public abstract class ChangeableDisplay {
   protected LanguageResourceHandler myLanguageResourceHandler;
   private Map<NodeWithText, String> myNodesToTextKey;
+  protected List<ChangeableDisplay> mySubDisplays;
   protected Node myDisp;
+  private ViewResourceHandler myViewResourceHandler;
 
 
   public ChangeableDisplay(){
@@ -42,8 +47,10 @@ public abstract class ChangeableDisplay {
 
   public ChangeableDisplay(LanguageResourceHandler l){
     myLanguageResourceHandler = l;
+    myViewResourceHandler = new ViewResourceHandler();
     myNodesToTextKey = new HashMap<>();
     myDisp = new Pane();
+    mySubDisplays = new ArrayList<>();
   }
 
   /**
@@ -114,6 +121,19 @@ public abstract class ChangeableDisplay {
       String resourceKey = myNodesToTextKey.get(n);
       n.setText(myLanguageResourceHandler.getStringFromKey(resourceKey));
     }
+
+    for (ChangeableDisplay cd : mySubDisplays){
+      cd.changeLanguageResourceHandler(myLanguageResourceHandler);
+      cd.changeLanguageOfText();
+    }
+  }
+
+  /**
+   * change the language resource handler
+   * @param newHandler will become myLanguageResourceHandler
+   */
+  public void changeLanguageResourceHandler(LanguageResourceHandler newHandler){
+    myLanguageResourceHandler = newHandler;
   }
 
   /**
@@ -155,6 +175,14 @@ public abstract class ChangeableDisplay {
     } catch(Exception e){
       displayErrorMessage(e.getMessage());
     }
+  }
+
+  /**
+   * get myViewResourceHandler
+   * @return  myViewResourceHandler
+   */
+  protected ViewResourceHandler getMyViewResourceHandler(){
+    return myViewResourceHandler;
   }
 
 }

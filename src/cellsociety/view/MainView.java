@@ -171,6 +171,8 @@ public class MainView extends ChangeableDisplay{
         });
       }
     }
+    mySubDisplays.clear();
+    mySubDisplays.add(mySimulationDisplay);
     Platform.runLater(new Runnable() {
       @Override public void run() {
         mainPane.getChildren().add(newDisplay);
@@ -179,15 +181,6 @@ public class MainView extends ChangeableDisplay{
   }
 
 
-  /**
-   * go through each node with text and change it to the new language
-   */
-  protected void changeLanguageOfText(){
-    super.changeLanguageOfText();
-    if (mySimulationDisplay != null) {
-      mySimulationDisplay.changeLanguageOfText();
-    }
-  }
 
   /**
    * get the number of simulations being run. This is for testing purposes

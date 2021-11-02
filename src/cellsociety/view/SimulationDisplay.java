@@ -131,19 +131,22 @@ public class SimulationDisplay extends ChangeableDisplay{
   private Node makeCellGridDisplay(){
     //make a node containing the grid
     myCellGridDisplay = new CellGridDisplay(myController);
+    mySubDisplays.add(myCellGridDisplay);
     return myCellGridDisplay.createGridDisplay();
   }
 
 
   private Node makeHistogram(){
     //create the histogram to add it onto the main node
-    myHistogram = new HistogramDisplay(myController.getNumCells(), getNumOfEachState());
+    myHistogram = new HistogramDisplay(myController.getNumCells(), getNumOfEachState(), myLanguageResourceHandler);
+    mySubDisplays.add(myHistogram);
     return myHistogram.createHistogramDisplay();
   }
 
   private Node makeInfoDisplay(){
     //make the node with the info display to add it onto the main node
-    myInfoDisplay = new InfoDisplay(getNumOfEachState());
+    myInfoDisplay = new InfoDisplay(getNumOfEachState(), myLanguageResourceHandler);
+    mySubDisplays.add(myInfoDisplay);
     return myInfoDisplay.createInfoDisplay();
   }
 
@@ -332,6 +335,7 @@ public class SimulationDisplay extends ChangeableDisplay{
   public Node getMyNode(){
     return myNode;
   }
+
 
 
 
