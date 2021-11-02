@@ -106,6 +106,7 @@ public class Cell {
   }
 
   public void updateNeighborsToroidal(int rows, int cols, Cell potentialNeighbor, List<Integer> numCornersShared){
+
     updateNeighbors(potentialNeighbor,numCornersShared);
     int indexedRows = rows--;
     int indexedCols = cols--;
@@ -123,6 +124,31 @@ public class Cell {
     }
   }
 
+  public void updateNeighborsMirror(int rows, int cols, Cell potentialNeighbor, List<Integer> numCornersShared){
+    updateNeighbors(potentialNeighbor,numCornersShared);
+
+    int indexedRows = rows--;
+    int indexedCols = cols--;
+
+    if(this.getiIndex() == 0||this.getiIndex()==indexedRows){
+      if(Math.abs(this.getiIndex()-potentialNeighbor.getjIndex())==indexedCols){
+        if(potentialNeighbor.getjIndex()==0 || potentialNeighbor.getjIndex() == indexedCols){
+          addUniqueNeighborToList(potentialNeighbor);
+        }
+      }
+    }
+
+
+    if(this.getjIndex() == 0||this.getjIndex()==indexedRows){
+      if(Math.abs(this.getjIndex()-potentialNeighbor.getiIndex())==indexedRows){
+        if(potentialNeighbor.getiIndex()==0 || potentialNeighbor.getiIndex() == indexedRows){
+          addUniqueNeighborToList(potentialNeighbor);
+        }
+      }
+    }
+
+  }
+
   public int iIndexDifference(Cell potentialNeighbor){
     return Math.abs(this.iIndex-potentialNeighbor.getiIndex());
   }
@@ -132,7 +158,7 @@ public class Cell {
   }
 
   public void addUniqueNeighborToList(Cell potentialNeighbor){
-    if(!neighbors.contains(potentialNeighbor)){
+    if(!neighbors.contains(potentialNeighbor) && !potentialNeighbor.equals(this)){
       neighbors.add(potentialNeighbor);
     }
   }
