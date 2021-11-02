@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import cellsociety.resourceHandlers.LanguageResourceHandler;
+import cellsociety.resourceHandlers.CSSidHandler;
 import cellsociety.view.MainView;
 import cellsociety.view.SimulationDisplay;
 import cellsociety.view.ViewUtilities.NodeWithText;
@@ -17,6 +18,7 @@ import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 
 
 import java.util.Collection;
@@ -60,31 +62,7 @@ public class SimulationDisplayTest extends DukeApplicationTest{
     }
   }
 
-  @Test
-  void testSaveFile(){
-    //Make sure to do setid on the nodes
-    //need to check in the right directory
-    clickOn(resourceHandler.getStringFromKey(LanguageResourceHandler.SAVE_FILE_KEY));
-    Node rootNode = myStage.getScene().getRoot();
 
-    Collection<Node> textFields = from(rootNode).lookup(".text-field").queryAll();
-
-    Random r = new Random();
-    int fileName = r.nextInt(9999999);
-    //this isn't working. Need to figure out how to find specific text field
-    for (Node n : textFields){
-      writeInputTo((TextInputControl)n, String.valueOf(fileName));
-    }
-
-    clickOn(resourceHandler.getStringFromKey(LanguageResourceHandler.SAVE_BUTTON_POPUP_KEY));
-    try {
-      File f = new File("data/game_of_life/saved/program-" + fileName + ".csv");
-      assertTrue(f.exists());
-    } catch (Exception e){
-      assertTrue(false);
-    }
-
-  }
 
   @Test
   void testOneStepButtonSimple(){
@@ -123,7 +101,7 @@ public class SimulationDisplayTest extends DukeApplicationTest{
     Node rootNode = myStage.getScene().getRoot();
     Slider s = from(rootNode).lookup(".slider").query();
     changeSpeedSlider(s, 30);
-    assertTrue(doublesEqual(1.0/30.0, simDisp.getAnimationSpeed()));
+    assertTrue(doublesEqual(1.0/30.0,  simDisp.getAnimationSpeed()));
   }
 
   @Test

@@ -56,9 +56,9 @@ public class CellDisplayTest {
   void testChangeStateWithColors(){
 
     myDisplay.changeState(1);
-    assertEquals(Color.BLUE, myDisplay.getMyColor());
+    assertEquals(myDisplay.getStateColors()[1], myDisplay.getMyColor());
     myDisplay.changeState(2);
-    assertEquals(Color.BLACK, myDisplay.getMyColor());
+    assertEquals(myDisplay.getStateColors()[2], myDisplay.getMyColor());
   }
 
 

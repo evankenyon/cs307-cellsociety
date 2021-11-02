@@ -19,4 +19,12 @@ public class CSSidHandlerTest {
     String actual = myHandler.getStringFromKey(CSSidHandler.HISTOGRAM_BACKGROUND_KEY);
     assertEquals("HistogramBackground", actual);
   }
+
+  @Test
+  void testFileNameSaveId(){
+    String actual = myHandler.getStringFromKey(CSSidHandler.FILENAME_SAVE_KEY);
+    assertEquals("FileNameSave", actual);
+  }
+
+
 }
