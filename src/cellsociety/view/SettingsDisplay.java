@@ -15,16 +15,22 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 /**
  * Objects of this class represent the display of the settings for the simulation
  * @author Keith Cressman
  */
-public class SimulationSettingsDisplay extends ChangeableDisplay{
+public class SettingsDisplay extends ChangeableDisplay{
+
+  private double framesPerSecond = 1;
+  private double secondDelay = 1.0 / framesPerSecond;
+
   private Controller myController;
   private Button pauseButton, resumeButton;
   private boolean paused;
   private Timeline myAnimation;
+  private SimulationDisplay mySimulationDisplay;
 
 
   /**
@@ -32,9 +38,10 @@ public class SimulationSettingsDisplay extends ChangeableDisplay{
    * @param controller will be myController
    * @param l will be myLanguageResourceHandler
    */
-  public SimulationSettingsDisplay(Controller controller, LanguageResourceHandler l){
+  public SettingsDisplay(Controller controller, LanguageResourceHandler l, SimulationDisplay simDisp){
     super(l);
     myController = controller;
+    mySimulationDisplay = simDisp;
   }
 
   /**
@@ -42,12 +49,13 @@ public class SimulationSettingsDisplay extends ChangeableDisplay{
    * @return
    */
   public Node createSettingsDisplay(){
-    //make the box with options to pause/resume, do one step, change speed, etc..
     VBox v = new VBox();
     v.getChildren().add(makeShowHideBox());
     v.getChildren().add(makeMiscellaneousControls());
     v.getChildren().add(makeParametersControlBox());
     v.getChildren().add(makeSlider());
+    setUpAnimation();
+    myDisp = v;
 
     return v;
   }
@@ -55,13 +63,16 @@ public class SimulationSettingsDisplay extends ChangeableDisplay{
   private Node makeShowHideBox(){
     //make a node with buttons for users to show/hide the grid, histogram, and info
     HBox showHideBox = new HBox();
-    showHideBox.getChildren().add(makeAButton(LanguageResourceHandler.SHOW_GRID_KEY, () -> myCellGridDisplay.setVisible(true)));
-    showHideBox.getChildren().add(makeAButton(LanguageResourceHandler.HIDE_GRID_KEY, () -> myCellGridDisplay.setVisible(false)));
-    showHideBox.getChildren().add(makeAButton(LanguageResourceHandler.SHOW_HISTOGRAM_KEY, () -> myHistogram.setVisible(true)));
-    showHideBox.getChildren().add(makeAButton(LanguageResourceHandler.HIDE_HISTOGRAM_KEY, () -> myHistogram.setVisible(false)));
-    showHideBox.getChildren().add(makeAButton(LanguageResourceHandler.SHOW_INFO_KEY, () -> myInfoDisplay.setVisible(true)));
-    showHideBox.getChildren().add(makeAButton(LanguageResourceHandler.HIDE_INFO_KEY, () -> myInfoDisplay.setVisible(false)));
+
+    showHideBox.getChildren().add(makeAButton(LanguageResourceHandler.SHOW_GRID_KEY, () -> mySimulationDisplay.showGrid(true)));
+    showHideBox.getChildren().add(makeAButton(LanguageResourceHandler.HIDE_GRID_KEY, () -> mySimulationDisplay.showGrid(false)));
+    showHideBox.getChildren().add(makeAButton(LanguageResourceHandler.SHOW_HISTOGRAM_KEY, () -> mySimulationDisplay.showHistogram(true)));
+    showHideBox.getChildren().add(makeAButton(LanguageResourceHandler.HIDE_HISTOGRAM_KEY, () -> mySimulationDisplay.showHistogram(false)));
+    showHideBox.getChildren().add(makeAButton(LanguageResourceHandler.SHOW_INFO_KEY, () -> mySimulationDisplay.showInfoDisplay(true)));
+    showHideBox.getChildren().add(makeAButton(LanguageResourceHandler.HIDE_INFO_KEY, () -> mySimulationDisplay.showInfoDisplay(false)));
+
     return showHideBox;
+
   }
 
   private Node makeMiscellaneousControls(){
@@ -74,7 +85,7 @@ public class SimulationSettingsDisplay extends ChangeableDisplay{
     controlBox.getChildren().add(pauseButton);
     controlBox.getChildren().add(resumeButton);
     controlBox.getChildren().add(makeAButton(LanguageResourceHandler.ONE_STEP_KEY, () -> oneStep()));
-    controlBox.getChildren().add(makeAButton(LanguageResourceHandler.SAVE_FILE_KEY, () -> makePopup()));
+    controlBox.getChildren().add(makeAButton(LanguageResourceHandler.SAVE_FILE_KEY, () -> makeFileSavePopup()));
     return controlBox;
   }
 
@@ -93,10 +104,11 @@ public class SimulationSettingsDisplay extends ChangeableDisplay{
   }
 
   private Node makeParametersControlBox(){
+
     HBox parametersControlBox = new HBox();
 
     Node shapeControlBox = makeOptionsBox(LanguageResourceHandler.SHAPES_KEY,
-        getMyViewResourceHandler().getCellShapes(), (s) -> myCellGridDisplay.changeCellShapes(s));
+        getMyViewResourceHandler().getCellShapes(), (s) -> mySimulationDisplay.changeCellShapes(s));
     parametersControlBox.getChildren().add(shapeControlBox);
 
     Node neighborArrangementBox = makeOptionsBox(LanguageResourceHandler.NEIGHBOR_ARRANGEMENT_KEY,
@@ -144,7 +156,7 @@ public class SimulationSettingsDisplay extends ChangeableDisplay{
     paused = false;
   }
 
-  private void makePopup(){
+  private void makeFileSavePopup(){
     //make a poup which the user can interact with to save the simulation
     pauseAnimation();
     FileSavePopup popup = new FileSavePopup(myLanguageResourceHandler, myController);
@@ -158,24 +170,26 @@ public class SimulationSettingsDisplay extends ChangeableDisplay{
   }
 
 
-  protected void step() {
-    try {
-      myController.step();
-      myHistogram.setNumOfEachType(getNumOfEachState());
-    } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-      // TODO: move to props file
-      displayErrorMessage("Reflection error occurred in backend model, please try restarting the"
-          + "program");
-    } catch (IllegalCellStateException e) {
-      // TODO: move to props file
-      displayErrorMessage("A cell was set to an illegal state in the backend model, please try restarting the program");
-    }
-    myInfoDisplay.setNumOfEachType((getNumOfEachState()));
-
+  private void step() {
+    //called at each time step of the animation
+    mySimulationDisplay.step();
   }
 
 
+  protected void setUpAnimation(){
+    myAnimation = new Timeline();
+    myAnimation.setCycleCount(Timeline.INDEFINITE);
+    myAnimation.getKeyFrames().add(new KeyFrame(Duration.seconds(secondDelay), e -> step()));
+    myAnimation.play();
+    paused = false;
+  }
 
-
+  /**
+   * get the speed of the animation;
+   * @return secondDelay
+   */
+  public double getAnimationSpeed(){
+    return secondDelay;
+  }
 
 }

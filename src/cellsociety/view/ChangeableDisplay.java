@@ -185,4 +185,14 @@ public abstract class ChangeableDisplay {
     return myViewResourceHandler;
   }
 
+  /**
+   * get the node containing all the display stuff for this simulation.
+   * This will allow us to remove it from the MainView
+   * @return myNode
+   */
+  public Node getMyNode(){
+    return myDisp;
+  }
+
+
 }
