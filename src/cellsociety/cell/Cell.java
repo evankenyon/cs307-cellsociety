@@ -143,10 +143,6 @@ public class Cell implements ImmutableCell {
     int indexedCols = cols-1;
     boolean onOppositeTopBottom = iIndexDifference(potentialNeighbor)==indexedRows &&
             jIndexDifference(potentialNeighbor) == 0;
-    System.out.println("Indexed rows" + indexedRows);
-    System.out.println("Indexed cols" + indexedCols);
-    System.out.println("I difference" + iIndexDifference(potentialNeighbor));
-    System.out.println("J difference" + jIndexDifference(potentialNeighbor));
 
     boolean onOppositeLeftRight = iIndexDifference(potentialNeighbor) == 0 &&
         jIndexDifference(potentialNeighbor) == indexedCols;
