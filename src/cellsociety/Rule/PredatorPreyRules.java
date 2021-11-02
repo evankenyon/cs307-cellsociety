@@ -13,7 +13,7 @@ public class PredatorPreyRules extends Rules {
     private static final String DEFAULT_RESOURCE_PACKAGE =
         GameOfLifeRules.class.getPackageName() + ".resources.";
     private static final String DEFAULT_PARAMS_FILENAME = "PredatorPreyDefaultParams";
-    private int reproductionCycle;
+    private int reproductionCycle=3;
 
     public PredatorPreyRules(Cell cell, List<Double> args) throws IllegalCellStateException {
         super(cell);
