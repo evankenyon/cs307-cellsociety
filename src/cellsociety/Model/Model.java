@@ -138,6 +138,7 @@ public class Model {
   public void findNextStateForEachCell()
       throws ClassNotFoundException, InvocationTargetException, IllegalAccessException, NoSuchMethodException, InstantiationException, IllegalCellStateException {
     for (Cell cell : cellList) {
+      cell.updateCellNeighborStateMap();
       RulesInterface r = (RulesInterface) Class.forName(
               String.format("%s%sRules", numCorners.getString("RulesPackageName"),
                   simulationInfo.get("Type")))
@@ -147,20 +148,6 @@ public class Model {
       r.setState();
     }
 
-  }
-
-  /**
-   * SHOULD DELETE THIS METHOD get a list of all the nodes to go on screen, representing displays of
-   * each cell
-   *
-   * @return a list of nodes displaying the cells
-   */
-  public List<Node> getCellDisplays() {
-    List<Node> nodeList = new ArrayList<>();
-    for (Cell cell : cellList) {
-      nodeList.add(cell.getMyDisplay());
-    }
-    return nodeList;
   }
 
   /**

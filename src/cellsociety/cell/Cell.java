@@ -5,6 +5,7 @@ import cellsociety.Model.Model;
 import cellsociety.location.CornerLocation;
 
 import java.util.*;
+import java.util.function.Consumer;
 import javafx.scene.Node;
 
 import cellsociety.CornerLocationGenerator.RectangleCellCornerLocationGenerator;
@@ -25,9 +26,9 @@ public class Cell {
   private final int iIndex;
   private final int jIndex;
   private Map<Integer, List<Cell>> neighborCellStateMap;
-  private CellDisplay myDisplay;
   private int chrononCounter;
   private int energy;
+  private List<Consumer<Integer>> myObservers;
 
 
   public Cell(int i, int j, int initialState, int rows, int columns) throws IllegalArgumentException {
@@ -41,22 +42,12 @@ public class Cell {
     this.currentState = initialState;
     corners = new RectangleCellCornerLocationGenerator(rows, columns).generateCorners(i, j);
     neighbors = new ArrayList<>();
-    myDisplay = new CellDisplay(j * Integer.parseInt(defaultVals.getString("defaultWidth")),
-        i * Integer.parseInt(defaultVals.getString("defaultHeight")), currentState);
+//    myDisplay = new CellDisplay(j * Integer.parseInt(defaultVals.getString("defaultWidth")),
+//        i * Integer.parseInt(defaultVals.getString("defaultHeight")), currentState);
     neighborCellStateMap = new HashMap<>();
     chrononCounter = 0;
     energy = 5;
-  }
-
-
-
-  /**
-   * set what myDisplay refers to
-   *
-   * @param disp will become myDisplay
-   */
-  public void setDisplay(CellDisplay disp) {
-    myDisplay = disp;
+    myObservers = new ArrayList<>();
   }
 
   public int getjIndex() {
@@ -70,9 +61,18 @@ public class Cell {
 
   public void updateState() {
     currentState = futureState;
-    myDisplay.changeState(currentState);
+    updateObservers();
   }
 
+  public void addObserver(Consumer<Integer> observer) {
+    myObservers.add(observer);
+  }
+
+  private void updateObservers() {
+    for(Consumer<Integer> observer : myObservers) {
+      observer.accept(getCurrentState());
+    }
+  }
 
   public void setFutureState(int state) {
     this.futureState = state;
@@ -182,18 +182,13 @@ public class Cell {
     return currentState == cell.currentState && futureState == cell.futureState
         && iIndex == cell.iIndex && jIndex == cell.jIndex && Objects.equals(neighbors,
         cell.neighbors) && Objects.equals(corners, cell.corners) && Objects.equals(
-        neighborCellStateMap, cell.neighborCellStateMap) && Objects.equals(myDisplay,
-        cell.myDisplay);
+        neighborCellStateMap, cell.neighborCellStateMap);
   }
 
   @Override
   public int hashCode() {
     return Objects.hash(currentState, futureState, neighbors, corners, iIndex, jIndex,
-        neighborCellStateMap, myDisplay);
-  }
-
-  public Node getMyDisplay() {
-    return myDisplay.getMyDisplay();
+        neighborCellStateMap);
   }
 
   public void updateChronon() {

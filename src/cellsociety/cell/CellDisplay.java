@@ -1,4 +1,5 @@
 package cellsociety.cell;
+import cellsociety.controller.Controller;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.shape.Polygon;
@@ -20,13 +21,14 @@ public class CellDisplay {
   private Node myDisp;
   private Cell myCell;
   private int myState;
+  private Controller myController;
   public static final Color ON_COLOR = Color.BLUE;
   public static final Color OFF_COLOR = Color.BLACK;
 
   private Color[] stateColors = {Color.BLACK, Color.RED, Color.GREEN};
 
-  public CellDisplay(double x, double y, int state){
-    this(x, y, DEFAULT_WIDTH, DEFAULT_HEIGHT, state);
+  public CellDisplay(double x, double y, int state, Controller myController){
+    this(x, y, DEFAULT_WIDTH, DEFAULT_HEIGHT, state, myController);
   }
 
   /**
@@ -37,7 +39,7 @@ public class CellDisplay {
    * @param height is the height of the rectangle
    * @param state is the state of the corresponding cell
    */
-  public CellDisplay(double x, double y, double width, double height, int state){
+  public CellDisplay(double x, double y, double width, double height, int state, Controller myController){
     /*
     try {
       FileInputStream input = new FileInputStream("src/cellsociety/cell/DukeLogo.png");
@@ -48,14 +50,16 @@ public class CellDisplay {
 
     }*/
     myDisp = new Rectangle(x, y, width, height);
+    this.myController = myController;
     commonConstructorSetup(state);
   }
 
-  public CellDisplay(double[] cornerXYs, int state){
+  public CellDisplay(double[] cornerXYs, int state, Controller myController){
     myDisp = new Polygon(cornerXYs);
     Polygon x = new Polygon(1, 1, 1,1 );
     Rectangle r = new Rectangle();
     commonConstructorSetup(state);
+    this.myController = myController;
   }
 
   private void commonConstructorSetup(int state){
@@ -80,8 +84,7 @@ public class CellDisplay {
   private void cellClicked(){
     //handle what happens when a cell is clicked on in the GUI
     int nextState = (myCell.getCurrentState() + 1) % stateColors.length;
-    myCell.setFutureState(nextState);
-    myCell.updateState();
+    myController.setCellState(myCell.getiIndex(), myCell.getjIndex(), nextState);
   }
 
   /**

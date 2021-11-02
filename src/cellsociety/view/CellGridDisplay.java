@@ -3,6 +3,7 @@ package cellsociety.view;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.shape.Rectangle;
@@ -34,7 +35,7 @@ public class CellGridDisplay extends ChangeableDisplay{
    * @param controller will be used to get things like grid shape and a list of cells.
    *                   I don't love the idea of making myController an instance variable here but it's convenient -Keith
    */
-  public CellGridDisplay( Controller controller){
+  public CellGridDisplay(Controller controller){
     allCellDisplays = new ArrayList<>();
     myViewResourceHandler = new ViewResourceHandler();
     myController = controller;
@@ -76,12 +77,12 @@ public class CellGridDisplay extends ChangeableDisplay{
     //make a cell display for the cell with the width and height given as arguments
     // CellDisplay newDisplay = new CellDisplay(cell.getjIndex() * widthPerCell,
     //cell.getiIndex() * heightPerCell, widthPerCell, heightPerCell, cell.getCurrentState());
-    CellDisplay newDisplay = new CellDisplay(generateXYs(cell), cell.getCurrentState());
+    CellDisplay newDisplay = new CellDisplay(generateXYs(cell), cell.getCurrentState(), myController);
     newDisplay.setCell(cell);
     newDisplay.setColors(myViewResourceHandler.getColorsForSimulation(
         myController.getSimulationType()));
-    cell.setDisplay(newDisplay);
     allCellDisplays.add(newDisplay);
+    myController.addCellObserver(cell.getiIndex(), cell.getjIndex(), cellState -> newDisplay.changeState(cellState));
     return newDisplay;
   }
 
@@ -106,7 +107,6 @@ public class CellGridDisplay extends ChangeableDisplay{
    * @param newShape is a String like "Triangle" or "Rectangle" that corresponds to a valid cell shape
    */
   public void changeCellShapes(String newShape){
-    System.out.println(newShape);
     myCornerGenerator = myViewResourceHandler.getCornerLocationGenerator(newShape, myController.getGridShape()[0],
         myController.getGridShape()[1]);
     removeCellDisplays();
