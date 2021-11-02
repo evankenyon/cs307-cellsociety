@@ -32,14 +32,16 @@ public class PredatorPreyRulesTest {
 
     @Test
     void sharkEatsFish() throws IllegalCellStateException {
-        PredatorPreyCell cell=new PredatorPreyCell(0,0,2,10,10);
+        PredatorPreyCell cell=new PredatorPreyCell(1,1,2,10,10);
         cell.setEnergy(3);
         List<Cell> test=new ArrayList<>();
         test.add(new Cell(0,0,0,10,10));
-        test.add(new Cell(0,0,0,10,10));
-        test.add(new Cell(0,0,1,10,10));
-        test.add(new Cell(0,0,0,10,10));
-        cell.setNeighbors(test);
+        test.add(new Cell(1,0,0,10,10));
+        test.add(new Cell(0,1,1,10,10));
+        test.add(new Cell(1,2,0,10,10));
+        for (Cell otherCell : test) {
+            cell.updateNeighbors(otherCell, List.of(new Integer[]{1, 2}));
+        }
         cell.updateCellNeighborStateMap();
         PredatorPreyRules pp=new PredatorPreyRules(cell, new ArrayList<>());
         pp.setState();

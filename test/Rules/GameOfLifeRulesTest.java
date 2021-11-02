@@ -27,8 +27,11 @@ public class GameOfLifeRulesTest {
     void killCellTest() throws IllegalCellStateException {
         GameOfLifeCell cell=new GameOfLifeCell(0,0,1,10,10);
         List<Cell> test=new ArrayList<>();
-        test.add(new GameOfLifeCell(0,0,0,10,10));
-        cell.setNeighbors(test);
+        test.add(new GameOfLifeCell(1,1,0,10,10));
+        for (Cell otherCell : test) {
+            cell.updateNeighbors(otherCell, List.of(new Integer[]{1, 2}));
+        }
+        cell.updateCellNeighborStateMap();
         GameOfLifeRules rules=new GameOfLifeRules(cell, new ArrayList<>());
         rules.setCellState(0);
         Assertions.assertEquals(0,cell.getFutureState());
@@ -38,8 +41,11 @@ public class GameOfLifeRulesTest {
     void createCellTest() throws IllegalCellStateException {
         GameOfLifeCell cell=new GameOfLifeCell(0,0,0,10,10);
         List<Cell> test=new ArrayList<>();
-        test.add(new GameOfLifeCell(0,0,0,10,10));
-        cell.setNeighbors(test);
+        test.add(new GameOfLifeCell(1,1,0,10,10));
+        for (Cell otherCell : test) {
+            cell.updateNeighbors(otherCell, List.of(new Integer[]{1, 2}));
+        }
+        cell.updateCellNeighborStateMap();
         GameOfLifeRules rules=new GameOfLifeRules(cell, new ArrayList<>());
         rules.setCellState(1);
         Assertions.assertEquals(1,cell.getFutureState());
@@ -50,8 +56,11 @@ public class GameOfLifeRulesTest {
             throws InvocationTargetException, IllegalAccessException, NoSuchMethodException, IllegalCellStateException {
         GameOfLifeCell cell=new GameOfLifeCell(0,0,1,10,10);
         List<Cell> test=new ArrayList<>();
-        test.add(new GameOfLifeCell(0,0,0,10,10));
-        cell.setNeighbors(test);
+        test.add(new GameOfLifeCell(1,1,0,10,10));
+        for (Cell otherCell : test) {
+            cell.updateNeighbors(otherCell, List.of(new Integer[]{1, 2}));
+        }
+        cell.updateCellNeighborStateMap();
         GameOfLifeRules rules=new GameOfLifeRules(cell, new ArrayList<>());
         rules.setNumOneNeighbors(1);
         rules.setState();

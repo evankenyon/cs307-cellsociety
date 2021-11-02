@@ -158,11 +158,6 @@ public class Cell implements ImmutableCell {
     return neighbors.size();
   }
 
-  // TODO: Remove
-  public void setNeighbors(List<Cell> neighbors) {
-    this.neighbors = neighbors;
-  }
-
   public List<Cell> getNeighbors() {return neighbors;}
 
   public Cell getNeighborOfState(int state, int num) {
