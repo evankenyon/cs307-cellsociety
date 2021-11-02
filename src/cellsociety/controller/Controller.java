@@ -17,6 +17,7 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
 import javafx.scene.Node;
 
 public class Controller {
@@ -52,6 +53,10 @@ public class Controller {
     model.setupCells(csvParser.getCellStates(simParser.getSimulationConfig().getProperty("Type")), csvParser.getRows(), csvParser.getCols());
   }
 
+  public void addCellObserver(int row, int col, Consumer<Integer> observer) {
+    model.getCell(row, col).addObserver(observer);
+  }
+
   public void saveFile(String fileName, Map<String, String> propertyToValue) throws IOException {
     simGenerator.createSimFile(fileName, propertyToValue);
     CSVGenerator csvGenerator = new CSVGenerator();
@@ -68,6 +73,12 @@ public class Controller {
    */
   public List<Cell> getCells(){
     return model.getCells();
+  }
+
+  public void setCellState(int row, int col, int state) {
+    Cell cellToUpdate = model.getCell(row, col);
+    cellToUpdate.setFutureState(state);
+    cellToUpdate.updateState();
   }
 
   /**

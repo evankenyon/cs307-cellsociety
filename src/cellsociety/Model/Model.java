@@ -138,6 +138,7 @@ public class Model {
   public void findNextStateForEachCell()
       throws ClassNotFoundException, InvocationTargetException, IllegalAccessException, NoSuchMethodException, InstantiationException, IllegalCellStateException {
     for (Cell cell : cellList) {
+      cell.updateCellNeighborStateMap();
       RulesInterface r = (RulesInterface) Class.forName(
               String.format("%s%sRules", numCorners.getString("RulesPackageName"),
                   simulationInfo.get("Type")))

@@ -1,6 +1,7 @@
 package cellsociety.cell;
 import static org.junit.jupiter.api.Assertions.*;
 
+import cellsociety.controller.Controller;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import javafx.scene.shape.Rectangle;
@@ -15,7 +16,7 @@ public class CellDisplayTest {
 
   @BeforeEach
   void setup(){
-    myDisplay = new CellDisplay(startX, startY, startState);
+    myDisplay = new CellDisplay(startX, startY, startState, new Controller());
   }
 
   @Test
