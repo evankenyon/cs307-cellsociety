@@ -4,6 +4,11 @@ import java.util.ResourceBundle;
 import java.util.Locale;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  * objects of this class help handle properties relating to languages/text
@@ -56,9 +61,11 @@ public class LanguageResourceHandler {
 
   public static final String ENGLISH = "English";
   public static final String SPANISH = "Spanish";
+  public static final String GERMAN = "German";
 
   private final Locale englishLocale = new Locale(ENGLISH, "EN");
   private final Locale spanishLocale = new Locale(SPANISH, "ES");
+  private final Locale germanLocale = new Locale(GERMAN, "DE");
   private Map<String, Locale> langToLocale;
 
 
@@ -73,6 +80,7 @@ public class LanguageResourceHandler {
     langToLocale = new HashMap<>();
     langToLocale.put(ENGLISH, englishLocale);
     langToLocale.put(SPANISH, spanishLocale);
+    langToLocale.put(GERMAN, germanLocale);
   }
 
 
@@ -142,21 +150,19 @@ public class LanguageResourceHandler {
     return myResourceBundle.getString(SELECT_FILE_KEY);
   }
 
-
-
   /**
-   * use the Spanish labels
+   * change the  language being used
+   * @param newLanguage should be a string like "English" or "Spanish"
    */
-  public void changeToSpanish(){
-    myResourceBundle = ResourceBundle.getBundle(LANGUAGE_BUNDLE_NAME, langToLocale.get(SPANISH));
+  public void changeLanguage(String newLanguage){
+    try {
+      myResourceBundle = ResourceBundle.getBundle(LANGUAGE_BUNDLE_NAME,
+          langToLocale.get(newLanguage));
+    } catch (Exception e){
+      //do nothing
+    }
   }
 
-  /**
-   * use the English labels
-   */
-  public void changeToEnglish(){
-    myResourceBundle = ResourceBundle.getBundle(LANGUAGE_BUNDLE_NAME, langToLocale.get(ENGLISH));
-  }
 
   /**
    * get the key/label associated with this key
@@ -165,6 +171,14 @@ public class LanguageResourceHandler {
    */
   public String getStringFromKey(String key){
     return myResourceBundle.getString(key);
+  }
+
+  /**
+   * get the strings representing all the possible languages
+   * @return a collection like {"English", "Spanish", "German"}
+   */
+  public Collection<String> getSupportedLanguages(){
+    return langToLocale.keySet();
   }
 
 

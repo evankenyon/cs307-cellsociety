@@ -19,7 +19,7 @@ public class CellDisplay {
   private static final int DEFAULT_HEIGHT = 20;
 
   private Node myDisp;
-  private Cell myCell;
+  private ImmutableCell myCell;
   private int myState;
   private Controller myController;
   public static final Color ON_COLOR = Color.BLUE;
@@ -77,7 +77,7 @@ public class CellDisplay {
    * set what cell corresponds to this cell display
    * @param cell will be myCell
    */
-  public void setCell(Cell cell){
+  public void setCell(ImmutableCell cell){
     myCell = cell;
   }
 

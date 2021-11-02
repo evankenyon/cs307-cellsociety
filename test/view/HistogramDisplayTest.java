@@ -1,5 +1,6 @@
 package view;
 
+import cellsociety.resourceHandlers.LanguageResourceHandler;
 import javafx.scene.shape.Rectangle;
 
 import cellsociety.view.HistogramDisplay;
@@ -21,7 +22,7 @@ public class HistogramDisplayTest {
     stateToCount.put(0, 20);
     stateToCount.put(1, 60);
     stateToCount.put(2, 20);
-    myHistogramDisplay = new HistogramDisplay(100, stateToCount);
+    myHistogramDisplay = new HistogramDisplay(100, stateToCount, new LanguageResourceHandler());
   }
 
   @Test

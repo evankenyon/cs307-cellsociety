@@ -1,9 +1,9 @@
 package cellsociety.view;
 
+import cellsociety.cell.ImmutableCell;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Consumer;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.shape.Rectangle;
@@ -15,8 +15,7 @@ import cellsociety.controller.Controller;
 
 import cellsociety.CornerLocationGenerator.RectangleCellCornerLocationGenerator;
 import cellsociety.CornerLocationGenerator.CornerLocationGenerator;
-import cellsociety.CornerLocationGenerator.HexagonalCellCornerLocationGenerator;
-import cellsociety.CornerLocationGenerator.TriangularCellCornerLocationGenerator;
+import cellsociety.CornerLocationGenerator.HexagonCellCornerLocationGenerator;
 import cellsociety.location.CornerLocation;
 
 /**
@@ -39,7 +38,7 @@ public class CellGridDisplay extends ChangeableDisplay{
     allCellDisplays = new ArrayList<>();
     myViewResourceHandler = new ViewResourceHandler();
     myController = controller;
-    myCornerGenerator = new HexagonalCellCornerLocationGenerator(controller.getGridShape()[0], controller.getGridShape()[1]);
+    myCornerGenerator = new HexagonCellCornerLocationGenerator(controller.getGridShape()[0], controller.getGridShape()[1]);
   }
 
   /**
@@ -61,7 +60,12 @@ public class CellGridDisplay extends ChangeableDisplay{
     //take all the cells in the simulation and create a cell display for them,
 
     List<Node> displayNodes = new ArrayList<>();
-    List<Cell> allCells = myController.getCells();
+    List<Cell> allCells = new ArrayList<>();
+    for(int row = 0; row < myController.getGridShape()[0]; row++) {
+      for(int col = 0; col < myController.getGridShape()[1]; col++) {
+        allCells.add(myController.getCell(row, col));
+      }
+    }
     int[] gridShape = myController.getGridShape();
     int numRows = gridShape[0];
     int numCols = gridShape[1];
@@ -73,7 +77,7 @@ public class CellGridDisplay extends ChangeableDisplay{
     return displayNodes;
   }
 
-  private CellDisplay makeACellDisplay(Cell cell, double widthPerCell, double heightPerCell){
+  private CellDisplay makeACellDisplay(ImmutableCell cell, double widthPerCell, double heightPerCell){
     //make a cell display for the cell with the width and height given as arguments
     // CellDisplay newDisplay = new CellDisplay(cell.getjIndex() * widthPerCell,
     //cell.getiIndex() * heightPerCell, widthPerCell, heightPerCell, cell.getCurrentState());
@@ -86,11 +90,8 @@ public class CellGridDisplay extends ChangeableDisplay{
     return newDisplay;
   }
 
-  private double[] generateXYs(Cell cell){
-    //generate an array of x and y coordinates that will be used to create a polygon
-    int i = cell.getiIndex();
-    int j = cell.getjIndex();
-   List<CornerLocation> locations = myCornerGenerator.generateCorners(i, j);
+  private double[] generateXYs(ImmutableCell cell){
+    List<CornerLocation> locations = cell.getCorners();
     double[] retXYs = new double[2*locations.size()];
     int index = 0;
     for (CornerLocation corner : locations){
@@ -109,6 +110,7 @@ public class CellGridDisplay extends ChangeableDisplay{
   public void changeCellShapes(String newShape){
     myCornerGenerator = myViewResourceHandler.getCornerLocationGenerator(newShape, myController.getGridShape()[0],
         myController.getGridShape()[1]);
+    myController.changeShape(newShape);
     removeCellDisplays();
     myGroup.getChildren().addAll(makeCellDisplays());
   }

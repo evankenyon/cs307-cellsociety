@@ -45,7 +45,11 @@ public class Model {
     this.cols = cols;
     for (int row = 0; row < rows; row++) {
       for (int col = 0; col < cols; col++) {
-        cellList.add(new Cell(row, col, cellStateList.get(rows * row + col), rows, cols));
+        try {
+          cellList.add(new Cell(row, col, cellStateList.get(rows * row + col), rows, cols, simulationInfo.get("Shape")));
+        } catch (NullPointerException e) {
+          cellList.add(new Cell(row, col, cellStateList.get(rows * row + col), rows, cols, "Rectangle"));
+        }
       }
     }
     updateAllNeighborsList();
@@ -74,12 +78,27 @@ public class Model {
     }
   }
 
+  public void changeShapeOfCells(String shape) {
+    for (Cell cell : cellList) {
+      cell.changeShape(shape, rows, cols);
+    }
+    updateAllNeighborsList();
+  }
+
+  public void updateNeighborArrangement(String arrangement)
+      throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+    simulationInfo.put("NeighborArrangement", arrangement);
+    affectAllCells("setNoNeighbors");
+    updateAllNeighborsList();
+  }
+
 
   public void setSimulationInfo(Properties simulationInfo) {
     // Borrowed code to loop through props keys and values from
     // https://www.boraji.com/how-to-iterate-properites-in-java
     for (String key : simulationInfo.stringPropertyNames()) {
 //      System.out.println(key);
+
       if (keyAlternatives.containsKey(key)) {
         try {
           this.simulationInfo.put(keyAlternatives.getString(key),
@@ -118,8 +137,14 @@ public class Model {
 
   private void updateSingleCellNeighbors(Cell inputCell) {
     for (Cell cell : cellList) {
-      inputCell.updateNeighbors(cell,
-          parseNumCornersList(numCorners.getString(simulationInfo.get("Type"))));
+      try {
+        inputCell.updateNeighbors(cell,
+            parseNumCornersList(numCorners.getString(simulationInfo.get("NeighborArrangement"))));
+      } catch (NullPointerException e) {
+        inputCell.updateNeighbors(cell,
+            parseNumCornersList(numCorners.getString("Complete")));
+      }
+
     }
   }
 
@@ -148,15 +173,6 @@ public class Model {
       r.setState();
     }
 
-  }
-
-  /**
-   * get a list of all the nodes to go on screen, representing displays of each cell
-   *
-   * @return a list of nodes displaying the cells
-   */
-  public List<Cell> getCells() {
-    return cellList;
   }
 
   public void createModelStateMap() {

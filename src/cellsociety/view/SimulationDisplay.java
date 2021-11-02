@@ -11,36 +11,24 @@ import cellsociety.controller.Controller;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Collections;
 import java.util.InputMismatchException;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-import javafx.scene.Group;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Slider;
 
-import cellsociety.cell.Cell;
 import cellsociety.cell.CellDisplay;
-
-import cellsociety.CornerLocationGenerator.RectangleCellCornerLocationGenerator;
-import cellsociety.CornerLocationGenerator.CornerLocationGenerator;
-import cellsociety.CornerLocationGenerator.HexagonalCellCornerLocationGenerator;
-import cellsociety.CornerLocationGenerator.TriangularCellCornerLocationGenerator;
-import cellsociety.location.CornerLocation;
 
 
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -65,6 +53,8 @@ public class SimulationDisplay extends ChangeableDisplay{
   private CellGridDisplay myCellGridDisplay;
   private HistogramDisplay myHistogram;
   private InfoDisplay myInfoDisplay;
+  private SettingsDisplay mySettingsDisplay;
+
 
 
 
@@ -76,14 +66,6 @@ public class SimulationDisplay extends ChangeableDisplay{
     super(l);
     myController = new Controller();
     myViewResourceHandler = new ViewResourceHandler();
-  }
-
-  protected void setUpAnimation(){
-    myAnimation = new Timeline();
-    myAnimation.setCycleCount(Timeline.INDEFINITE);
-    myAnimation.getKeyFrames().add(new KeyFrame(Duration.seconds(secondDelay), e -> step()));
-    myAnimation.play();
-    paused = false;
   }
 
 
@@ -117,8 +99,9 @@ public class SimulationDisplay extends ChangeableDisplay{
     }
     VBox root = new VBox();
     root.getChildren().add(makeAllDisplays());
-    root.getChildren().add(makeControls());
-    setUpAnimation();
+    mySettingsDisplay = new SettingsDisplay(myController, myLanguageResourceHandler, this);
+    mySubDisplays.add(mySettingsDisplay);
+    root.getChildren().add(mySettingsDisplay.createSettingsDisplay());
     myNode = root;
     return root;
   }
@@ -137,19 +120,22 @@ public class SimulationDisplay extends ChangeableDisplay{
   private Node makeCellGridDisplay(){
     //make a node containing the grid
     myCellGridDisplay = new CellGridDisplay(myController);
+    mySubDisplays.add(myCellGridDisplay);
     return myCellGridDisplay.createGridDisplay();
   }
 
 
   private Node makeHistogram(){
     //create the histogram to add it onto the main node
-    myHistogram = new HistogramDisplay(myController.getNumCells(), getNumOfEachState());
+    myHistogram = new HistogramDisplay(myController.getNumCells(), getNumOfEachState(), myLanguageResourceHandler);
+    mySubDisplays.add(myHistogram);
     return myHistogram.createHistogramDisplay();
   }
 
   private Node makeInfoDisplay(){
     //make the node with the info display to add it onto the main node
-    myInfoDisplay = new InfoDisplay(getNumOfEachState());
+    myInfoDisplay = new InfoDisplay(getNumOfEachState(), myLanguageResourceHandler);
+    mySubDisplays.add(myInfoDisplay);
     return myInfoDisplay.createInfoDisplay();
   }
 
@@ -171,7 +157,6 @@ public class SimulationDisplay extends ChangeableDisplay{
     }
     return stateToCount;
   }
-
 
   private Node makeControls(){
     //make the box with options to pause/resume, do one step, change speed, etc..
@@ -232,7 +217,14 @@ public class SimulationDisplay extends ChangeableDisplay{
     parametersControlBox.getChildren().add(shapeControlBox);
 
     Node neighborArrangementBox = makeOptionsBox(LanguageResourceHandler.NEIGHBOR_ARRANGEMENT_KEY,
-        myViewResourceHandler.getNeighborArrangements(), (s) -> myController.changeNeighborArrangement(s));
+        myViewResourceHandler.getNeighborArrangements(), (s) -> {
+          try {
+            myController.changeNeighborArrangement(s);
+          } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+            // TODO: move to props file
+            displayErrorMessage("Error with reflection in the backend, please try restarting the program and trying again");
+          }
+        });
     parametersControlBox.getChildren().add(neighborArrangementBox);
 
     Node edgePolicyBox = makeOptionsBox(LanguageResourceHandler.EDGE_POLICY_KEY,
@@ -290,7 +282,10 @@ public class SimulationDisplay extends ChangeableDisplay{
   }
 
 
-  protected void step() {
+  /**
+   * perform the next step in the simulation
+   */
+  public void step() {
     try {
       myController.step();
       myHistogram.setNumOfEachType(getNumOfEachState());
@@ -306,20 +301,13 @@ public class SimulationDisplay extends ChangeableDisplay{
 
   }
 
-  /**
-   * see if the simulation is paused. Only used for testing purposes
-   * @return true iff the simulation is paused
-   */
-  public boolean getPaused(){
-    return paused;
-  }
 
   /**
    * returns the second delay of the timeline. Used for testing
    * @return the second delay of the animation
    */
   public double getAnimationSpeed(){
-    return secondDelay;
+    return mySettingsDisplay.getAnimationSpeed();
   }
 
   /**
@@ -328,6 +316,14 @@ public class SimulationDisplay extends ChangeableDisplay{
    */
   public List<CellDisplay> getAllCellDisplays(){
     return myCellGridDisplay.getAllCellDisplays();
+  }
+
+  /**
+   * change the shape of the cells in the grid
+   * @param s is the new shape, like "Triangle" or "Hexagon"
+   */
+  public void changeCellShapes(String s){
+    myCellGridDisplay.changeCellShapes(s);
   }
 
   /**
@@ -340,7 +336,30 @@ public class SimulationDisplay extends ChangeableDisplay{
   }
 
 
+  /**
+   * show/hide the info display
+   * @param visible should be true to show the info display, false to hide it
+   */
+  public void showInfoDisplay(boolean visible){
+    myInfoDisplay.setVisible(visible);
+  }
 
+
+  /**
+   * show/hide the cell grid
+   * @param visible should be true to show the grid, false to hide it
+   */
+  public void showGrid(boolean visible){
+    myCellGridDisplay.setVisible(visible);
+  }
+
+  /**
+   * show/hide the histogram
+   * @param visible should be true to show the histogram, false to hide it
+   */
+  public void showHistogram(boolean visible){
+    myHistogram.setVisible(visible);
+  }
 
 
 }

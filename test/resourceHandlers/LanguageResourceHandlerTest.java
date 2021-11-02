@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import cellsociety.resourceHandlers.LanguageResourceHandler;
+import java.util.Collection;
 
 public class LanguageResourceHandlerTest {
   LanguageResourceHandler myHandler;
@@ -53,7 +54,7 @@ public class LanguageResourceHandlerTest {
     String expected = "About";
     String actual = myHandler.getAboutString();
     assertEquals(expected, actual);
-    myHandler.changeToSpanish();
+    myHandler.changeLanguage(LanguageResourceHandler.SPANISH);
     expected = "AboutS";
     actual = myHandler.getAboutString();
     assertEquals(expected, actual);
@@ -64,11 +65,11 @@ public class LanguageResourceHandlerTest {
     String expected = "About";
     String actual = myHandler.getAboutString();
     assertEquals(expected, actual);
-    myHandler.changeToSpanish();
-    myHandler.changeToSpanish();
-    myHandler.changeToEnglish();
-    myHandler.changeToEnglish();
-    myHandler.changeToSpanish();
+    myHandler.changeLanguage(LanguageResourceHandler.SPANISH);
+    myHandler.changeLanguage(LanguageResourceHandler.SPANISH);
+    myHandler.changeLanguage(LanguageResourceHandler.ENGLISH);
+    myHandler.changeLanguage(LanguageResourceHandler.ENGLISH);
+    myHandler.changeLanguage(LanguageResourceHandler.SPANISH);
     expected = "AboutS";
     actual = myHandler.getAboutString();
     assertEquals(expected, actual);
@@ -76,21 +77,30 @@ public class LanguageResourceHandlerTest {
 
   @Test
   void testChangeToEnglishSimple(){
-    myHandler.changeToSpanish();
-    myHandler.changeToEnglish();
+    myHandler.changeLanguage(LanguageResourceHandler.SPANISH);
+    myHandler.changeLanguage(LanguageResourceHandler.ENGLISH);
     testGetLanguageEnglish();
   }
 
   @Test
   void testChangeToEnglishComplex(){
-    myHandler.changeToSpanish();
-    myHandler.changeToEnglish();
-    myHandler.changeToEnglish();
-    myHandler.changeToSpanish();
-    myHandler.changeToEnglish();
-    myHandler.changeToEnglish();
-    myHandler.changeToEnglish();
+    myHandler.changeLanguage(LanguageResourceHandler.SPANISH);
+    myHandler.changeLanguage(LanguageResourceHandler.ENGLISH);
+    myHandler.changeLanguage(LanguageResourceHandler.ENGLISH);
+    myHandler.changeLanguage(LanguageResourceHandler.SPANISH);
+    myHandler.changeLanguage(LanguageResourceHandler.ENGLISH);
+    myHandler.changeLanguage(LanguageResourceHandler.ENGLISH);
+    myHandler.changeLanguage(LanguageResourceHandler.ENGLISH);
     testGetLanguageEnglish();
+  }
+
+  @Test
+  void testGetLanguages(){
+    Collection<String> langs = myHandler.getSupportedLanguages();
+    assertTrue(langs.size() == 3);
+    assertTrue(langs.contains(LanguageResourceHandler.ENGLISH));
+    assertTrue(langs.contains(LanguageResourceHandler.SPANISH));
+    assertTrue(langs.contains(LanguageResourceHandler.GERMAN));
   }
 
 

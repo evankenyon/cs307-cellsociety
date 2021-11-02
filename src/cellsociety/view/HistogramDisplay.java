@@ -37,8 +37,8 @@ public class HistogramDisplay extends ChangeableDisplay{
    * @param numCells is the total number of cells in the simulation
    * @param stateToCount maps each state to the number of cells in that state. It must contain a key for each possible state!
    */
-  public HistogramDisplay(int numCells, Map<Integer, Integer> stateToCount){
-    super();
+  public HistogramDisplay(int numCells, Map<Integer, Integer> stateToCount, LanguageResourceHandler l){
+    super(l);
     initializeSettings();
     maxNumCells = numCells;
     stateToBar = new HashMap<>();

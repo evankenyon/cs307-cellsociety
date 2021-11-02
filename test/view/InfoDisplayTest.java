@@ -1,5 +1,6 @@
 package view;
 
+import cellsociety.resourceHandlers.LanguageResourceHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,7 +20,7 @@ public class InfoDisplayTest {
     stateToCount.put(0, 20);
     stateToCount.put(1, 60);
     stateToCount.put(2, 20);
-    myInfoDisplay = new InfoDisplay(stateToCount);
+    myInfoDisplay = new InfoDisplay(stateToCount, new LanguageResourceHandler());
   }
 
   @Test
