@@ -2,6 +2,7 @@ package cellsociety.view;
 
 import cellsociety.resourceHandlers.LanguageResourceHandler;
 import cellsociety.resourceHandlers.ViewResourceHandler;
+import cellsociety.resourceHandlers.CSSidHandler;
 
 import cellsociety.view.ViewUtilities.NodeWithText;
 import java.io.File;
@@ -104,13 +105,18 @@ public class MainView extends ChangeableDisplay{
 
   private Node makeLanguageSelector(){
     Collection<String> languages = myLanguageResourceHandler.getSupportedLanguages();
-    return makeOptionsBox(LanguageResourceHandler.LANGUAGE_KEY, languages, (s) -> changeLanguage(s));
+    Node languageBox = makeOptionsBox(LanguageResourceHandler.LANGUAGE_KEY, languages, (s) -> changeLanguage(s));
+    languageBox.setId((new CSSidHandler()).getStringFromKey(CSSidHandler.LANGUAGE_COMBOBOX_KEY));
+    return languageBox;
+
   }
 
 
   private Node makeStyleSelector(){
     //make GUI component allowing user to choose between dark mode, Duke colors, basic style, etc..
-    return makeOptionsBox(LanguageResourceHandler.STYLE_SELECTOR_KEY, styleNameToPath.keySet(), (s) -> changeStyle(styleNameToPath.get(s)));
+    Node styleBox =  makeOptionsBox(LanguageResourceHandler.STYLE_SELECTOR_KEY, styleNameToPath.keySet(), (s) -> changeStyle(styleNameToPath.get(s)));
+    styleBox.setId((new CSSidHandler()).getStringFromKey(CSSidHandler.STYLE_COMBOBOX_KEY));
+    return styleBox;
   }
 
   private void changeStyle(String newStyle){
