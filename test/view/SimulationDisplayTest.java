@@ -1,7 +1,5 @@
 package view;
 import cellsociety.cell.CellDisplay;
-import java.util.List;
-import java.util.Set;
 import javafx.scene.control.TextInputControl;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -9,8 +7,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import cellsociety.resourceHandlers.LanguageResourceHandler;
 import cellsociety.view.MainView;
 import cellsociety.view.SimulationDisplay;
-import cellsociety.view.NodeWithText;
-import cellsociety.view.Button2;
+import cellsociety.view.ViewUtilities.NodeWithText;
+import cellsociety.view.ViewUtilities.Button2;
 
 import java.io.File;
 import java.util.Random;

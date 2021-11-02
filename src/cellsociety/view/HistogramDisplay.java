@@ -2,10 +2,12 @@ package cellsociety.view;
 
 
 import cellsociety.resourceHandlers.LanguageResourceHandler;
+import cellsociety.resourceHandlers.CSSidHandler;
 import java.util.Collections;
 import java.util.Map;
 import java.util.HashMap;
 import javafx.scene.shape.Rectangle;
+
 import javafx.scene.shape.Line;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
@@ -58,6 +60,7 @@ public class HistogramDisplay extends ChangeableDisplay{
     for (Integer state: stateToCount.keySet()){
       stateToBar.put(state, new Rectangle(startX, zeroBarY, barWidth, 0));
       stateToBar.get(state).setLayoutX(startX);
+
       startX = startX + barWidth + viewSettings.getViewSettingValueFromKey(ViewResourceHandler.DIST_BTWN_HISTOGRAM_BARS_KEY);
     }
 
@@ -71,7 +74,8 @@ public class HistogramDisplay extends ChangeableDisplay{
     Group container = new Group();
     Rectangle backGround = new Rectangle(0, 0, viewSettings.getViewSettingValueFromKey(ViewResourceHandler.HISTOGRAM_WIDTH_KEY),
         viewSettings.getViewSettingValueFromKey(ViewResourceHandler.HISTOGRAM_HEIGHT_KEY));
-    backGround.setFill(Color.CYAN);
+    backGround.setId((new CSSidHandler()).getStringFromKey(CSSidHandler.HISTOGRAM_BACKGROUND_KEY));
+
     container.getChildren().add(backGround);
     container.getChildren().add(makeALabel(LanguageResourceHandler.HISTOGRAM_TITLE_KEY));
     container.getChildren().add(new Line(0,zeroBarY, viewSettings.getViewSettingValueFromKey(ViewResourceHandler.HISTOGRAM_WIDTH_KEY), zeroBarY));

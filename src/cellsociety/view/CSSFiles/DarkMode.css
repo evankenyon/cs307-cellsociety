@@ -22,3 +22,11 @@ VBox{
   -fx-spacing: 5;
 }
 
+#HistogramBackground{
+  -fx-fill: rgb(100, 100, 100);
+}
+
+#InfoDisplayBackground{
+  -fx-fill: rgb(100, 100, 100);
+}
+

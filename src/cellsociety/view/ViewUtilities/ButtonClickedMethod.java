@@ -1,4 +1,4 @@
-package cellsociety.view;
+package cellsociety.view.ViewUtilities;
 
 /**
  * This interface is used for lambda functions. Now that I know more about lambadas, I don't think it's necessary,

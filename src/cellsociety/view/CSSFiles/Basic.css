@@ -13,12 +13,21 @@
   -fx-padding: 3 6 6 6;
 }
 
+
 HBox{
   -fx-spacing: 10;
 }
 
 VBox{
   -fx-spacing: 5;
+}
+
+#HistogramBackground{
+  -fx-fill: rgb(150, 150, 150);
+}
+
+#InfoDisplayBackground{
+  -fx-fill: rgb(150, 150, 150);
 }
 
 
