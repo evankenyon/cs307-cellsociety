@@ -116,8 +116,7 @@ public class SettingsDisplay extends ChangeableDisplay{
           try {
             myController.changeNeighborArrangement(s);
           } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
-            // TODO: move to properties file
-            displayErrorMessage("Reflection failed in the backend, please restart the program and try again");
+            displayErrorMessage(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.FAILED_REFLECT_KEY));
           }
         });
     parametersControlBox.getChildren().add(neighborArrangementBox);

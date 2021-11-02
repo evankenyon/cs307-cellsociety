@@ -79,22 +79,18 @@ public class SimulationDisplay extends ChangeableDisplay{
     }catch (IOException e ){
       displayErrorMessage(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.BAD_FILE_KEY));
     } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
-      // TODO: move to props file
-      displayErrorMessage("Reflection error occurred in backend model, please try restarting the"
-          + "program");
+      displayErrorMessage(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.FAILED_REFLECT_KEY));
     } catch (IllegalCellStateException e) {
-      // TODO: move to props file
-      displayErrorMessage("Illegal cell state was found, please make sure you are not using any values"
-          + "that are not 0 or 1 for GameOfLife or not 0, 1, or 2 for other simulations");
+      displayErrorMessage(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.ILLEGAL_STATE_USER_KEY));
     } catch (InputMismatchException e) {
-      // TODO: move to props file
-      displayErrorMessage("A file that was not of .csv type was uploaded");
+      displayErrorMessage(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.WRONG_FILE_TYPE_KEY));
     } catch (IllegalArgumentException e) {
-      // TODO: move to props file
-      displayErrorMessage("A cell was initialized to be outside of the grid's bounds, please try restarting the program");
+      displayErrorMessage(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.OUT_OF_BOUNDS_KEY));
     } catch (InvalidDimensionException e) {
+      // TODO: actually handle
       e.printStackTrace();
     } catch (IllegalRowSizeException e) {
+      // TODO: actually handle
       e.printStackTrace();
     }
     VBox root = new VBox();
@@ -221,8 +217,7 @@ public class SimulationDisplay extends ChangeableDisplay{
           try {
             myController.changeNeighborArrangement(s);
           } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
-            // TODO: move to props file
-            displayErrorMessage("Error with reflection in the backend, please try restarting the program and trying again");
+            displayErrorMessage(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.FAILED_REFLECT_KEY));
           }
         });
     parametersControlBox.getChildren().add(neighborArrangementBox);
@@ -290,12 +285,9 @@ public class SimulationDisplay extends ChangeableDisplay{
       myController.step();
       myHistogram.setNumOfEachType(getNumOfEachState());
     } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-      // TODO: move to props file
-      displayErrorMessage("Reflection error occurred in backend model, please try restarting the"
-          + "program");
+      displayErrorMessage(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.FAILED_REFLECT_KEY));
     } catch (IllegalCellStateException e) {
-      // TODO: move to props file
-      displayErrorMessage("A cell was set to an illegal state in the backend model, please try restarting the program");
+      displayErrorMessage(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.ILLEGAL_STATE_KEY));
     }
     myInfoDisplay.setNumOfEachType((getNumOfEachState()));
 

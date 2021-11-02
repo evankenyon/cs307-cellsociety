@@ -10,9 +10,6 @@ import java.util.List;
 
 public class CSVGenerator {
 
-  private int numProgramsSaved;
-
-  // TODO: handle exception properly
   public void createCSVFile(Model model, String filePath, String simType) throws IOException {
     String realFilePath =  String.format("./data/saved/%s/program-" + "%s.csv", simType, filePath);
     // Setup code for CSVWriter borrowed from https://www.baeldung.com/opencsv
@@ -30,7 +27,6 @@ public class CSVGenerator {
       csvWriter.writeNext(cellGridRowToStates(cellRow));
     }
     csvWriter.close();
-    numProgramsSaved++;
   }
 
   private String[] cellGridRowToStates(List<Cell> cellGridRow) {

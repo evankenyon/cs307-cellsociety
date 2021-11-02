@@ -53,6 +53,11 @@ public class LanguageResourceHandler {
   public final static String HIDE_INFO_KEY = "HideInfo";
   public final static String EDGE_POLICY_KEY = "EdgePolicy";
   public final static String NEIGHBOR_ARRANGEMENT_KEY = "NeighborArrangement";
+  public final static String FAILED_REFLECT_KEY = "ReflectFail";
+  public final static String ILLEGAL_STATE_KEY = "IllegalState";
+  public final static String ILLEGAL_STATE_USER_KEY = "IllegalStateUser";
+  public final static String WRONG_FILE_TYPE_KEY = "WrongFileType";
+  public final static String OUT_OF_BOUNDS_KEY = "OutOfBounds";
 
   public static final String ENGLISH = "English";
   public static final String SPANISH = "Spanish";
