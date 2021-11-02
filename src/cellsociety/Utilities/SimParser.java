@@ -39,12 +39,7 @@ public class SimParser {
     InputStream simFileInputStream = this.getClass().getClassLoader().getResourceAsStream(pathName.toString());
     simulationConfig.load(simFileInputStream);
     standardizeKeys();
-    try {
-      handleIllegalInput();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-
+    handleIllegalInput();
   }
 
   private void standardizeKeys() {

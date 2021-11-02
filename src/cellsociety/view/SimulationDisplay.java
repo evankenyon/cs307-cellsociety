@@ -88,10 +88,10 @@ public class SimulationDisplay extends ChangeableDisplay{
       displayErrorMessage(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.OUT_OF_BOUNDS_KEY));
     } catch (InvalidDimensionException e) {
       // TODO: actually handle
-      e.printStackTrace();
+      displayErrorMessage(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.INVALID_DIMENSIONS_KEY));
     } catch (IllegalRowSizeException e) {
       // TODO: actually handle
-      e.printStackTrace();
+      displayErrorMessage(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.BIG_ROW_KEY));
     }
     VBox root = new VBox();
     root.getChildren().add(makeAllDisplays());
