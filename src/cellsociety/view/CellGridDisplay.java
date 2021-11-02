@@ -1,5 +1,6 @@
 package cellsociety.view;
 
+import cellsociety.cell.ImmutableCell;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -73,7 +74,7 @@ public class CellGridDisplay extends ChangeableDisplay{
     return displayNodes;
   }
 
-  private CellDisplay makeACellDisplay(Cell cell, double widthPerCell, double heightPerCell){
+  private CellDisplay makeACellDisplay(ImmutableCell cell, double widthPerCell, double heightPerCell){
     //make a cell display for the cell with the width and height given as arguments
     // CellDisplay newDisplay = new CellDisplay(cell.getjIndex() * widthPerCell,
     //cell.getiIndex() * heightPerCell, widthPerCell, heightPerCell, cell.getCurrentState());
@@ -86,7 +87,7 @@ public class CellGridDisplay extends ChangeableDisplay{
     return newDisplay;
   }
 
-  private double[] generateXYs(Cell cell){
+  private double[] generateXYs(ImmutableCell cell){
     //generate an array of x and y coordinates that will be used to create a polygon
     int i = cell.getiIndex();
     int j = cell.getjIndex();

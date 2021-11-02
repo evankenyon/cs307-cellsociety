@@ -14,7 +14,7 @@ import cellsociety.location.CornerLocation;
 import java.util.stream.Collectors;
 
 
-public class Cell {
+public class Cell implements ImmutableCell {
   private static final String DEFAULT_RESOURCE_PACKAGE =
       Cell.class.getPackageName() + ".resources.";
   private static final String DEFAULT_VALUES_FILENAME = "DefaultValues";
