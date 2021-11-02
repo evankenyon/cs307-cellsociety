@@ -24,7 +24,6 @@ public class DefaultCSVParser extends CSVParser {
       dimensionInformation = dimensionInformation.strip();
       String[] dimensions = dimensionInformation.split(",");
 
-      //FIXME: Need to throw an exception when it isnt an integer
       try {
         setCols(Integer.parseInt(dimensions[0]));
         setRows(Integer.parseInt(dimensions[1]));

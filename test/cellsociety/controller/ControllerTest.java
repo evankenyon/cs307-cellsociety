@@ -59,8 +59,8 @@ class ControllerTest {
 
   @Test
   void parseFileThrowsException() {
-    assertThrows(FileNotFoundException.class,
-        () -> controller.parseFile(new File("./data/game_of_life/nonexistent.csv")));
+    assertThrows(NullPointerException.class,
+        () -> controller.parseFile(new File("./data/game_of_life/nonexistent.sim")));
   }
 
   @Test

@@ -25,7 +25,7 @@ public class SimParser {
     requiredKeys = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + REQUIRED_KEYS_FILENAME);
   }
 
-  public void setupKeyValuePairs(File simFile) throws IOException, InputMismatchException {
+  public void setupKeyValuePairs(File simFile) throws IOException, InputMismatchException, NullPointerException {
     // Used https://mkyong.com/java/java-read-a-file-from-resources-folder/ to learn how to properly
     // setup pathname
     File currFile = simFile;

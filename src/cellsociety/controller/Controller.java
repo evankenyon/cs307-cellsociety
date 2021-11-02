@@ -37,7 +37,7 @@ public class Controller {
   }
 
   public void parseFile(File SimFile)
-          throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, IllegalCellStateException, InputMismatchException, IllegalArgumentException, InvalidDimensionException, IllegalRowSizeException {
+          throws NullPointerException, IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, IllegalCellStateException, InputMismatchException, IllegalArgumentException, InvalidDimensionException, IllegalRowSizeException {
     CSVParser csvParser = null;
     SimParser simParser = new SimParser();
     simParser.setupKeyValuePairs(SimFile);

@@ -76,7 +76,7 @@ public class SimulationDisplay extends ChangeableDisplay{
   public Node makeDisplay(File SimFile) {
     try {
       myController.parseFile(SimFile);
-    }catch (IOException e ){
+    }catch (IOException | NullPointerException e ){
       displayErrorMessage(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.BAD_FILE_KEY));
     } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
       displayErrorMessage(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.FAILED_REFLECT_KEY));

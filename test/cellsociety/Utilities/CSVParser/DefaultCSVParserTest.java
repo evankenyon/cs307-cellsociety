@@ -33,14 +33,15 @@ class DefaultCSVParserTest {
   }
 
   @Test
-  void getCellStates() {
+  void initializeCellMatrixInvalidDimensionException() {
+    defaultCSVParser.setFile(new File("./data/game_of_life/invalidDimension.csv"));
+    Assertions.assertThrows(InvalidDimensionException.class, () -> defaultCSVParser.getCellStates("GameOfLife"));
   }
 
   @Test
-  void getRows() {
+  void initializeCellMatrixIllegalRowSize() {
+    defaultCSVParser.setFile(new File("./data/game_of_life/illegalRow.csv"));
+    Assertions.assertThrows(IllegalRowSizeException.class, () -> defaultCSVParser.getCellStates("GameOfLife"));
   }
 
-  @Test
-  void getCols() {
-  }
 }
