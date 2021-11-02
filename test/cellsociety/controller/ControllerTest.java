@@ -3,6 +3,8 @@ package cellsociety.controller;
 import static org.junit.jupiter.api.Assertions.*;
 
 import cellsociety.Model.Model;
+import cellsociety.Utilities.CSVParser.IllegalRowSizeException;
+import cellsociety.Utilities.CSVParser.InvalidDimensionException;
 import cellsociety.cell.Cell;
 import cellsociety.cell.CellDisplay;
 import cellsociety.cell.IllegalCellStateException;
@@ -37,7 +39,7 @@ class ControllerTest {
 
   @Test
   void parseFile()
-      throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, IllegalCellStateException {
+          throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, IllegalCellStateException, InvalidDimensionException, IllegalRowSizeException {
     controller.parseFile(new File("./data/game_of_life/blinkers.sim"));
 //    List<Cell> cells = model.getCellList();
     Scanner overallScanner = new Scanner("./data/game_of_life/blinkers.sim");
@@ -63,7 +65,7 @@ class ControllerTest {
 
   @Test
   void saveFile()
-      throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, IllegalCellStateException {
+          throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, IllegalCellStateException, InvalidDimensionException, IllegalRowSizeException {
     controller.parseFile(new File("./data/game_of_life/blinkers.sim"));
     List<Cell> expected = new ArrayList<>();
     for (int row = 0; row < model.getRows(); row++) {
@@ -80,6 +82,5 @@ class ControllerTest {
       }
     }
   }
-
 
 }

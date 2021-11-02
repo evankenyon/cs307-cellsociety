@@ -2,6 +2,8 @@ package cellsociety.Model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import cellsociety.Utilities.CSVParser.IllegalRowSizeException;
+import cellsociety.Utilities.CSVParser.InvalidDimensionException;
 import cellsociety.cell.Cell;
 import cellsociety.cell.IllegalCellStateException;
 import cellsociety.controller.Controller;
@@ -27,7 +29,7 @@ class ModelTest {
 
   @Test
   void findNextStateForEachCell()
-      throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, ClassNotFoundException, InstantiationException, IllegalCellStateException {
+          throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, ClassNotFoundException, InstantiationException, IllegalCellStateException, InvalidDimensionException, IllegalRowSizeException {
     controller.parseFile(new File("./data/game_of_life/blinkers.sim"));
     model.findNextStateForEachCell();
     model.updateModel();
