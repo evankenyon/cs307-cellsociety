@@ -154,10 +154,6 @@ public class Cell implements ImmutableCell {
     }
   }
 
-  public int getNumNeighbors() {
-    return neighbors.size();
-  }
-
   public List<Cell> getNeighbors() {return neighbors;}
 
   public Cell getNeighborOfState(int state, int num) {

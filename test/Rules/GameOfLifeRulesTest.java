@@ -62,7 +62,6 @@ public class GameOfLifeRulesTest {
         }
         cell.updateCellNeighborStateMap();
         GameOfLifeRules rules=new GameOfLifeRules(cell, new ArrayList<>());
-        rules.setNumOneNeighbors(1);
         rules.setState();
         Assertions.assertEquals(0,cell.getFutureState());
     }

@@ -21,8 +21,6 @@ public interface ImmutableCell {
 
   public int numOfStateNeighbors(int state);
 
-  public List<Cell> getNeighbors();
-
   public Cell getNeighborOfState(int state, int num);
 
   public int getChrononCounter();
