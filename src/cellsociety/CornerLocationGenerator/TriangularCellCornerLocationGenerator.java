@@ -14,6 +14,13 @@ public class TriangularCellCornerLocationGenerator extends CornerLocationGenerat
         super(rows,columns);
     }
 
+    /**
+     *
+     * @param i
+     * @param j
+     * @return a list of the corners for each individual triangle based on its index
+     * and the size of the simulation window
+     */
     @Override
     public List<CornerLocation> generateCorners(int i, int j)
     {
