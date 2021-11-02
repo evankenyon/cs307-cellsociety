@@ -102,4 +102,22 @@ public class Controller {
     return model.getSimulationType();
   }
 
+  /**
+   * change the neighbor arrangement. Could also pass in a lambda/method to this, or you can use the string
+   * as a key in resourceHandlers.NeighborArrangements.Properties to get something
+   * @param newArrangement is a String like "Complete" or "Cardinal"
+   */
+  public void changeNeighborArrangement(String newArrangement){
+
+  }
+
+  /**
+   * change the edge policy. Could also pass in a lambda/method to this, or you can use the string
+   * as a key in resourceHandlers.EdgePolicies.Properties to get something
+   * @param newPolicy is a String like "Toroidal" or "Finite"
+   */
+  public void changeEdgePolicy(String newPolicy){
+
+  }
+
 }

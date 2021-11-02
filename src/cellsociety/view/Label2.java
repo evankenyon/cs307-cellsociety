@@ -12,4 +12,5 @@ public class Label2 extends Label implements NodeWithText{
     super(text);
   }
 
+
 }

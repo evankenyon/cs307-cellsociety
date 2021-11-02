@@ -2,14 +2,20 @@ package cellsociety.view;
 
 import cellsociety.resourceHandlers.LanguageResourceHandler;
 
-import java.util.Map;
+
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.Node;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+
+import java.util.Map;
 import java.util.HashMap;
+import java.util.Collection;
+import java.util.function.Consumer;
 
 
 /**
@@ -58,6 +64,25 @@ public abstract class ChangeableDisplay {
     Label2 l = new Label2(myLanguageResourceHandler.getStringFromKey(resourceKey));
     myNodesToTextKey.put(l, resourceKey);
     return l;
+  }
+
+  /**
+   * Create a Node with a label and a combo box which, when an option is selected, will changeMethod
+   * with the comboBox's selected value as the argument to changeMehtod
+   * @param labelResourceKey is a key used to get the text on the Label
+   * @param options is a list of options to appear on the drop down box
+   * @param changeMethod will be called when a new value is selected on the drop down
+   * @return a node containing the nodes described above
+   */
+  public Node makeOptionsBox(String labelResourceKey, Collection<String> options, Consumer<String> changeMethod){
+    //create a node on which users can select the shape of a cell
+    HBox container = new HBox();
+    container.getChildren().add(makeALabel(labelResourceKey));
+    ComboBox cBox = new ComboBox();
+    cBox.getItems().addAll(options);
+    cBox.setOnAction(e -> changeMethod.accept(cBox.getSelectionModel().getSelectedItem().toString()));
+    container.getChildren().add(cBox);
+    return container;
   }
 
   /**
