@@ -97,7 +97,7 @@ public class MainViewTest extends DukeApplicationTest{
     testPressEnglish();
     File testFile = new File(BLINKERS_PATH);
     mainView.handleSelectedFile(testFile);
-    assertEquals(1, mainView.getNumSimulations());
+    assertTrue(null != mainView.getSimDisplay());
   }
 
   @Test

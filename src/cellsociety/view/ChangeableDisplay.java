@@ -100,7 +100,7 @@ public abstract class ChangeableDisplay {
    * change the language of everything on screen to english
    */
   protected void changeToEnglish(){
-    myLanguageResourceHandler.changeToEnglish();
+    myLanguageResourceHandler.changeLanguage(LanguageResourceHandler.ENGLISH);
     changeLanguageOfText();
   }
 
@@ -108,7 +108,17 @@ public abstract class ChangeableDisplay {
    * change the language of everything on screen to spanish
    */
   protected void changeToSpanish(){
-    myLanguageResourceHandler.changeToSpanish();
+    myLanguageResourceHandler.changeLanguage(LanguageResourceHandler.SPANISH);
+    changeLanguageOfText();
+  }
+
+  /**
+   * change the language of all text on screen
+   * @param language should be something like "Spanish" or "English"
+   *                corresponding to a static final variable in LanguageResourceHandler.java
+   */
+  protected void changeLanguage(String language){
+    myLanguageResourceHandler.changeLanguage(language);
     changeLanguageOfText();
   }
 
