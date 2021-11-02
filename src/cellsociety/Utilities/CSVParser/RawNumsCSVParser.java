@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class RawNumsCSVParser extends CSVParser {
+
   private List<Integer> numStates;
 
   public RawNumsCSVParser() {
@@ -37,7 +38,7 @@ public class RawNumsCSVParser extends CSVParser {
       try {
         numStates.add(Integer.parseInt(dimensions[3]));
       } catch (IndexOutOfBoundsException e) {
-        if(getValidStatesList(simType).contains(2)) {
+        if (getValidStatesList(simType).contains(2)) {
           throw new InputMismatchException();
         }
         numStates.add(0);
@@ -52,7 +53,7 @@ public class RawNumsCSVParser extends CSVParser {
     numStates.set(0, getRows() * getCols() - numStates.get(1) - numStates.get(2));
     for (int row = 0; row < getRows(); row++) {
       for (int col = 0; col < getCols(); col++) {
-        while(numStates.get(currState) <= 0) {
+        while (numStates.get(currState) <= 0) {
           currState = (currState + 1) % 3;
         }
         cellStates.add(currState);

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class GameOfLifeRules extends Rules {
+
   private static final String DEFAULT_RESOURCE_PACKAGE =
       GameOfLifeRules.class.getPackageName() + ".resources.";
   private static final String STATE_AND_NEIGHBORS_MAP_FILENAME = "GameOfLifeRules";
@@ -16,7 +17,7 @@ public class GameOfLifeRules extends Rules {
   public GameOfLifeRules(Cell cell, List<Double> args) throws InputMismatchException {
     super(cell);
 //    gcell=cell;
-    if(!args.isEmpty()) {
+    if (!args.isEmpty()) {
       throw new InputMismatchException();
     }
     stateAndNeighborsMap = ResourceBundle.getBundle(

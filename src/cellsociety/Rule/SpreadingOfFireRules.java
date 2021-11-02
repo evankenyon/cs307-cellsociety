@@ -45,6 +45,7 @@ public class SpreadingOfFireRules extends Rules {
 
   /**
    * Sets the state of the cell based on the rules of the game
+   *
    * @throws NoSuchMethodException
    * @throws InvocationTargetException
    * @throws IllegalAccessException
@@ -67,8 +68,8 @@ public class SpreadingOfFireRules extends Rules {
   }
 
   /**
-   * If the random double is less than probGrow, it changes the state of the cell from 0 to 1
-   * where 0 is empty and 1 is tree
+   * If the random double is less than probGrow, it changes the state of the cell from 0 to 1 where
+   * 0 is empty and 1 is tree
    */
   private void growTree() {
     Random rand = new Random();
@@ -80,9 +81,8 @@ public class SpreadingOfFireRules extends Rules {
   }
 
   /**
-   * If the random double is less than probCatch and there is a neighbor in state 2,
-   * it changes the state of the cell from 1 to 2
-   * where 1 is tree and 2 is on fire
+   * If the random double is less than probCatch and there is a neighbor in state 2, it changes the
+   * state of the cell from 1 to 2 where 1 is tree and 2 is on fire
    */
   private void burnTree() {
     Random rand = new Random();

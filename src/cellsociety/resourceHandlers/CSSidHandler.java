@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 
 /**
  * Objects of this class are used to get the css id associated with a given key
+ *
  * @author Keith Cressman
  */
 public class CSSidHandler {
@@ -19,20 +20,21 @@ public class CSSidHandler {
 
   private Properties idProperties;
 
-  public CSSidHandler(){
+  public CSSidHandler() {
     idProperties = new Properties();
-    try{
+    try {
       idProperties.load(new FileInputStream(IDS_PATH));
-    } catch (Exception e){
+    } catch (Exception e) {
     }
   }
 
   /**
    * get the key/label associated with this key
+   *
    * @param key should be one of the static final String constants defiened in this class
    * @return the label associated with the key
    */
-  public String getStringFromKey(String key){
+  public String getStringFromKey(String key) {
     return idProperties.getProperty(key);
   }
 

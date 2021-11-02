@@ -23,6 +23,7 @@ import java.util.function.Consumer;
 import javafx.scene.Node;
 
 public class Controller {
+
   private static final String DEFAULT_RESOURCE_PACKAGE =
       SimParser.class.getPackageName() + ".resources.";
   private static final String OPTIONAL_KEYS_FILENAME = "OptionalKeys";
@@ -43,16 +44,19 @@ public class Controller {
     simParser.setupKeyValuePairs(SimFile);
     try {
       csvParser = (CSVParser) Class.forName(
-              String.format("%s.%sCSVParser", CSVParser.class.getPackage().getName(), simParser.getSimulationConfig().getProperty("CSVType")))
+              String.format("%s.%sCSVParser", CSVParser.class.getPackage().getName(),
+                  simParser.getSimulationConfig().getProperty("CSVType")))
           .getConstructor()
           .newInstance();
     } catch (ClassNotFoundException | InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
       csvParser = new DefaultCSVParser();
     }
-    csvParser.setFile(new File(String.format("./data/%s", simParser.getSimulationConfig().getProperty("InitialStates"))));
+    csvParser.setFile(new File(
+        String.format("./data/%s", simParser.getSimulationConfig().getProperty("InitialStates"))));
     model.setSimulationInfo(simParser.getSimulationConfig());
     simGenerator = new SimGenerator(simParser.getSimulationConfig());
-    model.setupCells(csvParser.getCellStates(simParser.getSimulationConfig().getProperty("Type")), csvParser.getRows(), csvParser.getCols());
+    model.setupCells(csvParser.getCellStates(simParser.getSimulationConfig().getProperty("Type")),
+        csvParser.getRows(), csvParser.getCols());
   }
 
   public void addCellObserver(int row, int col, Consumer<Integer> observer) {
@@ -90,31 +94,35 @@ public class Controller {
 
   /**
    * get the shape of the grid for this simulation
+   *
    * @return model.getGridShape()
    */
-  public int[] getGridShape(){
+  public int[] getGridShape() {
     return new int[]{model.getRows(), model.getCols()};
   }
 
   /**
    * get the number of cells in the simulation
+   *
    * @return number of cells
    */
-  public int getNumCells(){
+  public int getNumCells() {
     return model.getRows() * model.getCols();
   }
 
   /**
    * get the simulation type, e.g. "GameOfLife" or "Percolation"
+   *
    * @return the the model's string simulationType
    */
-  public String getSimulationType(){
+  public String getSimulationType() {
     return model.getSimulationType();
   }
 
   /**
-   * change the neighbor arrangement. Could also pass in a lambda/method to this, or you can use the string
-   * as a key in resourceHandlers.NeighborArrangements.Properties to get something
+   * change the neighbor arrangement. Could also pass in a lambda/method to this, or you can use the
+   * string as a key in resourceHandlers.NeighborArrangements.Properties to get something
+   *
    * @param newArrangement is a String like "Complete" or "Cardinal"
    */
   public void changeNeighborArrangement(String newArrangement)
@@ -125,9 +133,10 @@ public class Controller {
   /**
    * change the edge policy. Could also pass in a lambda/method to this, or you can use the string
    * as a key in resourceHandlers.EdgePolicies.Properties to get something
+   *
    * @param newPolicy is a String like "Toroidal" or "Finite"
    */
-  public void changeEdgePolicy(String newPolicy){
+  public void changeEdgePolicy(String newPolicy) {
 
   }
 

@@ -1,4 +1,5 @@
 package cellsociety.cell;
+
 import cellsociety.controller.Controller;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -11,9 +12,11 @@ import java.io.FileInputStream;
 
 /**
  * Objects of this class are used to represent the display for a single cell in the grid display
+ *
  * @author Keith Cressman
  */
 public class CellDisplay {
+
   private static final int DEFAULT_WIDTH = 20;
   private static final int DEFAULT_HEIGHT = 20;
 
@@ -26,19 +29,21 @@ public class CellDisplay {
 
   private Color[] stateColors = {Color.BLACK, Color.RED, Color.GREEN};
 
-  public CellDisplay(double x, double y, int state, Controller myController){
+  public CellDisplay(double x, double y, int state, Controller myController) {
     this(x, y, DEFAULT_WIDTH, DEFAULT_HEIGHT, state, myController);
   }
 
   /**
    * instantiate a rectangular cell display with the given arguments
-   * @param x is the top left x value
-   * @param y is the y value of the top left of the display
-   * @param width is the widht of the rectangle
+   *
+   * @param x      is the top left x value
+   * @param y      is the y value of the top left of the display
+   * @param width  is the widht of the rectangle
    * @param height is the height of the rectangle
-   * @param state is the state of the corresponding cell
+   * @param state  is the state of the corresponding cell
    */
-  public CellDisplay(double x, double y, double width, double height, int state, Controller myController){
+  public CellDisplay(double x, double y, double width, double height, int state,
+      Controller myController) {
     /*
     try {
       FileInputStream input = new FileInputStream("src/cellsociety/cell/DukeLogo.png");
@@ -53,15 +58,15 @@ public class CellDisplay {
     commonConstructorSetup(state);
   }
 
-  public CellDisplay(double[] cornerXYs, int state, Controller myController){
+  public CellDisplay(double[] cornerXYs, int state, Controller myController) {
     myDisp = new Polygon(cornerXYs);
-    Polygon x = new Polygon(1, 1, 1,1 );
+    Polygon x = new Polygon(1, 1, 1, 1);
     Rectangle r = new Rectangle();
     commonConstructorSetup(state);
     this.myController = myController;
   }
 
-  private void commonConstructorSetup(int state){
+  private void commonConstructorSetup(int state) {
     //functionality common to both constructors
     myDisp.setOnMouseClicked(e -> cellClicked());
     myState = state;
@@ -69,18 +74,16 @@ public class CellDisplay {
   }
 
 
-
-
-
   /**
    * set what cell corresponds to this cell display
+   *
    * @param cell will be myCell
    */
-  public void setCell(ImmutableCell cell){
+  public void setCell(ImmutableCell cell) {
     myCell = cell;
   }
 
-  private void cellClicked(){
+  private void cellClicked() {
     //handle what happens when a cell is clicked on in the GUI
     int nextState = (myCell.getCurrentState() + 1) % stateColors.length;
     myController.setCellState(myCell.getiIndex(), myCell.getjIndex(), nextState);
@@ -88,59 +91,66 @@ public class CellDisplay {
 
   /**
    * change the color corresponding to each state
+   *
    * @param colors is an array where colors[i] is the color for the ith state in the simulation
    */
-  public void setColors(Color[] colors){
+  public void setColors(Color[] colors) {
     stateColors = colors;
     changeState(myState);
   }
 
   /**
    * change width of the display
+   *
    * @param width will be the width of hte display
    */
-  public void setWidth(int width){
-    ((Rectangle)myDisp).setWidth(width);
+  public void setWidth(int width) {
+    ((Rectangle) myDisp).setWidth(width);
   }
 
 
   /**
    * chagne the height of the display
+   *
    * @param height will be height of the display
    */
-  public void setHeight(int height){
-    ((Rectangle)myDisp).setHeight(height);
+  public void setHeight(int height) {
+    ((Rectangle) myDisp).setHeight(height);
   }
 
   /**
    * change the x coordinate of display
+   *
    * @param x
    */
-  public void setX(int x){
+  public void setX(int x) {
     myDisp.setLayoutX(x);
   }
 
   /**
    * change the y coordinate of display
+   *
    * @param y
    */
-  public void setY(int y){
+  public void setY(int y) {
     myDisp.setLayoutY(y);
   }
 
   /**
    * get a node representing the display for this cell
+   *
    * @return the node (Rectangle) representing the cell
    */
-  public Node getMyDisplay(){
+  public Node getMyDisplay() {
     return myDisp;
   }
 
   /**
    * change the display based on state of the cell
+   *
    * @param state
    */
-  public void changeState(int state){
+  public void changeState(int state) {
     state = state % stateColors.length;
     myState = state;
     ((Shape) myDisp).setFill(stateColors[state]);
@@ -148,28 +158,30 @@ public class CellDisplay {
 
   /**
    * get the array of possible colors
+   *
    * @return stateColors
    */
-  public Color[] getStateColors(){
+  public Color[] getStateColors() {
     return stateColors;
   }
 
   /**
    * get the state of this cellDisplay
+   *
    * @return myState
    */
-  public int getState(){
+  public int getState() {
     return myState;
   }
 
   /**
    * get the color of this cell display
+   *
    * @return stateColors[myState]
    */
-  public Color getMyColor(){
+  public Color getMyColor() {
     return stateColors[myState];
   }
-
 
 
 }

@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Properties;
 
 public class SimGenerator {
+
   private Properties simInfo;
 
   public SimGenerator(Properties simInfo) {
@@ -15,14 +16,19 @@ public class SimGenerator {
 
   /**
    * Save a .sim file for the simulation, with properties specified in propertyToValue
-   * @param propertyToValue maps keys like "Author" and "Title" to their corresponding values for the simulation
+   *
+   * @param propertyToValue maps keys like "Author" and "Title" to their corresponding values for
+   *                        the simulation
    */
-  public void createSimFile(String fileName, Map<String, String> propertyToValue) throws IOException{
-    String filePath = String.format("./data/saved/%s/program-" + "%s.sim", simInfo.getProperty("Type"), fileName);
-    simInfo.setProperty("InitialStates", String.format("/saved/%s/program-" + "%s.csv", simInfo.getProperty("Type"), fileName));
+  public void createSimFile(String fileName, Map<String, String> propertyToValue)
+      throws IOException {
+    String filePath = String.format("./data/saved/%s/program-" + "%s.sim",
+        simInfo.getProperty("Type"), fileName);
+    simInfo.setProperty("InitialStates",
+        String.format("/saved/%s/program-" + "%s.csv", simInfo.getProperty("Type"), fileName));
 
     try {
-      for (String property : propertyToValue.keySet()){
+      for (String property : propertyToValue.keySet()) {
         simInfo.setProperty(property, propertyToValue.get(property));
       }
     } catch (NullPointerException e) {

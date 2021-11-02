@@ -3,7 +3,9 @@ package cellsociety.view.ViewUtilities;
 import javafx.scene.control.Button;
 
 /**
- * Objects of this class act like any other button. I made a separate class for it to enable changing language dynamically - Keith
+ * Objects of this class act like any other button. I made a separate class for it to enable
+ * changing language dynamically - Keith
+ *
  * @author Keith Cressman
  */
 public class Button2 extends Button implements NodeWithText {

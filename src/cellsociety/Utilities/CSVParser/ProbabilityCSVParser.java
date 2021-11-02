@@ -8,6 +8,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class ProbabilityCSVParser extends CSVParser {
+
   private double stateOneProbability;
   private double stateTwoProbability;
 
@@ -54,7 +55,7 @@ public class ProbabilityCSVParser extends CSVParser {
       try {
         stateTwoProbability = Double.parseDouble(dimensions[3]);
       } catch (IndexOutOfBoundsException e) {
-        if(getValidStatesList(simType).contains(2)) {
+        if (getValidStatesList(simType).contains(2)) {
           throw new InputMismatchException();
         }
       }
