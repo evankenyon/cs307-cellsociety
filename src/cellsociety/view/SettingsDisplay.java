@@ -112,7 +112,14 @@ public class SettingsDisplay extends ChangeableDisplay{
     parametersControlBox.getChildren().add(shapeControlBox);
 
     Node neighborArrangementBox = makeOptionsBox(LanguageResourceHandler.NEIGHBOR_ARRANGEMENT_KEY,
-        getMyViewResourceHandler().getNeighborArrangements(), (s) -> myController.changeNeighborArrangement(s));
+        getMyViewResourceHandler().getNeighborArrangements(), (s) -> {
+          try {
+            myController.changeNeighborArrangement(s);
+          } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+            // TODO: move to properties file
+            displayErrorMessage("Reflection failed in the backend, please restart the program and try again");
+          }
+        });
     parametersControlBox.getChildren().add(neighborArrangementBox);
 
     Node edgePolicyBox = makeOptionsBox(LanguageResourceHandler.EDGE_POLICY_KEY,

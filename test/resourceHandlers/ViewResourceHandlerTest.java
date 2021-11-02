@@ -7,8 +7,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import cellsociety.resourceHandlers.ViewResourceHandler;
 import cellsociety.CornerLocationGenerator.CornerLocationGenerator;
 import cellsociety.CornerLocationGenerator.RectangleCellCornerLocationGenerator;
-import cellsociety.CornerLocationGenerator.TriangularCellCornerLocationGenerator;
-import cellsociety.CornerLocationGenerator.HexagonalCellCornerLocationGenerator;
+import cellsociety.CornerLocationGenerator.TriangleCellCornerLocationGenerator;
+import cellsociety.CornerLocationGenerator.HexagonCellCornerLocationGenerator;
 
 import java.util.List;
 
@@ -98,13 +98,13 @@ public class ViewResourceHandlerTest {
   @Test
   void testGetCornerLocationGeneratorTriangular(){
     CornerLocationGenerator clg = handler.getCornerLocationGenerator("Triangle", 10, 10);
-    assertInstanceOf(TriangularCellCornerLocationGenerator.class, clg);
+    assertInstanceOf(TriangleCellCornerLocationGenerator.class, clg);
   }
 
   @Test
   void testGetCornerLocationGeneratorHexagonal(){
     CornerLocationGenerator clg = handler.getCornerLocationGenerator("Hexagon", 10, 10);
-    assertInstanceOf(HexagonalCellCornerLocationGenerator.class, clg);
+    assertInstanceOf(HexagonCellCornerLocationGenerator.class, clg);
   }
 
   @Test

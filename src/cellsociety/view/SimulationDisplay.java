@@ -11,36 +11,24 @@ import cellsociety.controller.Controller;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Collections;
 import java.util.InputMismatchException;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-import javafx.scene.Group;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Slider;
 
-import cellsociety.cell.Cell;
 import cellsociety.cell.CellDisplay;
-
-import cellsociety.CornerLocationGenerator.RectangleCellCornerLocationGenerator;
-import cellsociety.CornerLocationGenerator.CornerLocationGenerator;
-import cellsociety.CornerLocationGenerator.HexagonalCellCornerLocationGenerator;
-import cellsociety.CornerLocationGenerator.TriangularCellCornerLocationGenerator;
-import cellsociety.location.CornerLocation;
 
 
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -168,6 +156,129 @@ public class SimulationDisplay extends ChangeableDisplay{
       stateToCount.put(state, 1 + stateToCount.get(state));
     }
     return stateToCount;
+  }
+
+  private Node makeControls(){
+    //make the box with options to pause/resume, do one step, change speed, etc..
+    VBox v = new VBox();
+    v.getChildren().add(makeShowHideBox());
+    v.getChildren().add(makeMiscellaneousControls());
+    v.getChildren().add(makeParametersControlBox());
+    v.getChildren().add(makeSlider());
+
+    return v;
+  }
+
+  private Node makeShowHideBox(){
+    //make a node with buttons for users to show/hide the grid, histogram, and info
+    HBox showHideBox = new HBox();
+    showHideBox.getChildren().add(makeAButton(LanguageResourceHandler.SHOW_GRID_KEY, () -> myCellGridDisplay.setVisible(true)));
+    showHideBox.getChildren().add(makeAButton(LanguageResourceHandler.HIDE_GRID_KEY, () -> myCellGridDisplay.setVisible(false)));
+    showHideBox.getChildren().add(makeAButton(LanguageResourceHandler.SHOW_HISTOGRAM_KEY, () -> myHistogram.setVisible(true)));
+    showHideBox.getChildren().add(makeAButton(LanguageResourceHandler.HIDE_HISTOGRAM_KEY, () -> myHistogram.setVisible(false)));
+    showHideBox.getChildren().add(makeAButton(LanguageResourceHandler.SHOW_INFO_KEY, () -> myInfoDisplay.setVisible(true)));
+    showHideBox.getChildren().add(makeAButton(LanguageResourceHandler.HIDE_INFO_KEY, () -> myInfoDisplay.setVisible(false)));
+    return showHideBox;
+  }
+
+  private Node makeMiscellaneousControls(){
+    //make a node with buttons for users to pause/resume, see about, do one step, or save file
+    HBox controlBox = new HBox();
+    controlBox.getChildren().add(makeAButton(LanguageResourceHandler.ABOUT_KEY, () -> showAbout()));
+    pauseButton = makeAButton(LanguageResourceHandler.PAUSE_KEY, () -> pauseAnimation());
+    resumeButton = makeAButton(LanguageResourceHandler.RESUME_KEY, () -> resumeAnimation());
+    resumeButton.setVisible(false);
+    controlBox.getChildren().add(pauseButton);
+    controlBox.getChildren().add(resumeButton);
+    controlBox.getChildren().add(makeAButton(LanguageResourceHandler.ONE_STEP_KEY, () -> oneStep()));
+    controlBox.getChildren().add(makeAButton(LanguageResourceHandler.SAVE_FILE_KEY, () -> makePopup()));
+    return controlBox;
+  }
+
+  private Node makeSlider(){
+    //make the slider controlling the speed of the animation
+    HBox sliderBox = new HBox();
+    Slider slider =new Slider();
+    slider.setMin(myViewResourceHandler.getMinFramesPerSecond());
+    slider.setMax(myViewResourceHandler.getMaxFramesPerSecond());
+    slider.setShowTickLabels(true);
+    slider.setShowTickMarks(true);
+    slider.setOnMouseClicked(e -> changeAnimationSpeed(slider.getValue()));
+    sliderBox.getChildren().add(makeALabel(LanguageResourceHandler.SPEED_SLIDER_KEY));
+    sliderBox.getChildren().add(slider);
+    return sliderBox;
+  }
+
+  private Node makeParametersControlBox(){
+    HBox parametersControlBox = new HBox();
+
+    Node shapeControlBox = makeOptionsBox(LanguageResourceHandler.SHAPES_KEY,
+        myViewResourceHandler.getCellShapes(), (s) -> myCellGridDisplay.changeCellShapes(s));
+    parametersControlBox.getChildren().add(shapeControlBox);
+
+    Node neighborArrangementBox = makeOptionsBox(LanguageResourceHandler.NEIGHBOR_ARRANGEMENT_KEY,
+        myViewResourceHandler.getNeighborArrangements(), (s) -> {
+          try {
+            myController.changeNeighborArrangement(s);
+          } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+            // TODO: move to props file
+            displayErrorMessage("Error with reflection in the backend, please try restarting the program and trying again");
+          }
+        });
+    parametersControlBox.getChildren().add(neighborArrangementBox);
+
+    Node edgePolicyBox = makeOptionsBox(LanguageResourceHandler.EDGE_POLICY_KEY,
+        myViewResourceHandler.getEdgePolicies(), (s) -> myController.changeEdgePolicy(s));
+    parametersControlBox.getChildren().add(edgePolicyBox);
+    return parametersControlBox;
+  }
+
+
+
+  public void changeAnimationSpeed(double newFramesPerSecond){
+    //change speed of animation
+    framesPerSecond = newFramesPerSecond;
+    secondDelay = 1.0 / framesPerSecond;
+    myAnimation.setRate(framesPerSecond);
+  }
+
+  private void showAbout(){
+    //when the user presses the about button, show them a dialogue box with info about the simulations
+    //use the controller to get info about the simulation
+    System.out.println("about");
+  }
+
+
+
+  private void pauseAnimation(){
+    //pause teh animation
+    myAnimation.pause();
+    //pauseButton.setText(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.RESUME_KEY));
+    pauseButton.setVisible(false);
+    resumeButton.setVisible(true);
+    paused = true;
+  }
+
+  private void resumeAnimation(){
+    //resume the animation
+    myAnimation.play();
+    //pauseButton.setText(myLanguageResourceHandler.getStringFromKey(LanguageResourceHandler.PAUSE_KEY));
+    resumeButton.setVisible(false);
+    pauseButton.setVisible(true);
+    paused = false;
+  }
+
+  private void makePopup(){
+    //make a poup which the user can interact with to save the simulation
+    pauseAnimation();
+    FileSavePopup popup = new FileSavePopup(myLanguageResourceHandler, myController);
+    popup.makePopup();
+  }
+
+  private void oneStep() {
+    //go through one step at a time
+    pauseAnimation();
+    step();
   }
 
 

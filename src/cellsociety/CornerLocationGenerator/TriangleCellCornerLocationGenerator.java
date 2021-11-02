@@ -4,12 +4,12 @@ import cellsociety.location.CornerLocation;
 
 import java.util.List;
 
-public class TriangularCellCornerLocationGenerator extends CornerLocationGenerator{
+public class TriangleCellCornerLocationGenerator extends CornerLocationGenerator{
     private double height=getVIEW_HEIGHT()/rows;
     private double length=getVIEW_WIDTH()/columns;
     private CornerLocation center=new CornerLocation(0,0);
 
-    public TriangularCellCornerLocationGenerator(int rows, int columns)
+    public TriangleCellCornerLocationGenerator(int rows, int columns)
     {
         super(rows,columns);
     }

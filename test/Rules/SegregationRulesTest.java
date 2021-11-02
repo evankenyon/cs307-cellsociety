@@ -20,13 +20,16 @@ public class SegregationRulesTest {
 
     @Test
     void checkFutureStateCurrentCellSatisfied() throws IllegalCellStateException {
-        SegregationCell cell=new SegregationCell(0,0,1,10,10);
+        SegregationCell cell=new SegregationCell(1,1,1,10,10);
         List<Cell> test=new ArrayList<>();
-        test.add(new Cell(0,0,1,10,10));
-        test.add(new Cell(0,0,1,10,10));
-        test.add(new Cell(0,0,1,10,10));
-        test.add(new Cell(0,0,2,10,10));
-        cell.setNeighbors(test);
+        test.add(new Cell(1,0,1,10,10));
+        test.add(new Cell(0,1,1,10,10));
+        test.add(new Cell(2,1,1,10,10));
+        test.add(new Cell(1,2,2,10,10));
+        for (Cell otherCell : test) {
+            cell.updateNeighbors(otherCell, List.of(new Integer[]{1, 2}));
+        }
+        cell.updateCellNeighborStateMap();
         cell.updateCellNeighborStateMap();
         SegregationRules sr=new SegregationRules(cell, new ArrayList<>());
         sr.setState();
@@ -35,14 +38,17 @@ public class SegregationRulesTest {
 
     @Test
     void checkFutureStateCurrentCellNotSatisfied() throws IllegalCellStateException {
-        SegregationCell cell=new SegregationCell(0,0,1,10,10);
+        SegregationCell cell=new SegregationCell(1,1,1,10,10);
         List<Cell> test=new ArrayList<>();
         test.add(new Cell(0,0,2,10,10));
-        test.add(new Cell(0,0,0,10,10));
-        test.add(new Cell(0,0,1,10,10));
-        test.add(new Cell(0,0,2,10,10));
-        test.add(new Cell(0,0,2,10,10));
-        cell.setNeighbors(test);
+        test.add(new Cell(1,0,0,10,10));
+        test.add(new Cell(0,1,1,10,10));
+        test.add(new Cell(2,1,2,10,10));
+        test.add(new Cell(2,2,2,10,10));
+        for (Cell otherCell : test) {
+            cell.updateNeighbors(otherCell, List.of(new Integer[]{1, 2}));
+        }
+        cell.updateCellNeighborStateMap();
         cell.updateCellNeighborStateMap();
         SegregationRules sr=new SegregationRules(cell, new ArrayList<>());
         sr.setState();
@@ -51,14 +57,16 @@ public class SegregationRulesTest {
 
     @Test
     void checkFutureStateNeighborsNotSatisfied() throws IllegalCellStateException {
-        SegregationCell cell=new SegregationCell(0,0,1,10,10);
+        SegregationCell cell=new SegregationCell(1,1,1,10,10);
         List<Cell> test=new ArrayList<>();
         test.add(new Cell(0,0,2,10,10));
-        test.add(new Cell(0,0,0,10,10));
-        test.add(new Cell(0,0,1,10,10));
-        test.add(new Cell(0,0,2,10,10));
-        test.add(new Cell(0,0,2,10,10));
-        cell.setNeighbors(test);
+        test.add(new Cell(1,0,0,10,10));
+        test.add(new Cell(0,1,1,10,10));
+        test.add(new Cell(1,2,2,10,10));
+        test.add(new Cell(2,2,2,10,10));
+        for (Cell otherCell : test) {
+            cell.updateNeighbors(otherCell, List.of(new Integer[]{1, 2}));
+        }
         cell.updateCellNeighborStateMap();
         SegregationRules sr=new SegregationRules(cell, new ArrayList<>());
         sr.setState();

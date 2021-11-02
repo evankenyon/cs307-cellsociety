@@ -69,18 +69,14 @@ public class Controller {
     this.model = model;
   }
 
-  /**
-   * get a list of the cells in the simulation
-   * @return a list of each cell
-   */
-  public List<Cell> getCells(){
-    return model.getCells();
-  }
-
   public void setCellState(int row, int col, int state) {
     Cell cellToUpdate = model.getCell(row, col);
     cellToUpdate.setFutureState(state);
     cellToUpdate.updateState();
+  }
+
+  public Cell getCell(int i, int j) {
+    return model.getCell(i, j);
   }
 
   /**
@@ -105,7 +101,7 @@ public class Controller {
    * @return number of cells
    */
   public int getNumCells(){
-    return model.getCells().size();
+    return model.getRows() * model.getCols();
   }
 
   /**
@@ -121,8 +117,9 @@ public class Controller {
    * as a key in resourceHandlers.NeighborArrangements.Properties to get something
    * @param newArrangement is a String like "Complete" or "Cardinal"
    */
-  public void changeNeighborArrangement(String newArrangement){
-
+  public void changeNeighborArrangement(String newArrangement)
+      throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+    model.updateNeighborArrangement(newArrangement);
   }
 
   /**
@@ -132,6 +129,10 @@ public class Controller {
    */
   public void changeEdgePolicy(String newPolicy){
 
+  }
+
+  public void changeShape(String shape) {
+    model.changeShapeOfCells(shape);
   }
 
 }
