@@ -70,6 +70,8 @@ public class CellDisplay {
     //functionality common to both constructors
     myDisp.setOnMouseClicked(e -> cellClicked());
     myState = state;
+
+
     changeState(state);
   }
 
