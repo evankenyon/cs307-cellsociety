@@ -21,13 +21,16 @@ encapsulation design principle.
 * Keith Cressman
   * I was responsible for the front end. I wrote nearly everything in the view package, although Evan contributed to the CellGridDisplay class as well. I also wrote almost the entirety of the resourceHandlers package, as the front end code uses LanguageResourceHandler.java and ViewResourceHandler.java to get various parameters for the display. 
 
-* Team Member #3
+* Remy Cross
+  * I was responsible for the logic in the Rules classes. While Evan did a lot of refactoring to add reflections to the Rules classes, I was the one that set up the initial logic that the reflections were adapted from. Furthermore, I was responsible for generating the cell shapes for display through the CornerLocationGenerator package. I also assisted on a lot of the backend logic. 
 
 * Team Member #4
 
 ## Design goals
+One of our major design goals was to make our code as extendable as possible for future simulations to be added. One of the specifications of this project was that there were going to be major changes implemented to the project. Because of this, we made it very simple to add new simulations with different Rules. By implementing reflections in many parts of our code, it also made it very easy to add new variations of different features. We sought to make it as easy as possible to make new types of simulations. Using our design, once we finished GameOfLife, it was very easy to create the other games because it was just a matter of adding in a new Rules subclass.
 
 #### What Features are Easy to Add
+One feature that was especially easy to implement based on how we designed our code was changing the shape of the cells. Rather than doing convoluted math to figure out where the neighbors would be in a grid for each cell, we calculated the corners for each cell based on the i and j index of the cell. This made it simple to implement different shaped cells because we just changed the algorithm used to calculate the corners. Furthermore, it made it easier to change our definition of "neighbor" because it was just based on how many corners they shared. Another aspect of the code that was very easy to implement was new types of simulations. Because the Rules of the simulations were abstracted from the model, it made it easier to change which rules we would adhere to. We would need to create a new class that contains the rules for the specific simulation and then initialize that class specifically in order to have that game run. The way that we designed our code really made it easier to extend our project further than the initial specifications. Our code is extremely flexible and adaptable to the user's preferences. 
 
 ## High-level Design
   * An instance of MainView is instantiated by Main.java when starting the program. MainView is responsible for organizing all of the front end components. It has a method which creates the window, along with options to change some basic settings like language/style, and components to upload a .SIM file or start a new window to view another simulation. When a user uploads a file, MainView uses it to create a new SimulationDisplay, which is responsible for managing the view components associated with a single simulation.
