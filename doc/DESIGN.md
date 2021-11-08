@@ -105,6 +105,12 @@ information (and it is used through the same pathway as CSVGenerator).
 #### Features Affected by Assumptions
 
 ## Significant differences from Original Plan
+One of the most significant changes from our initial plans was the data structure we used to hold the cells themselves.  Initially, the model had held a 2 dimensional array of cell objects, and the indexing of each cell was done by its position in the 2-d array.When adding more functionality, we figured out that this structure was burdensome and gave away too much data. In order to operate on one cell, we would need to pass the entire matrix, leaving the rest of the cells open for modification. Therefore in order to keep the data protected as much as possible, we changed the entire structure of this data. We modified the functionality of parsing the CSV file to construct each cell to also have an iIndex and jIndex attribute. Then, we modified the model to hold a list of cells instead of a 2d array. The location of the cells was unknown to the model, leaving the cells hidden.
+
+Another significant change to functionality was how we determined the neighbors of cells. In the early stages of the project, we resolved to use the index of the cells to determine the neighbors. Then, we would use math to add and subtract from the indexes to find the respective neighbors of each cell. With this implementation, the neighbors of a cell were determined within the model itself. In this implementation, the neighbors were determined within the model itself. This worked relatively simply for squares, as a square grid fit neatly with the implementation of a 2d array. However, we quickly realized that this implementation would break down for other types of neighbors. We later changed our neighbor logic to use the view itself, where the visualization of the corners of the cell objects would determine if cells were neighbors or not. The switch of logic from using the model to using the view to determine the neighbors ended up paying off for the other shapes, and led to a more robust design of finding neighbors.
+
+
+
 
 ## Describe, in detail, how to add new features to your project, especially ones you were not able to complete by the deadline
 Our group implemented all the backend features laid out in the specifications, but did not get to all of the front end features. Listed below is how to implement those front end features.
