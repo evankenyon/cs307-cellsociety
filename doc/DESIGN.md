@@ -105,7 +105,28 @@ information (and it is used through the same pathway as CSVGenerator).
 
 ## Assumptions that Affect the Design
 
-#### Features Affected by Assumptions
+* Probability CSV files would be laid out in the following format: numCols, numRows, probStateOne,
+probStateTwo. probStateZero would equal 1 - probStateTwo - probStateOne.
+    * This affected the design because if the formatting is different, an exception will be thrown
+      since the Probability CSV class expects this format
+* Raw number CSV files would be laid out in the following format: numCols, numRows, numStateOne,
+numStateTwo. numStateZero would equal numCols * numRows - numStateOne - numStateTwo
+  * This affected the design because if the formatting is different, an exception will be thrown 
+  since the Raw number CSV class expects this format
+* User wants .sim file and .csv file that are saved to share a pathname (except for the extension)
+  * This affected the design because it did not allow the user to choose separate pathnames
+* Any files used, both .sim and .csv, are located in data/simulation, where simulation is the name
+of the simulation (i.e. fire)
+  * This affected the design since the creation/parsing of pathnames rests on this assumption, so
+  if this assumption is not true, then the program will throw an exception and the simulation will
+  not run as desired
+* The .csv path in the .sim file represents its path within the data folder (ex. you could have 
+fire/fire_corner.csv)
+  * Once again, this affected the design since the creation/parsing of pathnames rests on this 
+  assumption, so if this assumption is not true, then the program will throw an exception and the 
+  simulation will not run as desired
+
+
 
 ## Significant differences from Original Plan
 One of the most significant changes from our initial plans was the data structure we used to hold the cells themselves.  Initially, the model had held a 2 dimensional array of cell objects, and the indexing of each cell was done by its position in the 2-d array.When adding more functionality, we figured out that this structure was burdensome and gave away too much data. In order to operate on one cell, we would need to pass the entire matrix, leaving the rest of the cells open for modification. Therefore in order to keep the data protected as much as possible, we changed the entire structure of this data. We modified the functionality of parsing the CSV file to construct each cell to also have an iIndex and jIndex attribute. Then, we modified the model to hold a list of cells instead of a 2d array. The location of the cells was unknown to the model, leaving the cells hidden.
