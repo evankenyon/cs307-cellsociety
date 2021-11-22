@@ -1,0 +1,9 @@
+SimType=Fire
+Title=Starts Small
+Author=Robert Duvall
+Description=Fire starts from the corner
+InitialStates=fire/fire_cornerTwo.csv
+Parameters=1.0,0.5
+Shape=Triangle
+EdgePolicy=Toroidal
+NeighborArrangement=Corner
